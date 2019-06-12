@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import App from './App';
+import QA from './Q&A';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<QA/>, document.getElementById('root'));
