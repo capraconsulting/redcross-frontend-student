@@ -13,7 +13,7 @@ class App extends Component {
   render(){
     return(
       <div>
-        <Header />
+        <Header isOpen={false}/>
         <Router>
           <Switch>
             <Route path='/react' component={LandingPage} />

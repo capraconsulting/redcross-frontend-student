@@ -1,30 +1,10 @@
-import React, { Component } from 'react'; 
+import React, { FunctionComponent } from 'react'; 
 
-type FooterState = {
-  text: string,
-  link?: any,
-}
-
-class Header extends Component<{}, FooterState> {
-  static defaultProps = {
-    text: 'Følg oss på',
-    link: {
-        facebook:{
-            url: 'https://www.facebook.com/digitalleksehjelp/',
-            name: 'Facebook',
-        },
-    }
-  }  
-
-  // render will know everything!
-  render() {
-    return(
-        <div>
-            <p>{this.props['text'] + ' '}<a href={this.props['link']['facebook']['url']}>{this.props['link']['facebook']['name']}</a></p>
-        </div>
-    );
-  }
-}
+const Footer: FunctionComponent = () => (
+  <p>
+    Følg oss på <a href="https://www.facebook.com/digitalleksehjelp/">Facebook</a>)}
+  </p>
+);
 
 const styles = {
     footer: {
@@ -38,4 +18,5 @@ const styles = {
     }
 }
 
-export default Header;
+export default Footer;
+
