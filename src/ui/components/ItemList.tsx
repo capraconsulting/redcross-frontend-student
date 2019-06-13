@@ -10,31 +10,40 @@ import {
 import IQuestion from '../../interfaces/IQuestion';
 
 export default function ItemList(questions: IQuestion[]) {
-  return (
-    <Accordion allowZeroExpanded={true}>
-      {questions.map(question => {
-        return (
-          <AccordionItem key={`question-${question.id}`}>
-            <AccordionItemHeading>
-              <AccordionItemButton>
-                {question.title} {/*question title*/}
-              </AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel>
-              <p>
-                {/*Question content*/}
-                {question.question}
-              </p>
+  if (questions.length > 0) {
+    return (
+      <Accordion allowZeroExpanded={true}>
+        {questions.map(question => {
+          return (
+            <AccordionItem key={`question-${question.id}`}>
+              <AccordionItemHeading>
+                <AccordionItemButton>
+                  {question.title} {/*question title*/}
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <p>
+                  {/*Question content*/}
+                  {question.question}
+                </p>
 
-              <hr/>
+                <hr/>
 
-              <p>
-                {question.answer}
-              </p>
-            </AccordionItemPanel>
-          </AccordionItem>
-        );
-      })}
-    </Accordion>
-  );
+                <p>
+                  {question.answer}
+                </p>
+              </AccordionItemPanel>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    );
+  } else {
+    return (
+      <div>
+        Fant du ikke det du lette etter? <a href="#">Still et spørsmål</a>
+      </div>
+    );
+  }
+
 }
