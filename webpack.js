@@ -73,6 +73,7 @@ module.exports = env => {
     output: {
       filename: '[name].[contentHash].js',
       path: path.resolve(__dirname, 'build'),
+      publicPath: '/',
     },
     optimization: {
       splitChunks: {
@@ -106,6 +107,7 @@ module.exports = env => {
     devServer: {
       contentBase: './build',
       port: 3000,
+      historyApiFallback: true,
     },
   };
 };
