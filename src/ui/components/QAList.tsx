@@ -9,7 +9,7 @@ import {
 } from 'react-accessible-accordion';
 import IQuestion from '../../interfaces/IQuestion';
 
-export default function ItemList(questions: IQuestion[]) {
+export default function QAList(questions: IQuestion[]) {
   if (questions.length > 0) {
     return (
       <Accordion allowZeroExpanded={true}>

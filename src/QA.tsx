@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { get } from './services/api-service';
-import ItemList from './ui/components/ItemList';
+import QAList from './ui/components/QAList';
 import IQuestion from './interfaces/IQuestion';
 
 interface IState {
@@ -28,7 +28,7 @@ export default class QA extends React.Component<{},IState> {
   render(): React.ReactNode {
     return (
       <div>
-        {this.state.questions ? ItemList(this.state.questions) : ''}
+        {this.state.questions ? QAList(this.state.questions) : ''}
       </div>
     );
   }
