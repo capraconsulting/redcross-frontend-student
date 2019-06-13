@@ -1,4 +1,9 @@
 export default interface IQuestion {
   id: number;
-  email: string;
+  title: string;
+  question: string;
+  answer: string;
+  class: string;
+  date: string;
+  course: string;
 }
