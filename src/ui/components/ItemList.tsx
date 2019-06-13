@@ -19,6 +19,7 @@ export default function ItemList(questions: IQuestion[]) {
               <AccordionItemHeading>
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
+                  <p>{question.course}, {question.class}, {question.date}</p>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
