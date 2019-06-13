@@ -1,8 +1,15 @@
 import React from 'react';
 import '../../styles/QAList.css';
-import {Accordion, AccordionItem, AccordionItemHeading, AccordionItemPanel, AccordionItemButton} from 'react-accessible-accordion';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemPanel,
+  AccordionItemButton,
+} from 'react-accessible-accordion';
+import IQuestion from '../../interfaces/IQuestion';
 
-export default function ItemList(questions) {
+export default function ItemList(questions: IQuestion[]) {
   return (
     <Accordion allowZeroExpanded={true}>
       {questions.map(question => {
@@ -10,16 +17,17 @@ export default function ItemList(questions) {
           <AccordionItem key={`question-${question.id}`}>
             <AccordionItemHeading>
               <AccordionItemButton>
-                {question.question} {/*question title*/}
+                {question.title} {/*question title*/}
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
               <p>
                 {/*Question content*/}
-                Kommer: question content
+                {question.question}
               </p>
-            </AccordionItemPanel>
-            <AccordionItemPanel>
+
+              <hr/>
+
               <p>
                 {question.answer}
               </p>
@@ -30,31 +38,3 @@ export default function ItemList(questions) {
     </Accordion>
   );
 }
-
-/*export default function ItemsList(questions, open, isOpen) {
-
-  return (
-    <div className={'qa_items'}>
-      <ul>
-        {questions.map(question => {
-          console.log(isOpen);
-          return (
-            <li key={question.id}>
-              <a href="#" onClick={() => open(question.id)}>
-                <div>{question.question}</div>
-                <div className={'meta'}>
-                  {question.course}, {question.class}, {question.date}
-                </div>
-              </a>
-              <div className={isOpen === question.id ? 'open' : 'closed'}>
-                <div className={'text-component'}>
-                  {question.answer}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}*/

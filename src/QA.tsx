@@ -1,17 +1,21 @@
 import * as React from 'react';
 
-import getHelloWorldMessage from './services/hello-world-service';
 import { get } from './services/api-service';
 import ItemList from './ui/components/ItemList';
 import IQuestion from './interfaces/IQuestion';
 
-// const QA = () => <h1>{getHelloWorldMessage('some-app', 'some-version')}</h1>;
+interface IState {
+  questions: IQuestion[]
+}
 
+export default class QA extends React.Component<{},IState> {
 
-export default class QA extends React.Component {
-  state = {
-    questions: [],
-  };
+  constructor(state: IState) {
+    super(state);
+    this.state = {
+      questions: []
+    };
+  }
 
   componentDidMount(): void {
     get('questions').then(res => {
@@ -24,7 +28,7 @@ export default class QA extends React.Component {
   render(): React.ReactNode {
     return (
       <div>
-        {ItemList(this.state.questions)}
+        {this.state.questions ? ItemList(this.state.questions) : ''}
       </div>
     );
   }
