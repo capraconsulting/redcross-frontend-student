@@ -5,7 +5,7 @@ class SectionQuestions extends Component {
   render() {
     return (
       <div >
-        <Link to='/react' style={{textDecoration: 'none'}}>
+        <Link to='/questions' style={{textDecoration: 'none'}}>
         <h2>
           Spørsmål og svar
         </h2>

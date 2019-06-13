@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 const Footer: FunctionComponent = () => (
   <p>
-    Følg oss på <a href="https://www.facebook.com/digitalleksehjelp/">Facebook</a>)}
+    Følg oss på <a href="https://www.facebook.com/digitalleksehjelp/">Facebook</a>
   </p>
 );
 
