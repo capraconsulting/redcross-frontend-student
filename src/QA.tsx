@@ -28,7 +28,7 @@ export default class QA extends React.Component<{},IState> {
   render(): React.ReactNode {
     return (
       <div>
-        {this.state.questions ? QAList(this.state.questions) : ''}
+        {QAList(this.state.questions)}
       </div>
     );
   }
