@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import '../../styles/Header.css';
+import '../../styles/Header.less';
 
 type HeaderState = {
   isOpen?: boolean,

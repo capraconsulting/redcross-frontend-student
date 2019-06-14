@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import './styles/base.css';
+import './styles/base.less';
 // Pages
 import LandingPage from './views/LandingPage/LandingPage';
 

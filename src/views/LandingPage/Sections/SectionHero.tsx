@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../../styles/SectionHero.css';
+import '../../../styles/SectionHero.less';
 
 const message = {
     header: "Gratis, trygt og anonymt for deg på ungdomsskolen og videregående.",
@@ -14,7 +14,7 @@ class SectionQuestions extends Component {
         <div className="hero--description">
           <span style={{color: '#8b51c6'}}>Gratis, trygt </span> og <span style={{color: '#8b51c6'}}>anonymt</span> for deg på ungdomsskolen og videregående.
         </div>
-        <div className="hero-tips">
+        <div className="hero--tips">
           {message.tips}
         </div>
 

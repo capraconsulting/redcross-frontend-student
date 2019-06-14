@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/QAList.css';
+import '../../styles/QAList.less';
 import {
   Accordion,
   AccordionItem,

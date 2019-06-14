@@ -47,23 +47,8 @@ module.exports = env => {
           use: 'url-loader',
         },
         {
-          test: /(?<!\.module)\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
-        },
-        {
-          test: /\.module\.css$/,
-          use: [
-            'style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-                modules: true,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
-              },
-            },
-            'postcss-loader',
-          ],
+          test: /(?<!\.module)\.(css|less)$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
         },
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
@@ -93,26 +78,6 @@ module.exports = env => {
                 }
               }
             },
-          ],
-        },
-        {
-          test: /\.less$/,
-          use: [
-            {
-              loader: 'style-loader', // creates style nodes from JS strings
-            },
-            {
-              loader: 'css-loader', // translates CSS into CommonJS
-              options: {
-                importLoaders: 1,
-                modules: true,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'less-loader', // compiles Less to CSS
-            },
-            'postcss-loader',
           ],
         },
       ],
