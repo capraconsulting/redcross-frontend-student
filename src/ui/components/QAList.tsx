@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/QAList.css';
+import '../../styles/QAList.less';
 import {
   Accordion,
   AccordionItem,
@@ -10,7 +10,7 @@ import {
 import IQuestion from '../../interfaces/IQuestion';
 
 export default function QAList(questions: IQuestion[]) {
-  if (questions.length > 0) {
+  if (questions && questions.length > 0) { /*This array can be null (before we fetch it)*/
     return (
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
@@ -19,7 +19,7 @@ export default function QAList(questions: IQuestion[]) {
               <AccordionItemHeading>
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
-                  <p>{question.course}, {question.class}, {question.date}</p>
+                  <p>{question.course}, {question.grade}, {question.date}</p>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
