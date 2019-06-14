@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-
+import './styles/base.css';
 // Pages
 import LandingPage from './views/LandingPage/LandingPage';
 
@@ -13,7 +13,7 @@ import QA from './QA';
 class App extends Component {
   render(){
     return(
-      <div>
+      <div className="base">
         <Header isOpen={false}/>
         <Router>
           <Switch>

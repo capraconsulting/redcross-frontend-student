@@ -1,0 +1,30 @@
+.header {
+    height: 5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.24rem;
+}
+
+.header--rk_logo {
+    height: 2.5rem;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header--logo {
+    font-weight: bold;
+    white-space: nowrap;
+    color: black;
+    cursor: pointer;
+}
+
+.header--serviceStatusMessage {
+    color: #8b51c6;
+    white-space: nowrap;
+}
+.header--link {
+    text-decoration: none;
+}
