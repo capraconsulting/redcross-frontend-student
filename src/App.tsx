@@ -30,7 +30,7 @@ class App extends Component<{}, AppProps> {
 
   render() {
     const { time } = this.state;
-    return(
+    return (
       <div>
         <div className="base">
           <Header isOpen={false} day={time.getDay()}/>
