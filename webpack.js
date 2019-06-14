@@ -94,11 +94,31 @@ module.exports = env => {
               }
             },
           ],
-        }
+        },
+        {
+          test: /\.less$/,
+          use: [
+            {
+              loader: 'style-loader', // creates style nodes from JS strings
+            },
+            {
+              loader: 'css-loader', // translates CSS into CommonJS
+              options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'less-loader', // compiles Less to CSS
+            },
+            'postcss-loader',
+          ],
+        },
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css','.less'],
     },
     output: {
       filename: '[name].[contentHash].js',

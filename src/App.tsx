@@ -13,15 +13,18 @@ import QA from './QA';
 class App extends Component {
   render(){
     return(
-      <div className="base">
-        <Header isOpen={false}/>
-        <Router>
-          <Switch>
-            <Route path='/questions' component={QA} />
-            <Route path='/' exact component={LandingPage} />
-            <Redirect to='/' />
-          </Switch>
-        </Router>
+      <div>
+        <div className="base">
+          <Header isOpen={false}/>
+          <Router>
+            <Switch>
+              <Route path='/questions' component={QA} />
+              <Route path='/' exact component={LandingPage} />
+              <Redirect to='/' />
+            </Switch>
+          </Router>
+          
+        </div>
         <Footer />
       </div>
     );
