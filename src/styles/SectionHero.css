@@ -1,0 +1,17 @@
+.hero {
+    color: #333;
+    border-bottom: solid 1px black;
+}
+
+.hero--description {
+    font-size: 2.5rem;
+}
+
+.hero-tips {
+    color: #8b51c6;
+    background-color: rgba(139, 81, 198, 0.1);
+    font-size: 0.90em;
+    padding: 0.8em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+}
