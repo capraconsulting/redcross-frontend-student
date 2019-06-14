@@ -7,7 +7,8 @@ import LandingPage from './views/LandingPage/LandingPage';
 // Global components
 import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
-import QA from './QA';
+import QA from './views/QA/QA';
+import QAForm from './ui/components/QAForm';
 
 
 class App extends Component {
@@ -17,7 +18,8 @@ class App extends Component {
         <Header isOpen={false}/>
         <Router>
           <Switch>
-            <Route path='/questions' component={QA} />
+            <Route path='/questions' exact component={QA} />
+            <Route path='/questions/new' exact component={QAForm}/>
             <Route path='/' exact component={LandingPage} />
             <Redirect to='/' />
           </Switch>
