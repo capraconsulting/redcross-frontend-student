@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import '../../../styles/SectionHero.css';
 
-
 const message = {
     header: "Gratis, trygt og anonymt for deg på ungdomsskolen og videregående.",
     tips: "Hvis det tar lang tid å få videohjelp anbefaler vi å prøve vanlig chat i stedet. Det går ofte raskere!"
 }
 
 class SectionQuestions extends Component {
-
     
   render() {
     return (
