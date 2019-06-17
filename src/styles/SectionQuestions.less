@@ -1,19 +1,21 @@
+@import 'colors.less';
+
 .container {
-    border: solid 1px black;
+    border: solid 1px @black;
     padding: 3em;
     margin: 2.8em 0em;
 
     &--header {
         font-size: 2.5rem;
-        color: #333;
+        color: @hero-black;
     }
     
     &--text {
         margin: 0 0 10px;
         font-size: 1.4rem;
-        color: #333;
+        color: @hero-black;
         &--colored {
-            color: #82c289;
+            color: @secondary-color;
             line-height: 1.5;
         }
     }
@@ -22,7 +24,7 @@
         &--input {
             width: 100%;
             padding: 10px;
-            border: solid 1px #d1d1d1;
+            border: solid 1px @select-color;
             border-radius: 0;
             -webkit-appearance: none;
             font-size: 15px;

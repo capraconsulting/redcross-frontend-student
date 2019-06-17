@@ -1,18 +1,20 @@
+@import 'colors.less';
+
 .hero {
-    color: #333;
-    border-bottom: solid 1px black;
+    color: @hero-black;
+    border-bottom: solid 1px @black;
     
     &--description {
         font-size: 2.5rem;
 
         &--colored {
-            color: #8b51c6;
+            color: @primary-color;
         }
     }
 
     &--tips {
-        color: #8b51c6;
-        background-color: rgba(139, 81, 198, 0.1);
+        color: @primary-color;
+        background-color: @info-background;
         font-size: 0.90em;
         padding: 0.8em;
         margin-top: 0.67em;

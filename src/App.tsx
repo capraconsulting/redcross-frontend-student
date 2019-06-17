@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+
+// Styles
 import './styles/base.less';
+
 // Pages
 import LandingPage from './views/LandingPage/LandingPage';
 
@@ -9,23 +12,28 @@ import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
 import QA from './QA';
 
+
+//Global application types
 type AppProps = {
-  time: Date,
+  time?: Date,
 }
 
 class App extends Component<{}, AppProps> {
+  //Constructing state
+  state = {
+    time: new Date()
+  }
+
   tick() {
+    //Setting the date
     this.setState({
       time: new Date()
     })
   }
 
-  componentWillMount() {
-    this.tick();
-  }
-
   componentDidMount() {
-    setInterval (() => this.tick(), 10000);
+    //Setting the date every 10th second.
+    setInterval (() => this.tick(), 10 * 1000);
   }
 
   render() {
