@@ -8,7 +8,7 @@ import {
   AccordionItemButton,
 } from 'react-accessible-accordion';
 import IQuestion from '../../interfaces/IQuestion';
-import { NorwegianDate } from '../../services/date-pipe-service';
+import { NorwegianDate } from '../../services/date-service';
 
 export default function QAList(questions: IQuestion[]) {
   if (questions && questions.length > 0) {

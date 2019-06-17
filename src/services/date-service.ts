@@ -1,9 +1,9 @@
 export function NorwegianDate(date): string {
   const tmpDate = new Date(date);
   return (
-    tmpDate.getDay().toString() +
+    tmpDate.getDate().toString() +
     '.' +
-    tmpDate.getMonth().toString() +
+    (tmpDate.getMonth() + 1).toString() +
     '.' +
     tmpDate.getFullYear().toString()
   );
