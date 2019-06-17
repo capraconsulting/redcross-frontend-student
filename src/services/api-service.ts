@@ -1,8 +1,9 @@
 import axios from 'axios';
-import IQuestion from '../interfaces/IQuestion';
+import {API_URL, HEADERS} from '../../config';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/',
+  baseURL: API_URL,
+  headers: HEADERS
 });
 
 export function get(url: string) {
