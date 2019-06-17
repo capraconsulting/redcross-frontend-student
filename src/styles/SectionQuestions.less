@@ -1,45 +1,40 @@
 @import 'colors.less';
 
 .container {
-    border: solid 1px @black;
-    padding: 3em;
-    margin: 2.8em 0em;
+  border: solid 1px @black;
+  padding: 3em;
+  margin: 2.8em 0em;
+
+  &--header {
+    font-size: 2.5rem;
+    color: @hero-black;
+  }
+
+  &--text {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    color: @hero-black;
+    &--colored {
+      color: @secondary-color;
+      line-height: 1.5;
+    }
+  }
+
+  &--form {
+    &--input {
+      width: 100%;
+      padding: 10px;
+      border: solid 1px @select-color;
+      border-radius: 0;
+      -webkit-appearance: none;
+      font-size: 15px;
+      height: 1.5vh;
+    }
 
     &--header {
-        font-size: 2.5rem;
-        color: @hero-black;
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      font-weight: bold;
     }
-    
-    &--text {
-        margin: 0 0 10px;
-        font-size: 1.4rem;
-        color: @hero-black;
-        &--colored {
-            color: @secondary-color;
-            line-height: 1.5;
-        }
-    }
-
-    &--form {
-        &--input {
-            width: 100%;
-            padding: 10px;
-            border: solid 1px @select-color;
-            border-radius: 0;
-            -webkit-appearance: none;
-            font-size: 15px;
-            height: 1.5vh;
-        }
-    
-        &--header {
-            font-size: 1.25rem;
-            margin-bottom: 0.6rem;
-            font-weight: bold;
-        }
-    } 
+  }
 }
-
-
-
-
-

@@ -5,30 +5,29 @@ import QAList from '../../ui/components/QAList';
 import IQuestion from '../../interfaces/IQuestion';
 
 interface IState {
-  questions: IQuestion[]
+  questions: IQuestion[];
 }
 
-export default class QA extends React.Component<{},IState> {
-
-  constructor(state: IState) {
+export default class QA extends React.Component<{}, IState> {
+  public constructor(state: IState) {
     super(state);
-    this.state = {} as IState;
+    this.state = {
+      questions: [] as IQuestion[],
+    };
   }
 
-  componentDidMount(): void {
-    get('questions').then(res => {
-      console.log(res);
-      this.setState({
-        questions: res.data,
-      });
-    }).then(() => console.log(this.state.questions));
+  public componentDidMount(): void {
+    get('questions')
+      .then(res => {
+        console.log(res);
+        this.setState({
+          questions: res.data,
+        });
+      })
+      .then(() => console.log(this.state.questions));
   }
 
-  render(): React.ReactNode {
-    return (
-      <div>
-        {QAList(this.state.questions)}
-      </div>
-    );
+  public render(): React.ReactNode {
+    return <div>{QAList(this.state.questions)}</div>;
   }
 }

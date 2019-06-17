@@ -3,42 +3,27 @@ import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import '../../styles/QAForm.less';
 import { get, post } from '../../services/api-service';
-import Dropdown from 'react-dropdown';
+import Dropdown, { Option } from 'react-dropdown';
 
-
-interface IQAFormState {
-  courses: ICourse[]
-  grades: IGrade[]
+interface IState {
+  courses: ICourse[];
+  grades: IGrade[];
   formControls: {
-    email: {
-      value: ''
-    }
-    course: {
-      value: ''
-      label: ''
-    }
-    theme: {
-      value: ''
-      label: ''
-    }
-    question: {
-      value: ''
-    }
-    grade: {
-      value: ''
-      label: ''
-    }
-  }
+    email: Option;
+    course: Option;
+    theme: Option;
+    question: Option;
+    grade: Option;
+  };
 }
 
 interface IGrade {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
-
-export default class QAForm extends Component<{}, IQAFormState> {
-  constructor(state: IQAFormState) {
+export default class QAForm extends Component<{}, IState> {
+  public constructor(state: IState) {
     super(state);
     this.state = {
       courses: [] as ICourse[],
@@ -46,6 +31,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
       formControls: {
         email: {
           value: '',
+          label: '',
         },
         course: {
           value: '',
@@ -57,6 +43,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
         },
         question: {
           value: '',
+          label: '',
         },
         grade: {
           value: '',
@@ -66,27 +53,31 @@ export default class QAForm extends Component<{}, IQAFormState> {
     };
   }
 
-  componentDidMount(): void {
-    get('courses').then(res => {
-      this.setState({
-        courses: res.data,
-      });
-    }).catch(e => console.error(e.getMessage));
+  public componentDidMount(): void {
+    get('courses')
+      .then(res => {
+        this.setState({
+          courses: res.data,
+        });
+      })
+      .catch(e => console.error(e.getMessage));
 
-    get('grades').then(res => {
-      this.setState({
-        grades: res.data,
-      });
-    }).catch(e => console.error(e.getMessage));
+    get('grades')
+      .then(res => {
+        this.setState({
+          grades: res.data,
+        });
+      })
+      .catch(e => console.error(e.getMessage));
   }
 
-  handleSubmit(): void {
+  private handleSubmit(): void {
     const { formControls } = this.state;
-    const body = {
+    const body: IQuestion = {
       email: formControls.email.value,
-      grade: formControls.email.value,
-      course: formControls.email.value,
-      theme: formControls.email.value,
+      grade: Number(formControls.email.value),
+      course: Number(formControls.email.value),
+      theme: Number(formControls.email.value),
       question: formControls.email.value,
     };
     post('courses', body)
@@ -94,7 +85,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
       .catch(e => console.error(e.getMessage));
   }
 
-  handleChange = (event, type) => {
+  private handleChange = (event, type) => {
     const { formControls } = this.state;
     let label, value;
     if (type === 'email' || type === 'question') {
@@ -104,52 +95,54 @@ export default class QAForm extends Component<{}, IQAFormState> {
       label = event.label;
       value = event.value;
       formControls[type] = {
-        label, value,
+        label,
+        value,
       };
     }
     this.setState({ formControls });
   };
 
-  getCourseOptions(): any {
+  private getCourseOptions(): Option[] {
     return this.state.courses.map(course => {
       return {
-        value: course.id,
+        value: course.id.toString(),
         label: course.name,
       };
     });
   }
 
-  getThemeOptions(): any {
-    const chosenCourse = this.state.courses
-      .filter(course => course.name === this.state.formControls.course.label)[0];  // Will always only be one entry in array
+  private getThemeOptions(): Option[] {
+    const chosenCourse = this.state.courses.filter(
+      course => course.name === this.state.formControls.course.label,
+    )[0]; // Will always only be one entry in array
     if (chosenCourse) {
       return chosenCourse.themes.map(theme => {
         return {
-          value: theme.id,
+          value: theme.id.toString(),
           label: theme.name,
         };
       });
     } else return [];
   }
 
-  getGradeOptions(): any {
+  private getGradeOptions(): Option[] {
     return this.state.grades.map(grade => {
       return {
-        value: grade.id,
+        value: grade.id.toString(),
         label: grade.name,
       };
     });
   }
 
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
     const { formControls } = this.state;
     return (
       <div className={'container'}>
         <form className={'form'}>
-          <div className="form--input-container"> {/*input container start*/}
-            <label className={'form--label'}>
-              Tema:
-            </label>
+          <div className="form--input-container">
+            {' '}
+            {/*input container start*/}
+            <label className={'form--label'}>Tema:</label>
             <Dropdown
               placeholder={'Velg fag'}
               options={this.getCourseOptions()}
@@ -163,29 +156,23 @@ export default class QAForm extends Component<{}, IQAFormState> {
               value={formControls.theme.value && formControls.theme}
               onChange={event => this.handleChange(event, 'theme')}
             />
-            <label className={'form--label'}>
-              Klassetrinn:
-            </label>
-
+            <label className={'form--label'}>Klassetrinn:</label>
             <Dropdown
               placeholder={'Velg klassetrinn'}
               options={this.getGradeOptions()}
               value={formControls.grade.value && formControls.grade}
               onChange={event => this.handleChange(event, 'grade')}
             />
-
-            <label className="form--label">
-            </label>
+            <label className="form--label"></label>
             <textarea
-              placeholder={'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'}
+              placeholder={
+                'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
+              }
               className={'textarea'}
               value={formControls.question.value}
               onChange={event => this.handleChange(event, 'question')}
-            >
-              </textarea>
-            <label className={'form--label'}>
-              E-post:
-            </label>
+            />
+            <label className={'form--label'}>E-post:</label>
             <input
               className={'email'}
               value={formControls.email.value}
@@ -195,8 +182,11 @@ export default class QAForm extends Component<{}, IQAFormState> {
             />
           </div>
           {/*Input container end*/}
-          <input onSubmit={() => this.handleSubmit()} type="submit" value={'Send'}/>
-
+          <input
+            onSubmit={() => this.handleSubmit()}
+            type="submit"
+            value={'Send'}
+          />
         </form>
       </div>
     );
