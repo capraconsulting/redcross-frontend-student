@@ -41,15 +41,17 @@ class App extends Component<{}, AppProps> {
     const { time } = this.state;
     return (
       <div>
-        <Header isOpen={false}/>
-        <Router>
-          <Switch>
-            <Route path='/questions' exact component={QA}/>
-            <Route path='/questions/new' exact component={QAForm}/>
-            <Route path='/' exact component={LandingPage}/>
-            <Redirect to='/'/>
-          </Switch>
-        </Router>
+        <div className="base">
+          <Header isOpen={false} day={time.getDay()}/>
+          <Router>
+            <Switch>
+              <Route path='/questions' component={QA}/>
+              <Route path='/questions/new' exact component={QAForm}/>
+              <Route path='/' exact component={LandingPage}/>
+              <Redirect to='/'/>
+            </Switch>
+          </Router>
+        </div>
         <Footer/>
       </div>
     );

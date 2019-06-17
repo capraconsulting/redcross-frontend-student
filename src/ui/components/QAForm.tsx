@@ -95,7 +95,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
   }
 
   handleChange = (event, type) => {
-    const formControls = this.state.formControls;
+    const { formControls } = this.state;
     let label, value;
     if (type === 'email' || type === 'question') {
       value = event.target.value;
@@ -107,7 +107,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
         label, value,
       };
     }
-    this.setState({ formControls: formControls });
+    this.setState({ formControls });
   };
 
   getCourseOptions(): any {
@@ -142,6 +142,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
   }
 
   render(): React.ReactNode {
+    const { formControls } = this.state;
     return (
       <div className={'container'}>
         <form className={'form'}>
@@ -152,14 +153,14 @@ export default class QAForm extends Component<{}, IQAFormState> {
             <Dropdown
               placeholder={'Velg fag'}
               options={this.getCourseOptions()}
-              value={this.state.formControls.course.value && this.state.formControls.course}
+              value={formControls.course.value && formControls.course}
               onChange={event => this.handleChange(event, 'course')}
             />
             <Dropdown
-              disabled={!this.state.formControls.course.value}
+              disabled={!formControls.course.value}
               placeholder={'Velg undertema'}
               options={this.getThemeOptions()}
-              value={this.state.formControls.theme.value && this.state.formControls.theme}
+              value={formControls.theme.value && formControls.theme}
               onChange={event => this.handleChange(event, 'theme')}
             />
             <label className={'form--label'}>
@@ -169,7 +170,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
             <Dropdown
               placeholder={'Velg klassetrinn'}
               options={this.getGradeOptions()}
-              value={this.state.formControls.grade.value && this.state.formControls.grade}
+              value={formControls.grade.value && formControls.grade}
               onChange={event => this.handleChange(event, 'grade')}
             />
 
@@ -178,7 +179,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
             <textarea
               placeholder={'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'}
               className={'textarea'}
-              value={this.state.formControls.question.value}
+              value={formControls.question.value}
               onChange={event => this.handleChange(event, 'question')}
             >
               </textarea>
@@ -187,7 +188,7 @@ export default class QAForm extends Component<{}, IQAFormState> {
             </label>
             <input
               className={'email'}
-              value={this.state.formControls.email.value}
+              value={formControls.email.value}
               onChange={event => this.handleChange(event, 'email')}
               type="email"
               name={'email'}
