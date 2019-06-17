@@ -50,7 +50,7 @@ class App extends Component<{}, IState> {
           {/*<Header isOpen={false} day={time.getDay()} />*/}
           <Router>
             <Switch>
-              <Route path="/questions" component={QA} />
+              <Route path="/questions" exact component={QA} />
               <Route path="/questions/new" exact component={QAForm} />
               <Route path="/" exact component={LandingPage} />
               <Redirect to="/" />
