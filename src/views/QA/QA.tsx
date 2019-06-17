@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { get } from './services/api-service';
-import ItemList from './ui/components/ItemList';
-import IQuestion from './interfaces/IQuestion';
+import { get } from '../../services/api-service';
+import QAList from '../../ui/components/QAList';
+import IQuestion from '../../interfaces/IQuestion';
 
 interface IState {
   questions: IQuestion[]
@@ -12,9 +12,7 @@ export default class QA extends React.Component<{},IState> {
 
   constructor(state: IState) {
     super(state);
-    this.state = {
-      questions: []
-    };
+    this.state = {} as IState;
   }
 
   componentDidMount(): void {
@@ -28,7 +26,7 @@ export default class QA extends React.Component<{},IState> {
   render(): React.ReactNode {
     return (
       <div>
-        {ItemList(this.state.questions)}
+        {QAList(this.state.questions)}
       </div>
     );
   }

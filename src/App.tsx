@@ -10,7 +10,8 @@ import LandingPage from './views/LandingPage/LandingPage';
 // Global components
 import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
-import QA from './QA';
+import QA from './views/QA/QA';
+import QAForm from './ui/components/QAForm';
 
 
 //Global application types
@@ -21,19 +22,19 @@ type AppProps = {
 class App extends Component<{}, AppProps> {
   //Constructing state
   state = {
-    time: new Date()
-  }
+    time: new Date(),
+  };
 
   tick() {
     //Setting the date
     this.setState({
-      time: new Date()
-    })
+      time: new Date(),
+    });
   }
 
   componentDidMount() {
     //Setting the date every 10th second.
-    setInterval (() => this.tick(), 10 * 1000);
+    setInterval(() => this.tick(), 10 * 1000);
   }
 
   render() {
@@ -44,13 +45,14 @@ class App extends Component<{}, AppProps> {
           <Header isOpen={false} day={time.getDay()}/>
           <Router>
             <Switch>
-              <Route path='/questions' component={QA} />
-              <Route path='/' exact component={LandingPage} />
-              <Redirect to='/' />
+              <Route path='/questions' component={QA}/>
+              <Route path='/questions/new' exact component={QAForm}/>
+              <Route path='/' exact component={LandingPage}/>
+              <Redirect to='/'/>
             </Switch>
           </Router>
         </div>
-        <Footer />
+        <Footer/>
       </div>
     );
   }

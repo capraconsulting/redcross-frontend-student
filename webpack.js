@@ -83,7 +83,7 @@ module.exports = env => {
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css','.less'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.less'],
     },
     output: {
       filename: '[name].[contentHash].js',
