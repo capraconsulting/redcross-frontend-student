@@ -3,7 +3,7 @@ import '../../styles/Footer.less';
 
 const Footer: FunctionComponent = () => (
   <div className="footer">
-    <h1 className="footer--content">
+    <h1 className="footer--content" id="footer--content">
       Følg oss på{' '}
       <a
         className="footer-content-link"

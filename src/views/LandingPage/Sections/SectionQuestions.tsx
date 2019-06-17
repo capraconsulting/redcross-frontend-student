@@ -6,8 +6,8 @@ class SectionQuestions extends Component {
     return (
       <div className="container">
         <div className="container--header">Spørsmål og svar</div>
-        <p className="container--text">
-          Her kan du lete etter svar blant allerede stilte spørsmål, eller{' '}
+        <p className="container--text" id="container--text">
+          Her kan du lete etter svar blant allerede stilte spørsmål, eller
           <a
             href="http://www.digitalleksehjelp.no/sporsmal"
             className="container--text--colored"

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/Header.less';
+import getApplicationTitle from '../../services/header-service';
 
 interface IProps {
   isOpen: boolean;
@@ -10,7 +11,9 @@ export default function Header(props: IProps) {
   return (
     <div className="header">
       <a className="header--link" href="https://www.digitalleksehjelp.no/">
-        <span className="header--logo">Digital Leksehjelp</span>
+        <span className="header--logo" id="header--logo">
+          {getApplicationTitle('Digital Leksehjelp')}
+        </span>
         <span className="header--serviceStatusMessage">
           {!props.isOpen &&
             props.time.getDay() >= 5 &&
