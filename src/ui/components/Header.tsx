@@ -14,12 +14,12 @@ const Header: FunctionComponent<HeaderState> = ({isOpen, day = 1}) => (
       </span> 
       <span className="header--serviceStatusMessage">
         {!isOpen && day >= 5 ? " åpner mandag kl. 17:00" : ""}
-        {!isOpen && day < 5 ?" åpner kl. 17:00" : ""}
-        {isOpen ? " åpen":""}
+        {!isOpen && day < 5 ? " åpner kl. 17:00" : ""}
+        {isOpen ? " åpen" : ""}
       </span> 
     </a>
     <span>
-      <img className="header--rk_logo"src={require('../../assets/images/rk_logo.png')} />
+      <img className="header--rk_logo" src={require('../../assets/images/rk_logo.png')} />
     </span>
   </div>
 );
