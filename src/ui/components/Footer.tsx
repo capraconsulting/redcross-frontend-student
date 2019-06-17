@@ -1,22 +1,13 @@
 import React, { FunctionComponent } from 'react'; 
+import '../../styles/Footer.less';
 
 const Footer: FunctionComponent = () => (
-  <p>
-    Følg oss på <a href="https://www.facebook.com/digitalleksehjelp/">Facebook</a>
-  </p>
+  <div className="footer">
+    <h1 className="footer--content">
+      Følg oss på <a className="footer-content-link" href="https://www.facebook.com/digitalleksehjelp/">Facebook</a>
+    </h1>
+  </div>
 );
-
-const styles = {
-    footer: {
-        position: 'fixed',
-        left: 0, 
-        bottom: 0,
-        width: '100%',
-        backgroundColor: 'red',
-        color: 'white',
-        textAlign: 'center',
-    }
-}
 
 export default Footer;
 

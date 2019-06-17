@@ -1,0 +1,32 @@
+@import 'colors.less';
+
+.header {
+    height: 5rem;
+    margin-top: 1.4rem;
+    margin-bottom: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.24rem;
+
+    &--rk_logo {
+        height: 2.5rem;
+        vertical-align: middle;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    &--logo {
+        font-weight: bold;
+        white-space: nowrap;
+        color: @black;
+        cursor: pointer;
+    }
+
+    &--serviceStatusMessage {
+        color: @primary-color;
+        white-space: nowrap;
+    }
+    &--link {
+            text-decoration: none;
+    }
+}
