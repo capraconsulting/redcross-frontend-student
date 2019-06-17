@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import '../../styles/QAForm.less';
-import { get } from '../../services/api-service';
+import { get, post } from '../../services/api-service';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 
 
 interface IQAFormState {
-  question: IQuestion
   courses: ICourse[]
   grades: IGrade[]
   formControls: {
     email: {
       value: ''
-      label: ''
     }
     course: {
       value: ''
@@ -26,13 +23,8 @@ interface IQAFormState {
     }
     question: {
       value: ''
-      label: ''
     }
     grade: {
-      value: ''
-      label: ''
-    }
-    title: {
       value: ''
       label: ''
     }
@@ -49,13 +41,11 @@ export default class QAForm extends Component<{}, IQAFormState> {
   constructor(state: IQAFormState) {
     super(state);
     this.state = {
-      question: {} as IQuestion,
       courses: [] as ICourse[],
       grades: [] as IGrade[],
       formControls: {
         email: {
           value: '',
-          label: '',
         },
         course: {
           value: '',
@@ -67,13 +57,8 @@ export default class QAForm extends Component<{}, IQAFormState> {
         },
         question: {
           value: '',
-          label: '',
         },
         grade: {
-          value: '',
-          label: '',
-        },
-        title: {
           value: '',
           label: '',
         },
@@ -95,15 +80,33 @@ export default class QAForm extends Component<{}, IQAFormState> {
     }).catch(e => console.error(e.getMessage));
   }
 
-  changeHandler = (event, type) => {
-    const formControls = this.state.formControls;
-    const label = event.label;
-    const value = event.value;
-
-    formControls[type] = {
-      label, value,
+  handleSubmit(): void {
+    const { formControls } = this.state;
+    const body = {
+      email: formControls.email.value,
+      grade: formControls.email.value,
+      course: formControls.email.value,
+      theme: formControls.email.value,
+      question: formControls.email.value,
     };
+    post('courses', body)
+      .then(res => console.log(res.data))
+      .catch(e => console.error(e.getMessage));
+  }
 
+  handleChange = (event, type) => {
+    const formControls = this.state.formControls;
+    let label, value;
+    if (type === 'email' || type === 'question') {
+      value = event.target.value;
+      formControls[type] = { value };
+    } else {
+      label = event.label;
+      value = event.value;
+      formControls[type] = {
+        label, value,
+      };
+    }
     this.setState({ formControls: formControls });
   };
 
@@ -117,14 +120,14 @@ export default class QAForm extends Component<{}, IQAFormState> {
   }
 
   getThemeOptions(): any {
-    const chosenCourse =  this.state.courses
+    const chosenCourse = this.state.courses
       .filter(course => course.name === this.state.formControls.course.label)[0];  // Will always only be one entry in array
     if (chosenCourse) {
       return chosenCourse.themes.map(theme => {
         return {
           value: theme.id,
-          label: theme.name
-        }
+          label: theme.name,
+        };
       });
     } else return [];
   }
@@ -139,52 +142,60 @@ export default class QAForm extends Component<{}, IQAFormState> {
   }
 
   render(): React.ReactNode {
-    console.log(this.getThemeOptions());
     return (
       <div className={'container'}>
         <form className={'form'}>
           <div className="form--input-container"> {/*input container start*/}
             <label className={'form--label'}>
               Tema:
-              <Dropdown
-                placeholder={'Velg fag'}
-                options={this.getCourseOptions()}
-                value={this.state.formControls.course}
-                onChange={event => this.changeHandler(event, 'course')}
-              />
-              <Dropdown
-                placeholder={'Velg undertema'}
-                options={this.getThemeOptions()}
-                value={this.state.formControls.theme}
-                onChange={event => this.changeHandler(event, 'theme')}
-              />
             </label>
-            <label className={'form-label'}>
+            <Dropdown
+              placeholder={'Velg fag'}
+              options={this.getCourseOptions()}
+              value={this.state.formControls.course.value && this.state.formControls.course}
+              onChange={event => this.handleChange(event, 'course')}
+            />
+            <Dropdown
+              disabled={!this.state.formControls.course.value}
+              placeholder={'Velg undertema'}
+              options={this.getThemeOptions()}
+              value={this.state.formControls.theme.value && this.state.formControls.theme}
+              onChange={event => this.handleChange(event, 'theme')}
+            />
+            <label className={'form--label'}>
               Klassetrinn:
-              <Dropdown
-                placeholder={'Velg klassetrinn'}
-                options={this.getGradeOptions()}
-                value={this.state.formControls.grade}
-                onChange={event => this.changeHandler(event, 'grade')}
-              />
             </label>
 
-            <label className="form-label">
-    <textarea
-      value={this.state.question.question}
-      onChange={() => console.log('hei')}
-    >
+            <Dropdown
+              placeholder={'Velg klassetrinn'}
+              options={this.getGradeOptions()}
+              value={this.state.formControls.grade.value && this.state.formControls.grade}
+              onChange={event => this.handleChange(event, 'grade')}
+            />
 
-    </textarea>
+            <label className="form--label">
             </label>
-
-            <label className={'form-label'}>
+            <textarea
+              placeholder={'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'}
+              className={'textarea'}
+              value={this.state.formControls.question.value}
+              onChange={event => this.handleChange(event, 'question')}
+            >
+              </textarea>
+            <label className={'form--label'}>
               E-post:
-              <input type="email" name={'email'}/>
             </label>
+            <input
+              className={'email'}
+              value={this.state.formControls.email.value}
+              onChange={event => this.handleChange(event, 'email')}
+              type="email"
+              name={'email'}
+            />
           </div>
           {/*Input container end*/}
-          <input type="submit" value={'Send'}/>
+          <input onSubmit={() => this.handleSubmit()} type="submit" value={'Send'}/>
+
         </form>
       </div>
     );

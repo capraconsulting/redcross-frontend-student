@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'base';
 
 .container {
   margin-bottom: 20px;
@@ -27,17 +28,17 @@
   flex-direction: column;
 
   &--label {
-    display: initial;
+    display: block;
     max-width: initial;
-    margin-bottom: 0;
-    font-weight: normal;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-bottom: .5rem;
   }
 
   &--input-container {
-    padding: 0 20px 20px;
-
+    width: 95%;
     @media (min-width: 768px) {
-      padding: 0 40px 30px;
+      padding: 1.5rem 3rem 2rem;
     }
     background-color: @form-background-color;
   }
@@ -47,8 +48,7 @@
     display: block;
     width: 100%;
     margin: 0 auto;
-    font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
-    font-size: 18px;
+    font-size: 1.5rem;
     color: #60666d;
 
     @media (min-width: 768px) {
@@ -63,11 +63,6 @@
       width: 30%;
     }
   }
-}
-
-.form-label {
-  display: flex;
-  flex-direction: column;
 }
 
 
