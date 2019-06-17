@@ -47,32 +47,48 @@ module.exports = env => {
           use: 'url-loader',
         },
         {
-          test: /(?<!\.module)\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          test: /(?<!\.module)\.(css|less)$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
         },
         {
-          test: /\.module\.css$/,
+          test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
-            'style-loader',
+            'file-loader',
             {
-              loader: 'css-loader',
+              loader: 'image-webpack-loader',
               options: {
-                importLoaders: 1,
-                modules: true,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65,
+                },
+                // optipng.enabled: false will disable optipng
+                optipng: {
+                  enabled: false,
+                },
+                pngquant: {
+                  quality: '65-90',
+                  speed: 4,
+                },
+                gifsicle: {
+                  interlaced: false,
+                },
+                // the webp option will enable WEBP
+                webp: {
+                  quality: 75,
+                },
               },
             },
-            'postcss-loader',
           ],
         },
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.less'],
     },
     output: {
       filename: '[name].[contentHash].js',
       path: path.resolve(__dirname, 'build'),
+      publicPath: '/',
     },
     optimization: {
       splitChunks: {
@@ -106,6 +122,7 @@ module.exports = env => {
     devServer: {
       contentBase: './build',
       port: 3000,
+      historyApiFallback: true,
     },
   };
 };

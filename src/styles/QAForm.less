@@ -1,0 +1,66 @@
+@import 'colors';
+@import 'base';
+
+.container {
+  margin-bottom: 20px;
+  background-color: @form-background-color;
+
+  @media (min-width: 768px) {
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-bottom: 60px;
+  }
+
+  @media (min-width: 1366px) {
+    display: flex;
+
+    > * {
+      width: 50%;
+
+      &:not(:last-child) {
+        margin-right: 30px;
+      }
+    }
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &--label {
+    display: block;
+    max-width: initial;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
+  }
+
+  &--input-container {
+    width: 95%;
+    @media (min-width: 768px) {
+      padding: 1.5rem 3rem 2rem;
+    }
+  }
+
+  &--selector {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    color: #60666d;
+
+    @media (min-width: 768px) {
+      width: 70%;
+    }
+
+    @media (min-width: 992px) {
+      width: 50%;
+    }
+
+    @media (min-width: 1200px) {
+      width: 30%;
+    }
+  }
+}
