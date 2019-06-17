@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 
 // Styles
 import './styles/base.less';
@@ -13,50 +18,49 @@ import Footer from './ui/components/Footer';
 import QA from './views/QA/QA';
 import QAForm from './ui/components/QAForm';
 
-
-//Global application types
-type AppProps = {
-  time?: Date,
+interface IState {
+  time: Date;
+  isOpen: boolean;
 }
 
-class App extends Component<{}, AppProps> {
+class App extends Component<{}, IState> {
   //Constructing state
-  state = {
+  public readonly state: Readonly<IState> = {
     time: new Date(),
+    isOpen: false,
   };
 
-  tick() {
+  private tick() {
     //Setting the date
     this.setState({
       time: new Date(),
     });
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     //Setting the date every 10th second.
     setInterval(() => this.tick(), 10 * 1000);
   }
 
-  render() {
-    const { time } = this.state;
+  public render() {
     return (
       <div>
         <div className="base">
-          <Header isOpen={false} day={time.getDay()}/>
+          {Header(this.state)}
+          {/*<Header isOpen={false} day={time.getDay()} />*/}
           <Router>
             <Switch>
-              <Route path='/questions' component={QA}/>
-              <Route path='/questions/new' exact component={QAForm}/>
-              <Route path='/' exact component={LandingPage}/>
-              <Redirect to='/'/>
+              <Route path="/questions" exact component={QA} />
+              <Route path="/questions/new" exact component={QAForm} />
+              <Route path="/" exact component={LandingPage} />
+              <Redirect to="/" />
             </Switch>
           </Router>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
 }
 
 export default App;
-

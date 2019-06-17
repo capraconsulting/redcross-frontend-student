@@ -5,8 +5,8 @@ import SectionHero from './Sections/SectionHero';
 import '../../styles/LandingPage.less';
 
 class LandingPage extends Component {
-  render(){
-    return(
+  public render() {
+    return (
       <div className="content">
         <SectionHero />
         <SectionQuestions />
@@ -14,6 +14,5 @@ class LandingPage extends Component {
     );
   }
 }
-  
 
 export default LandingPage;

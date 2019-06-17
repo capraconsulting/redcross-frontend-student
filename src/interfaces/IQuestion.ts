@@ -1,10 +1,11 @@
 export default interface IQuestion {
   id?: number;
-  title: string;
+  title?: string;
+  email?: string;
   question: string;
   answer?: string;
-  grade: string;
+  grade: number;
   date?: string;
-  course: string;
-  theme?: string;
+  course: number;
+  theme: number;
 }

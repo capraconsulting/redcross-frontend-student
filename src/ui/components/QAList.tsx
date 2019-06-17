@@ -8,9 +8,11 @@ import {
   AccordionItemButton,
 } from 'react-accessible-accordion';
 import IQuestion from '../../interfaces/IQuestion';
+import { NorwegianDate } from '../../services/date-pipe-service';
 
 export default function QAList(questions: IQuestion[]) {
-  if (questions && questions.length > 0) { /*This array can be null (before we fetch it)*/
+  if (questions && questions.length > 0) {
+    /*This array can be null (before we fetch it)*/
     return (
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
@@ -19,7 +21,10 @@ export default function QAList(questions: IQuestion[]) {
               <AccordionItemHeading>
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
-                  <p>{question.course}, {question.grade}, {question.date}</p>
+                  <p>
+                    {question.course}, {question.grade},{' '}
+                    {NorwegianDate(question.date)}
+                  </p>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
@@ -28,11 +33,9 @@ export default function QAList(questions: IQuestion[]) {
                   {question.question}
                 </p>
 
-                <hr/>
+                <hr />
 
-                <p>
-                  {question.answer}
-                </p>
+                <p>{question.answer}</p>
               </AccordionItemPanel>
             </AccordionItem>
           );
@@ -46,5 +49,4 @@ export default function QAList(questions: IQuestion[]) {
       </div>
     );
   }
-
 }

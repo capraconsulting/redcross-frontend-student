@@ -59,7 +59,7 @@ module.exports = env => {
               options: {
                 mozjpeg: {
                   progressive: true,
-                  quality: 65
+                  quality: 65,
                 },
                 // optipng.enabled: false will disable optipng
                 optipng: {
@@ -67,16 +67,16 @@ module.exports = env => {
                 },
                 pngquant: {
                   quality: '65-90',
-                  speed: 4
+                  speed: 4,
                 },
                 gifsicle: {
                   interlaced: false,
                 },
                 // the webp option will enable WEBP
                 webp: {
-                  quality: 75
-                }
-              }
+                  quality: 75,
+                },
+              },
             },
           ],
         },
