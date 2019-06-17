@@ -17,6 +17,7 @@ export default class QA extends React.Component<{},IState> {
 
   componentDidMount(): void {
     get('questions').then(res => {
+      console.log(res);
       this.setState({
         questions: res.data,
       });
