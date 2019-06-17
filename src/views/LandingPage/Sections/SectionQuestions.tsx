@@ -8,8 +8,8 @@ class SectionQuestions extends Component {
         <div className="container--header">
           Spørsmål og svar
         </div>
-        <p className="container--text">
-          Her kan du lete etter svar blant allerede stilte spørsmål, eller <a href="http://www.digitalleksehjelp.no/sporsmal" className="container--text--colored"> stille et nytt spørsmål</a> hvis du ikke finner det du lurer på!
+        <p className="container--text" id="container--text">
+          Her kan du lete etter svar blant allerede stilte spørsmål, eller <a href="http://www.digitalleksehjelp.no/sporsmal" className="container--text--colored">stille et nytt spørsmål</a> hvis du ikke finner det du lurer på!
         </p>
         <form className="container--form">
           <div className="container--form--header">
