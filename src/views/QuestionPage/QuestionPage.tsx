@@ -15,6 +15,7 @@ import SectionQuestion from './Sections/SectionQuestion';
 import SectionAnswer from './Sections/SectionAnswer';
 import SectionMetadata from './Sections/SectionMetadata';
 import SectionServiceDescription from './Sections/SectionServiceDescription';
+import SectionFeedback from './Sections/SectionFeedback';
 
 interface IState {
   question: IQuestion;
@@ -47,13 +48,16 @@ export default class Question extends Component<IProps, IState> {
     return (
       <div className="content">
         {question && (
-          <div className="showAnswer">
-            <SectionMetadata date={question.date} course={question.course} />
-            <SectionQuestion
-              question={question.question}
-              grade={question.grade}
-            />
-            <SectionAnswer answer={question.answer} />
+          <div>
+            <div className="showAnswer">
+              <SectionMetadata date={question.date} course={question.course} />
+              <SectionQuestion
+                question={question.question}
+                grade={question.grade}
+              />
+              <SectionAnswer answer={question.answer} />
+            </div>
+            <SectionFeedback questionId={this.props.id} />
             <SectionServiceDescription />
           </div>
         )}
