@@ -14,6 +14,10 @@ class SectionQuestions extends Component {
           Hvis det tar lang tid å få videohjelp anbefaler vi å prøve vanlig chat
           i stedet. Det går ofte raskere!
         </div>
+        <img
+          className="hero--svg"
+          src={require('../../../assets/images/figure_1.svg')}
+        />
       </div>
     );
   }
