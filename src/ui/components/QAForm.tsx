@@ -97,7 +97,7 @@ export default class QAForm extends Component<{}, IState> {
   private handleChange = (event, type) => {
     const { formControls } = this.state;
     let label, value;
-    if (type === 'email' || type === 'question') {
+    if (type === 'userEmail' || type === 'question') {
       value = event.target.value;
       formControls[type] = { value };
     } else {
@@ -184,7 +184,7 @@ export default class QAForm extends Component<{}, IState> {
             <input
               className={'email'}
               value={formControls.userEmail.value}
-              onChange={event => this.handleChange(event, 'email')}
+              onChange={event => this.handleChange(event, 'userEmail')}
               type="email"
               name={'email'}
             />
