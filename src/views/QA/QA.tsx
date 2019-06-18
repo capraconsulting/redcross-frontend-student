@@ -4,10 +4,6 @@ import { getQuestionList } from '../../services/api-service';
 import QAList from '../../ui/components/QAList';
 import IQuestion from '../../interfaces/IQuestion';
 
-interface IState {
-  questions: IQuestion[];
-}
-
 export const QA = () => {
   const [questions, setQuestions] = React.useState([] as IQuestion[]);
 
