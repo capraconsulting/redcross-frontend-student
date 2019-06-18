@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:3000/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <title>Røde Kors - Digital Leksehjelp</title>
+  <style type="text/css">.base {
+  font-family: 'GT America', Arial, sans-serif;
+  margin-left: 2.2rem;
+  margin-right: 2.2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+@media (min-width: 768px) {
+  .base {
+    font-size: 20px;
+  }
+}
+/*Form*/
+.textarea,
+.email {
+  resize: none;
+  width: 95%;
+  padding: 1rem;
+  border: solid 1px #d1d1d1;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 1rem;
+}
+.textarea.error,
+.email.error {
+  border-color: red;
+}
+.textarea {
+  height: 8rem;
+}
+/*Dropdown*/
+.Dropdown-root {
+  position: relative;
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+}
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: default;
+  outline: none;
+  padding: 8px 52px 8px 10px;
+  transition: all 200ms ease;
+}
+.Dropdown-control:hover {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+.Dropdown-arrow {
+  border-color: #5f9f66 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  content: '';
+  display: block;
+  height: 0;
+  margin-top: -ceil(2.5);
+  position: absolute;
+  right: 10px;
+  top: 45%;
+  width: 0;
+}
+.is-open .Dropdown-arrow {
+  border-color: transparent transparent #5f9f66;
+  border-width: 0 5px 5px;
+}
+.Dropdown-menu {
+  background-color: white;
+  border: 1px solid #dfdad5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+}
+.Dropdown-menu .Dropdown-group > .Dropdown-title {
+  padding: 8px 10px;
+  color: #333333;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.Dropdown-option {
+  box-sizing: border-box;
+  color: #666666;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+}
+.Dropdown-option:last-child {
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.Dropdown-option:hover {
+  background-color: #5f9f66;
+  color: #333;
+}
+.Dropdown-option.is-selected {
+  background-color: #82c289;
+  color: #666666;
+}
+.Dropdown-noresults {
+  box-sizing: border-box;
+  color: #666666;
+  cursor: default;
+  display: block;
+  padding: 8px 10px;
+}
+/*Buttons*/
+input[type='submit'] {
+  height: 4rem;
+  width: 8rem;
+  border: none;
+  background-color: #82c289;
+  margin-top: 0.5rem;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+</style><style type="text/css">.container {
+  border: solid 1px #000000;
+  padding: 2rem;
+  margin: 2.8rem 1rem;
+}
+.container--header {
+  font-size: 2.5rem;
+  color: #333;
+}
+.container--text {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  color: #333;
+}
+.container--text--colored {
+  color: #82c289;
+  line-height: 1.5;
+}
+.container--form--input {
+  width: 100%;
+  padding: 0.5rem;
+  border: solid 1px #d1d1d1;
+  border-radius: 0;
+  -webkit-appearance: none;
+  font-size: 15px;
+  height: 1.5vh;
+}
+.container--form--header {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  font-weight: bold;
+}
+</style><style type="text/css">.hero {
+  color: #333;
+  border-bottom: solid 1px #000000;
+}
+.hero--description {
+  font-size: 2.5rem;
+}
+.hero--description--colored {
+  color: #8c52c7;
+}
+.hero--tips {
+  color: #8c52c7;
+  background-color: rgba(139, 81, 198, 0.1);
+  font-size: 0.9em;
+  padding: 0.8em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+}
+</style><style type="text/css">.content {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.content > * {
+  flex-shrink: 0;
+}
+</style><style type="text/css">.header {
+  height: 5rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.24rem;
+}
+.header--rk_logo {
+  height: 2.5rem;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+}
+.header--logo {
+  font-weight: bold;
+  white-space: nowrap;
+  color: #000000;
+  cursor: pointer;
+}
+.header--serviceStatusMessage {
+  color: #8c52c7;
+}
+.header--link {
+  text-decoration: none;
+}
+</style><style type="text/css">.footer {
+  height: 3rem;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #8c52c7;
+  color: #ffffff;
+}
+.footer--content {
+  font-size: 1.24rem;
+  padding: 0rem 3.7rem;
+  font-weight: normal;
+}
+.footer--content--link {
+  color: #ffffff;
+}
+</style><style type="text/css">.accordion {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+.accordion__item + .accordion__item {
+  border-top: 1px solid var(--primary-color);
+}
+.accordion__button {
+  background-color: var(--primary-color--very-light);
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: 0;
+}
+.accordion__button:hover {
+  background-color: var(--primary-color--light);
+}
+.accordion__button:before {
+  display: inline-block;
+  content: '';
+  height: 10px;
+  width: 10px;
+  margin-right: 12px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+.accordion__button[aria-expanded='true']::before,
+.accordion__button[aria-selected='true']::before {
+  transform: rotate(45deg);
+}
+.accordion__panel {
+  padding: 20px;
+  white-space: pre-wrap;
+  -webkit-animation: fadein 0.35s ease-in;
+          animation: fadein 0.35s ease-in;
+}
+p {
+  font-size: 0.8rem;
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+/* -------------------------------------------------- */
+/* ---------------- Animation part ------------------ */
+/* -------------------------------------------------- */
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style><style type="text/css">.base {
+  font-family: 'GT America', Arial, sans-serif;
+  margin-left: 2.2rem;
+  margin-right: 2.2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+@media (min-width: 768px) {
+  .base {
+    font-size: 20px;
+  }
+}
+/*Form*/
+.textarea,
+.email {
+  resize: none;
+  width: 95%;
+  padding: 1rem;
+  border: solid 1px #d1d1d1;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 1rem;
+}
+.textarea.error,
+.email.error {
+  border-color: red;
+}
+.textarea {
+  height: 8rem;
+}
+/*Dropdown*/
+.Dropdown-root {
+  position: relative;
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+}
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: default;
+  outline: none;
+  padding: 8px 52px 8px 10px;
+  transition: all 200ms ease;
+}
+.Dropdown-control:hover {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+.Dropdown-arrow {
+  border-color: #5f9f66 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  content: '';
+  display: block;
+  height: 0;
+  margin-top: -ceil(2.5);
+  position: absolute;
+  right: 10px;
+  top: 45%;
+  width: 0;
+}
+.is-open .Dropdown-arrow {
+  border-color: transparent transparent #5f9f66;
+  border-width: 0 5px 5px;
+}
+.Dropdown-menu {
+  background-color: white;
+  border: 1px solid #dfdad5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+}
+.Dropdown-menu .Dropdown-group > .Dropdown-title {
+  padding: 8px 10px;
+  color: #333333;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.Dropdown-option {
+  box-sizing: border-box;
+  color: #666666;
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+}
+.Dropdown-option:last-child {
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.Dropdown-option:hover {
+  background-color: #5f9f66;
+  color: #333;
+}
+.Dropdown-option.is-selected {
+  background-color: #82c289;
+  color: #666666;
+}
+.Dropdown-noresults {
+  box-sizing: border-box;
+  color: #666666;
+  cursor: default;
+  display: block;
+  padding: 8px 10px;
+}
+/*Buttons*/
+input[type='submit'] {
+  height: 4rem;
+  width: 8rem;
+  border: none;
+  background-color: #82c289;
+  margin-top: 0.5rem;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+.container {
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 768px) {
+  .container {
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-bottom: 60px;
+  }
+}
+@media (min-width: 1366px) {
+  .container {
+    display: flex;
+  }
+  .container > * {
+    width: 50%;
+  }
+  .container > *:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.form--label {
+  display: block;
+  max-width: initial;
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+}
+.form--input-container {
+  width: 95%;
+}
+@media (min-width: 768px) {
+  .form--input-container {
+    padding: 1.5rem 3rem 2rem;
+  }
+}
+.form--selector {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  color: #60666d;
+}
+@media (min-width: 768px) {
+  .form--selector {
+    width: 70%;
+  }
+}
+@media (min-width: 992px) {
+  .form--selector {
+    width: 50%;
+  }
+}
+@media (min-width: 1200px) {
+  .form--selector {
+    width: 30%;
+  }
+}
+</style><style type="text/css">.content {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1366px) {
+  .showAnswer {
+    margin-right: 120px;
+    margin-left: 120px;
+  }
+}
+.showAnswer p {
+  font-size: 1.2rem;
+  border-bottom: 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+  display: block;
+  -webkit-margin-before: 1em;
+          margin-block-start: 1em;
+  -webkit-margin-after: 1em;
+          margin-block-end: 1em;
+  -webkit-margin-start: 0px;
+          margin-inline-start: 0px;
+  -webkit-margin-end: 0px;
+          margin-inline-end: 0px;
+}
+.showAnswer--info {
+  font-weight: bold;
+  margin: 20px 0 10px;
+  margin-right: 120px;
+}
+.answer {
+  color: #333;
+  border-top: solid 1px #8b51c6;
+  position: relative;
+  margin-bottom: 30px;
+  max-width: 720px;
+}
+.answer--content {
+  font-size: 1.24rem;
+  padding: 0rem 3.7rem;
+  font-weight: normal;
+}
+.question {
+  color: #333;
+  border-top: solid 1px #82c289;
+  position: relative;
+  margin-bottom: 50px;
+  max-width: 720px;
+  line-height: 1.2;
+}
+@media (min-width: 768px) {
+  .question {
+    margin-bottom: 70px;
+  }
+}
+.serviceDescription {
+  color: #333;
+  font-size: 20px;
+  padding: 30px 0px;
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  .serviceDescription {
+    font-size: 40px;
+    padding: 40px 0px;
+  }
+}
+.serviceDescription--link {
+  color: #82c289;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.serviceDescription--svg {
+  width: 100%;
+  margin: 10px auto 20px;
+  display: block;
+  max-width: 335px;
+  border: 0;
+}
+</style></head>
+
+  <body>
+    <div id="root"><div><div class="base"><div class="header"><a class="header--link" href="http://localhost:3000/"><span class="header--logo" id="header--logo">Digital Leksehjelp</span><span class="header--serviceStatusMessage"> åpner kl. 17:00</span></a><span><img class="header--rk_logo" src="./_html_files/cdbb4116ed2e45e2f4efd73da6166d9c.png"></span></div><div class="content"><div class="hero"><div class="hero--description"><span class="hero--description--colored">Gratis, trygt </span> og <span class="hero--description--colored">anonymt</span> for deg på ungdomsskolen og videregående.</div><div class="hero--tips" id="hero--tips">Hvis det tar lang tid å få videohjelp anbefaler vi å prøve vanlig chat i stedet. Det går ofte raskere!</div></div><div class="container"><div class="container--header">Spørsmål og svar</div><p class="container--text" id="container--text">Her kan du lete etter svar blant allerede stilte spørsmål, eller<a href="http://www.digitalleksehjelp.no/sporsmal" class="container--text--colored"> stille et nytt spørsmål</a> hvis du ikke finner det du lurer på!</p><form class="container--form"><div class="container--form--header">Søk etter spørsmål</div><form class="container--form--input"></form></form></div></div></div><div class="footer"><h1 class="footer--content" id="footer--content">Følg oss på <a class="footer--content--link" href="https://www.facebook.com/digitalleksehjelp/">Facebook</a></h1></div></div></div>
+  <script type="text/javascript" src="./_html_files/vendors-main.1adf973fe628526f6cf6.js"></script><script type="text/javascript" src="./_html_files/main.f94415ffa92c86f09fc2.js"></script>
+
+</body></html>

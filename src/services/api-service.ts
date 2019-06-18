@@ -19,3 +19,11 @@ export function post(url: string, body) {
     .then(res => res)
     .catch(error => error);
 }
+
+export async function getQuestion(url: string) {
+  try {
+    return await api.get(`${url}`);
+  } catch (error) {
+    return error;
+  }
+}

@@ -2,8 +2,14 @@
 
 .base {
   font-family: 'GT America', Arial, sans-serif;
-  margin-left: 3.2rem;
-  margin-right: 3.2rem;
+  margin-left: 2.2rem;
+  margin-right: 2.2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 /*Form*/
@@ -130,7 +136,7 @@ input[type='submit'] {
   width: 8rem;
   border: none;
   background-color: @secondary-color;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   color: white;
   font-size: 20px;
   text-align: center;
