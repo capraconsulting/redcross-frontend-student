@@ -4,28 +4,10 @@
   font-family: 'GT America', Arial, sans-serif;
   margin-left: 3.2rem;
   margin-right: 3.2rem;
-}
 
-/*Form*/
-
-.textarea,
-.email {
-  resize: none;
-  width: 95%;
-  padding: 1rem;
-  border: solid 1px @input-border-color;
-  border-radius: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  font-size: 1rem;
-
-  &.error {
-    border-color: @error-color;
+  @media (max-width: 768px) {
+    margin: 0;
   }
-}
-
-.textarea {
-  height: 8rem;
 }
 
 /*Dropdown*/
@@ -125,13 +107,16 @@
 }
 
 /*Buttons*/
-input[type='submit'] {
+.btn {
   height: 4rem;
   width: 8rem;
   border: none;
-  background-color: @secondary-color;
-  margin-top: .5rem;
   color: white;
   font-size: 20px;
   text-align: center;
+  margin: 2rem 0 auto;
+
+  &-submit {
+    background-color: @secondary-color;
+  }
 }
