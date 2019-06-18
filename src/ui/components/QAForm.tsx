@@ -75,6 +75,7 @@ export default class QAForm extends Component<{}, IState> {
       course: Number(formControls.course.value),
       theme: Number(formControls.theme.value),
       question: formControls.question.value,
+      anon: false
     };
     postQuestion(question)
       .then(res => console.log(res.data))
