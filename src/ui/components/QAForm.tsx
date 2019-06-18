@@ -172,7 +172,6 @@ export default class QAForm extends Component<{}, IState> {
               value={formControls.grade.value && formControls.grade}
               onChange={event => this.handleChange(event, 'grade')}
             />
-            <label className="form--label"></label>
             <textarea
               placeholder={
                 'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -191,14 +190,13 @@ export default class QAForm extends Component<{}, IState> {
             />
             <div className={'anon'}>
               <label>
+                <input
+                  type="checkbox"
+                  checked={formControls.anon}
+                  onChange={() => this.toggleAnon()}
+                />
                 Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
               </label>
-              <input
-                type="checkbox"
-                className={'anon--check'}
-                checked={formControls.anon}
-                onChange={() => this.toggleAnon()}
-              />
             </div>
           </div>
           {/*Input container end*/}
