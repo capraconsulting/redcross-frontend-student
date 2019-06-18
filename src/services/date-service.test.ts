@@ -1,4 +1,4 @@
-import { NorwegianDate } from '../src/services/date-service';
+import { NorwegianDate } from './date-service';
 
 const dateformat = {
   in: '2019-12-06 00:00:00.0',
