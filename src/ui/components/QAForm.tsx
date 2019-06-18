@@ -3,7 +3,11 @@ import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import IGrade from '../../interfaces/IGrade';
 import '../../styles/QAForm.less';
-import { postQuestion, getGradeList, getCourseList } from '../../services/api-service';
+import {
+  postQuestion,
+  getGradeList,
+  getCourseList,
+} from '../../services/api-service';
 import Dropdown, { Option } from 'react-dropdown';
 
 interface IState {
@@ -15,6 +19,7 @@ interface IState {
     theme: Option;
     question: Option;
     grade: Option;
+    anon: boolean;
   };
 }
 
@@ -45,6 +50,7 @@ export default class QAForm extends Component<{}, IState> {
           value: '',
           label: '',
         },
+        anon: true,
       },
     };
   }
@@ -75,12 +81,18 @@ export default class QAForm extends Component<{}, IState> {
       course: Number(formControls.course.value),
       theme: Number(formControls.theme.value),
       question: formControls.question.value,
-      anon: false
+      anon: formControls.anon,
     };
     postQuestion(question)
       .then(res => console.log(res.data))
       .catch(e => console.error(e.getMessage));
   }
+
+  private toggleAnon = () => {
+    const { formControls } = this.state;
+    formControls.anon = !formControls.anon;
+    this.setState({ formControls });
+  };
 
   private handleChange = (event, type) => {
     const { formControls } = this.state;
@@ -177,6 +189,17 @@ export default class QAForm extends Component<{}, IState> {
               type="email"
               name={'email'}
             />
+            <div className={'anon'}>
+              <label>
+                Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
+              </label>
+              <input
+                type="checkbox"
+                className={'anon--check'}
+                checked={formControls.anon}
+                onChange={() => this.toggleAnon()}
+              />
+            </div>
           </div>
           {/*Input container end*/}
           <button
