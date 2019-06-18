@@ -14,7 +14,7 @@ export default function SectionQuestion(props: IProps) {
         {' '}
         {'Spørmsålet er stilt av en elev i ' + grade + '.'}
       </p>
-      {question}
+      <p id="singleQuestion">{question}</p>
     </div>
   );
 }
