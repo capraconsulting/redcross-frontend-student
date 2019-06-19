@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/SectionHero.less';
+import '../../../styles/LandingPage.less';
 
 export const SectionHero = () => {
   return (

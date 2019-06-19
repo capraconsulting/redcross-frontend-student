@@ -12,6 +12,8 @@ import {
 import LandingPage from './views/LandingPage/LandingPage';
 import QA from './views/QA/QA';
 import Question from './views/QuestionPage/QuestionPage';
+import Leksehjelp from './views/Leksehjelp/LeksehjelpPage';
+import Mestring from './views/Mestring/MestringPage';
 import QAForm from './ui/components/QAForm';
 
 export const AppRouter = () => {
@@ -24,6 +26,8 @@ export const AppRouter = () => {
           path="/questions/:id"
           render={({ match }) => <Question questionId={match.params.id} />}
         />
+        <Route path="/leksehjelp" exact component={Leksehjelp} />
+        <Route path="/mestring" exact component={Mestring} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/SectionQuestions.less';
+import '../../../styles/LandingPage.less';
 
 const SectionQuestions = () => {
   return (
