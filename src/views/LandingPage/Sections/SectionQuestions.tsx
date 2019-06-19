@@ -7,11 +7,12 @@ class SectionQuestions extends Component {
       <div className="sectioncontainer">
         <div className="sectioncontainer--header">Spørsmål og svar</div>
         <p className="sectioncontainer--text" id="container--text">
-          Her kan du lete etter svar blant allerede stilte spørsmål, eller
-          <a
-            href="http://www.digitalleksehjelp.no/sporsmal"
-            className="sectioncontainer--text--colored"
-          >
+          Her kan du lete etter svar blant{' '}
+          <a href="/questions" className="sectioncontainer--text--colored">
+            allerede stilte spørsmål
+          </a>
+          , eller
+          <a href="questions/new" className="sectioncontainer--text--colored">
             {' '}
             stille et nytt spørsmål
           </a>{' '}
