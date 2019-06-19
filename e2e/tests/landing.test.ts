@@ -32,6 +32,7 @@ test('Check header', async t => {
 });
 
 //Test hero section text value
+/** 
 test('Check QA description', async t => {
   await t
     .expect(landingPage.getText('QA'))
@@ -39,6 +40,7 @@ test('Check QA description', async t => {
       'Her kan du lete etter svar blant allerede stilte spørsmål, eller stille et nytt spørsmål hvis du ikke finner det du lurer på!',
     );
 });
+*/
 
 //Test footer text value
 test('Check footer', async t => {
