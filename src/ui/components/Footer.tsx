@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import '../../styles/Footer.less';
 
-const Footer: FunctionComponent = () => (
+const Footer = () => (
   <div className="footer">
     <h1 className="footer--content" id="footer--content">
       Følg oss på{' '}

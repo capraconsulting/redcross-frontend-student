@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../styles/QuestionPage.less';
 
-export default function SectionServiceDescription({}) {
+export const SectionServiceDescription = () => {
   return (
     <div className="serviceDescription">
       <div>
@@ -21,4 +21,6 @@ export default function SectionServiceDescription({}) {
       />
     </div>
   );
-}
+};
+
+export default SectionServiceDescription;

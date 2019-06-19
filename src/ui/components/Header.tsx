@@ -7,8 +7,8 @@ interface IProps {
   time: Date;
 }
 
-export default function Header(props: IProps) {
-  const { isOpen, time } = props;
+export const Header = (props: IProps) => {
+  let { isOpen, time } = props;
   return (
     <div className="header">
       <a className="header--link" href="/">
@@ -22,11 +22,15 @@ export default function Header(props: IProps) {
         </span>
       </a>
       <span>
-        <img
-          className="header--rk_logo"
-          src={require('../../assets/images/rk_logo.png')}
-        />
+        <a href="https://www.rodekors.no/">
+          <img
+            className="header--rk_logo"
+            src={require('../../assets/images/rk_logo.png')}
+          />
+        </a>
       </span>
     </div>
   );
-}
+};
+
+export default Header;
