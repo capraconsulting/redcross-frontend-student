@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import IGrade from '../../interfaces/IGrade';
