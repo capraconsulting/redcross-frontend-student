@@ -17,6 +17,7 @@ import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
 import QA from './views/QA/QA';
 import QAForm from './ui/components/QAForm';
+import Question from './views/QuestionPage/QuestionPage';
 
 interface IState {
   time: Date;
@@ -52,6 +53,10 @@ class App extends Component<{}, IState> {
             <Switch>
               <Route path="/questions" exact component={QA} />
               <Route path="/questions/new" exact component={QAForm} />
+              <Route
+                path="/questions/:id"
+                render={({ match }) => <Question id={match.params.id} />}
+              />
               <Route path="/" exact component={LandingPage} />
               <Redirect to="/" />
             </Switch>

@@ -43,10 +43,6 @@ module.exports = env => {
           loader: 'source-map-loader',
         },
         {
-          test: /\.svg$/i,
-          use: 'url-loader',
-        },
-        {
           test: /(?<!\.module)\.(css|less)$/,
           use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
         },

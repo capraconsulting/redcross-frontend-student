@@ -6,7 +6,7 @@ const Footer: FunctionComponent = () => (
     <h1 className="footer--content" id="footer--content">
       Følg oss på{' '}
       <a
-        className="footer-content-link"
+        className="footer--content--link"
         href="https://www.facebook.com/digitalleksehjelp/"
       >
         Facebook
