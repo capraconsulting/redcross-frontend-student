@@ -5,7 +5,7 @@ interface IProps {
   answer?: string;
 }
 
-export default function SectionAnswer(props: IProps) {
+export const SectionAnswer = (props: IProps) => {
   const { answer } = props;
   return (
     <div className="answer">
@@ -15,4 +15,6 @@ export default function SectionAnswer(props: IProps) {
       {answer}
     </div>
   );
-}
+};
+
+export default SectionAnswer;

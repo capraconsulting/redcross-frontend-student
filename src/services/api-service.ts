@@ -36,10 +36,9 @@ export function postQuestion(question) {
     .catch(e => console.error(e.getMessage));
 }
 
-export async function getQuestion(url: string) {
-  try {
-    return await api.get(`${url}`);
-  } catch (error) {
-    return error;
-  }
+export function getQuestion(url: string) {
+  return api
+    .get(`${url}`)
+    .then(res => res)
+    .catch(err => err);
 }
