@@ -57,7 +57,7 @@ export default class Question extends Component<IProps, IState> {
               />
               <SectionAnswer answer={question.answer} />
             </div>
-            <SectionFeedback questionId={this.props.id} />
+            <SectionFeedback questionId={parseInt(this.props.id)} />
             <SectionServiceDescription />
           </div>
         )}

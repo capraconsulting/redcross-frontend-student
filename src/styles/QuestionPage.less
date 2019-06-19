@@ -36,7 +36,7 @@
 
 .answer {
   color: @hero-black;
-  border-top: solid 1px #8b51c6;
+  border-top: solid 1px @primary-color;
   position: relative;
   margin-bottom: 30px;
   max-width: 720px;
@@ -74,7 +74,7 @@
   }
 
   &--link {
-    color: #82c289;
+    color: @secondary-color;
     text-decoration: underline;
     background-color: transparent;
   }
@@ -90,7 +90,7 @@
 
 .feedback {
   padding: 0 20px 20px;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: @form-background-color;
   display: block;
   max-width: 760px;
 
@@ -121,8 +121,8 @@
     &--button {
       align-self: flex-end;
       margin-top: 10px;
-      --primary-color: white;
-      --secondary-color: #82c289;
+      --primary-color: @white;
+      --secondary-color: @secondary-color;
       color: var(--primary-color);
       background-color: var(--secondary-color);
       border: none;
@@ -131,7 +131,7 @@
       font-size: 15px;
 
       .disabled {
-        --secondary-color: #d1d1d1;
+        --secondary-color: @disabled-color;
         cursor: default;
       }
 

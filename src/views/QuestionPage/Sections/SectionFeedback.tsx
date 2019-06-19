@@ -6,7 +6,7 @@ interface IState {
 }
 
 interface IProps {
-  questionId: string;
+  questionId: number;
 }
 
 export default class Question extends Component<IProps, IState> {
