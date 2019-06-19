@@ -55,7 +55,9 @@ class App extends Component<{}, IState> {
               <Route path="/questions/new" exact component={QAForm} />
               <Route
                 path="/questions/:id"
-                render={({ match }) => <Question id={match.params.id} />}
+                render={({ match }) => (
+                  <Question questionId={match.params.id} />
+                )}
               />
               <Route path="/" exact component={LandingPage} />
               <Redirect to="/" />

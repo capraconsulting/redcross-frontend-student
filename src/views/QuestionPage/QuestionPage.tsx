@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 // Styles
@@ -24,45 +24,38 @@ interface IState {
 }
 
 interface IProps {
-  id: string;
+  questionId: string;
 }
 
-export default class Question extends Component<IProps, IState> {
-  public constructor(props: IProps, state: IState) {
-    super(props, state);
-    this.state = state;
-  }
+export const Question = (props: IProps, state: IState) => {
+  const [question, setQuestion] = useState(state.question as IQuestion);
+  const [error, setError] = useState(state.error);
 
-  public componentDidMount() {
-    getQuestion(`questions/${this.props.id}`).then(res => {
-      res.data
-        ? this.setState({
-            question: res.data,
-          })
-        : this.setState({ error: res });
+  React.useEffect(() => {
+    getQuestion(`questions/${props.questionId}`).then(res => {
+      res.data ? setQuestion(res.data) : setError(res);
     });
-  }
+  });
 
-  public render() {
-    let { question, error } = this.state;
-    return (
-      <div className="content">
-        {question && (
-          <div>
-            <div className="showAnswer">
-              <SectionMetadata date={question.date} course={question.course} />
-              <SectionQuestion
-                question={question.question}
-                grade={question.grade}
-              />
-              <SectionAnswer answer={question.answer} />
-            </div>
-            <SectionFeedback questionId={parseInt(this.props.id)} />
-            <SectionServiceDescription />
+  return (
+    <div className="content">
+      {question && (
+        <div>
+          <div className="showAnswer">
+            <SectionMetadata date={question.date} course={question.course} />
+            <SectionQuestion
+              question={question.question}
+              grade={question.grade}
+            />
+            <SectionAnswer answer={question.answer} />
           </div>
-        )}
-        {error && <Redirect to="/questions" />}
-      </div>
-    );
-  }
-}
+          <SectionFeedback questionId={parseInt(props.questionId)} />
+          <SectionServiceDescription />
+        </div>
+      )}
+      {error && <Redirect to="/questions" />}
+    </div>
+  );
+};
+
+export default Question;
