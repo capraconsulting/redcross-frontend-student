@@ -11,21 +11,21 @@ export function getQuestionList(): Promise<IQuestion[]> {
   return api
     .get('questions')
     .then(res => res.data)
-    .catch(err => err);
+    .catch(e => console.error(e.getMessage));
 }
 
 export function getGradeList(): Promise<IGrade[]> {
   return api
     .get('grades')
     .then(res => res.data)
-    .catch(err => err);
+    .catch(e => console.error(e.getMessage));
 }
 
 export function getCourseList(): Promise<ICourse[]> {
   return api
     .get('courses')
     .then(res => res.data)
-    .catch(err => err);
+    .catch(e => console.error(e.getMessage));
 }
 
 export function postQuestion(question) {
@@ -33,5 +33,5 @@ export function postQuestion(question) {
   return api
     .post('questions', question)
     .then(res => res)
-    .catch(err => err);
+    .catch(e => console.error(e.getMessage));
 }

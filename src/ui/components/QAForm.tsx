@@ -56,21 +56,17 @@ export default class QAForm extends Component<{}, IState> {
   }
 
   public componentDidMount(): void {
-    getCourseList()
-      .then(res => {
-        this.setState({
-          courses: res,
-        });
-      })
-      .catch(e => console.error(e.getMessage));
+    getCourseList().then(courses => {
+      this.setState({
+        courses,
+      });
+    });
 
-    getGradeList()
-      .then(res => {
-        this.setState({
-          grades: res,
-        });
-      })
-      .catch(e => console.error(e.getMessage));
+    getGradeList().then(res => {
+      this.setState({
+        grades: res,
+      });
+    });
   }
 
   private handleSubmit(): void {
@@ -83,9 +79,7 @@ export default class QAForm extends Component<{}, IState> {
       question: formControls.question.value,
       anon: formControls.anon,
     };
-    postQuestion(question)
-      .then(res => console.log(res.data))
-      .catch(e => console.error(e.getMessage));
+    postQuestion(question).then(res => console.log(res));
   }
 
   private toggleAnon = () => {
