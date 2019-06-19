@@ -11,13 +11,13 @@ import './styles/base.less';
 
 // Pages
 import LandingPage from './views/LandingPage/LandingPage';
+import QA from './views/QA/QA';
+import Question from './views/QuestionPage/QuestionPage';
 
 // Global components
 import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
-import QA from './views/QA/QA';
 import QAForm from './ui/components/QAForm';
-import Question from './views/QuestionPage/QuestionPage';
 
 interface IState {
   time: Date;
