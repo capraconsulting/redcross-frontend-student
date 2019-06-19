@@ -1,33 +1,17 @@
 import * as React from 'react';
 
-import { get } from '../../services/api-service';
+import { getQuestionList } from '../../services/api-service';
 import QAList from '../../ui/components/QAList';
 import IQuestion from '../../interfaces/IQuestion';
 
-interface IState {
-  questions: IQuestion[];
-}
+export const QA = () => {
+  const [questions, setQuestions] = React.useState([] as IQuestion[]);
 
-export default class QA extends React.Component<{}, IState> {
-  public constructor(state: IState) {
-    super(state);
-    this.state = {
-      questions: [] as IQuestion[],
-    };
-  }
+  React.useEffect(() => {
+    getQuestionList().then(setQuestions);
+  });
 
-  public componentDidMount(): void {
-    get('questions')
-      .then(res => {
-        console.log(res);
-        this.setState({
-          questions: res.data,
-        });
-      })
-      .then(() => console.log(this.state.questions));
-  }
+  return <div>{questions && QAList(questions)}</div>;
+};
 
-  public render(): React.ReactNode {
-    return <div>{QAList(this.state.questions)}</div>;
-  }
-}
+export default QA;

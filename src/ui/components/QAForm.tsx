@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
+import IGrade from '../../interfaces/IGrade';
 import '../../styles/QAForm.less';
-import { get, post } from '../../services/api-service';
+import {
+  postQuestion,
+  getGradeList,
+  getCourseList,
+} from '../../services/api-service';
 import Dropdown, { Option } from 'react-dropdown';
 
 interface IState {
   courses: ICourse[];
   grades: IGrade[];
   formControls: {
-    email: Option;
+    userEmail: Option;
     course: Option;
     theme: Option;
     question: Option;
     grade: Option;
+    anon: boolean;
   };
-}
-
-interface IGrade {
-  id: number;
-  name: string;
 }
 
 export default class QAForm extends Component<{}, IState> {
@@ -29,7 +30,7 @@ export default class QAForm extends Component<{}, IState> {
       courses: [] as ICourse[],
       grades: [] as IGrade[],
       formControls: {
-        email: {
+        userEmail: {
           value: '',
           label: '',
         },
@@ -49,23 +50,24 @@ export default class QAForm extends Component<{}, IState> {
           value: '',
           label: '',
         },
+        anon: true,
       },
     };
   }
 
   public componentDidMount(): void {
-    get('courses')
+    getCourseList()
       .then(res => {
         this.setState({
-          courses: res.data,
+          courses: res,
         });
       })
       .catch(e => console.error(e.getMessage));
 
-    get('grades')
+    getGradeList()
       .then(res => {
         this.setState({
-          grades: res.data,
+          grades: res,
         });
       })
       .catch(e => console.error(e.getMessage));
@@ -73,22 +75,29 @@ export default class QAForm extends Component<{}, IState> {
 
   private handleSubmit(): void {
     const { formControls } = this.state;
-    const body: IQuestion = {
-      email: formControls.email.value,
-      grade: Number(formControls.email.value),
-      course: Number(formControls.email.value),
-      theme: Number(formControls.email.value),
-      question: formControls.email.value,
+    const question: IQuestion = {
+      userEmail: formControls.userEmail.value,
+      grade: Number(formControls.grade.value),
+      course: Number(formControls.course.value),
+      theme: Number(formControls.theme.value),
+      question: formControls.question.value,
+      anon: formControls.anon,
     };
-    post('courses', body)
+    postQuestion(question)
       .then(res => console.log(res.data))
       .catch(e => console.error(e.getMessage));
   }
 
+  private toggleAnon = () => {
+    const { formControls } = this.state;
+    formControls.anon = !formControls.anon;
+    this.setState({ formControls });
+  };
+
   private handleChange = (event, type) => {
     const { formControls } = this.state;
     let label, value;
-    if (type === 'email' || type === 'question') {
+    if (type === 'userEmail' || type === 'question') {
       value = event.target.value;
       formControls[type] = { value };
     } else {
@@ -138,7 +147,7 @@ export default class QAForm extends Component<{}, IState> {
     const { formControls } = this.state;
     return (
       <div className={'container'}>
-        <form className={'form'}>
+        <form className={'form'} onSubmit={this.handleSubmit}>
           <div className="form--input-container">
             {' '}
             {/*input container start*/}
@@ -163,7 +172,6 @@ export default class QAForm extends Component<{}, IState> {
               value={formControls.grade.value && formControls.grade}
               onChange={event => this.handleChange(event, 'grade')}
             />
-            <label className="form--label"></label>
             <textarea
               placeholder={
                 'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -175,18 +183,30 @@ export default class QAForm extends Component<{}, IState> {
             <label className={'form--label'}>E-post:</label>
             <input
               className={'email'}
-              value={formControls.email.value}
-              onChange={event => this.handleChange(event, 'email')}
+              value={formControls.userEmail.value}
+              onChange={event => this.handleChange(event, 'userEmail')}
               type="email"
               name={'email'}
             />
+            <div className={'anon'}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={formControls.anon}
+                  onChange={() => this.toggleAnon()}
+                />
+                Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
+              </label>
+            </div>
           </div>
           {/*Input container end*/}
-          <input
-            onSubmit={() => this.handleSubmit()}
-            type="submit"
-            value={'Send'}
-          />
+          <button
+            onClick={() => this.handleSubmit()}
+            className={'btn btn-submit'}
+            type={'button'}
+          >
+            Send
+          </button>
         </form>
       </div>
     );

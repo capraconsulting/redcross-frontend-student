@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import '../../../styles/QuestionPage.less';
 
-import { post } from '../../../services/api-service';
-
 interface IState {
   feedback: string;
 }
@@ -24,7 +22,6 @@ export default class Question extends Component<IProps, IState> {
       questionId,
       feedback,
     };
-    console.log(body);
     /** post('feedback', body)
       .then(res => console.log(res.data))
       .catch(e => console.error(e.getMessage));

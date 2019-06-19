@@ -11,6 +11,11 @@
     margin-bottom: 60px;
   }
 
+  @media (max-width: 768px) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
   @media (min-width: 1366px) {
     display: flex;
 
@@ -37,9 +42,9 @@
   }
 
   &--input-container {
-    width: 95%;
+    width: 100%;
     @media (min-width: 768px) {
-      padding: 1.5rem 3rem 2rem;
+      padding: 1.5rem 0 2rem;
     }
   }
 
@@ -63,4 +68,34 @@
       width: 30%;
     }
   }
+}
+
+.anon {
+  margin-top: 1rem;
+  > input {
+    float: left;
+    margin-right: 0.5rem;
+  }
+}
+
+.textarea,
+.email {
+  resize: none;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: solid 1px @input-border-color;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+
+  &.error {
+    border-color: @error-color;
+  }
+}
+
+.textarea {
+  height: 8rem;
 }
