@@ -27,7 +27,7 @@ interface IProps {
   questionId: string;
 }
 
-export const Question = (props: IProps, state: IState) => {
+export const QuestionPage = (props: IProps, state: IState) => {
   const [question, setQuestion] = useState(state.question as IQuestion);
   const [error, setError] = useState(state.error);
 
@@ -59,4 +59,4 @@ export const Question = (props: IProps, state: IState) => {
   );
 };
 
-export default Question;
+export default QuestionPage;

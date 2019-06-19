@@ -6,7 +6,9 @@ interface IProps {
   date?: string;
 }
 
-export default function SectionMetadata(props: IProps) {
+export const SectionMetadata = (props: IProps) => {
   const { course, date } = props;
   return <div className="metadata">{course + ', ' + date}</div>;
-}
+};
+
+export default SectionMetadata;

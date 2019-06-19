@@ -7,8 +7,8 @@ interface IProps {
   time: Date;
 }
 
-export default function Header(props: IProps) {
-  const { isOpen, time } = props;
+export const Header = (props: IProps) => {
+  let { isOpen, time } = props;
   return (
     <div className="header">
       <a className="header--link" href="/">
@@ -31,4 +31,6 @@ export default function Header(props: IProps) {
       </span>
     </div>
   );
-}
+};
+
+export default Header;
