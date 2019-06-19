@@ -1,10 +1,10 @@
 interface ITheme {
   id: number;
-  name: string;
+  theme: string;
 }
 
 export default interface ICourse {
   id: number;
-  name: string;
+  course: string;
   themes: ITheme[];
 }

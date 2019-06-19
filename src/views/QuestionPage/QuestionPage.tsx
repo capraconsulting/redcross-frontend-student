@@ -43,7 +43,10 @@ export const QuestionPage = (props: IProps, state: IState) => {
         <div>
           <div className="showAnswer">
             <h1 className="showAnswer--header">{question.title}</h1>
-            <SectionMetadata date={question.date} course={question.course} />
+            <SectionMetadata
+              date={question.questionDate}
+              course={question.courseID}
+            />
             <SectionQuestion
               question={question.question}
               grade={question.grade}

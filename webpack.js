@@ -82,7 +82,7 @@ module.exports = env => {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.less'],
     },
     output: {
-      filename: '[name].[contentHash].js',
+      filename: '[theme].[contentHash].js',
       path: path.resolve(__dirname, 'build'),
       publicPath: '/',
     },

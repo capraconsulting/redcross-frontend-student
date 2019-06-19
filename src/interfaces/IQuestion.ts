@@ -5,8 +5,8 @@ export default interface IQuestion {
   question: string;
   answer?: string;
   grade: number;
-  date?: string;
-  course: number;
+  questionDate?: string;
+  courseID: number;
   theme: number;
   anon?: boolean;
 }
