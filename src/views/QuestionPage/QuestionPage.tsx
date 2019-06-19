@@ -42,6 +42,7 @@ export const Question = (props: IProps, state: IState) => {
       {question && (
         <div>
           <div className="showAnswer">
+            <h1 className="showAnswer--header">{question.title}</h1>
             <SectionMetadata date={question.date} course={question.course} />
             <SectionQuestion
               question={question.question}
