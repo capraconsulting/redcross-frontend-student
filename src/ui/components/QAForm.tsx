@@ -14,7 +14,7 @@ interface IState {
   courses: ICourse[];
   grades: IGrade[];
   formControls: {
-    email: Option;
+    userEmail: Option;
     course: Option;
     theme: Option;
     question: Option;
@@ -30,7 +30,7 @@ export default class QAForm extends Component<{}, IState> {
       courses: [] as ICourse[],
       grades: [] as IGrade[],
       formControls: {
-        email: {
+        userEmail: {
           value: '',
           label: '',
         },
@@ -72,7 +72,7 @@ export default class QAForm extends Component<{}, IState> {
   private handleSubmit(): void {
     const { formControls } = this.state;
     const question: IQuestion = {
-      email: formControls.email.value,
+      userEmail: formControls.userEmail.value,
       grade: Number(formControls.grade.value),
       courseID: Number(formControls.course.value),
       theme: Number(formControls.theme.value),
@@ -91,7 +91,7 @@ export default class QAForm extends Component<{}, IState> {
   private handleChange = (event, type) => {
     const { formControls } = this.state;
     let label, value;
-    if (type === 'email' || type === 'question') {
+    if (type === 'userEmail' || type === 'question') {
       value = event.target.value;
       formControls[type] = { value };
     } else {
@@ -177,8 +177,8 @@ export default class QAForm extends Component<{}, IState> {
             <label className={'form--label'}>E-post:</label>
             <input
               className={'email'}
-              value={formControls.email.value}
-              onChange={event => this.handleChange(event, 'email')}
+              value={formControls.userEmail.value}
+              onChange={event => this.handleChange(event, 'userEmail')}
               type="email"
               name={'email'}
             />

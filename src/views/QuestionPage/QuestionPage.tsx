@@ -50,7 +50,7 @@ export default class Question extends Component<IProps, IState> {
         {question && (
           <div>
             <div className="showAnswer">
-              <SectionMetadata date={question.date} course={question.course} />
+              <SectionMetadata date={question.questionDate} course={question.courseID} />
               <SectionQuestion
                 question={question.question}
                 grade={question.grade}
