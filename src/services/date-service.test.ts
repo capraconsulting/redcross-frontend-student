@@ -5,8 +5,8 @@ const dateformat = {
   out: '6.12.2019',
 };
 
-describe('date-pipe-service', () => {
-  it('should return date formatted to norwegian date format', () => {
+describe('questionDate-pipe-service', () => {
+  it('should return questionDate formatted to norwegian questionDate format', () => {
     expect(NorwegianDate(dateformat.in)).toMatch(dateformat.out);
   });
 });

@@ -14,7 +14,7 @@ interface IState {
   courses: ICourse[];
   grades: IGrade[];
   formControls: {
-    userEmail: Option;
+    email: Option;
     course: Option;
     theme: Option;
     question: Option;
@@ -30,7 +30,7 @@ export default class QAForm extends Component<{}, IState> {
       courses: [] as ICourse[],
       grades: [] as IGrade[],
       formControls: {
-        userEmail: {
+        email: {
           value: '',
           label: '',
         },
@@ -72,9 +72,9 @@ export default class QAForm extends Component<{}, IState> {
   private handleSubmit(): void {
     const { formControls } = this.state;
     const question: IQuestion = {
-      userEmail: formControls.userEmail.value,
+      email: formControls.email.value,
       grade: Number(formControls.grade.value),
-      course: Number(formControls.course.value),
+      courseID: Number(formControls.course.value),
       theme: Number(formControls.theme.value),
       question: formControls.question.value,
       anon: formControls.anon,
@@ -91,7 +91,7 @@ export default class QAForm extends Component<{}, IState> {
   private handleChange = (event, type) => {
     const { formControls } = this.state;
     let label, value;
-    if (type === 'userEmail' || type === 'question') {
+    if (type === 'email' || type === 'question') {
       value = event.target.value;
       formControls[type] = { value };
     } else {
@@ -109,20 +109,20 @@ export default class QAForm extends Component<{}, IState> {
     return this.state.courses.map(course => {
       return {
         value: course.id.toString(),
-        label: course.name,
+        label: course.course,
       };
     });
   }
 
   private getThemeOptions(): Option[] {
     const chosenCourse = this.state.courses.filter(
-      course => course.name === this.state.formControls.course.label,
+      course => course.course === this.state.formControls.course.label,
     )[0]; // Will always only be one entry in array
     if (chosenCourse) {
       return chosenCourse.themes.map(theme => {
         return {
           value: theme.id.toString(),
-          label: theme.name,
+          label: theme.theme,
         };
       });
     } else return [];
@@ -132,7 +132,7 @@ export default class QAForm extends Component<{}, IState> {
     return this.state.grades.map(grade => {
       return {
         value: grade.id.toString(),
-        label: grade.name,
+        label: grade.grade,
       };
     });
   }
@@ -177,8 +177,8 @@ export default class QAForm extends Component<{}, IState> {
             <label className={'form--label'}>E-post:</label>
             <input
               className={'email'}
-              value={formControls.userEmail.value}
-              onChange={event => this.handleChange(event, 'userEmail')}
+              value={formControls.email.value}
+              onChange={event => this.handleChange(event, 'email')}
               type="email"
               name={'email'}
             />

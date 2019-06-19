@@ -31,14 +31,14 @@ class App extends Component<{}, IState> {
   };
 
   private tick() {
-    //Setting the date
+    //Setting the questionDate
     this.setState({
       time: new Date(),
     });
   }
 
   public componentDidMount() {
-    //Setting the date every 10th second.
+    //Setting the questionDate every 10th second.
     setInterval(() => this.tick(), 10 * 1000);
   }
 

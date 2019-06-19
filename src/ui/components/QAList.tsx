@@ -22,8 +22,9 @@ export default function QAList(questions: IQuestion[]) {
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
                   <p>
-                    {question.course}, {question.grade},{' '}
-                    {NorwegianDate(question.date)}
+                    {question.courseID}, {question.grade},{' '}
+
+                    {NorwegianDate(question.questionDate)}
                   </p>
                 </AccordionItemButton>
               </AccordionItemHeading>
