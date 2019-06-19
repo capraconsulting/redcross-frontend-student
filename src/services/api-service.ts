@@ -32,7 +32,7 @@ export function postQuestion(question) {
   // Which type will this be? Defined in backend
   return api
     .post('questions', question)
-    .then(res => res)
+    .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
 
