@@ -15,7 +15,7 @@ class LandingPage {
   //Constructing elements to test
   public constructor() {
     this.headline = ReactSelector('span').withProps({ id: 'header--logo' });
-    this.QA = ReactSelector('p').withProps({ id: 'sectionquestion--text' });
+    this.QA = ReactSelector('p').withProps({ id: 'sectionquestions--text' });
     this.footer = ReactSelector('h1').withProps({ id: 'footer--content' });
   }
 
