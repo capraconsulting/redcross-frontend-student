@@ -35,3 +35,11 @@ export function postQuestion(question) {
     .then(res => res)
     .catch(err => err);
 }
+
+export async function getQuestion(url: string) {
+  try {
+    return await api.get(`${url}`);
+  } catch (error) {
+    return error;
+  }
+}

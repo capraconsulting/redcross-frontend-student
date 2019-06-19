@@ -1,0 +1,143 @@
+@import 'colors.less';
+
+.content {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.showAnswer {
+  @media (min-width: 1366px) {
+    margin-right: 120px;
+    margin-left: 120px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    border-bottom: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  &--info {
+    font-weight: bold;
+    margin: 20px 0 10px;
+    margin-right: 120px;
+  }
+}
+
+.answer {
+  color: @hero-black;
+  border-top: solid 1px @primary-color;
+  position: relative;
+  margin-bottom: 30px;
+  max-width: 720px;
+
+  &--content {
+    font-size: 1.24rem;
+    padding: 0rem 3.7rem;
+    font-weight: normal;
+  }
+}
+
+.question {
+  color: @hero-black;
+  border-top: solid 1px @secondary-color;
+  position: relative;
+  margin-bottom: 50px;
+  max-width: 720px;
+  line-height: 1.2;
+
+  @media (min-width: 768px) {
+    margin-bottom: 70px;
+  }
+}
+
+.serviceDescription {
+  color: @hero-black;
+  font-size: 20px;
+  padding: 30px 0px;
+  margin-bottom: 30px;
+  max-width: 1000px;
+
+  @media (min-width: 768px) {
+    font-size: 40px;
+    padding: 40px 0px;
+  }
+
+  &--link {
+    color: @secondary-color;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+  &--svg {
+    width: 100%;
+    margin: 10px auto 20px;
+    display: block;
+    max-width: 335px;
+    border: 0;
+  }
+}
+
+.feedback {
+  padding: 0 20px 20px;
+  background-color: @form-background-color;
+  display: block;
+  max-width: 760px;
+
+  @media (min-width: 768px) {
+    padding: 20px 60px 20px;
+  }
+
+  &--form {
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+
+    &--header {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 20px 0;
+
+      @media (min-width: 768px) {
+        font-size: 2.2rem;
+      }
+    }
+
+    &--textarea {
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    &--button {
+      align-self: flex-end;
+      margin-top: 10px;
+      --primary-color: @white;
+      --secondary-color: @secondary-color;
+      color: var(--primary-color);
+      background-color: var(--secondary-color);
+      border: none;
+      padding: 14px 0 11px;
+      width: 110px;
+      font-size: 15px;
+
+      .disabled {
+        --secondary-color: @disabled-color;
+        cursor: default;
+      }
+
+      @media (min-width: 400px) {
+        width: 130px;
+      }
+    }
+  }
+}

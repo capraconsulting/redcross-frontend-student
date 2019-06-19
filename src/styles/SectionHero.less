@@ -3,9 +3,11 @@
 .hero {
   color: @hero-black;
   border-bottom: solid 1px @black;
+  line-height: 1.2;
 
   &--description {
     font-size: 2.5rem;
+    max-width: 1100px;
 
     &--colored {
       color: @primary-color;
@@ -19,5 +21,13 @@
     padding: 0.8em;
     margin-top: 0.67em;
     margin-bottom: 0.67em;
+  }
+
+  &--svg {
+    width: 100%;
+    margin: 1rem auto 2rem;
+    display: block;
+    max-width: 20rem;
+    border: 0;
   }
 }
