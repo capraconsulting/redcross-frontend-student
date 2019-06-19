@@ -5,7 +5,7 @@ const SectionQuestions = () => {
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Spørsmål og svar</div>
-      <p className="sectioncontainer--text" id="container--text">
+      <p className="sectioncontainer--text" id="sectionquestion--text">
         Her kan du lete etter svar blant{' '}
         <a href="/questions" className="sectioncontainer--text--colored">
           allerede stilte spørsmål
