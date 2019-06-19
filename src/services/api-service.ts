@@ -38,7 +38,7 @@ export function postQuestion(question) {
 
 export function getQuestion(url: string) {
   return api
-    .get(`${url}`)
+    .get(url)
     .then(res => res)
     .catch(err => err);
 }

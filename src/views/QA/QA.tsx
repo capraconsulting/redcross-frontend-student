@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { getQuestionList } from '../../services/api-service';
 import QAList from '../../ui/components/QAList';
