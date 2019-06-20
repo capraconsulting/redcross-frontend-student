@@ -80,14 +80,14 @@ const QAForm = () => {
     return courses.map(course => {
       return {
         value: course.id.toString(),
-        label: course.course,
+        label: course.name,
       };
     });
   };
 
   const getThemeOptions = (): Option[] => {
     const chosenCourse = courses.filter(
-      course => course.course === formControls.course.label,
+      course => course.name === formControls.course.label,
     )[0]; // Will always only be one entry in array
     if (chosenCourse) {
       return chosenCourse.themes.map(theme => {
