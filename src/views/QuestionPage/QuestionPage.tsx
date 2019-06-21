@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 // Styles
@@ -31,11 +31,11 @@ export const QuestionPage = (props: IProps, state: IState) => {
   const [question, setQuestion] = useState(state.question as IQuestion);
   const [error, setError] = useState(state.error);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getQuestion(`questions/${props.questionId}`).then(res => {
       res.data ? setQuestion(res.data) : setError(res);
     });
-  });
+  }, []);
 
   return (
     <div className="content">
