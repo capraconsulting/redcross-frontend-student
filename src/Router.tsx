@@ -24,6 +24,7 @@ export const AppRouter = () => {
         <Route path="/questions/new" exact component={QAForm} />
         <Route
           path="/questions/:id"
+          exact
           render={({ match }) => <Question questionId={match.params.id} />}
         />
         <Route path="/leksehjelp" exact component={Leksehjelp} />

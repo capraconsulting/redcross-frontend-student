@@ -67,6 +67,47 @@
   }
 }
 
+.searchcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  &--input {
+    &--searchkey {
+      flex-basis: 320px;
+      padding: 0.5rem;
+      border: solid 1px @select-color;
+      border-radius: 0;
+      -webkit-appearance: none;
+
+      position: relative;
+      font-size: 1.2rem;
+      height: 2.8;
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d1d1;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    &--gradeselector {
+      flex-basis: 320px;
+      color: @hero-black;
+    }
+    &--subjectselector {
+      flex-basis: 155px;
+    }
+  }
+
+  &--header {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+    font-weight: normal;
+    color: @hero-black;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
