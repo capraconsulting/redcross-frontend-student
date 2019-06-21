@@ -3,12 +3,6 @@ const port = 8000;
 
 let connections = [{ studentID: 'student', teacherID: 'teacher' }];
 
-const getConnection = studentID => {
-  return connections.filter(
-    connection => connection.studentID === studentID,
-  )[0];
-};
-
 sio.on('connection', socket => {
 
   socket.on('join room', room => {
