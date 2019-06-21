@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import openSocket from 'socket.io-client';
 import { ChatBody, ChatHeader } from '.';
+import IMessage from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-
-interface IMessage {
-  author: string;
-  message: string;
-}
 
 const Chat = () => {
   const socket = openSocket('http://localhost:8000');
@@ -27,10 +23,21 @@ const Chat = () => {
     });
   }, []);
 
+  const send = message => {
+    socket.emit('message', message);
+    setMessages([
+      ...messages,
+      {
+        author: message.author,
+        message,
+      },
+    ]);
+  };
+
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith={'Caroline'} />
-      <ChatBody messages={messages} />
+      <ChatBody messages={messages} send={send} />
     </div>
   );
 };
