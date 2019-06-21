@@ -6,7 +6,7 @@ const socket = openSocket('http://localhost:8000');
 // TEMPORARY VALUES FOR STUDENT AND TEACHER WHILE TESTING
 const roomID = '1';
 
-export const ChatSocket = () => {
+const ChatSocket = () => {
   const [message, setMessage] = useState('' as string);
   const [recvMessage, setRecvMessage] = useState('' as string);
 
@@ -38,3 +38,5 @@ export const ChatSocket = () => {
     </div>
   );
 };
+
+export default ChatSocket;
