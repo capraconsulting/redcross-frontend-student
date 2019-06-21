@@ -28,7 +28,7 @@ export function getCourseList(): Promise<ICourse[]> {
     .catch(e => console.error(e.getMessage));
 }
 
-export function getCourseStatus(id): Promise<IStatus[]> {
+export function getCourseStatus(id: string): Promise<IStatus[]> {
   console.log('Hentet course status');
   return api
     .get(`courseStatus/${id}`)
