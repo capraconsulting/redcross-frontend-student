@@ -6,6 +6,7 @@ import './styles/base.less';
 // Global components
 import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
+import {ChatSocket} from './ui/components/ChatSocket';
 import AppRouter from './Router';
 
 export const App = () => {
@@ -21,6 +22,7 @@ export const App = () => {
     <div>
       <div className="base">
         {Header({ time, isOpen })}
+        {ChatSocket()}
         <AppRouter />
       </div>
       <Footer />
