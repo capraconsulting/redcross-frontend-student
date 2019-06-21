@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './styles/base.less';
 
 // Global components
-import { Header, Footer } from './ui/components';
+import { Header, Footer, Chat } from './ui/components';
 import AppRouter from './Router';
 
 export const App = () => {
@@ -22,6 +22,7 @@ export const App = () => {
         {Header({ time, isOpen })}
         <AppRouter />
       </div>
+      <Chat />
       <Footer />
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../../styles/ChatHeader';
 
 interface IProps {
   connectedWith: string;
@@ -9,9 +10,9 @@ const ChatHeader = (props: IProps) => {
   const [isOpen, setIsOpen] = useState(false as boolean);
 
   return (
-    <div className={`ch--container`}>
-      <span className={'ch--item'}>{props.connectedWith}</span>
-      <span className={'ch--item'}>{unreadMessages}</span>
+    <div className={`ch`}>
+      <span className={'ch--left'}>{props.connectedWith}</span>
+      <span className={'ch--right'}>{unreadMessages}</span>
     </div>
   );
 };

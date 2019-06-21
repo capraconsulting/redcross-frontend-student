@@ -4,7 +4,7 @@ import { getQuestionList } from '../../services/api-service';
 import QAList from '../../ui/components/QAList';
 import IQuestion from '../../interfaces/IQuestion';
 
-export const QA = () => {
+const QA = () => {
   const [questions, setQuestions] = React.useState([] as IQuestion[]);
 
   React.useEffect(() => {
