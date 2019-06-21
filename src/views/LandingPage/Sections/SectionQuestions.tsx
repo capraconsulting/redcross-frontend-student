@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../styles/LandingPage.less';
 
 const SectionQuestions = () => {
+  const [searchKey, setSearchKey] = useState('' as string);
+
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Spørsmål og svar</div>
@@ -19,7 +21,18 @@ const SectionQuestions = () => {
       </p>
       <form className="sectioncontainer--form">
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
-        <div className="sectioncontainer--form--input"></div>
+        <input
+          className={'sectioncontainer--form--search'}
+          value={searchKey}
+          onChange={event => setSearchKey(event.target.value)}
+          type=""
+          name={'searchKey'}
+          placeholder="Hva lurer du på?"
+        />
+        <img
+          className="sectioncontainer--form--img"
+          src={require('../../../assets/images/search.svg')}
+        />
       </form>
     </div>
   );
