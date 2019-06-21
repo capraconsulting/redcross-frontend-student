@@ -15,7 +15,7 @@ export const App = () => {
 
   useEffect(() => {
     setInterval(() => setTime(new Date()), 10 * 1000);
-  });
+  }, []);
 
   return (
     <div>

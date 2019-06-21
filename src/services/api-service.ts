@@ -29,9 +29,10 @@ export function getCourseList(): Promise<ICourse[]> {
 }
 
 export function getCourseStatus(id): Promise<IStatus[]> {
+  console.log('Hentet course status');
   return api
     .get(`courseStatus/${id}`)
-    .then(res => res.data)
+    .then(res => res.data.status)
     .catch(e => console.error(e.getMessage));
 }
 

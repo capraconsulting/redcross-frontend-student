@@ -8,7 +8,6 @@ import { getCourseList, getCourseStatus } from '../../../services/api-service';
 const SectionLeksehjelp = () => {
   const [courses, setCourses] = useState([] as ICourse[]);
   const [courseStatus, setCourseStatus] = useState([] as IStatus[]);
-  const [courseStatusMessage, setCourseStatusMessage] = useState('' as string);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
@@ -26,13 +25,33 @@ const SectionLeksehjelp = () => {
     return courseOptions;
   };
 
+  const setStatus = value => {
+    getCourseStatus(value).then(res => setCourseStatus(res));
+  };
+
   const handleChange = async event => {
     let { label, value } = event;
-    setFormControls({ label, value });
+    await setFormControls({ label, value });
+    setStatus(value);
+  };
 
-    let courseStatus = await getCourseStatus(value);
-    await setCourseStatus(courseStatus);
-    console.log(courseStatus);
+  const renderStatusMessage = () => {
+    if (courseStatus.length === 0 && formControls.value) {
+      return (
+        <p className="sectioncontainer--text">
+          {formControls.label +
+            ' er dessverre ikke tilgjengelig med det første.'}
+        </p>
+      );
+    } else if (courseStatus.length > 0) {
+      return courseStatus.map((s, index) => {
+        return (
+          <p className="sectioncontainer--text" key={index}>
+            {s.day + ' ' + s.start + '-' + s.end}
+          </p>
+        );
+      });
+    }
   };
 
   return (
@@ -55,13 +74,7 @@ const SectionLeksehjelp = () => {
           value={formControls.value}
           onChange={event => handleChange(event)}
         />
-        <p className="sectioncontainer--text">
-          {courseStatus.length === 0 &&
-            formControls.value &&
-            formControls.label +
-              ' er dessverre ikke tilgjengelig med det første'}
-          {courseStatusMessage}
-        </p>
+        {renderStatusMessage()}
       </form>
     </div>
   );
