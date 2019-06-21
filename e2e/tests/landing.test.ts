@@ -6,6 +6,9 @@ fixture`Digital Leksehjelp`
     await waitForReact();
   });
 
+//Skipping all tests in selected fixture
+fixture.skip`Digital Leksehjelp`;
+
 class LandingPage {
   //Declaring selector type for each element to test
   public headline: Selector;
@@ -29,13 +32,12 @@ class LandingPage {
 
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
-
+console.log(landingPage.footer.length);
 //Test header text value
 test('Check header', async t => {
   await t.expect(landingPage.getText('headline')).eql('Digital Leksehjelp');
 });
 
-/** 
 //Test leksehjelp section text value
 test('Check leksehjelp header', async t => {
   await t
@@ -51,7 +53,6 @@ test('Check QA description', async t => {
       'Her kan du lete etter svar blant allerede stilte spørsmål, eller stille et nytt spørsmål hvis du ikke finner det du lurer på!',
     );
 });
-*/
 
 //Test footer text value
 test('Check footer', async t => {
