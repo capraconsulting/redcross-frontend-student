@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 
+//Styles
 import '../../../styles/LandingPage.less';
+
+//Interfaces
 import { ICourse, IStatus } from '../../../interfaces';
+
+//Services
 import { getCourseList, getCourseStatus } from '../../../services/api-service';
 
 const SectionLeksehjelp = () => {
@@ -24,17 +29,13 @@ const SectionLeksehjelp = () => {
     });
     return courseOptions;
   };
-
-  const setStatus = value => {
-    getCourseStatus(value).then(res => setCourseStatus(res));
-  };
-
   const handleChange = async event => {
     let { label, value } = event;
     await setFormControls({ label, value });
-    setStatus(value);
+    getCourseStatus(value).then(setCourseStatus);
   };
 
+  //Rendering course availability based on employee time schedule
   const renderStatusMessage = () => {
     if (courseStatus.length === 0 && formControls.value) {
       return (
