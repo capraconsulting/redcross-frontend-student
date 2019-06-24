@@ -1,55 +1,34 @@
 @import 'colors';
 @import 'base';
 
-.container {
-  margin-bottom: 20px;
-  background-color: @form-background-color;
 
-  @media (min-width: 768px) {
-    margin-right: 60px;
-    margin-left: 60px;
-    margin-bottom: 60px;
-  }
+.form-container {
+  border: solid 1px @black;
+  background-color: @form-background-color;
+  padding: 2rem;
+  margin: 2.8rem auto;
 
   @media (max-width: 768px) {
     padding-right: 1rem;
     padding-left: 1rem;
   }
 
-  @media (min-width: 1366px) {
-    display: flex;
-
-    > * {
-      width: 50%;
-
-      &:not(:last-child) {
-        margin-right: 30px;
-      }
-    }
-  }
-}
-
-.container {
-  border: solid 1px @black;
-  padding: 2rem;
-  margin-top: 2.8rem;
-  &--header {
-    font-size: 2.5rem;
-    color: @hero-black;
+  @media (min-width: 769px) {
+    padding-right: 4rem;
+    padding-left: 4rem;
+    width: 70%;
   }
 
-  &--text {
-    margin: 0 0 10px;
-    font-size: 1.4rem;
-    color: @hero-black;
-    &--colored {
-      color: @secondary-color;
-      line-height: 1.5;
-    }
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+
+  @media (min-width: 1200px) {
+    width: 30%;
   }
 
   &--form {
-    &--input {
+    &--input-container {
       width: 100%;
       padding: 0.5rem;
       border: solid 1px @select-color;
@@ -57,54 +36,41 @@
       -webkit-appearance: none;
       font-size: 15px;
       height: 1.5vh;
+
+      @media (min-width: 768px) {
+        padding: 1.5rem 0 2rem;
+      }
     }
 
-    &--header {
-      font-size: 1.25rem;
-      margin-bottom: 0.6rem;
+    &--label {
+      display: block;
+      max-width: initial;
       font-weight: bold;
-    }
-  }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-
-  &--label {
-    display: block;
-    max-width: initial;
-    font-weight: bold;
-    font-size: 1.3rem;
-    padding-bottom: 0.5rem;
-  }
-
-  &--input-container {
-    width: 100%;
-    @media (min-width: 768px) {
-      padding: 1.5rem 0 2rem;
-    }
-  }
-
-  &--selector {
-    position: relative;
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    font-size: 1.5rem;
-    color: #60666d;
-
-    @media (min-width: 768px) {
-      width: 70%;
+      font-size: 1.3rem;
+      padding-bottom: 0.5rem;
     }
 
-    @media (min-width: 992px) {
-      width: 50%;
+    &--selector {
+      position: relative;
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+      font-size: 1.5rem;
+      color: #60666d;
+
+      @media (min-width: 768px) {
+        width: 70%;
+      }
+
+      @media (min-width: 992px) {
+        width: 50%;
+      }
+
+      @media (min-width: 1200px) {
+        width: 30%;
+      }
     }
 
-    @media (min-width: 1200px) {
-      width: 30%;
-    }
   }
 }
 
@@ -137,7 +103,3 @@
 .textarea {
   height: 8rem;
 }
-
-//Ikke rør
-
-//////
