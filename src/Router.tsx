@@ -29,7 +29,7 @@ export const AppRouter = () => {
         />
         <Route path="/leksehjelp" exact component={Leksehjelp} />
         <Route path="/mestring" exact component={Mestring} />
-        <Route path="/meldinger" exact component={Chat}/>
+        <Route path="/meldinger" exact component={Chat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>

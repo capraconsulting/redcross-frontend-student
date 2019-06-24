@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import openSocket from 'socket.io-client';
-import { ChatBody, ChatHeader } from '../../ui/components';
+import { ChatBody } from '../../ui/components';
 import IMessage from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
 
@@ -36,7 +36,9 @@ const Chat = () => {
   return (
     <div className={'chat'}>
       {/*This button is temporary, only to join rooms while we dont have a proper queue*/}
-      <button onClick={() => socket.emit('join room', '1')}>Join temporary testing room</button>
+      <button onClick={() => socket.emit('join room', '1')}>
+        Join temporary testing room
+      </button>
       <ChatBody messages={messages} send={send} />
     </div>
   );

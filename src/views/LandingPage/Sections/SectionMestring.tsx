@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown, { Option } from 'react-dropdown';
+import Dropdown from 'react-dropdown';
 
 // Styes
 import '../../../styles/LandingPage.less';

@@ -50,4 +50,3 @@ export function getQuestion(url: string) {
     .then(res => res)
     .catch(err => err);
 }
-

@@ -6,12 +6,4 @@ import Header from './Header';
 import QAForm from './QAForm';
 import QAList from './QAList';
 
-export {
-  Chat,
-  ChatHeader,
-  ChatBody,
-  Footer,
-  Header,
-  QAForm,
-  QAList,
-};
+export { Chat, ChatHeader, ChatBody, Footer, Header, QAForm, QAList };
