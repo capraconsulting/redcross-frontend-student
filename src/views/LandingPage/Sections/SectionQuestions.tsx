@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+
+//Styles
 import '../../../styles/LandingPage.less';
 
 const SectionQuestions = () => {
+  const [searchKey, setSearchKey] = useState('' as string);
+  const [submit, setSubmit] = useState(false as boolean);
+
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Spørsmål og svar</div>
@@ -17,10 +23,31 @@ const SectionQuestions = () => {
         </a>{' '}
         hvis du ikke finner det du lurer på!
       </p>
-      <form className="sectioncontainer--form">
+      <form className="sectioncontainer--form" onSubmit={() => setSubmit(true)}>
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
-        <div className="sectioncontainer--form--input"></div>
+        <input
+          className={'sectioncontainer--form--search'}
+          value={searchKey}
+          onChange={event => setSearchKey(event.target.value)}
+          type="text"
+          name={''}
+          placeholder="Hva lurer du på?"
+        />
+        <img
+          className="sectioncontainer--form--img"
+          src={require('../../../assets/images/search.svg')}
+          onClick={() => setSubmit(true)}
+        />
       </form>
+      {submit && (
+        <Redirect
+          push
+          to={{
+            pathname: `questions/`,
+            search: `searchKey=${searchKey}`,
+          }}
+        />
+      )}
     </div>
   );
 };

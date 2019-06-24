@@ -7,9 +7,9 @@ const api = axios.create({
   headers: HEADERS,
 });
 
-export function getQuestionList(): Promise<IQuestion[]> {
+export function getQuestionList(query): Promise<IQuestion[]> {
   return api
-    .get('questions')
+    .get(`questions`)
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
@@ -29,7 +29,6 @@ export function getCourseList(): Promise<ICourse[]> {
 }
 
 export function getCourseStatus(id: string): Promise<IStatus[]> {
-  console.log('Hentet course status');
   return api
     .get(`courseStatus/${id}`)
     .then(res => res.data.status)
