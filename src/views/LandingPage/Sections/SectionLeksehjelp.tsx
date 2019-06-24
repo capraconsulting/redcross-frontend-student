@@ -45,10 +45,10 @@ const SectionLeksehjelp = () => {
         </p>
       );
     } else if (courseStatus.length > 0) {
-      return courseStatus.map((s, index) => {
+      return courseStatus.map((status, index) => {
         return (
           <p className="sectioncontainer--text" key={index}>
-            {s.day + ' ' + s.start + '-' + s.end}
+            {status.day + ' ' + status.start + '-' + status.end}
           </p>
         );
       });
