@@ -6,7 +6,6 @@ import qs from 'query-string';
 import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import IGrade from '../../interfaces/IGrade';
-import IOption from '../../interfaces/IOption';
 
 //Services
 import {
@@ -45,11 +44,9 @@ export const QA = (props: IProps) => {
       ? (values.searchKey as string)
       : ('' as string),
   );
-  const [course, setCourse] = useState(getDefaultOptions(
-    'courseId',
-  ) as IOption);
-  const [grade, setGrade] = useState(getDefaultOptions('grade') as IOption);
-  const [filter, setFilter] = useState(getDefaultOptions('filter') as IOption);
+  const [course, setCourse] = useState(getDefaultOptions('courseId') as Option);
+  const [grade, setGrade] = useState(getDefaultOptions('grade') as Option);
+  const [filter, setFilter] = useState(getDefaultOptions('filter') as Option);
 
   //Function removing empty fields from query object
   const removeFalsyFields = obj => {
@@ -130,7 +127,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--gradeselector'}
             placeholder={'Velg fag'}
             options={getCourseOptions()}
-            value={course.value && course.label && course}
+            value={(course.value && course.label && course) || ''}
             onChange={event =>
               setCourse({ value: event.value, label: event.label })
             }
@@ -139,7 +136,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--subjectselector'}
             placeholder={'Velg trinn'}
             options={getGradeOptions()}
-            value={grade.value && grade.label && grade}
+            value={(grade.value && grade.label && grade) || ''}
             onChange={event =>
               setGrade({ value: event.value, label: event.label })
             }
@@ -148,7 +145,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--subjectselector'}
             placeholder={'Sorter etter'}
             options={getFilterOptions()}
-            value={filter.value && filter.label && filter}
+            value={(filter.value && filter.label && filter) || ''}
             onChange={event =>
               setFilter({ value: event.value, label: event.label })
             }
