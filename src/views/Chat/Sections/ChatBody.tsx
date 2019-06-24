@@ -51,7 +51,7 @@ const ChatBody = (props: IProps) => {
           </button>
           <input
             className={'message-text'}
-            type="text"
+            type="textarea"
             value={message.message}
             onChange={event =>
               setMessage({
