@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './styles/base.less';
 
 // Global components
-import Header from './ui/components/Header';
-import Footer from './ui/components/Footer';
+import { Header, Footer } from './ui/components';
 import AppRouter from './Router';
 
 export const App = () => {

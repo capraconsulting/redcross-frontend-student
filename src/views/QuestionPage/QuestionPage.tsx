@@ -27,7 +27,7 @@ interface IProps {
   questionId: string;
 }
 
-export const QuestionPage = (props: IProps, state: IState) => {
+const QuestionPage = (props: IProps, state: IState) => {
   const [question, setQuestion] = useState(state.question as IQuestion);
   const [error, setError] = useState(state.error);
 

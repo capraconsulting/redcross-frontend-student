@@ -15,6 +15,7 @@ import Question from './views/QuestionPage/QuestionPage';
 import Leksehjelp from './views/Leksehjelp/LeksehjelpPage';
 import Mestring from './views/Mestring/MestringPage';
 import QAForm from './ui/components/QAForm';
+import Chat from './views/Chat/Chat';
 
 export const AppRouter = () => {
   return (
@@ -29,6 +30,7 @@ export const AppRouter = () => {
         />
         <Route path="/leksehjelp" exact component={Leksehjelp} />
         <Route path="/mestring" exact component={Mestring} />
+        <Route path="/meldinger" exact component={Chat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>
