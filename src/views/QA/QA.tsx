@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import qs from 'query-string';
 
 //Interfaces
 import IQuestion from '../../interfaces/IQuestion';
@@ -19,44 +20,66 @@ import QAList from '../../ui/components/QAList';
 
 interface IProps {
   location?: any;
+  history?: any;
 }
 
-let defaultoption = {
-  value: '',
-  label: '',
-};
-
 export const QA = (props: IProps) => {
-  //Gets search key from landingpage redirection
-  const { searchKey } = props.location.state;
-
-  //Form fields
+  //Fetched questions
   const [questions, setQuestions] = useState([] as IQuestion[]);
+  //Dropdown alternatives
   const [courses, setCourses] = useState([] as ICourse[]);
   const [grades, setGrades] = useState([] as IGrade[]);
 
-  //Form controller
-  const [search, setSearch] = useState(searchKey as string);
-  const [course, setCourse] = useState(defaultoption as IOption);
-  const [grade, setGrade] = useState(defaultoption as IOption);
-  const [filter, setFilter] = useState(defaultoption as IOption);
+  //Parsed query parameter string
+  const values = qs.parse(props.location.search);
+
+  //Returns option to be filled out based on query params
+  const getDefaultOptions = type => {
+    //return values[type] ? {value: values[type, label: courses[values[type]]]}
+    return { value: values[type] || '' };
+  };
+
+  //Query states
+  const [search, setSearch] = useState(
+    props.location.search.length > 0
+      ? (values.searchKey as string)
+      : ('' as string),
+  );
+  const [course, setCourse] = useState(getDefaultOptions(
+    'courseId',
+  ) as IOption);
+  const [grade, setGrade] = useState(getDefaultOptions('grade') as IOption);
+  const [filter, setFilter] = useState(getDefaultOptions('filter') as IOption);
+
+  //Function removing empty fields from query object
+  const removeFalsyFields = obj => {
+    let newObj = {};
+    Object.keys(obj).forEach(prop => {
+      if (obj[prop]) {
+        newObj[prop] = obj[prop];
+      }
+    });
+    return newObj;
+  };
+
+  const handleSubmit = () => {
+    let queryObject = {
+      searchKey: search,
+      courseId: Number(course.value),
+      grade: grade.value,
+      filter: Number(filter.value),
+    };
+    let queryString = qs.stringify(removeFalsyFields(queryObject));
+    props.history.push({ pathname: '/questions', search: queryString });
+    // note that `search` automatically prepends a question mark
+    getQuestionList(queryString).then(setQuestions);
+  };
 
   useEffect(() => {
     getCourseList().then(setCourses);
     getGradeList().then(setGrades);
-    getQuestionList(searchKey).then(setQuestions);
+    handleSubmit();
   }, []);
-
-  const handleSubmit = () => {
-    let query = {
-      searchKey: search,
-      courseID: Number(course.value),
-      grade: grade.value,
-      filter: Number(filter.value),
-    };
-    console.log(query);
-    // TODO: get questions
-  };
 
   const getCourseOptions = (): Option[] => {
     return courses.map(course => {
@@ -71,11 +94,11 @@ export const QA = (props: IProps) => {
     return [
       {
         label: 'Dato',
-        value: 'date',
+        value: '1',
       },
       {
         label: 'Relevans',
-        value: 'relevance',
+        value: '2',
       },
     ];
   };
@@ -93,7 +116,6 @@ export const QA = (props: IProps) => {
     return (
       <div>
         <h1 className={'searchcontainer--header'}>Søk blant spørsmål</h1>
-
         <form className={'searchcontainer'} onSubmit={handleSubmit}>
           {' '}
           {/*input container start*/}
@@ -108,7 +130,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--gradeselector'}
             placeholder={'Velg fag'}
             options={getCourseOptions()}
-            value={course.value && course}
+            value={course.value && course.label && course}
             onChange={event =>
               setCourse({ value: event.value, label: event.label })
             }
@@ -117,7 +139,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--subjectselector'}
             placeholder={'Velg trinn'}
             options={getGradeOptions()}
-            value={grade.value && grade}
+            value={grade.value && grade.label && grade}
             onChange={event =>
               setGrade({ value: event.value, label: event.label })
             }
@@ -126,7 +148,7 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--subjectselector'}
             placeholder={'Sorter etter'}
             options={getFilterOptions()}
-            value={filter.value && filter}
+            value={filter.value && filter.label && filter}
             onChange={event =>
               setFilter({ value: event.value, label: event.label })
             }

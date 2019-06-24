@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 //Styles
 import '../../../styles/LandingPage.less';
-
-import { Redirect, withRouter } from 'react-router-dom';
 
 const SectionQuestions = () => {
   const [searchKey, setSearchKey] = useState('' as string);
@@ -37,16 +36,15 @@ const SectionQuestions = () => {
         <img
           className="sectioncontainer--form--img"
           src={require('../../../assets/images/search.svg')}
+          onClick={() => setSubmit(true)}
         />
       </form>
       {submit && (
         <Redirect
           push
           to={{
-            pathname: 'questions',
-            state: {
-              searchKey,
-            },
+            pathname: `questions/`,
+            search: `searchKey=${searchKey}`,
           }}
         />
       )}
@@ -54,4 +52,4 @@ const SectionQuestions = () => {
   );
 };
 
-export default withRouter(SectionQuestions);
+export default SectionQuestions;

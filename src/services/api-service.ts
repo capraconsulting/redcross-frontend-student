@@ -7,7 +7,7 @@ const api = axios.create({
   headers: HEADERS,
 });
 
-export function getQuestionList(searchKey: number): Promise<IQuestion[]> {
+export function getQuestionList(query): Promise<IQuestion[]> {
   return api
     .get(`questions`)
     .then(res => res.data)

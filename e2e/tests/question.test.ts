@@ -6,6 +6,9 @@ fixture`Digital Leksehjelp`
     await waitForReact();
   });
 
+//Skipping all tests in selected fixture
+fixture.skip`Digital Leksehjelp`;
+
 class LandingPage {
   //Declaring selector type for each element to test
   public answer: Selector;
