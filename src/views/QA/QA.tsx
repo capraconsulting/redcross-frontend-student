@@ -5,6 +5,7 @@ import Dropdown, { Option } from 'react-dropdown';
 import IQuestion from '../../interfaces/IQuestion';
 import ICourse from '../../interfaces/ICourse';
 import IGrade from '../../interfaces/IGrade';
+import IOption from '../../interfaces/IOption';
 
 //Services
 import {
@@ -20,57 +21,41 @@ interface IProps {
   location?: any;
 }
 
+let defaultoption = {
+  value: '',
+  label: '',
+};
+
 export const QA = (props: IProps) => {
+  //Gets search key from landingpage redirection
   const { searchKey } = props.location.state;
 
+  //Form fields
   const [questions, setQuestions] = useState([] as IQuestion[]);
   const [courses, setCourses] = useState([] as ICourse[]);
   const [grades, setGrades] = useState([] as IGrade[]);
 
-  const [formControls, setFormControls] = useState({
-    searchKey: {
-      value: '',
-      label: ',',
-    },
-    course: {
-      value: '',
-      label: '',
-    },
-    grade: {
-      value: '',
-      label: '',
-    },
-    theme: {
-      value: '',
-      label: '',
-    },
-  });
+  //Form controller
+  const [search, setSearch] = useState(searchKey as string);
+  const [course, setCourse] = useState(defaultoption as IOption);
+  const [grade, setGrade] = useState(defaultoption as IOption);
+  const [filter, setFilter] = useState(defaultoption as IOption);
+
+  useEffect(() => {
+    getCourseList().then(setCourses);
+    getGradeList().then(setGrades);
+    getQuestionList(searchKey).then(setQuestions);
+  }, []);
 
   const handleSubmit = () => {
-    const query = {
-      searchKey: formControls.searchKey,
-      courseID: Number(formControls.course.value),
-      grade: formControls.grade.value,
-      theme: Number(formControls.theme.value),
+    let query = {
+      searchKey: search,
+      courseID: Number(course.value),
+      grade: grade.value,
+      filter: Number(filter.value),
     };
+    console.log(query);
     // TODO: get questions
-  };
-
-  const handleChange = (event, type) => {
-    const tmpFormControls = formControls;
-    let label, value;
-    if (type === 'searchKey') {
-      value = event.target.value;
-      tmpFormControls[type] = { value };
-    } else {
-      label = event.label;
-      value = event.value;
-      tmpFormControls[type] = {
-        label,
-        value,
-      };
-    }
-    setFormControls(tmpFormControls);
   };
 
   const getCourseOptions = (): Option[] => {
@@ -82,18 +67,17 @@ export const QA = (props: IProps) => {
     });
   };
 
-  const getThemeOptions = (): Option[] => {
-    const chosenCourse = courses.filter(
-      course => course.name === formControls.course.label,
-    )[0]; // Will always only be one entry in array
-    if (chosenCourse) {
-      return chosenCourse.themes.map(theme => {
-        return {
-          value: theme.id.toString(),
-          label: theme.theme,
-        };
-      });
-    } else return [];
+  const getFilterOptions = (): Option[] => {
+    return [
+      {
+        label: 'Dato',
+        value: 'date',
+      },
+      {
+        label: 'Relevans',
+        value: 'relevance',
+      },
+    ];
   };
 
   const getGradeOptions = (): Option[] => {
@@ -115,31 +99,37 @@ export const QA = (props: IProps) => {
           {/*input container start*/}
           <input
             className={'searchcontainer--input--searchkey'}
-            value={formControls.searchKey.value}
-            onChange={event => handleChange(event, 'searchKey')}
+            value={search}
+            onChange={event => setSearch(event.target.value)}
             type="text"
             placeholder="Hva lurer du på?"
           />
           <Dropdown
-            className={'searchcontainer--input--subjectSelector'}
+            className={'searchcontainer--input--gradeselector'}
             placeholder={'Velg fag'}
             options={getCourseOptions()}
-            value={formControls.course.value && formControls.course}
-            onChange={event => handleChange(event, 'course')}
+            value={course.value && course}
+            onChange={event =>
+              setCourse({ value: event.value, label: event.label })
+            }
           />
           <Dropdown
-            className={'searchcontainer--input--gradeselector'}
+            className={'searchcontainer--input--subjectselector'}
             placeholder={'Velg trinn'}
             options={getGradeOptions()}
-            value={formControls.grade.value && formControls.grade}
-            onChange={event => handleChange(event, 'grade')}
+            value={grade.value && grade}
+            onChange={event =>
+              setGrade({ value: event.value, label: event.label })
+            }
           />
           <Dropdown
-            className={'searchcontainer--input--gradeselector'}
+            className={'searchcontainer--input--subjectselector'}
             placeholder={'Sorter etter'}
-            options={getThemeOptions()}
-            value={formControls.theme.value && formControls.theme}
-            onChange={event => handleChange(event, 'theme')}
+            options={getFilterOptions()}
+            value={filter.value && filter}
+            onChange={event =>
+              setFilter({ value: event.value, label: event.label })
+            }
           />
         </form>
         <button
@@ -152,13 +142,6 @@ export const QA = (props: IProps) => {
       </div>
     );
   };
-
-  useEffect(() => {
-    getCourseList().then(setCourses);
-    getGradeList().then(setGrades);
-    getQuestionList(searchKey).then(setQuestions);
-    console.log(searchKey);
-  }, []);
 
   return (
     <div>

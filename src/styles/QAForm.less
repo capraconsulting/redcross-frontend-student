@@ -72,20 +72,18 @@
   flex-wrap: wrap;
   &--input {
     &--searchkey {
-      flex-basis: 320px;
       padding: 0.5rem;
       border: solid 1px @select-color;
       border-radius: 0;
       -webkit-appearance: none;
 
-      position: relative;
       font-size: 1.2rem;
       height: 2.8;
       margin-bottom: 1rem;
-      margin-right: 1rem;
+      margin-right: 0.6rem;
 
       width: 100%;
-      padding: 10px;
+      padding: 0.7rem;
       border: 1px solid #d1d1d1;
       border-radius: 0;
       -webkit-appearance: none;
@@ -93,10 +91,15 @@
 
     &--gradeselector {
       flex-basis: 320px;
+      min-width: 100px;
       color: @hero-black;
+      margin-right: 0.8rem;
     }
     &--subjectselector {
-      flex-basis: 155px;
+      flex-basis: 220px;
+      min-width: 100px;
+      margin-right: 0.8rem;
+      color: @hero-black;
     }
   }
 
@@ -105,6 +108,10 @@
     margin-bottom: 0.6rem;
     font-weight: normal;
     color: @hero-black;
+
+    @media (min-width: 768px) {
+      font-size: 40px;
+    }
   }
 }
 
