@@ -11,10 +11,10 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on('message', message => {
-      setMessages([
+      setMessages(messages => [
         ...messages,
         {
-          author: message.author,
+          author: /*message.author*/ 'Not you',
           message: message.message,
         },
       ]);
@@ -24,7 +24,7 @@ const Chat = () => {
   const send = message => {
     socket.emit('message', message, '1');
     console.log(message);
-    setMessages([
+    setMessages(messages => [
       ...messages,
       {
         author: message.author,
