@@ -1,4 +1,7 @@
 import React from 'react';
+import Dropdown, { Option } from 'react-dropdown';
+
+// Styes
 import '../../../styles/LandingPage.less';
 
 const SectionMestring = () => {
@@ -12,8 +15,7 @@ const SectionMestring = () => {
         <div className="mestring--form--header">
           Se hvilke temaer vi kan hjelpe deg med
         </div>
-
-        <form className="mestring--form--input"></form>
+        <Dropdown options={[]} placeholder="F.eks motivasjon, læringsmetoder" />
       </form>
     </div>
   );

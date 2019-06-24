@@ -19,7 +19,7 @@ const SectionQuestions = () => {
       </p>
       <form className="sectioncontainer--form">
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
-        <form className="sectioncontainer--form--input"></form>
+        <div className="sectioncontainer--form--input"></div>
       </form>
     </div>
   );

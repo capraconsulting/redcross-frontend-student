@@ -5,6 +5,6 @@ interface ITheme {
 
 export default interface ICourse {
   id: number;
-  course: string;
+  name: string;
   themes: ITheme[];
 }
