@@ -22,7 +22,6 @@ export const App = () => {
         {Header({ time, isOpen })}
         <AppRouter />
       </div>
-      <Chat />
       <Footer />
     </div>
   );
