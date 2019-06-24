@@ -22,7 +22,6 @@ const ChatBody = (props: IProps) => {
 
   const send = event => {
     event.preventDefault();
-    console.log(message);
     if (message.message.length > 0) {
       props.send(message);
       const tmpMsg = message;
