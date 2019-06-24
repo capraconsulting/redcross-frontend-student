@@ -109,7 +109,7 @@ const QAForm = () => {
   };
 
   return (
-    <div className={'container'}>
+    <div className={'form-container'}>
       <form className={'form'} onSubmit={handleSubmit}>
         <div className="form--input-container">
           {' '}
