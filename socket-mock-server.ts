@@ -4,10 +4,9 @@ const port = 8000;
 let connections = [{ studentID: 'student', teacherID: 'teacher' }];
 
 sio.on('connection', socket => {
-
   socket.on('join room', room => {
     console.log('room joined');
-    socket.join(room)
+    socket.join(room);
   });
 
   socket.on('leave room', room => {

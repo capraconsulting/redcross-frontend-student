@@ -10,30 +10,22 @@ import {
 } from '../../services/api-service';
 import Dropdown, { Option } from 'react-dropdown';
 
+const defaultOptions = {
+  value: '',
+  label: '',
+};
+
 const QAForm = () => {
   const [courses, setCourses] = useState([] as ICourse[]);
   const [grades, setGrades] = useState([] as IGrade[]);
-  const [formControls, setFormControls] = useState({
-    userEmail: {
-      value: '',
-    },
-    course: {
-      value: '',
-      label: '',
-    },
-    theme: {
-      value: '',
-      label: '',
-    },
-    question: {
-      value: '',
-    },
-    grade: {
-      value: '',
-      label: '',
-    },
-    anon: true,
-  });
+
+  const [userEmail, setUserEmail] = useState('' as string);
+  const [question, setQuestion] = useState('' as string);
+
+  const [course, setCourse] = useState(defaultOptions as Option);
+  const [theme, setTheme] = useState(defaultOptions as Option);
+  const [grade, setGrade] = useState(defaultOptions as Option);
+  const [anon, setAnon] = useState(true as boolean);
 
   useEffect(() => {
     getCourseList().then(setCourses);
@@ -41,39 +33,16 @@ const QAForm = () => {
   }, []);
 
   const handleSubmit = () => {
-    const question: IQuestion = {
-      userEmail: formControls.userEmail.value,
-      grade: Number(formControls.grade.value),
-      courseID: Number(formControls.course.value),
-      theme: Number(formControls.theme.value),
-      question: formControls.question.value,
-      anon: formControls.anon,
+    const questionForm: IQuestion = {
+      userEmail,
+      grade: Number(grade.value),
+      courseID: Number(course.value),
+      theme: Number(theme.value),
+      question,
+      anon,
     };
     // TODO: post question
-    postQuestion(question).then(data => console.log(data));
-  };
-
-  const toggleAnon = () => {
-    const tmpFormControls = formControls;
-    tmpFormControls.anon = !tmpFormControls;
-    setFormControls(tmpFormControls);
-  };
-
-  const handleChange = (event, type) => {
-    const tmpFormControls = formControls;
-    let label, value;
-    if (type === 'userEmail' || type === 'question') {
-      value = event.target.value;
-      tmpFormControls[type] = { value };
-    } else {
-      label = event.label;
-      value = event.value;
-      tmpFormControls[type] = {
-        label,
-        value,
-      };
-    }
-    setFormControls(tmpFormControls);
+    postQuestion(questionForm).then(data => console.log(data));
   };
 
   const getCourseOptions = (): Option[] => {
@@ -86,9 +55,7 @@ const QAForm = () => {
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenCourse = courses.filter(
-      course => course.name === formControls.course.label,
-    )[0]; // Will always only be one entry in array
+    const chosenCourse = courses.filter(c => c.name === course.label)[0]; // Will always only be one entry in array
     if (chosenCourse) {
       return chosenCourse.themes.map(theme => {
         return {
@@ -118,36 +85,42 @@ const QAForm = () => {
           <Dropdown
             placeholder={'Velg fag'}
             options={getCourseOptions()}
-            value={formControls.course.value && formControls.course}
-            onChange={event => handleChange(event, 'course')}
+            value={course.value && course}
+            onChange={event =>
+              setCourse({ value: event.value, label: event.label })
+            }
           />
           <Dropdown
-            disabled={!formControls.course.value}
+            disabled={!course.value}
             placeholder={'Velg undertema'}
             options={getThemeOptions()}
-            value={formControls.theme.value && formControls.theme}
-            onChange={event => handleChange(event, 'theme')}
+            value={theme.value && theme}
+            onChange={event =>
+              setTheme({ value: event.value, label: event.label })
+            }
           />
           <label className={'form--label'}>Klassetrinn:</label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
             options={getGradeOptions()}
-            value={formControls.grade.value && formControls.grade}
-            onChange={event => handleChange(event, 'grade')}
+            value={grade.value && grade}
+            onChange={event =>
+              setGrade({ value: event.value, label: event.label })
+            }
           />
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
             }
             className={'textarea'}
-            value={formControls.question.value}
-            onChange={event => handleChange(event, 'question')}
+            value={question}
+            onChange={event => setQuestion(event.target.value)}
           />
           <label className={'form--label'}>E-post:</label>
           <input
             className={'email'}
-            value={formControls.userEmail.value}
-            onChange={event => handleChange(event, 'userEmail')}
+            value={userEmail}
+            onChange={event => setUserEmail(event.target.value)}
             type="email"
             name={'email'}
           />
@@ -155,8 +128,8 @@ const QAForm = () => {
             <label>
               <input
                 type="checkbox"
-                checked={formControls.anon}
-                onChange={() => toggleAnon()}
+                checked={anon}
+                onChange={() => setAnon(!anon)}
               />
               Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
             </label>
