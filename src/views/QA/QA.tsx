@@ -44,10 +44,12 @@ export const QA = (props: IProps) => {
       : ('' as string),
   );
   const [subject, setSubject] = useState(getDefaultOptions(
-    'subjectId',
+    'subjectID',
   ) as Option);
   const [grade, setGrade] = useState(getDefaultOptions('grade') as Option);
-  const [filter, setFilter] = useState(getDefaultOptions('filter') as Option);
+  const [orderByDate, setOrderByDate] = useState(getDefaultOptions(
+    'filter',
+  ) as Option);
 
   //Function removing empty fields from query object
   const removeFalsyFields = obj => {
@@ -63,9 +65,9 @@ export const QA = (props: IProps) => {
   const handleSubmit = () => {
     let queryObject = {
       searchKey: search,
-      subjectId: Number(subject.value),
-      grade: grade.value,
-      filter: Number(filter.value),
+      subjectID: Number(subject.value),
+      grade: Number(grade.value),
+      orderByDate: orderByDate.value.toLocaleLowerCase() == 'true',
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     props.history.push({ pathname: '/questions', search: queryString });
@@ -93,17 +95,18 @@ export const QA = (props: IProps) => {
     return [
       {
         label: 'Dato',
-        value: '1',
+        value: 'true',
       },
       {
         label: 'Relevans',
-        value: '2',
+        value: 'false',
       },
     ];
   };
 
   const getGradeOptions = (): Option[] => {
     return grades.map(grade => {
+      console.log(grade);
       return {
         value: grade.id.toString(),
         label: grade.grade,
@@ -147,9 +150,14 @@ export const QA = (props: IProps) => {
             className={'searchcontainer--input--subjectselector'}
             placeholder={'Sorter etter'}
             options={getFilterOptions()}
-            value={(filter.value && filter.label && filter) || ''}
+            value={
+              (orderByDate.value && orderByDate.label && orderByDate) || ''
+            }
             onChange={event =>
-              setFilter({ value: event.value, label: event.label })
+              setOrderByDate({
+                value: orderByDate.value === 'true' ? 'false' : 'true',
+                label: event.label,
+              })
             }
           />
         </form>

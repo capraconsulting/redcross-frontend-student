@@ -1,4 +1,9 @@
 import React from 'react';
+
+//Services
+import { NorwegianDate } from '../../../services/date-service';
+
+//Styles
 import '../../../styles/QuestionPage.less';
 
 interface IProps {
@@ -8,16 +13,9 @@ interface IProps {
 
 export const SectionMetadata = (props: IProps) => {
   const { subject, questionDate } = props;
-  const date = new Date(questionDate || '');
   return (
     <div className="metadata">
-      {subject +
-        ', ' +
-        date.getDate() +
-        '.' +
-        (date.getMonth() + 1) +
-        '.' +
-        date.getFullYear()}
+      {subject} {NorwegianDate(new Date(questionDate || ''))}
     </div>
   );
 };
