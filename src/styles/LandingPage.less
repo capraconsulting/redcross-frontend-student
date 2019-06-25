@@ -167,12 +167,37 @@
 
 .help {
   margin: 50px 60px;
-
+  border-bottom: solid 1px black;
   &--image {
-    border-bottom: solid 1px black;
     width: 100%;
     margin: 10px auto 20px;
     display: block;
     max-width: 335px;
+  }
+}
+
+.volunteer {
+  &--header {
+    font-size: 2.5rem;
+    color: @hero-black;
+  }
+
+  &--text {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    color: @hero-black;
+    &--colored {
+      color: @secondary-color;
+      line-height: 1.5;
+    }
+  }
+
+  &--image {
+    margin: 20px auto;
+    width: 80%;
+    position: relative;
+    &--content {
+      width: 100%;
+    }
   }
 }

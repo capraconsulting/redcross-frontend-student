@@ -36,6 +36,7 @@ const SectionMestring = () => {
           </a>
         </div>
       </div>
+      <div></div>
       <img
         src={require('../../../assets/images/figure_2.svg')}
         className="help--image"
