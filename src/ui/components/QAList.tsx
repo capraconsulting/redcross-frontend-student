@@ -45,7 +45,8 @@ const QAList = (questions: IQuestion[]) => {
   } else {
     return (
       <div>
-        Fant du ikke det du lette etter? <a href="#">Still et spørsmål</a>
+        Fant du ikke det du lette etter?{' '}
+        <a href="/questions/new">Still et spørsmål</a>
       </div>
     );
   }
