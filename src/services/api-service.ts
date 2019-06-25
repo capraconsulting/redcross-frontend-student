@@ -23,7 +23,7 @@ export function getGradeList(): Promise<IGrade[]> {
 
 export function getCourseList(): Promise<ICourse[]> {
   return api
-    .get('courses')
+    .get('subjects')
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }

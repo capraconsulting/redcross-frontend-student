@@ -82,7 +82,7 @@ export const QA = (props: IProps) => {
     return courses.map(course => {
       return {
         value: course.id.toString(),
-        label: course.name,
+        label: course.subject,
       };
     });
   };

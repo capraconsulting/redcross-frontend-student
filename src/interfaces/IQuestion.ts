@@ -1,12 +1,16 @@
+import { string } from 'prop-types';
+
 export default interface IQuestion {
   id?: number;
   title?: string;
   userEmail?: string;
-  question: string;
+  questionText: string;
   answer?: string;
-  grade: number;
+  studentGrade: number;
   questionDate?: string;
+  answerDate?: string;
   courseID: number;
   theme: number;
   anon?: boolean;
+  subject?: string;
 }

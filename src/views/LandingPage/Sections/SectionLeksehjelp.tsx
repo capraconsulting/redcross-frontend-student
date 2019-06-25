@@ -25,7 +25,11 @@ const SectionLeksehjelp = () => {
   const getCourseOptions = (): Option[] => {
     let courseOptions: Option[] = [];
     courses.map(course => {
-      courseOptions.push({ value: course.id.toString(), label: course.name });
+      console.log(course);
+      courseOptions.push({
+        value: course.id.toString(),
+        label: course.subject,
+      });
     });
     return courseOptions;
   };
