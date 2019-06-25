@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import '../../../styles/QuestionPage.less';
 
-interface IState {
-  feedback: string;
-}
-
 interface IProps {
   questionId: number;
 }
@@ -25,11 +21,6 @@ export const SectionFeedback = (props: IProps) => {
       */
   };
 
-  const handleChange = event => {
-    let { value } = event.target;
-    setFeedback(value);
-  };
-
   return (
     <div className="feedback">
       <div className="feedback--form">
@@ -38,7 +29,7 @@ export const SectionFeedback = (props: IProps) => {
           placeholder="Du kan stille oss ett oppfølgningspørmsål, eller be oss utdype om noe var uklart i svaret."
           rows={8}
           className="feedback--form--textarea"
-          onChange={handleChange}
+          onChange={event => setFeedback(event.target.value)}
         ></textarea>
         <button className="feedback--form--button" onClick={handleSubmit}>
           Send

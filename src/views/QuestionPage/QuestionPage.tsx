@@ -33,7 +33,7 @@ const QuestionPage = (props: IProps, state: IState) => {
 
   useEffect(() => {
     getQuestion(`questions/${props.questionId}`).then(res => {
-      res.data ? setQuestion(res.data) : setError(res);
+      res.data ? setQuestion(res.data[0]) : setError(res);
     });
   }, []);
 
@@ -44,12 +44,12 @@ const QuestionPage = (props: IProps, state: IState) => {
           <div className="showAnswer">
             <h1 className="showAnswer--header">{question.title}</h1>
             <SectionMetadata
-              date={question.questionDate}
-              course={question.courseID}
+              questionDate={question.questionDate}
+              subject={question.subject}
             />
             <SectionQuestion
-              question={question.question}
-              grade={question.grade}
+              questionText={question.questionText}
+              studentGrade={question.studentGrade}
             />
             <SectionAnswer answer={question.answer} />
           </div>

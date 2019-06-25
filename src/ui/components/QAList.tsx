@@ -22,7 +22,7 @@ const QAList = (questions: IQuestion[]) => {
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
                   <p>
-                    {question.courseID}, {question.grade},{' '}
+                    {question.subjectId}, {question.studentGrade},{' '}
                     {NorwegianDate(question.questionDate)}
                   </p>
                 </AccordionItemButton>
@@ -30,7 +30,7 @@ const QAList = (questions: IQuestion[]) => {
               <AccordionItemPanel>
                 <p>
                   {/*Question content*/}
-                  {question.question}
+                  {question.questionText}
                 </p>
 
                 <hr />
@@ -45,7 +45,8 @@ const QAList = (questions: IQuestion[]) => {
   } else {
     return (
       <div>
-        Fant du ikke det du lette etter? <a href="#">Still et spørsmål</a>
+        Fant du ikke det du lette etter?{' '}
+        <a href="/questions/new">Still et spørsmål</a>
       </div>
     );
   }

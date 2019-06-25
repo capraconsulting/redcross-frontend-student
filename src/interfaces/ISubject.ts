@@ -3,8 +3,8 @@ interface ITheme {
   theme: string;
 }
 
-export default interface ICourse {
+export default interface ISubject {
   id: number;
-  name: string;
   themes: ITheme[];
+  subject: string;
 }

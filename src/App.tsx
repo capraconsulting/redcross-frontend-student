@@ -9,8 +9,8 @@ import AppRouter from './Router';
 
 export const App = () => {
   //Constructing state
-  const [time, setTime] = useState(new Date());
-  const [isOpen] = useState(false);
+  const [time, setTime] = useState(new Date() as Date);
+  const [isOpen] = useState(false as boolean);
 
   useEffect(() => {
     setInterval(() => setTime(new Date()), 10 * 1000);
