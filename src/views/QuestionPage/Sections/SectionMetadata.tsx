@@ -2,7 +2,7 @@ import React from 'react';
 import '../../../styles/QuestionPage.less';
 
 interface IProps {
-  course: any;
+  course;
   date?: string;
 }
 

@@ -18,8 +18,8 @@ import {
 import QAList from '../../ui/components/QAList';
 
 interface IProps {
-  location?: any;
-  history?: any;
+  location;
+  history;
 }
 
 export const QA = (props: IProps) => {
