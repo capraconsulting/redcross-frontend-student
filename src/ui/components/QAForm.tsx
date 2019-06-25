@@ -61,7 +61,7 @@ const QAForm = () => {
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenSubject = subjects.filter(c => c.name === subject.label)[0]; // Will always only be one entry in array
+    const chosenSubject = subjects.filter(c => c.subject === subject.label)[0]; // Will always only be one entry in array
     if (chosenSubject) {
       return chosenSubject.themes.map(theme => {
         return {
