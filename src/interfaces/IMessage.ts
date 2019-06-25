@@ -1,5 +1,5 @@
 export default interface IMessage {
   author: string;
-  message: string;
+  message: string | File;
   datetime: Date;
 }

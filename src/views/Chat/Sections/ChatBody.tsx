@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import IMessage from '../../../interfaces/IMessage';
 import '../../../styles/ChatBody';
+import { file } from '@babel/types';
 
 interface IProps {
   messages: IMessage[];
   send;
+  sendFile;
 }
 
 const ChatBody = (props: IProps) => {
@@ -32,6 +34,32 @@ const ChatBody = (props: IProps) => {
     }
   };
 
+  const uploadFile = () => {
+    const fileInput = document.getElementById('msg-file-input');
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
+  const sendFile = file => {
+    const msg: IMessage = {
+      author,
+      message: file,
+      datetime: new Date()
+    };
+    props.send(msg);
+  };
+
+  const downloadFile = file => {
+    const blob: Blob = file[0];
+    const name: string = blob['name'];
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a['download'] = name;
+    a.click();
+  };
+
   return (
     <div className={'cb'}>
       <div className={'display'} id="message-display">
@@ -47,13 +75,14 @@ const ChatBody = (props: IProps) => {
       <div className={'message-form-container'}>
         <form className={'message-form'}>
           <input
+            onChange={event => sendFile(event.target.files)}
             type="file"
             name="attachment"
-            id="file-input"
+            id="msg-file-input"
             accept="image/*|.pdf|.doc|.docx"
             className="file"
           />
-          <button type="button" className="upload">
+          <button type="button" className="upload" onClick={() => uploadFile()}>
             <span className="plus">+</span>
             <div className="tooltip">
               Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller

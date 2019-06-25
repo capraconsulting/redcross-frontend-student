@@ -57,6 +57,12 @@
           display: block;
           transform: translate(0, -100%);
         }
+        &:hover {
+          background-color: @link-hover-color;
+        }
+        &:focus {
+          outline: none;
+        }
       }
       > .file {
         display: none;
@@ -80,4 +86,11 @@
 
 .arrow {
   fill: @secondary-color;
+  &:hover {
+    fill: @link-hover-color;
+  }
+}
+
+.hidden {
+  display: none;
 }
