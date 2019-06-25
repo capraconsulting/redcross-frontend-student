@@ -21,6 +21,7 @@ const SectionFrivillig = () => {
         <img
           src={require('../../../assets/images/volunteers_1.jpg')}
           className="volunteer--image--content"
+          alt="frivillig"
         ></img>
       </div>
     </div>

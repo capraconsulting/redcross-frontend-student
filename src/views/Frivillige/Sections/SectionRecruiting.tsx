@@ -3,28 +3,47 @@ import React from 'react';
 //Styles
 import '../../../styles/LandingPage.less';
 
-const SectionFrivillig = () => {
+const SectionRecruiting = () => {
   return (
-    <div className="volunteer">
-      <div className="volunteer--header">Våre frivillige</div>
-      <p className="volunteer--text" id="volunteer--text">
-        På samme måte som de fleste andre aktiviteter i Røde Kors, er Digital
-        Leksehjelp drevet av frivillige. Våre frivillige er trygge
-        voksenpersoner som bruker sine fagkunnskaper og sitt engasjement til å
-        gjøre elevers skolehverdag bedre og legge til rette for mestring,
-        motivasjon og lærelyst.{' '}
-      </p>
-      <a href="/frivillige" className="volunteer--text--colored">
-        Les mer...
-      </a>
-      <div className="volunteer--image">
+    <div className="volunteersPage--section">
+      <div className="volunteersPage--section--div">
         <img
-          src={require('../../../assets/images/volunteers_1.jpg')}
+          src={require('../../../assets/images/volunteers_3.jpg')}
           className="volunteer--image--content"
+          alt="frivillig"
         ></img>
+      </div>
+      <div className="volunteersPage--section--div">
+        <div className="volunteer--header">Våre frivillige</div>
+        <p className="volunteer--text" id="volunteer--text">
+          Vi trenger stadig nye frivillige med ulik bakgrunn. Du trenger ikke
+          være ekspert, men en som er glad i fag, og som liker å formidle,
+          motivere og veilede. Har du lyst til å bidra, les mer og meld deg som
+          frivillig på{' '}
+          <a
+            href="https://www.rodekors.no"
+            className="volunteer--text--colored"
+          >
+            www.rodekors.no
+          </a>
+        </p>
+        <div className="listHeader">Kriterier</div>
+        <ul>
+          <li>Du er over 20 år</li>
+          <li>
+            Har påbegynt høyere utdanning (høyskole, fagskole, universitet)
+          </li>
+          <li>Begrenset politiattest</li>
+          <li>Gjennomfører obligatoriske kurs i regi av Røde Kors</li>
+          <li>Møter opp fast 2 timer i uken</li>
+          <li>
+            Forplikter deg til å være aktiv frivillig i Digital Leksehjelp i
+            minst ett år.
+          </li>
+        </ul>
       </div>
     </div>
   );
 };
 
-export default SectionFrivillig;
+export default SectionRecruiting;

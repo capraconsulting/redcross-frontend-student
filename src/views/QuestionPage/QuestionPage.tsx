@@ -11,11 +11,13 @@ import { getQuestion } from '../../services/api-service';
 import IQuestion from '../../interfaces/IQuestion';
 
 // Sections
-import SectionQuestion from './Sections/SectionQuestion';
-import SectionAnswer from './Sections/SectionAnswer';
-import SectionMetadata from './Sections/SectionMetadata';
-import SectionServiceDescription from './Sections/SectionServiceDescription';
-import SectionFeedback from './Sections/SectionFeedback';
+import {
+  SectionQuestion,
+  SectionAnswer,
+  SectionMetadata,
+  SectionServiceDescription,
+  SectionFeedback,
+} from './Sections';
 
 interface IState {
   question: IQuestion;

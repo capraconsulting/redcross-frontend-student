@@ -5,11 +5,13 @@ import React from 'react';
 import '../../styles/LandingPage.less';
 
 // Sections
-import SectionHero from './Sections/SectionHero';
-import SectionQuestions from './Sections/SectionQuestions';
-import SectionLeksehjelp from './Sections/SectionLeksehjelp';
-import SectionMestring from './Sections/SectionMestring';
-import SectionFrivillig from './Sections/SectionFrivillig';
+import {
+  SectionHero,
+  SectionQuestions,
+  SectionLeksehjelp,
+  SectionMestring,
+  SectionFrivillig,
+} from './Sections';
 
 const LandingPage = () => {
   return (
