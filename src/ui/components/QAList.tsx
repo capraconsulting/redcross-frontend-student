@@ -22,7 +22,7 @@ const QAList = (questions: IQuestion[]) => {
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
                   <p>
-                    {question.courseID}, {question.studentGrade},{' '}
+                    {question.subjectId}, {question.studentGrade},{' '}
                     {NorwegianDate(question.questionDate)}
                   </p>
                 </AccordionItemButton>

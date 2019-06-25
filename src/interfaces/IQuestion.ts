@@ -1,5 +1,3 @@
-import { string } from 'prop-types';
-
 export default interface IQuestion {
   id?: number;
   title?: string;
@@ -9,7 +7,7 @@ export default interface IQuestion {
   studentGrade: number;
   questionDate?: string;
   answerDate?: string;
-  courseID: number;
+  subjectId: number;
   theme: number;
   anon?: boolean;
   subject?: string;

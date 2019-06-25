@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import Dropdown, { Option } from 'react-dropdown';
+
+// Interfaces
 import IQuestion from '../../interfaces/IQuestion';
-import ICourse from '../../interfaces/ICourse';
+import ISubject from '../../interfaces/ISubject';
 import IGrade from '../../interfaces/IGrade';
-import '../../styles/QAForm.less';
+
+//Services
 import {
   postQuestion,
   getGradeList,
-  getCourseList,
+  getSubjectList,
 } from '../../services/api-service';
-import Dropdown, { Option } from 'react-dropdown';
+
+//Styles
+import '../../styles/QAForm.less';
 
 const defaultOptions = {
   value: '',
@@ -16,19 +22,19 @@ const defaultOptions = {
 };
 
 const QAForm = () => {
-  const [courses, setCourses] = useState([] as ICourse[]);
+  const [subjects, setSubjects] = useState([] as ISubject[]);
   const [grades, setGrades] = useState([] as IGrade[]);
 
   const [userEmail, setUserEmail] = useState('' as string);
   const [questionText, setQuestion] = useState('' as string);
 
-  const [course, setCourse] = useState(defaultOptions as Option);
+  const [subject, setSubject] = useState(defaultOptions as Option);
   const [theme, setTheme] = useState(defaultOptions as Option);
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [anon, setAnon] = useState(true as boolean);
 
   useEffect(() => {
-    getCourseList().then(setCourses);
+    getSubjectList().then(setSubjects);
     getGradeList().then(setGrades);
   }, []);
 
@@ -36,7 +42,7 @@ const QAForm = () => {
     const questionForm: IQuestion = {
       userEmail,
       studentGrade: Number(studentGrade.value),
-      courseID: Number(course.value),
+      subjectId: Number(subject.value),
       theme: Number(theme.value),
       questionText,
       anon,
@@ -45,19 +51,19 @@ const QAForm = () => {
     postQuestion(questionForm).then(data => console.log(data));
   };
 
-  const getCourseOptions = (): Option[] => {
-    return courses.map(course => {
+  const getSubjectOptions = (): Option[] => {
+    return subjects.map(subject => {
       return {
-        value: course.id.toString(),
-        label: course.subject,
+        value: subject.id.toString(),
+        label: subject.subject,
       };
     });
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenCourse = courses.filter(c => c.name === course.label)[0]; // Will always only be one entry in array
-    if (chosenCourse) {
-      return chosenCourse.themes.map(theme => {
+    const chosenSubject = subjects.filter(c => c.name === subject.label)[0]; // Will always only be one entry in array
+    if (chosenSubject) {
+      return chosenSubject.themes.map(theme => {
         return {
           value: theme.id.toString(),
           label: theme.theme,
@@ -84,14 +90,14 @@ const QAForm = () => {
           <label className={'form--label'}>Tema:</label>
           <Dropdown
             placeholder={'Velg fag'}
-            options={getCourseOptions()}
-            value={course.value && course}
+            options={getSubjectOptions()}
+            value={subject.value && subject}
             onChange={event =>
-              setCourse({ value: event.value, label: event.label })
+              setSubject({ value: event.value, label: event.label })
             }
           />
           <Dropdown
-            disabled={!course.value}
+            disabled={!subject.value}
             placeholder={'Velg undertema'}
             options={getThemeOptions()}
             value={theme.value && theme}

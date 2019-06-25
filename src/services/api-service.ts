@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
-import { IQuestion, IGrade, ICourse, IStatus } from '../interfaces/index';
+import { IQuestion, IGrade, ISubject, IStatus } from '../interfaces/index';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,7 +9,7 @@ const api = axios.create({
 
 export function getQuestionList(query): Promise<IQuestion[]> {
   return api
-    .get(`questions`)
+    .get(`questions/public`)
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
@@ -21,16 +21,16 @@ export function getGradeList(): Promise<IGrade[]> {
     .catch(e => console.error(e.getMessage));
 }
 
-export function getCourseList(): Promise<ICourse[]> {
+export function getSubjectList(): Promise<ISubject[]> {
   return api
     .get('subjects')
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
 
-export function getCourseStatus(id: string): Promise<IStatus[]> {
+export function getSubjectStatus(id: string): Promise<IStatus[]> {
   return api
-    .get(`courseStatus/${id}`)
+    .get(`subject/status/${id}`)
     .then(res => res.data.status)
     .catch(e => console.error(e.getMessage));
 }

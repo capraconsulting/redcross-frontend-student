@@ -4,13 +4,13 @@ import qs from 'query-string';
 
 //Interfaces
 import IQuestion from '../../interfaces/IQuestion';
-import ICourse from '../../interfaces/ICourse';
+import ISubject from '../../interfaces/ISubject';
 import IGrade from '../../interfaces/IGrade';
 
 //Services
 import {
   getQuestionList,
-  getCourseList,
+  getSubjectList,
   getGradeList,
 } from '../../services/api-service';
 
@@ -26,7 +26,7 @@ export const QA = (props: IProps) => {
   //Fetched questions
   const [questions, setQuestions] = useState([] as IQuestion[]);
   //Dropdown alternatives
-  const [courses, setCourses] = useState([] as ICourse[]);
+  const [subjects, setSubjects] = useState([] as ISubject[]);
   const [grades, setGrades] = useState([] as IGrade[]);
 
   //Parsed query parameter string
@@ -34,7 +34,6 @@ export const QA = (props: IProps) => {
 
   //Returns option to be filled out based on query params
   const getDefaultOptions = type => {
-    //return values[type] ? {value: values[type, label: courses[values[type]]]}
     return { value: values[type] || '' };
   };
 
@@ -44,7 +43,9 @@ export const QA = (props: IProps) => {
       ? (values.searchKey as string)
       : ('' as string),
   );
-  const [course, setCourse] = useState(getDefaultOptions('courseId') as Option);
+  const [subject, setSubject] = useState(getDefaultOptions(
+    'subjectId',
+  ) as Option);
   const [grade, setGrade] = useState(getDefaultOptions('grade') as Option);
   const [filter, setFilter] = useState(getDefaultOptions('filter') as Option);
 
@@ -62,27 +63,28 @@ export const QA = (props: IProps) => {
   const handleSubmit = () => {
     let queryObject = {
       searchKey: search,
-      courseId: Number(course.value),
+      subjectId: Number(subject.value),
       grade: grade.value,
       filter: Number(filter.value),
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     props.history.push({ pathname: '/questions', search: queryString });
     // note that `search` automatically prepends a question mark
+    console.log(queryString);
     getQuestionList(queryString).then(setQuestions);
   };
 
   useEffect(() => {
-    getCourseList().then(setCourses);
+    getSubjectList().then(setSubjects);
     getGradeList().then(setGrades);
     handleSubmit();
   }, []);
 
-  const getCourseOptions = (): Option[] => {
-    return courses.map(course => {
+  const getSubjectOptions = (): Option[] => {
+    return subjects.map(subject => {
       return {
-        value: course.id.toString(),
-        label: course.subject,
+        value: subject.id.toString(),
+        label: subject.subject,
       };
     });
   };
@@ -126,10 +128,10 @@ export const QA = (props: IProps) => {
           <Dropdown
             className={'searchcontainer--input--gradeselector'}
             placeholder={'Velg fag'}
-            options={getCourseOptions()}
-            value={(course.value && course.label && course) || ''}
+            options={getSubjectOptions()}
+            value={(subject.value && subject.label && subject) || ''}
             onChange={event =>
-              setCourse({ value: event.value, label: event.label })
+              setSubject({ value: event.value, label: event.label })
             }
           />
           <Dropdown
