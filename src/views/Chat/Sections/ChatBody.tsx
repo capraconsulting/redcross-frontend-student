@@ -1,13 +1,11 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import ChatMessage from './ChatMessage';
 import IMessage from '../../../interfaces/IMessage';
 import '../../../styles/ChatBody';
-import { file } from '@babel/types';
 
 interface IProps {
   messages: IMessage[];
   send;
-  sendFile;
 }
 
 const ChatBody = (props: IProps) => {
@@ -42,10 +40,11 @@ const ChatBody = (props: IProps) => {
   };
 
   const sendFile = file => {
+    console.log(file);
     const msg: IMessage = {
       author,
       message: file,
-      datetime: new Date()
+      datetime: new Date(),
     };
     props.send(msg);
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import IMessage from '../../../interfaces/IMessage';
 import '../../../styles/ChatMessage.less';
-import { NorwegianDate, NorwegianTime } from '../../../services/date-service';
+import { NorwegianTime } from '../../../services/date-service';
 
 interface IProps {
   message: IMessage;
@@ -12,7 +12,9 @@ const ChatMessage = (props: IProps) => {
     props.message.author.toLowerCase() === 'student' ? 'self' : 'other';
 
   const downloadFile = file => {
-    const blob: Blob = file;
+    const blob: Blob = new File([file], file.name,{
+      type: file.type,
+    });
     const name: string = blob['name'];
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -30,18 +32,23 @@ const ChatMessage = (props: IProps) => {
       );
     } else {
       return (
-        <div className={`cm--${authorType} cm--download`} onClick={() => downloadFile(props.message.message[0])}>
-          <p
-            className={`cm--message`}
-          >
-            <span className='cm--file-name'>{props.message.message[0].name} {' | '}</span>
-            <span className='cm--file-size'>{(props.message.message[0].size / 1000000).toPrecision(3)} MB</span>
+        <div
+          className={`cm--${authorType} cm--download`}
+          onClick={() => downloadFile(props.message.message[0])}
+        >
+          <p className={`cm--message`}>
+            <span className="cm--file-name">
+              {props.message.message[0].name} {' | '}
+            </span>
+            <span className="cm--file-size">
+              {(props.message.message[0].size / 1000000).toPrecision(3)} MB
+            </span>
           </p>
-            <img
-              className="svg-download"
-              src={require('../../../assets/images/download.svg')}
-              alt=""
-            />
+          <img
+            className="svg-download"
+            src={require('../../../assets/images/download.svg')}
+            alt=""
+          />
         </div>
       );
     }

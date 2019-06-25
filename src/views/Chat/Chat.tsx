@@ -12,11 +12,9 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on('message', message => {
+      console.log(message.message);
       setMessages(messages => [...messages, message]);
     });
-    socket.on('file', file => {
-      console.log(file[0]);
-    })
   }, []);
 
   useEffect(() => {
@@ -28,12 +26,7 @@ const Chat = () => {
 
   const send = message => {
     socket.emit('message', message, '1');
-    console.log(message);
     setMessages(messages => [...messages, message]);
-  };
-
-  const sendFile = file => {
-    socket.emit('file', file);
   };
 
   return (
@@ -43,7 +36,7 @@ const Chat = () => {
       <button onClick={() => socket.emit('join room', '1')}>
         Join temporary testing room
       </button>
-      <ChatBody messages={messages} send={send} sendFile={sendFile} />
+      <ChatBody messages={messages} send={send}/>
     </div>
   );
 };
