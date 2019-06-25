@@ -20,11 +20,11 @@ const QAForm = () => {
   const [grades, setGrades] = useState([] as IGrade[]);
 
   const [userEmail, setUserEmail] = useState('' as string);
-  const [question, setQuestion] = useState('' as string);
+  const [questionText, setQuestion] = useState('' as string);
 
   const [course, setCourse] = useState(defaultOptions as Option);
   const [theme, setTheme] = useState(defaultOptions as Option);
-  const [grade, setGrade] = useState(defaultOptions as Option);
+  const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [anon, setAnon] = useState(true as boolean);
 
   useEffect(() => {
@@ -35,10 +35,10 @@ const QAForm = () => {
   const handleSubmit = () => {
     const questionForm: IQuestion = {
       userEmail,
-      grade: Number(grade.value),
+      studentGrade: Number(studentGrade.value),
       courseID: Number(course.value),
       theme: Number(theme.value),
-      question,
+      questionText,
       anon,
     };
     // TODO: post question
@@ -103,7 +103,7 @@ const QAForm = () => {
           <Dropdown
             placeholder={'Velg klassetrinn'}
             options={getGradeOptions()}
-            value={grade.value && grade}
+            value={studentGrade.value && studentGrade}
             onChange={event =>
               setGrade({ value: event.value, label: event.label })
             }
@@ -113,7 +113,7 @@ const QAForm = () => {
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
             }
             className={'textarea'}
-            value={question}
+            value={questionText}
             onChange={event => setQuestion(event.target.value)}
           />
           <label className={'form--label'}>E-post:</label>

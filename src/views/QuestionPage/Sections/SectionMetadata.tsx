@@ -2,22 +2,22 @@ import React from 'react';
 import '../../../styles/QuestionPage.less';
 
 interface IProps {
-  course;
-  date: string;
+  subject;
+  questionDate?: string;
 }
 
 export const SectionMetadata = (props: IProps) => {
-  const { course, date } = props;
-  const d = new Date(date);
+  const { subject, questionDate } = props;
+  const date = new Date(questionDate || '');
   return (
     <div className="metadata">
-      {course +
+      {subject +
         ', ' +
-        d.getDate() +
+        date.getDate() +
         '.' +
-        (d.getMonth() + 1) +
+        (date.getMonth() + 1) +
         '.' +
-        d.getFullYear()}
+        date.getFullYear()}
     </div>
   );
 };
