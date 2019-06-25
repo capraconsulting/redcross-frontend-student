@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import openSocket from 'socket.io-client';
-import { ChatBody } from '../../ui/components';
+import ChatBody from './Sections/ChatBody';
+import ChatHeader from './Sections/ChatHeader';
 import IMessage from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
 
@@ -15,6 +16,13 @@ const Chat = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const display = document.querySelector('.display');
+    if (display) {
+      display.scrollTo(0, display.scrollHeight);
+    }
+  }, [messages]);
+
   const send = message => {
     socket.emit('message', message, '1');
     console.log(message);
@@ -23,6 +31,7 @@ const Chat = () => {
 
   return (
     <div className={'chat'}>
+      <ChatHeader connectedWith='Caroline Sandsbråten' course='Engelsk'/>
       {/*This button is temporary, only to join rooms while we dont have a proper queue*/}
       <button onClick={() => socket.emit('join room', '1')}>
         Join temporary testing room
