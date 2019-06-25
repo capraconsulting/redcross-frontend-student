@@ -50,16 +50,6 @@ const ChatBody = (props: IProps) => {
     props.send(msg);
   };
 
-  const downloadFile = file => {
-    const blob: Blob = file[0];
-    const name: string = blob['name'];
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a['download'] = name;
-    a.click();
-  };
-
   return (
     <div className={'cb'}>
       <div className={'display'} id="message-display">

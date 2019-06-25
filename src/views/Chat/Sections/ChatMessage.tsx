@@ -30,12 +30,19 @@ const ChatMessage = (props: IProps) => {
       );
     } else {
       return (
-        <p
-          onClick={() => downloadFile(props.message.message[0])}
-          className={`cm--message cm--${authorType}`}
-        >
-          {props.message.message[0].name}
-        </p>
+        <div className={`cm--${authorType} cm--download`} onClick={() => downloadFile(props.message.message[0])}>
+          <p
+            className={`cm--message`}
+          >
+            <span className='cm--file-name'>{props.message.message[0].name} {' | '}</span>
+            <span className='cm--file-size'>{(props.message.message[0].size / 1000000).toPrecision(3)} MB</span>
+          </p>
+            <img
+              className="svg-download"
+              src={require('../../../assets/images/download.svg')}
+              alt=""
+            />
+        </div>
       );
     }
   };
