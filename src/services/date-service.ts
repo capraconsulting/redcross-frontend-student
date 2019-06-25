@@ -8,3 +8,12 @@ export function NorwegianDate(date): string {
     tmpDate.getFullYear().toString()
   );
 }
+
+export function NorwegianTime(date): string {
+  const tmpDate = new Date(date);
+  return (
+    tmpDate.getHours() +
+    ':' +
+    tmpDate.getMinutes()
+  );
+}

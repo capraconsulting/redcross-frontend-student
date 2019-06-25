@@ -9,10 +9,9 @@ interface IProps {
 }
 
 const ChatBody = (props: IProps) => {
-  const [message, setMessage] = useState({
-    author: 'Deg',
-    message: '',
-  });
+  /*Only one student in each conversation. Might aswell be static as student. Atleast for now*/
+  const author = 'student';
+  const [message, setMessage] = useState('' as string);
 
   const mapMessages = () => {
     return props.messages.map((message, index) => {
@@ -22,11 +21,14 @@ const ChatBody = (props: IProps) => {
 
   const send = event => {
     event.preventDefault();
-    if (message.message.length > 0) {
-      props.send(message);
-      const tmpMsg = message;
-      tmpMsg.message = '';
-      setMessage(tmpMsg);
+    if (message.length > 0) {
+      const msg: IMessage = {
+        author,
+        message,
+        datetime: new Date(),
+      };
+      setMessage('');
+      props.send(msg);
     }
   };
 
@@ -52,13 +54,8 @@ const ChatBody = (props: IProps) => {
           <input
             className={'message-text'}
             type="textarea"
-            value={message.message}
-            onChange={event =>
-              setMessage({
-                message: event.target.value,
-                author: message.author,
-              })
-            }
+            value={message}
+            onChange={event => setMessage(event.target.value)}
           />
           <button onClick={event => send(event)} className={'send-message'}>
             <svg width="30px" height="30px" viewBox="0 0 30 30">
