@@ -26,7 +26,7 @@ const QAForm = () => {
   const [grades, setGrades] = useState([] as IGrade[]);
 
   const [userEmail, setUserEmail] = useState('' as string);
-  const [questionText, setQuestion] = useState('' as string);
+  const [questionText, setQuestionText] = useState('' as string);
 
   const [subject, setSubject] = useState(defaultOptions as Option);
   const [theme, setTheme] = useState(defaultOptions as Option);
@@ -120,7 +120,7 @@ const QAForm = () => {
             }
             className={'textarea'}
             value={questionText}
-            onChange={event => setQuestion(event.target.value)}
+            onChange={event => setQuestionText(event.target.value)}
           />
           <label className={'form--label'}>E-post:</label>
           <input
