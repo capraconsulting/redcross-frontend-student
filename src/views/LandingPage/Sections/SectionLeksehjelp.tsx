@@ -71,7 +71,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
         Få{' '}
         <a
-          onClick={() => props.history.push('frivillige')}
+          onClick={() => props.history.push('leksehjelp')}
           className="sectioncontainer--text--colored"
         >
           gratis leksehjelp
