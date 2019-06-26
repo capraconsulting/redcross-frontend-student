@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
 import '../../../styles/LandingPage.less';
@@ -13,7 +14,7 @@ import {
   getSubjectStatus,
 } from '../../../services/api-service';
 
-const SectionLeksehjelp = () => {
+const SectionLeksehjelp = (props: RouteComponentProps) => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
   const [subjectStatus, setSubjectStatus] = useState([] as IStatus[]);
   const [formControls, setFormControls] = useState({
@@ -69,7 +70,10 @@ const SectionLeksehjelp = () => {
       <div className="sectioncontainer--header">Leksehjelp</div>
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
         Få{' '}
-        <a href="/leksehjelp" className="sectioncontainer--text--colored">
+        <a
+          onClick={() => props.history.push('frivillige')}
+          className="sectioncontainer--text--colored"
+        >
           gratis leksehjelp
         </a>{' '}
         over chat eller video av våre frivillige!
@@ -93,4 +97,4 @@ const SectionLeksehjelp = () => {
   );
 };
 
-export default SectionLeksehjelp;
+export default withRouter(SectionLeksehjelp);

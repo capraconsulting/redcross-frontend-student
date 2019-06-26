@@ -16,11 +16,11 @@ import { IQuestion } from '../../../interfaces';
 //Services
 import { NorwegianDate } from '../../../services/date-service';
 
-const SectionQAList = (questions: IQuestion[]) => {
+const SectionQAList = (questions: IQuestion[], totalHits: number) => {
   /*This array can be null (before we fetch it)*/
-  return (
-    questions &&
-    questions.length > 0 && (
+  return questions && questions.length > 0 ? (
+    <div>
+      <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
           return (
@@ -48,7 +48,9 @@ const SectionQAList = (questions: IQuestion[]) => {
           );
         })}
       </Accordion>
-    )
+    </div>
+  ) : (
+    <div className="resultStatus">Søket ditt ga ingen svar</div>
   );
 };
 

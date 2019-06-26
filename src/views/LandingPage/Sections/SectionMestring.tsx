@@ -1,16 +1,16 @@
 import React from 'react';
 import Dropdown from 'react-dropdown';
-
+import { withRouter, RouteComponentProps } from 'react-router';
 // Styes
 import '../../../styles/LandingPage.less';
 
-const SectionMestring = () => {
+const SectionMestring = (props: RouteComponentProps) => {
   return (
     <div className="help">
       <div>
         <div className="mestring">
           <a
-            href="/mestring"
+            onClick={() => props.history.push(`mestring`)}
             style={{ textDecoration: 'none', color: 'black' }}
           >
             <div className="mestring--header">Mestring og motivasjon</div>
@@ -45,4 +45,4 @@ const SectionMestring = () => {
   );
 };
 
-export default SectionMestring;
+export default withRouter(SectionMestring);

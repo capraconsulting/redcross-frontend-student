@@ -1,18 +1,25 @@
 import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
 import '../../../styles/QuestionPage.less';
 
-export const SectionServiceDescription = () => {
+export const SectionServiceDescription = (props: RouteComponentProps) => {
   return (
     <div className="serviceDescription">
       <div>
         På Digital Leksehjelp kan du{' '}
-        <a href="/questions" className="serviceDescription--link">
+        <a
+          onClick={() => props.history.push('questions')}
+          className="serviceDescription--link"
+        >
           stille spørsmål
         </a>{' '}
         eller få{' '}
-        <a href="/" className="serviceDescription--link">
+        <a
+          onClick={() => props.history.push('')}
+          className="serviceDescription--link"
+        >
           direkte hjelp
         </a>{' '}
         fra en frivillig med leksene.
@@ -25,4 +32,4 @@ export const SectionServiceDescription = () => {
   );
 };
 
-export default SectionServiceDescription;
+export default withRouter(SectionServiceDescription);

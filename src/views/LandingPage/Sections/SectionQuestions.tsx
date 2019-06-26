@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
 import '../../../styles/LandingPage.less';
 
-const SectionQuestions = () => {
+const SectionQuestions = (props: RouteComponentProps) => {
   const [searchText, setSearchText] = useState('' as string);
   const [submit, setSubmit] = useState(false as boolean);
 
@@ -13,12 +14,17 @@ const SectionQuestions = () => {
       <div className="sectioncontainer--header">Spørsmål og svar</div>
       <p className="sectioncontainer--text" id="sectionquestions--text">
         Her kan du lete etter svar blant{' '}
-        <a href="/questions" className="sectioncontainer--text--colored">
+        <a
+          onClick={() => props.history.push('questions')}
+          className="sectioncontainer--text--colored"
+        >
           allerede stilte spørsmål
         </a>
-        , eller
-        <a href="questions/new" className="sectioncontainer--text--colored">
-          {' '}
+        , eller{' '}
+        <a
+          onClick={() => props.history.push('questions/new')}
+          className="sectioncontainer--text--colored"
+        >
           stille et nytt spørsmål
         </a>{' '}
         hvis du ikke finner det du lurer på!
@@ -52,4 +58,4 @@ const SectionQuestions = () => {
   );
 };
 
-export default SectionQuestions;
+export default withRouter(SectionQuestions);

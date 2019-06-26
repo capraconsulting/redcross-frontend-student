@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import { Link } from 'react-router-dom';
 import qs from 'query-string';
 
 //Interfaces
@@ -12,8 +13,9 @@ import {
   getGradeList,
 } from '../../services/api-service';
 
-//Components
+//Sections
 import { SectionHelper, SectionQAList, SectionPagination } from './Sections';
+import gradeList from './grades';
 
 interface IProps {
   location;
@@ -79,7 +81,6 @@ export const QA = (props: IProps) => {
   useEffect(() => {
     getSubjectList().then(setSubjects);
     getGradeList().then(setGrades);
-    //handleSubmit();
   }, []);
 
   useEffect(() => {
@@ -109,10 +110,10 @@ export const QA = (props: IProps) => {
   };
 
   const getGradeOptions = (): Option[] => {
-    return grades.map(grade => {
+    return gradeList.map(grade => {
       return {
-        value: grade.id.toString(),
-        label: grade.grade,
+        value: grade.gradeID,
+        label: grade.label,
       };
     });
   };
@@ -164,26 +165,34 @@ export const QA = (props: IProps) => {
             }
           />
         </form>
-        <button
-          onClick={() => handleSubmit()}
-          className={'btn btn-submit'}
-          type={'button'}
-        >
-          Send
-        </button>
+        <div className="helpText">
+          <button
+            onClick={() => handleSubmit()}
+            className={'btn btn-submit'}
+            type={'button'}
+          >
+            Send
+          </button>
+          <div>
+            Eller{' '}
+            <Link to="questions/new" className="helpText--colored">
+              still et spørsmål
+            </Link>
+          </div>
+        </div>
       </div>
     );
   };
 
   const totalHits =
-    questions && questions.length > 1 ? questions[0].totalRows : 0;
+    questions && questions.length > 0 ? questions[0].totalRows : 0;
   const pageLimit = 10;
   const pageCount = Math.ceil(totalHits / pageLimit);
 
   return (
-    <div>
+    <div className="content">
       {renderSearchForm()}
-      {questions && SectionQAList(questions)}
+      {questions && SectionQAList(questions, totalHits)}
       {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
       {SectionHelper()}
     </div>

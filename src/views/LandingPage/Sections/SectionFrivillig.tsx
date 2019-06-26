@@ -1,9 +1,10 @@
 import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
 import '../../../styles/LandingPage.less';
 
-const SectionFrivillig = () => {
+const SectionFrivillig = (props: RouteComponentProps) => {
   return (
     <div className="volunteer">
       <div className="volunteer--header">Våre frivillige</div>
@@ -14,7 +15,10 @@ const SectionFrivillig = () => {
         gjøre elevers skolehverdag bedre og legge til rette for mestring,
         motivasjon og lærelyst.{' '}
       </p>
-      <a href="/frivillige" className="volunteer--text--colored">
+      <a
+        onClick={() => props.history.push('frivillige')}
+        className="volunteer--text--colored"
+      >
         Les mer...
       </a>
       <div className="volunteer--image">
@@ -28,4 +32,4 @@ const SectionFrivillig = () => {
   );
 };
 
-export default SectionFrivillig;
+export default withRouter(SectionFrivillig);
