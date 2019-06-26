@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import ReactPaginate from 'react-paginate';
 import qs from 'query-string';
 
 //Interfaces
-import IQuestion from '../../interfaces/IQuestion';
-import ISubject from '../../interfaces/ISubject';
-import IGrade from '../../interfaces/IGrade';
-import ReactPaginate from 'react-paginate';
+import { IQuestion, ISubject, IGrade } from '../../interfaces';
 
 //Services
 import {

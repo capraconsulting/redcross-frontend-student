@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 
 // Interfaces
-import IQuestion from '../../interfaces/IQuestion';
-import ISubject from '../../interfaces/ISubject';
-import IGrade from '../../interfaces/IGrade';
+import { IQuestion, ISubject, IGrade } from '../../interfaces';
 
 //Services
 import {
