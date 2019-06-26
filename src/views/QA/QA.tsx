@@ -172,20 +172,26 @@ export const QA = (props: IProps) => {
     );
   };
 
+  //Get this with result from questions request
+  const totalHits = 99;
+  //Constant limit
+  const pageLimit = 10;
+  //Calculate pageCount frontend to show
+  const pageCount = Math.ceil(totalHits / pageLimit);
+
+  //TODO: Pull this out into seperate file when functionality is ready
   const renderPagination = () => {
     console.log(page);
     return (
       <ReactPaginate
         //Label for the previous button
-        previousLabel={page.value === '0' ? '' : '<'}
+        previousLabel={parseInt(page.value) > 0 && '<'}
         //Label for the next button
-        nextLabel={'>'}
+        nextLabel={pageCount > parseInt(page.value) + 1 && '>'}
         //Label for elipsis
         breakLabel={'..'}
-        //Classname on tag li of the ellipsis element
-        breakClassName={'pagination-component--break'}
         //Required. Total number of pages
-        pageCount={10}
+        pageCount={pageCount}
         //Required. Number of pages to display of margins
         marginPagesDisplayed={2}
         //Required. The range of pages displayed
