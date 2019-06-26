@@ -35,15 +35,3 @@ export const createFileMessage = (file: ISocketFile): IMessage => {
     createNewRoom: false,
   };
 };
-
-export const createSelectFromWaitingRoomMessage = (helpID: string): IMessage => {
-  return {
-    author: 'volounteer',
-    roomID: '',
-    uniqueID: '',
-    message: helpID,
-    datetime: new Date(0),
-    enterWaitingRoom: false,
-    createNewRoom: true
-  };
-};

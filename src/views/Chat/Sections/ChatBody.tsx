@@ -11,7 +11,6 @@ interface IProps {
 
 const ChatBody = (props: IProps) => {
   /*Only one student in each conversation. Might aswell be static as student. Atleast for now*/
-  const author = 'student';
   const [message, setMessage] = useState('' as string);
 
   const mapMessages = () => {
