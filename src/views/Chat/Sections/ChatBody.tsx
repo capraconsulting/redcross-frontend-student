@@ -24,8 +24,12 @@ const ChatBody = (props: IProps) => {
     if (message.length > 0) {
       const msg: IMessage = {
         author,
+        roomID: '',
+        uniqueID: '',
         message,
         datetime: new Date(),
+        enterWaitingRoom: false,
+        createNewRoom: false,
       };
       setMessage('');
       props.send(msg);
@@ -60,8 +64,12 @@ const ChatBody = (props: IProps) => {
       };
       const msg: IMessage = {
         author,
+        roomID: '',
+        uniqueID: '',
         message: socketFile,
         datetime: new Date(),
+        enterWaitingRoom: false,
+        createNewRoom: false,
       };
       props.send(msg);
     };
