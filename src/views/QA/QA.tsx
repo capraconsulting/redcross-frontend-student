@@ -194,7 +194,7 @@ export const QA = (props: IProps) => {
       {renderSearchForm()}
       {questions && SectionQAList(questions, totalHits)}
       {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
-      {SectionHelper()}
+      <SectionHelper />
     </div>
   );
 };
