@@ -17,7 +17,7 @@ export const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="base-flex">
       <div className="base">
         {Header({ time, isOpen })}
         <AppRouter />
