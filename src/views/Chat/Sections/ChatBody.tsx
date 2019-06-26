@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ChatMessage from './ChatMessage';
 import '../../../styles/ChatBody';
 import { ISocketFile, IMessage } from '../../../interfaces';
+import { createFileMessage, createTextMessage } from '../../../services/message-service';
 
 interface IProps {
   messages: IMessage[];
@@ -22,15 +23,7 @@ const ChatBody = (props: IProps) => {
   const send = event => {
     event.preventDefault();
     if (message.length > 0) {
-      const msg: IMessage = {
-        author,
-        roomID: '',
-        uniqueID: '',
-        message,
-        datetime: new Date(),
-        enterWaitingRoom: false,
-        createNewRoom: false,
-      };
+      const msg: IMessage = createTextMessage(message);
       setMessage('');
       props.send(msg);
     }
@@ -62,15 +55,7 @@ const ChatBody = (props: IProps) => {
         size: file.size,
         dataURL: String(fr.result),
       };
-      const msg: IMessage = {
-        author,
-        roomID: '',
-        uniqueID: '',
-        message: socketFile,
-        datetime: new Date(),
-        enterWaitingRoom: false,
-        createNewRoom: false,
-      };
+      const msg: IMessage = createFileMessage(socketFile);
       props.send(msg);
     };
     fr.readAsDataURL(file);

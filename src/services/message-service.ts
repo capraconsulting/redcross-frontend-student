@@ -1,4 +1,4 @@
-import { IMessage } from '../interfaces';
+import { IMessage, ISocketFile } from '../interfaces';
 
 export const createEnterWaitingRoomMessage = (): IMessage => {
   return {
@@ -9,6 +9,30 @@ export const createEnterWaitingRoomMessage = (): IMessage => {
     datetime: new Date(0),
     enterWaitingRoom: true,
     createNewRoom: true
+  };
+};
+
+export const createTextMessage = (message: string): IMessage => {
+  return {
+    author: 'student',
+    roomID: '',
+    uniqueID: '',
+    message,
+    datetime: new Date(),
+    enterWaitingRoom: false,
+    createNewRoom: false,
+  };
+};
+
+export const createFileMessage = (file: ISocketFile): IMessage => {
+  return {
+    author: 'student',
+    roomID: '',
+    uniqueID: '',
+    message: file,
+    datetime: new Date(),
+    enterWaitingRoom: false,
+    createNewRoom: false,
   };
 };
 
