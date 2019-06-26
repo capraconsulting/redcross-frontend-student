@@ -39,14 +39,27 @@ const ChatBody = (props: IProps) => {
     }
   };
 
-  const sendFile = file => {
-    console.log(file);
+  /*const sendFile = file => {
     const msg: IMessage = {
       author,
       message: file,
       datetime: new Date(),
     };
     props.send(msg);
+  };*/
+
+  const sendFile = file => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      console.log(fr.result);
+      const msg: IMessage = {
+        author,
+        message: String(fr.result),
+        datetime: new Date(),
+      };
+      props.send(msg);
+    };
+    fr.readAsDataURL(file[0]);
   };
 
   return (

@@ -11,8 +11,9 @@ const ChatMessage = (props: IProps) => {
   const authorType =
     props.message.author.toLowerCase() === 'student' ? 'self' : 'other';
 
-  const downloadFile = file => {
-    const blob: Blob = new File([file], file.name,{
+  /*const downloadFile = file => {
+    console.log(file);
+    const blob: File = new File([], file.name, {
       type: file.type,
     });
     const name: string = blob['name'];
@@ -21,10 +22,26 @@ const ChatMessage = (props: IProps) => {
     a.href = url;
     a['download'] = name;
     a.click();
-  };
+  };*/
 
+  const downloadFile = file => {
+
+    const a = document.createElement('a');
+    a.href = String(file);
+    a['download'] = name;
+    a.click();
+
+    /*const fr = new FileReader();
+    fr.onload = e => {
+      const a = document.createElement('a');
+      a.href = String(fr.result);
+      a['download'] = name;
+      a.click();
+    };
+    fr.readAsDataURL(file);*/
+  };
   const renderMessage = () => {
-    if (typeof props.message.message === 'string') {
+    if (typeof props.message.message !== 'string') {
       return (
         <p className={`cm--message cm--${authorType}`}>
           {props.message.message}
@@ -34,15 +51,16 @@ const ChatMessage = (props: IProps) => {
       return (
         <div
           className={`cm--${authorType} cm--download`}
-          onClick={() => downloadFile(props.message.message[0])}
+          onClick={() => downloadFile(props.message.message)}
         >
           <p className={`cm--message`}>
-            <span className="cm--file-name">
+            download
+            {/*<span className="cm--file-name">
               {props.message.message[0].name} {' | '}
             </span>
             <span className="cm--file-size">
               {(props.message.message[0].size / 1000000).toPrecision(3)} MB
-            </span>
+            </span>*/}
           </p>
           <img
             className="svg-download"
