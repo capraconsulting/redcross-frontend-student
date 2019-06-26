@@ -44,6 +44,7 @@ const QAForm = () => {
       theme: Number(theme.value),
       questionText,
       anon,
+      totalRows: 0,
     };
     // TODO: post question
     postQuestion(questionForm).then(data => console.log(data));

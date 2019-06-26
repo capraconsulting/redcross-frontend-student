@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
-import ReactPaginate from 'react-paginate';
 import qs from 'query-string';
 
 //Interfaces
@@ -14,7 +13,7 @@ import {
 } from '../../services/api-service';
 
 //Components
-import { SectionHelper, SectionQAList } from './Sections';
+import { SectionHelper, SectionQAList, SectionPagination } from './Sections';
 
 interface IProps {
   location;
@@ -39,7 +38,7 @@ export const QA = (props: IProps) => {
   //Query states
   const [search, setSearch] = useState(
     props.location.search.length > 0
-      ? (values.searchKey as string)
+      ? (values.searchText as string)
       : ('' as string),
   );
   const [subject, setSubject] = useState(getDefaultOptions(
@@ -64,23 +63,28 @@ export const QA = (props: IProps) => {
 
   const handleSubmit = () => {
     let queryObject = {
-      searchKey: search,
+      searchText: search,
       subjectID: Number(subject.value),
       grade: Number(grade.value),
       orderByDate: orderByDate.value.toLocaleLowerCase() == 'true',
-      page: page.value,
+      page: search === values.searchText ? parseInt(page.value) : 0,
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     props.history.push({ pathname: '/questions', search: queryString });
     // note that `search` automatically prepends a question mark
+    console.log(queryString);
     getQuestionList(queryString).then(setQuestions);
   };
 
   useEffect(() => {
     getSubjectList().then(setSubjects);
     getGradeList().then(setGrades);
-    handleSubmit();
+    //handleSubmit();
   }, []);
+
+  useEffect(() => {
+    handleSubmit();
+  }, [page]);
 
   const getSubjectOptions = (): Option[] => {
     return subjects.map(subject => {
@@ -171,49 +175,17 @@ export const QA = (props: IProps) => {
     );
   };
 
-  //Get this with result from questions request
-  const totalHits = 99;
-  //Constant limit
+  const totalHits =
+    questions && questions.length > 1 ? questions[0].totalRows : 0;
   const pageLimit = 10;
-  //Calculate pageCount frontend to show
   const pageCount = Math.ceil(totalHits / pageLimit);
-
-  //TODO: Pull this out into seperate file when functionality is ready
-  const renderPagination = () => {
-    return (
-      <ReactPaginate
-        //Label for the previous button
-        previousLabel={parseInt(page.value) > 0 && '<'}
-        //Label for the next button
-        nextLabel={pageCount > parseInt(page.value) + 1 && '>'}
-        //Label for elipsis
-        breakLabel={'..'}
-        //Required. Total number of pages
-        pageCount={pageCount}
-        //Required. Number of pages to display of margins
-        marginPagesDisplayed={2}
-        //Required. The range of pages displayed
-        pageRangeDisplayed={4}
-        //Method to call when a page is clicked. Expose the current page object as an argument.
-        onPageChange={event =>
-          setPage({ value: event.selected.toString(), label: '' })
-        }
-        //Classname of the pagination container
-        containerClassName={'pagination-component'}
-        //Classname of the pagination sub container
-        pageClassName={'pagination-component--page'}
-        //Classname of the active page
-        activeClassName={'pagination-component--active'}
-      />
-    );
-  };
 
   return (
     <div>
       {renderSearchForm()}
       {questions && SectionQAList(questions)}
-      {renderPagination()}
-      <SectionHelper />
+      {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
+      {SectionHelper()}
     </div>
   );
 };

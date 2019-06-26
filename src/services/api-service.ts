@@ -9,7 +9,7 @@ const api = axios.create({
 
 export function getQuestionList(query): Promise<IQuestion[]> {
   return api
-    .get(`questions/public`)
+    .get(`questions/public?${query}`)
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }

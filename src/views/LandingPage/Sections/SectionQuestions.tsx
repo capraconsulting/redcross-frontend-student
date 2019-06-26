@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import '../../../styles/LandingPage.less';
 
 const SectionQuestions = () => {
-  const [searchKey, setSearchKey] = useState('' as string);
+  const [searchText, setSearchText] = useState('' as string);
   const [submit, setSubmit] = useState(false as boolean);
 
   return (
@@ -27,8 +27,8 @@ const SectionQuestions = () => {
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
         <input
           className={'sectioncontainer--form--search'}
-          value={searchKey}
-          onChange={event => setSearchKey(event.target.value)}
+          value={searchText}
+          onChange={event => setSearchText(event.target.value)}
           type="text"
           name={''}
           placeholder="Hva lurer du på?"
@@ -44,7 +44,7 @@ const SectionQuestions = () => {
           push
           to={{
             pathname: `questions/`,
-            search: `searchKey=${searchKey}`,
+            search: `searchText=${searchText}`,
           }}
         />
       )}
