@@ -6,6 +6,7 @@ import qs from 'query-string';
 import IQuestion from '../../interfaces/IQuestion';
 import ISubject from '../../interfaces/ISubject';
 import IGrade from '../../interfaces/IGrade';
+import ReactPaginate from 'react-paginate';
 
 //Services
 import {
@@ -15,7 +16,7 @@ import {
 } from '../../services/api-service';
 
 //Components
-import QAList from '../../ui/components/QAList';
+import { SectionHelper, SectionQAList } from './Sections';
 
 interface IProps {
   location;
@@ -34,7 +35,7 @@ export const QA = (props: IProps) => {
 
   //Returns option to be filled out based on query params
   const getDefaultOptions = type => {
-    return { value: values[type] || '' };
+    return { value: values[type] || type === 'page' ? '0' : '' };
   };
 
   //Query states
@@ -50,6 +51,7 @@ export const QA = (props: IProps) => {
   const [orderByDate, setOrderByDate] = useState(getDefaultOptions(
     'filter',
   ) as Option);
+  const [page, setPage] = useState(getDefaultOptions('page') as Option);
 
   //Function removing empty fields from query object
   const removeFalsyFields = obj => {
@@ -68,6 +70,7 @@ export const QA = (props: IProps) => {
       subjectID: Number(subject.value),
       grade: Number(grade.value),
       orderByDate: orderByDate.value.toLocaleLowerCase() == 'true',
+      page: page.value,
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     props.history.push({ pathname: '/questions', search: queryString });
@@ -106,7 +109,6 @@ export const QA = (props: IProps) => {
 
   const getGradeOptions = (): Option[] => {
     return grades.map(grade => {
-      console.log(grade);
       return {
         value: grade.id.toString(),
         label: grade.grade,
@@ -172,10 +174,44 @@ export const QA = (props: IProps) => {
     );
   };
 
+  const renderPagination = () => {
+    console.log(page);
+    return (
+      <ReactPaginate
+        //Label for the previous button
+        previousLabel={page.value === '0' ? '' : '<'}
+        //Label for the next button
+        nextLabel={'>'}
+        //Label for elipsis
+        breakLabel={'..'}
+        //Classname on tag li of the ellipsis element
+        breakClassName={'pagination-component--break'}
+        //Required. Total number of pages
+        pageCount={10}
+        //Required. Number of pages to display of margins
+        marginPagesDisplayed={2}
+        //Required. The range of pages displayed
+        pageRangeDisplayed={4}
+        //Method to call when a page is clicked. Expose the current page object as an argument.
+        onPageChange={event =>
+          setPage({ value: event.selected.toString(), label: '' })
+        }
+        //Classname of the pagination container
+        containerClassName={'pagination-component'}
+        //Classname of the pagination sub container
+        pageClassName={'pagination-component--page'}
+        //Classname of the active page
+        activeClassName={'pagination-component--active'}
+      />
+    );
+  };
+
   return (
     <div>
       {renderSearchForm()}
-      {questions && QAList(questions)}
+      {questions && SectionQAList(questions)}
+      {renderPagination()}
+      <SectionHelper />
     </div>
   );
 };

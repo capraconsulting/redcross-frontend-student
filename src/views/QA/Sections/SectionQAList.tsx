@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/QAList.less';
+import '../../../styles/QAList.less';
 import {
   Accordion,
   AccordionItem,
@@ -7,13 +7,14 @@ import {
   AccordionItemPanel,
   AccordionItemButton,
 } from 'react-accessible-accordion';
-import IQuestion from '../../interfaces/IQuestion';
-import { NorwegianDate } from '../../services/date-service';
+import IQuestion from '../../../interfaces/IQuestion';
+import { NorwegianDate } from '../../../services/date-service';
 
-const QAList = (questions: IQuestion[]) => {
-  if (questions && questions.length > 0) {
-    /*This array can be null (before we fetch it)*/
-    return (
+const SectionQAList = (questions: IQuestion[]) => {
+  /*This array can be null (before we fetch it)*/
+  return (
+    questions &&
+    questions.length > 0 && (
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
           return (
@@ -41,15 +42,8 @@ const QAList = (questions: IQuestion[]) => {
           );
         })}
       </Accordion>
-    );
-  } else {
-    return (
-      <div>
-        Fant du ikke det du lette etter?{' '}
-        <a href="/questions/new">Still et spørsmål</a>
-      </div>
-    );
-  }
+    )
+  );
 };
 
-export default QAList;
+export default SectionQAList;
