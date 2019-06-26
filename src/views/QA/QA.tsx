@@ -73,7 +73,6 @@ export const QA = (props: IProps) => {
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     props.history.push({ pathname: '/questions', search: queryString });
     // note that `search` automatically prepends a question mark
-    console.log(queryString);
     getQuestionList(queryString).then(setQuestions);
   };
 
@@ -181,7 +180,6 @@ export const QA = (props: IProps) => {
 
   //TODO: Pull this out into seperate file when functionality is ready
   const renderPagination = () => {
-    console.log(page);
     return (
       <ReactPaginate
         //Label for the previous button
