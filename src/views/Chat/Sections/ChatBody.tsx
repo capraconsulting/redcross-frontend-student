@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ChatMessage from './ChatMessage';
-import IMessage from '../../../interfaces/IMessage';
 import '../../../styles/ChatBody';
+import { ISocketFile, IMessage } from '../../../interfaces';
 
 interface IProps {
   messages: IMessage[];
@@ -48,18 +48,24 @@ const ChatBody = (props: IProps) => {
     props.send(msg);
   };*/
 
-  const sendFile = file => {
+  const sendFile = (file: File) => {
     const fr = new FileReader();
+    console.log(file);
     fr.onload = () => {
-      console.log(fr.result);
+      const socketFile: ISocketFile = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        dataURL: String(fr.result),
+      };
       const msg: IMessage = {
         author,
-        message: String(fr.result),
+        message: socketFile,
         datetime: new Date(),
       };
       props.send(msg);
     };
-    fr.readAsDataURL(file[0]);
+    fr.readAsDataURL(file);
   };
 
   return (
@@ -77,7 +83,9 @@ const ChatBody = (props: IProps) => {
       <div className={'message-form-container'}>
         <form className={'message-form'}>
           <input
-            onChange={event => sendFile(event.target.files)}
+            onChange={event =>
+              event.target.files && sendFile(event.target.files[0])
+            }
             type="file"
             name="attachment"
             id="msg-file-input"
