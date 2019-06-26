@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Styles
 import '../../../styles/LandingPage.less';
 
 export const SectionHero = () => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../../styles/QAList.less';
 import {
   Accordion,
   AccordionItem,
@@ -7,7 +6,14 @@ import {
   AccordionItemPanel,
   AccordionItemButton,
 } from 'react-accessible-accordion';
-import IQuestion from '../../../interfaces/IQuestion';
+
+//Styles
+import '../../../styles/QAList.less';
+
+//Interfaces
+import { IQuestion } from '../../../interfaces';
+
+//Services
 import { NorwegianDate } from '../../../services/date-service';
 
 const SectionQAList = (questions: IQuestion[]) => {
