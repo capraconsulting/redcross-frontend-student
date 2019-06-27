@@ -18,7 +18,7 @@ const createMessage = (
 
 export const createEnterQueueMessage = (uniqueID: string): ISocketMessage => {
   const msg: IEnterQueueMessage = {
-    uniqueID: '',
+    uniqueID,
     datetime: new Date(0),
   };
   return createMessage(msg, 'enterQueueMessage');

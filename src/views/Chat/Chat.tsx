@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ChatBody from './Sections/ChatBody';
 import ChatHeader from './Sections/ChatHeader';
+import ChatInput from './Sections/ChatInput';
 import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
 import { createEnterQueueMessage } from '../../services/message-service';
@@ -15,23 +16,31 @@ const Chat = () => {
     setSocket(new WebSocket('ws://localhost:3001/events'));
   }, []);
 
+  const generateTextMessageFromPayload = (
+    message: ISocketMessage,
+  ): ITextMessage => {
+    return {
+      author: message.payload['author'],
+      roomID: message.payload['roomID'],
+      uniqueID: message.payload['uniqueID'],
+      message: message.payload['message'],
+      datetime: message.payload['datetime'],
+    };
+  };
+
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
 
     if (parsedMessage.type === 'textMessage') {
-      const msg: ITextMessage = {
-        author: parsedMessage.payload['author'],
-        roomID: parsedMessage.payload['roomID'],
-        uniqueID: parsedMessage.payload['uniqueID'],
-        message: parsedMessage.payload['message'],
-        datetime: parsedMessage.payload['datetime'],
-      };
-      setMessages(messages => [...messages, msg]);
+      setMessages(messages => [
+        ...messages,
+        generateTextMessageFromPayload(message),
+      ]);
     } else if (parsedMessage.type === 'distributeRoomMessage') {
       setRoomID(parsedMessage.payload['roomID']);
     } else if (parsedMessage.type === 'connectionMessage') {
       setUniqueID(parsedMessage.payload['uniqueID']);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -50,6 +59,10 @@ const Chat = () => {
 
   const sendTextMessage = (message: ISocketMessage) => {
     socket.send(JSON.stringify(message));
+    setMessages(messages => [
+      ...messages,
+      generateTextMessageFromPayload(message),
+    ]);
   };
 
   const sendEnterQueueMessage = () => {
@@ -60,12 +73,8 @@ const Chat = () => {
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" course="Engelsk" />
       <button onClick={() => sendEnterQueueMessage()}>Enter queue</button>
-      <ChatBody
-        uniqueID={uniqueID}
-        roomID={roomID}
-        messages={messages}
-        send={sendTextMessage}
-      />
+      <ChatBody messages={messages} />
+      <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />
     </div>
   );
 };
