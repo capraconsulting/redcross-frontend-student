@@ -79,8 +79,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
-        Få <a className="sectioncontainer--text--colored">gratis leksehjelp</a>{' '}
-        over chat eller video av våre frivillige!
+        Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive
+        tekster eller øve til prøver.
       </p>
       <form className="sectioncontainer--form">
         <div
