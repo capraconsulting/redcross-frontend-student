@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 const SectionFrivillig = (props: RouteComponentProps) => {
+  const { history } = props;
   return (
     <div className="volunteer">
       <div className="volunteer--header">Våre frivillige</div>
@@ -16,7 +17,7 @@ const SectionFrivillig = (props: RouteComponentProps) => {
         motivasjon og lærelyst.{' '}
       </p>
       <a
-        onClick={() => props.history.push('frivillige')}
+        onClick={() => history.push('frivillige')}
         className="volunteer--text--colored"
       >
         Les mer...

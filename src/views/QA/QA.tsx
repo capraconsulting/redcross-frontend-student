@@ -61,7 +61,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
       searchText: search,
       subjectID: Number(subject.value),
       grade: Number(grade.value),
-      orderByDate: orderByDate.value.toLocaleLowerCase() == 'true',
+      orderByDate: orderByDate.value.toLocaleLowerCase() === 'true',
       page: search === values.searchText ? parseInt(page.value) : 0,
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));

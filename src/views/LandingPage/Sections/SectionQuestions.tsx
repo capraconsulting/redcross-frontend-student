@@ -6,6 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 const SectionQuestions = (props: RouteComponentProps) => {
+  const { history } = props;
   const [searchText, setSearchText] = useState('' as string);
   const [submit, setSubmit] = useState(false as boolean);
 
@@ -15,14 +16,14 @@ const SectionQuestions = (props: RouteComponentProps) => {
       <p className="sectioncontainer--text" id="sectionquestions--text">
         Her kan du lete etter svar blant{' '}
         <a
-          onClick={() => props.history.push('questions')}
+          onClick={() => history.push('questions')}
           className="sectioncontainer--text--colored"
         >
           allerede stilte spørsmål
         </a>
         , eller{' '}
         <a
-          onClick={() => props.history.push('questions/new')}
+          onClick={() => history.push('questions/new')}
           className="sectioncontainer--text--colored"
         >
           stille et nytt spørsmål

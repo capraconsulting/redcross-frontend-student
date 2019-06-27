@@ -5,12 +5,13 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 const SectionMestring = (props: RouteComponentProps) => {
+  const { history } = props;
   return (
     <div className="help">
       <div>
         <div className="mestring">
           <a
-            onClick={() => props.history.push(`mestring`)}
+            onClick={() => history.push(`mestring`)}
             style={{ textDecoration: 'none', color: 'black' }}
           >
             <div className="mestring--header">Mestring og motivasjon</div>

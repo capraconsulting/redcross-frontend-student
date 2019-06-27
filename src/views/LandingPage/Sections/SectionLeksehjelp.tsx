@@ -15,6 +15,7 @@ import {
 } from '../../../services/api-service';
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
+  const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
   const [subjectStatus, setSubjectStatus] = useState([] as IStatus[]);
   const [formControls, setFormControls] = useState({
@@ -76,7 +77,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
         Få{' '}
         <a
-          onClick={() => props.history.push('leksehjelp')}
+          onClick={() => history.push('leksehjelp')}
           className="sectioncontainer--text--colored"
         >
           gratis leksehjelp
