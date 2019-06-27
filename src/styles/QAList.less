@@ -65,3 +65,31 @@ p {
     opacity: 1;
   }
 }
+
+.pagination-component {
+  display: flex;
+  list-style: none;
+  padding: 0.5rem;
+  color: #82c289;
+
+  cursor: pointer;
+  &--page {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  &--active {
+    color: #82c289;
+    text-decoration: underline;
+  }
+}
+
+.resultStatus {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.45rem 0.1rem;
+
+  @media (min-width: 768px) {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+}

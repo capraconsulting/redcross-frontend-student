@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 
 // Interfaces
-import IQuestion from '../../interfaces/IQuestion';
-import ISubject from '../../interfaces/ISubject';
-import IGrade from '../../interfaces/IGrade';
+import { IQuestion, ISubject } from '../../interfaces';
 
 //Services
-import {
-  postQuestion,
-  getGradeList,
-  getSubjectList,
-} from '../../services/api-service';
+import { postQuestion, getSubjectList } from '../../services/api-service';
 
 //Styles
 import '../../styles/QAForm.less';
+
+import gradeList from '../../grades';
 
 const defaultOptions = {
   value: '',
@@ -23,7 +19,6 @@ const defaultOptions = {
 
 const QAForm = () => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
-  const [grades, setGrades] = useState([] as IGrade[]);
 
   const [userEmail, setUserEmail] = useState('' as string);
   const [questionText, setQuestionText] = useState('' as string);
@@ -35,7 +30,6 @@ const QAForm = () => {
 
   useEffect(() => {
     getSubjectList().then(setSubjects);
-    getGradeList().then(setGrades);
   }, []);
 
   const handleSubmit = () => {
@@ -46,22 +40,27 @@ const QAForm = () => {
       theme: Number(theme.value),
       questionText,
       anon,
+      totalRows: 0,
     };
     // TODO: post question
     postQuestion(questionForm).then(data => console.log(data));
   };
 
   const getSubjectOptions = (): Option[] => {
-    return subjects.map(subject => {
-      return {
-        value: subject.id.toString(),
-        label: subject.subject,
-      };
-    });
+    let subjectOptions: Option[] = [];
+    subjects &&
+      subjects.map(subject => {
+        subjectOptions.push({
+          value: subject.id.toString(),
+          label: subject.subject,
+        });
+      });
+    return subjectOptions;
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenSubject = subjects.filter(c => c.subject === subject.label)[0]; // Will always only be one entry in array
+    const chosenSubject =
+      subjects && subjects.filter(c => c.subject === subject.label)[0]; // Will always only be one entry in array
     if (chosenSubject) {
       return chosenSubject.themes.map(theme => {
         return {
@@ -73,10 +72,10 @@ const QAForm = () => {
   };
 
   const getGradeOptions = (): Option[] => {
-    return grades.map(grade => {
+    return gradeList.map(grade => {
       return {
-        value: grade.id.toString(),
-        label: grade.grade,
+        value: grade.gradeID,
+        label: grade.label,
       };
     });
   };

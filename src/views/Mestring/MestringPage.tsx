@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const MestringPage = () => {
-  return <div>Mestring</div>;
+  return <div className="content">Mestring</div>;
 };
 
 export default MestringPage;

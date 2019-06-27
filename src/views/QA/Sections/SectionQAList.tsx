@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../styles/QAList.less';
 import {
   Accordion,
   AccordionItem,
@@ -7,13 +6,21 @@ import {
   AccordionItemPanel,
   AccordionItemButton,
 } from 'react-accessible-accordion';
-import IQuestion from '../../interfaces/IQuestion';
-import { NorwegianDate } from '../../services/date-service';
 
-const QAList = (questions: IQuestion[]) => {
-  if (questions && questions.length > 0) {
-    /*This array can be null (before we fetch it)*/
-    return (
+//Styles
+import '../../../styles/QAList.less';
+
+//Interfaces
+import { IQuestion } from '../../../interfaces';
+
+//Services
+import { NorwegianDate } from '../../../services/date-service';
+
+const SectionQAList = (questions: IQuestion[], totalHits: number) => {
+  /*This array can be null (before we fetch it)*/
+  return questions && questions.length > 0 ? (
+    <div>
+      <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
           return (
@@ -41,15 +48,10 @@ const QAList = (questions: IQuestion[]) => {
           );
         })}
       </Accordion>
-    );
-  } else {
-    return (
-      <div>
-        Fant du ikke det du lette etter?{' '}
-        <a href="/questions/new">Still et spørsmål</a>
-      </div>
-    );
-  }
+    </div>
+  ) : (
+    <div className="resultStatus">Søket ditt ga ingen svar</div>
+  );
 };
 
-export default QAList;
+export default SectionQAList;

@@ -11,4 +11,5 @@ export default interface IQuestion {
   theme: number;
   anon?: boolean;
   subject?: string;
+  totalRows: number;
 }

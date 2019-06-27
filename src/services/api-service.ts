@@ -9,23 +9,23 @@ const api = axios.create({
 
 export function getQuestionList(query): Promise<IQuestion[]> {
   return api
-    .get(`questions/public`)
+    .get(`questions/public?${query}`)
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
+    .catch(e => console.log('Could not get question list'));
 }
 
 export function getGradeList(): Promise<IGrade[]> {
   return api
     .get('grades')
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
+    .catch(e => console.log('Could not get grade list'));
 }
 
 export function getSubjectList(): Promise<ISubject[]> {
   return api
     .get('subjects')
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
+    .catch(e => console.log('Could not get subject list'));
 }
 
 export function getSubjectStatus(id: string): Promise<IStatus[]> {

@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router';
+
+//Styles
 import '../../styles/Header.less';
+
+//Services
 import getApplicationTitle from '../../services/header-service';
 
-interface IProps {
-  isOpen: boolean;
-  time: Date;
-}
+export const Header = (props: RouteComponentProps) => {
+  let { history } = props;
 
-export const Header = (props: IProps) => {
-  let { isOpen, time } = props;
+  //Constructing state
+  const [time, setTime] = useState(new Date() as Date);
+  const [isOpen] = useState(false as boolean);
+
+  useEffect(() => {
+    setInterval(() => setTime(new Date()), 10 * 1000);
+  }, []);
+
   return (
     <div className="header">
-      <a className="header--link" href="/">
+      <a className="header--link" onClick={() => history.push('/')}>
         <span className="header--logo" id="header--logo">
           {getApplicationTitle('Digital Leksehjelp')}
         </span>
@@ -33,4 +42,4 @@ export const Header = (props: IProps) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
