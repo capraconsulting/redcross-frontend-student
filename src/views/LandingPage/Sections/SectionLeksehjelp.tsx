@@ -71,6 +71,9 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     }
   };
 
+  const textChat = true;
+  const videoChat = true;
+
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
@@ -97,6 +100,13 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           value={formControls.value}
           onChange={event => handleChange(event)}
         />
+        <button className="btn btn-submit" disabled={!textChat}>
+          Chat
+        </button>{' '}
+        eller{' '}
+        <button className="btn btn-submit" disabled={!videoChat}>
+          Videchat
+        </button>
         {renderStatusMessage()}
       </form>
     </div>
