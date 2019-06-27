@@ -5,7 +5,8 @@ export function NorwegianDate(date): string {
     '.' +
     (tmpDate.getMonth() + 1).toString() +
     '.' +
-    tmpDate.getFullYear().toString()
+    tmpDate.getFullYear().toString() +
+    tmpDate.getTime()
   );
 }
 

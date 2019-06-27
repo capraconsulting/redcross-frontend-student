@@ -3,7 +3,7 @@ import '../../../styles/ChatHeader';
 
 interface IProps {
   connectedWith: string;
-  course: string;
+  subject: string;
 }
 
 const ChatHeader = (props: IProps) => {
@@ -15,7 +15,7 @@ const ChatHeader = (props: IProps) => {
       <span className={'ch--right'}>{unreadMessages}</span>*/}
       <div className={'ch--text'}>
         <p className={'ch--text--left'}>{props.connectedWith}</p>
-        <p className={'ch--text--right'}>{props.course}</p>
+        <p className={'ch--text--right'}>{props.subject}</p>
       </div>
     </div>
   );

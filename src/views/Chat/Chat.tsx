@@ -71,7 +71,7 @@ const Chat = () => {
   };
   return (
     <div className={'chat'}>
-      <ChatHeader connectedWith="Caroline Sandsbråten" course="Engelsk" />
+      <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />
       <button onClick={() => sendEnterQueueMessage()}>Enter queue</button>
       <ChatBody messages={messages} />
       <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />

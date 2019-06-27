@@ -1,51 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import { ICourse, IStatus } from '../../../interfaces';
+import { ISubject, IStatus } from '../../../interfaces';
 
 //Services
-import { getCourseList, getCourseStatus } from '../../../services/api-service';
+import {
+  getSubjectList,
+  getSubjectStatus,
+} from '../../../services/api-service';
 
-const SectionLeksehjelp = () => {
-  const [courses, setCourses] = useState([] as ICourse[]);
-  const [courseStatus, setCourseStatus] = useState([] as IStatus[]);
+const SectionLeksehjelp = (props: RouteComponentProps) => {
+  const { history } = props;
+  const [subjects, setSubjects] = useState([] as ISubject[]);
+  const [subjectStatus, setSubjectStatus] = useState([] as IStatus[]);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
   });
 
   useEffect(() => {
-    getCourseList().then(setCourses);
+    try {
+      getSubjectList().then(setSubjects);
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
-  const getCourseOptions = (): Option[] => {
-    let courseOptions: Option[] = [];
-    courses.map(course => {
-      courseOptions.push({ value: course.id.toString(), label: course.name });
-    });
-    return courseOptions;
+  const getSubjectOptions = (): Option[] => {
+    let subjectOptions: Option[] = [];
+    subjects &&
+      subjects.map(subject => {
+        subjectOptions.push({
+          value: subject.id.toString(),
+          label: subject.subject,
+        });
+      });
+    return subjectOptions;
   };
   const handleChange = async event => {
     let { label, value } = event;
     await setFormControls({ label, value });
-    getCourseStatus(value).then(setCourseStatus);
+    /** 
+    Activate this request when questions/status endpoint is created
+    getSubjectStatus(value).then(setSubjectStatus);
+    */
   };
 
-  //Rendering course availability based on employee time schedule
+  //Rendering subject availability based on employee time schedule
   const renderStatusMessage = () => {
-    if (courseStatus.length === 0 && formControls.value) {
+    if (subjectStatus.length === 0 && formControls.value) {
       return (
         <p className="sectioncontainer--text">
           {formControls.label +
             ' er dessverre ikke tilgjengelig med det første.'}
         </p>
       );
-    } else if (courseStatus.length > 0) {
-      return courseStatus.map((status, index) => {
+    } else if (subjectStatus.length > 0) {
+      return subjectStatus.map((status, index) => {
         return (
           <p className="sectioncontainer--text" key={index}>
             {status.day + ' ' + status.start + '-' + status.end}
@@ -60,7 +76,10 @@ const SectionLeksehjelp = () => {
       <div className="sectioncontainer--header">Leksehjelp</div>
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
         Få{' '}
-        <a href="/leksehjelp" className="sectioncontainer--text--colored">
+        <a
+          onClick={() => history.push('leksehjelp')}
+          className="sectioncontainer--text--colored"
+        >
           gratis leksehjelp
         </a>{' '}
         over chat eller video av våre frivillige!
@@ -74,7 +93,7 @@ const SectionLeksehjelp = () => {
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
-          options={getCourseOptions()}
+          options={getSubjectOptions()}
           value={formControls.value}
           onChange={event => handleChange(event)}
         />
@@ -84,4 +103,4 @@ const SectionLeksehjelp = () => {
   );
 };
 
-export default SectionLeksehjelp;
+export default withRouter(SectionLeksehjelp);

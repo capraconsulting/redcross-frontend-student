@@ -1,20 +1,22 @@
 import React from 'react';
+
+//Styles
 import '../../../styles/QuestionPage.less';
 
 interface IProps {
-  grade: number;
-  question: string;
+  studentGrade: number;
+  questionText: string;
 }
 
 export const SectionQuestion = (props: IProps) => {
-  const { question, grade } = props;
+  const { questionText, studentGrade } = props;
   return (
     <div className="question">
       <p className="showAnswer--info">
         {' '}
-        {'Spørmsålet er stilt av en elev i ' + grade + '.'}
+        {'Spørmsålet er stilt av en elev i ' + studentGrade + '.'}
       </p>
-      <p id="singleQuestion">{question}</p>
+      <p id="singleQuestion">{questionText}</p>
     </div>
   );
 };

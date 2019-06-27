@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 // Styles
 import './styles/base.less';
 
-// Global components
-import { Header, Footer } from './ui/components';
+//Router
 import AppRouter from './Router';
 
 export const App = () => {
-  //Constructing state
-  const [time, setTime] = useState(new Date());
-  const [isOpen] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => setTime(new Date()), 10 * 1000);
-  }, []);
-
   return (
-    <div className="base-flex">
-      <div className="base">
-        {Header({ time, isOpen })}
-        <AppRouter />
-      </div>
-      <Footer />
+    <div className="base">
+      <AppRouter />
     </div>
   );
 };
