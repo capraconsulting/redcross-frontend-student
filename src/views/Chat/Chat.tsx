@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import ChatBody from './Sections/ChatBody';
 import ChatHeader from './Sections/ChatHeader';
-import IMessage from '../../interfaces/IMessage';
+import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-import { createEnterWaitingRoomMessage } from '../../services/message-service';
+import { createEnterQueueMessage } from '../../services/message-service';
 
 const Chat = () => {
   const [socket, setSocket] = useState(null as any);
-  const [messages, setMessages] = useState([] as IMessage[]);
-  const [uniqueID, setUniqueID] = useState('' as string);
+  const [messages, setMessages] = useState([] as ITextMessage[]);
   const [roomID, setRoomID] = useState('' as string);
+  const [uniqueID, setUniqueID] = useState('' as string);
 
   useEffect(() => {
     setSocket(new WebSocket('ws://localhost:3001/events'));
   }, []);
 
   const socketHandler = message => {
-    const parsedMessage: IMessage = JSON.parse(message.data);
+    const parsedMessage: ISocketMessage = JSON.parse(message.data);
 
-    if (
-      parsedMessage.message === 'lostClient' ||
-      parsedMessage.message === 'newClient'
-    ) {
-      return;
-    }
-    if (parsedMessage.roomID && roomID.length <= 'null'.length) {
-      setRoomID(parsedMessage.roomID);
-    }
-    if (parsedMessage.uniqueID && uniqueID === '') {
-      setUniqueID(parsedMessage.uniqueID);
-    } else {
-      setMessages(messages => [...messages, parsedMessage]);
-    }
+    if (parsedMessage.type === 'textMessage') {
+      const msg: ITextMessage = {
+        author: parsedMessage.payload['author'],
+        roomID: parsedMessage.payload['roomID'],
+        uniqueID: parsedMessage.payload['uniqueID'],
+        message: parsedMessage.payload['message'],
+        datetime: parsedMessage.payload['datetime'],
+      };
+      setMessages(messages => [...messages, msg]);
+    } else if (parsedMessage.type === 'distributeRoomMessage') {
+      setRoomID(parsedMessage.payload['roomID']);
+    } else if (parsedMessage.type === 'connectionMessage') {
+      setUniqueID(parsedMessage.payload['uniqueID']);
+    } 
   };
 
   useEffect(() => {
@@ -48,29 +48,24 @@ const Chat = () => {
     }
   }, [messages]);
 
-  const sendEvent = (message: IMessage) => {
-    message.uniqueID = uniqueID;
-    message.roomID = roomID;
-    console.log(message);
+  const sendTextMessage = (message: ISocketMessage) => {
     socket.send(JSON.stringify(message));
   };
 
-  const send = (message: IMessage) => {
-    sendEvent(message);
-    setMessages(messages => [...messages, message]);
+  const sendEnterQueueMessage = () => {
+    const msg = createEnterQueueMessage(uniqueID);
+    socket.send(JSON.stringify(msg));
   };
-
-  const enterWaitingRoom = () => {
-    const message: IMessage = createEnterWaitingRoomMessage();
-    sendEvent(message);
-  };
-
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" course="Engelsk" />
-      {/*This button is temporary, only to join rooms while we dont have a proper queue*/}
-      <button onClick={() => enterWaitingRoom()}>Enter waiting room</button>
-      <ChatBody messages={messages} send={send} />
+      <button onClick={() => sendEnterQueueMessage()}>Enter queue</button>
+      <ChatBody
+        uniqueID={uniqueID}
+        roomID={roomID}
+        messages={messages}
+        send={sendTextMessage}
+      />
     </div>
   );
 };

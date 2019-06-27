@@ -1,37 +1,40 @@
-import { IMessage, ISocketFile } from '../interfaces';
+import { ISocketFile } from '../interfaces';
+import {
+  IGenerateRoomMessage,
+  IEnterQueueMessage,
+  ISocketMessage,
+  ITextMessage,
+} from '../interfaces/IMessage';
 
-export const createEnterWaitingRoomMessage = (): IMessage => {
+const createMessage = (
+  payload: ITextMessage | IEnterQueueMessage | IGenerateRoomMessage,
+  type: string,
+): ISocketMessage => {
   return {
-    author: 'student',
-    roomID: '',
-    uniqueID: '',
-    message: '',
-    datetime: new Date(0),
-    enterWaitingRoom: true,
-    createNewRoom: true
+    type,
+    payload,
   };
 };
 
-export const createTextMessage = (message: string): IMessage => {
-  return {
-    author: 'student',
-    roomID: '',
+export const createEnterQueueMessage = (uniqueID: string): ISocketMessage => {
+  const msg: IEnterQueueMessage = {
     uniqueID: '',
+    datetime: new Date(0),
+  };
+  return createMessage(msg, 'enterQueueMessage');
+};
+
+export const createTextMessage = (
+  message: string | ISocketFile,
+  uniqueID: string,
+  roomID: string,
+): ISocketMessage => {
+  const msg: ITextMessage = {
+    author: 'student',
+    uniqueID,
+    roomID,
     message,
     datetime: new Date(),
-    enterWaitingRoom: false,
-    createNewRoom: false,
   };
-};
-
-export const createFileMessage = (file: ISocketFile): IMessage => {
-  return {
-    author: 'student',
-    roomID: '',
-    uniqueID: '',
-    message: file,
-    datetime: new Date(),
-    enterWaitingRoom: false,
-    createNewRoom: false,
-  };
+  return createMessage(msg, 'textMessage');
 };
