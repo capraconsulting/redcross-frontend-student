@@ -3,24 +3,24 @@ import React, { useState } from 'react';
 //Styles
 import '../../../styles/QuestionPage.less';
 
+//Services
+import { postFeedback } from '../../../services/api-service';
+
 interface IProps {
   questionId: number;
 }
 
 export const SectionFeedback = (props: IProps) => {
-  const [feedback, setFeedback] = useState('' as string);
+  const [feedbackText, setFeedbackText] = useState('' as string);
 
   const handleSubmit = () => {
     const { questionId } = props;
-    //Data to pass API
-    const body = {
+    const feedback = {
       questionId,
-      feedback,
+      feedbackText,
     };
-    /** post('feedback', body)
-      .then(res => console.log(res.data))
-      .catch(e => console.error(e.getMessage));
-      */
+    console.log(feedback);
+    //postFeedback(feedback);
   };
 
   return (
@@ -31,7 +31,7 @@ export const SectionFeedback = (props: IProps) => {
           placeholder="Du kan stille oss ett oppfølgningspørmsål, eller be oss utdype om noe var uklart i svaret."
           rows={8}
           className="feedback--form--textarea"
-          onChange={event => setFeedback(event.target.value)}
+          onChange={event => setFeedbackText(event.target.value)}
         ></textarea>
         <button className="feedback--form--button" onClick={handleSubmit}>
           Send

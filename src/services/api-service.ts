@@ -9,7 +9,7 @@ const api = axios.create({
 
 export function getQuestionList(query): Promise<IQuestion[]> {
   return api
-    .get(`questions/public?${query}`)
+    .get(`questions/public${query}`)
     .then(res => res.data)
     .catch(e => console.log('Could not get question list'));
 }
@@ -39,6 +39,14 @@ export function postQuestion(question) {
   // Which type will this be? Defined in backend
   return api
     .post('questions', question)
+    .then(res => res.data)
+    .catch(e => console.error(e.getMessage));
+}
+
+export function postFeedback(feedback) {
+  // Which type will this be? Defined in backend
+  return api
+    .post(`questions/${feedback.questionID}`, feedback.feedbackText)
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
