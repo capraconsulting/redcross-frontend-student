@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ChatMessage from './ChatMessage';
 import '../../../styles/ChatBody';
-import { ISocketFile } from '../../../interfaces';
-import { createTextMessage } from '../../../services/message-service';
-import { ISocketMessage, ITextMessage } from '../../../interfaces/IMessage';
+import { ITextMessage } from '../../../interfaces/IMessage';
 
 interface IProps {
   messages: ITextMessage[];

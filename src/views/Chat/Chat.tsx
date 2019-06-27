@@ -34,7 +34,7 @@ const Chat = () => {
     if (parsedMessage.type === 'textMessage') {
       setMessages(messages => [
         ...messages,
-        generateTextMessageFromPayload(message),
+        generateTextMessageFromPayload(parsedMessage),
       ]);
     } else if (parsedMessage.type === 'distributeRoomMessage') {
       setRoomID(parsedMessage.payload['roomID']);
