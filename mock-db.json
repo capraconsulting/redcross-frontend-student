@@ -170,5 +170,6 @@
       "id": 3,
       "status": []
     }
-  ]
+  ],
+  "statusNew": [{ "from": 17, "to": 20, "day": 0 }]
 }

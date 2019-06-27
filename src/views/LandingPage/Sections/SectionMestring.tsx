@@ -6,6 +6,8 @@ import '../../../styles/LandingPage.less';
 
 const SectionMestring = (props: RouteComponentProps) => {
   const { history } = props;
+  const textChat = false;
+  const videoChat = false;
   return (
     <div className="help">
       <div>
@@ -14,18 +16,40 @@ const SectionMestring = (props: RouteComponentProps) => {
             onClick={() => history.push(`mestring`)}
             style={{ textDecoration: 'none', color: 'black' }}
           >
-            <div className="mestring--header">Mestring og motivasjon</div>
-          </a>
-
-          <form className="mestring--form">
-            <div className="mestring--form--header">
-              Se hvilke temaer vi kan hjelpe deg med
+            <div className="mestring--header">
+              Mestring, motivasjon og veiledning
             </div>
+          </a>
+          <p className="sectioncontainer--text">
+            Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve
+            en ny lesestrategi?
+          </p>
+          <p className="sectioncontainer--text">
+            Snakk med en av våre frivillige, enten via chat eller på
+            videosamtale!
+          </p>
+          <form className="mestring--form">
+            <div className="mestring--form--header">Velg tema</div>
             <Dropdown
               options={[]}
               placeholder="F.eks motivasjon, læringsmetoder"
             />
           </form>
+          <button
+            className="btn btn-submit"
+            disabled={!textChat}
+            onClick={() => history.push('mestring')}
+          >
+            Chat
+          </button>{' '}
+          eller{' '}
+          <button
+            className="btn btn-submit"
+            disabled={!videoChat}
+            onClick={() => history.push('mestring')}
+          >
+            Videchat
+          </button>
         </div>
         <div className="cross-my-heart">
           Trenger du noen å snakke med?{' '}

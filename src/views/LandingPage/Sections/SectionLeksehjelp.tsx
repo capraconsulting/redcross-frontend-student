@@ -87,7 +87,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           className="sectioncontainer--form--header"
           id="leksehjelp--form--header"
         >
-          Se når ditt fag er tilgjengelig
+          Velg tema
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
@@ -100,7 +100,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       </form>
       <button
         className="btn btn-submit"
-        disabled={!textChat}
+        disabled={!textChat || formControls.value === ''}
         onClick={() => history.push('leksehjelp')}
       >
         Chat
