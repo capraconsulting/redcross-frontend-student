@@ -66,9 +66,11 @@ export const QA = (props: IProps & RouteComponentProps) => {
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     history.push({ pathname: '/questions', search: queryString });
-    // note that `search` automatically prepends a question mark
+    // note that `search` automatically prepends a question mark in browser window
     console.log(queryString);
-    getQuestionList(queryString).then(setQuestions);
+    getQuestionList(queryString.length > 0 ? '?' + queryString : '').then(
+      setQuestions,
+    );
   };
 
   //Fetch subject alternatives
