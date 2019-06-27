@@ -23,17 +23,22 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   });
 
   useEffect(() => {
-    getSubjectList().then(setSubjects);
+    try {
+      getSubjectList().then(setSubjects);
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   const getSubjectOptions = (): Option[] => {
     let subjectOptions: Option[] = [];
-    subjects.map(subject => {
-      subjectOptions.push({
-        value: subject.id.toString(),
-        label: subject.subject,
+    subjects &&
+      subjects.map(subject => {
+        subjectOptions.push({
+          value: subject.id.toString(),
+          label: subject.subject,
+        });
       });
-    });
     return subjectOptions;
   };
   const handleChange = async event => {

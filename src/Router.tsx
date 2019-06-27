@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 
 // Pages and components
+import Header from './ui/components/Header';
+import Footer from './ui/components/Footer';
 import LandingPage from './views/LandingPage/LandingPage';
 import QA from './views/QA/QA';
 import Question from './views/QuestionPage/QuestionPage';
@@ -21,6 +23,7 @@ import Chat from './views/Chat/Chat';
 export const AppRouter = () => {
   return (
     <Router>
+      <Route path="/" component={Header} />
       <Switch>
         <Route path="/questions" exact component={QA} />
         <Route path="/questions/new" exact component={QAForm} />
@@ -36,6 +39,7 @@ export const AppRouter = () => {
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>
+      <Route path="/" component={Footer} />
     </Router>
   );
 };
