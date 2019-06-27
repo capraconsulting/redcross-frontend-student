@@ -43,6 +43,14 @@ export function postQuestion(question) {
     .catch(e => console.error(e.getMessage));
 }
 
+export function postFeedback(feedback) {
+  // Which type will this be? Defined in backend
+  return api
+    .post(`questions/${feedback.questionID}`, feedback.feedbackText)
+    .then(res => res.data)
+    .catch(e => console.error(e.getMessage));
+}
+
 export function getQuestion(url: string) {
   return api
     .get(url)

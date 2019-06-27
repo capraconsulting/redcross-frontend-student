@@ -35,7 +35,7 @@ const QuestionPage = (props: IProps, state: IState) => {
 
   useEffect(() => {
     getQuestion(`questions/${props.questionId}`).then(res => {
-      res.data ? setQuestion(res.data[0]) : setError(res);
+      res.data ? setQuestion(res.data) : setError(res);
     });
   }, []);
 
