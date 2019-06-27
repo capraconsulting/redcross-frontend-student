@@ -71,20 +71,15 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     }
   };
 
+  //Set the status from request subjectStatus
   const textChat = true;
-  const videoChat = true;
+  const videoChat = false;
 
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
-        Få{' '}
-        <a
-          onClick={() => history.push('leksehjelp')}
-          className="sectioncontainer--text--colored"
-        >
-          gratis leksehjelp
-        </a>{' '}
+        Få <a className="sectioncontainer--text--colored">gratis leksehjelp</a>{' '}
         over chat eller video av våre frivillige!
       </p>
       <form className="sectioncontainer--form">
@@ -100,15 +95,24 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           value={formControls.value}
           onChange={event => handleChange(event)}
         />
-        <button className="btn btn-submit" disabled={!textChat}>
-          Chat
-        </button>{' '}
-        eller{' '}
-        <button className="btn btn-submit" disabled={!videoChat}>
-          Videchat
-        </button>
+
         {renderStatusMessage()}
       </form>
+      <button
+        className="btn btn-submit"
+        disabled={!textChat}
+        onClick={() => history.push('leksehjelp')}
+      >
+        Chat
+      </button>{' '}
+      eller{' '}
+      <button
+        className="btn btn-submit"
+        disabled={!videoChat}
+        onClick={() => history.push('leksehjelp')}
+      >
+        Videchat
+      </button>
     </div>
   );
 };
