@@ -6,7 +6,7 @@ const Footer = () => (
     <div className="footer--container">
       <a href="https://www.rodekors.no/" className="footer--container--logo">
         <img
-          className="header--rk_logo"
+          className="footer--rk_logo"
           src={require('../../assets/images/rk_logo.png')}
         />
       </a>
