@@ -44,6 +44,7 @@ const SectionQAList = (questions: IQuestion[], totalHits: number) => {
 
                 <p>{question.answer}</p>
               </AccordionItemPanel>
+              <div className="underline"></div>
             </AccordionItem>
           );
         })}

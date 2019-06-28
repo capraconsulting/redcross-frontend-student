@@ -9,14 +9,29 @@
   background-color: @primary-color;
   color: @white;
 
-  &--content {
-    font-size: 1.24rem;
-    padding: 0rem 3.7rem;
-    font-weight: normal;
-    vertical-align: center;
+  &--container {
+    padding: 0.1rem 1rem;
 
-    &--link {
-      color: @white;
+    @media (min-width: 768px) {
+      padding: 0.1rem 2.1rem;
+    }
+    &--text {
+      font-size: 0.9rem;
+      @media (min-width: 400px) {
+        font-size: 1.2rem;
+      }
+      font-weight: normal;
+      float: right;
+      line-height: 1.3;
+      vertical-align: center;
+
+      &--link {
+        color: @white;
+      }
+    }
+    &--logo {
+      float: left;
+      margin: auto;
     }
   }
 }
