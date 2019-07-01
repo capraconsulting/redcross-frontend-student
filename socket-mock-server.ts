@@ -24,6 +24,11 @@ sio.on('connection', socket => {
   socket.on('message', (message, roomID) => {
     socket.to(roomID).emit('message', message);
   });
+
+  socket.on('file', (file) => {
+    socket.emit('file', file);
+    console.log(file);
+  })
 });
 
 sio.listen(port);

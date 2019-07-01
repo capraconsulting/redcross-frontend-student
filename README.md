@@ -1,8 +1,8 @@
 # Baseline for creating web apps
 
-[![Build Status](https://jenkins.capra.tv/buildStatus/icon?job=redcross-digital-leksehjelp-frontend-student/master)](https://jenkins.capra.tv/job/redcross-digital-leksehjelp-frontend-student/job/master/)
+[![Build Status](https://jenkins.capra.tv/buildStatus/icon?job=redcross-digital-leksehjelp-frontend-frivillig/master)](https://jenkins.capra.tv/job/redcross-digital-leksehjelp-frontend-frivillig/job/master/)
 
-Technologies:
+### Technologies:
 
 - React
 - TypeScript
@@ -12,3 +12,22 @@ Technologies:
 - TSLint
 - Prettier
 - Autoprefixer
+
+### Setup:
+
+```
+npm install
+npm start // Project is running at http://localhost:3000/
+```
+
+### Test:
+
+```
+npm run test
+```
+
+### Lint:
+
+```
+npm run lint
+```
