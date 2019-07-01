@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import { ISubject, IStatus } from '../../../interfaces';
+import { ISubject } from '../../../interfaces';
 
 //Services
 import {
@@ -17,7 +17,7 @@ import {
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
-  const [subjectStatus, setSubjectStatus] = useState([] as IStatus[]);
+  const [timeSlots, setTimeSlots] = useState([] as string[]);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
@@ -26,9 +26,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   useEffect(() => {
     try {
       getSubjectList().then(setSubjects);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }, []);
 
   const getSubjectOptions = (): Option[] => {
@@ -42,29 +40,90 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       });
     return subjectOptions;
   };
+
+  const weekDays = [
+    'Mandag',
+    'Tirsdag',
+    'Onsdag',
+    'Torsdag',
+    'Fredag',
+    'Lørdag',
+    'Søndag',
+  ];
+
+  const getTimes = statusMap => {
+    let tempTimeSlots = [] as string[];
+    statusMap.forEach((timeTable, key) => {
+      let start = 0;
+      let end = 0;
+      timeTable.map((timeSlot, index) => {
+        if (timeSlot === 1) {
+          end = index;
+        } else {
+          if (end > start) {
+            let startDate = new Date(
+              start * 60000 - 60 * 6 * 10000 + 6 * 10000,
+            );
+            let endDate = new Date(end * 60000 - 60 * 6 * 10000 + 6 * 10000);
+            tempTimeSlots.push(
+              key +
+                ' ' +
+                startDate.getHours() +
+                ':' +
+                (startDate.getMinutes() < 10
+                  ? '0' + startDate.getMinutes()
+                  : startDate.getMinutes()) +
+                '-' +
+                endDate.getHours() +
+                ':' +
+                (endDate.getMinutes() < 10
+                  ? '0' + endDate.getMinutes()
+                  : endDate.getMinutes()),
+            );
+          }
+          start = index;
+        }
+      });
+    });
+    setTimeSlots(tempTimeSlots);
+  };
+
+  const handleStatus = async subjectStatus => {
+    let statusMap = new Map();
+    for (var i = 0; i < 7; i++) {
+      statusMap.set(weekDays[i], new Array(1560).fill(0));
+    }
+    await subjectStatus.map(status => {
+      let { from, to, day } = status;
+      let fromList = from.split(':');
+      let toList = to.split(':');
+      let fromMinutes = Number(fromList[0]) * 60 + Number(fromList[1]);
+      let toMinutes = Number(toList[0]) * 60 + Number(toList[1]);
+      statusMap.get(weekDays[day]).fill(1, fromMinutes, toMinutes);
+    });
+    getTimes(statusMap);
+  };
+
   const handleChange = async event => {
     let { label, value } = event;
     await setFormControls({ label, value });
-    /** 
-    Activate this request when questions/status endpoint is created
-    getSubjectStatus(value).then(setSubjectStatus);
-    */
+    getSubjectStatus(value).then(res => handleStatus(res));
   };
 
   //Rendering subject availability based on employee time schedule
   const renderStatusMessage = () => {
-    if (subjectStatus.length === 0 && formControls.value) {
+    if (timeSlots && timeSlots.length === 0 && formControls.value) {
       return (
         <p className="sectioncontainer--text">
           {formControls.label +
             ' er dessverre ikke tilgjengelig med det første.'}
         </p>
       );
-    } else if (subjectStatus.length > 0) {
-      return subjectStatus.map((status, index) => {
+    } else if (timeSlots && timeSlots.length > 0) {
+      return timeSlots.map((status, index) => {
         return (
           <p className="sectioncontainer--text" key={index}>
-            {status.day + ' ' + status.start + '-' + status.end}
+            {status}
           </p>
         );
       });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
-import { IQuestion, IGrade, ISubject, IStatus } from '../interfaces/index';
+import { IQuestion, IGrade, ISubject } from '../interfaces/index';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -28,10 +28,10 @@ export function getSubjectList(): Promise<ISubject[]> {
     .catch(e => console.log('Could not get subject list'));
 }
 
-export function getSubjectStatus(id: string): Promise<IStatus[]> {
+export function getSubjectStatus(id: string) {
   return api
-    .get(`subject/status/${id}`)
-    .then(res => res.data.status)
+    .get(`timeslots/subject/${id}`)
+    .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
 
