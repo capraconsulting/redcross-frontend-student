@@ -18,6 +18,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
   const [timeSlots, setTimeSlots] = useState([] as string[]);
+  const [statusActive, setStatusActive] = useState(false);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
@@ -53,7 +54,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const getTimes = statusMap => {
     let tempTimeSlots = [] as string[];
-    let status = false;
     statusMap.forEach((timeTable, key) => {
       let start = 0;
       let end = 0;
@@ -82,13 +82,23 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
                   : endDate.getMinutes()),
             );
             let now = new Date();
+            let before = new Date();
+            before.setHours(
+              startDate.getHours(),
+              startDate.getMinutes(),
+              startDate.getMinutes(),
+            );
+            let after = new Date();
+            after.setHours(
+              endDate.getHours(),
+              endDate.getMinutes(),
+              endDate.getSeconds(),
+            );
             if (
-              startDate.getHours() <= now.getHours() &&
-              startDate.getMinutes() <= now.getMinutes() &&
-              now.getHours() <= endDate.getHours() &&
-              now.getMinutes() <= endDate.getMinutes()
+              Number(now.getTime()) >= Number(before.getTime()) &&
+              Number(now.getTime()) <= Number(after.getTime())
             ) {
-              console.log('AKTIV!');
+              setStatusActive(true);
             }
           }
           start = index;
@@ -169,7 +179,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       </form>
       <button
         className="btn btn-submit"
-        disabled={!textChat || formControls.value === ''}
+        disabled={!statusActive || formControls.value === ''}
         onClick={() => history.push('leksehjelp')}
       >
         Chat
@@ -177,7 +187,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       eller{' '}
       <button
         className="btn btn-submit"
-        disabled={!videoChat}
+        disabled={!statusActive || formControls.value === ''}
         onClick={() => history.push('leksehjelp')}
       >
         Videchat
