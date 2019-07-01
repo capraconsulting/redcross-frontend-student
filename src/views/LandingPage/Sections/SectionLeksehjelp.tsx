@@ -54,18 +54,22 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const getTimes = statusMap => {
     let tempTimeSlots = [] as string[];
+    //Loop over the seven bitmaps (one per day) in the filled statusMaps.
     statusMap.forEach((timeTable, key) => {
       let start = 0;
       let end = 0;
       timeTable.map((timeSlot, index) => {
+        //Checks if bit is filled, and sets it as new interval end.
         if (timeSlot === 1) {
           end = index;
         } else {
+          //Complete intervall.
           if (end > start) {
             let startDate = new Date(
               start * 60000 - 60 * 6 * 10000 + 6 * 10000,
             );
             let endDate = new Date(end * 60000 - 60 * 6 * 10000 + 6 * 10000);
+            //Push time string to timeslots list.
             tempTimeSlots.push(
               key +
                 ' ' +
@@ -81,6 +85,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
                   ? '0' + endDate.getMinutes()
                   : endDate.getMinutes()),
             );
+            //Create dates to compare time.
             let now = new Date();
             let before = new Date();
             before.setHours(
@@ -88,6 +93,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
               startDate.getMinutes(),
               startDate.getMinutes(),
             );
+            console.log(weekDays[now.getDay() - 1] === key);
             let after = new Date();
             after.setHours(
               endDate.getHours(),
@@ -96,7 +102,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
             );
             if (
               Number(now.getTime()) >= Number(before.getTime()) &&
-              Number(now.getTime()) <= Number(after.getTime())
+              Number(now.getTime()) <= Number(after.getTime()) &&
+              weekDays[now.getDay() - 1] === key
             ) {
               setStatusActive(true);
             }
@@ -110,17 +117,23 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const handleStatus = async subjectStatus => {
     let statusMap = new Map();
+    //Creates bit map for each day in the week, 1560 minutes per day.
     for (var i = 0; i < 7; i++) {
       statusMap.set(weekDays[i], new Array(1560).fill(0));
     }
+    //Loop the timeslots recieved from backend
     await subjectStatus.map(status => {
       let { from, to, day } = status;
       let fromList = from.split(':');
       let toList = to.split(':');
+      //Lower timeslot boundery in minutes
       let fromMinutes = Number(fromList[0]) * 60 + Number(fromList[1]);
+      //Upper timeslot boundary in minutes
       let toMinutes = Number(toList[0]) * 60 + Number(toList[1]);
+      //Fill the bitmap with 1s to cover the timeslots of 'Mandag' (day=0) to 'Søndag' (day=6).
       statusMap.get(weekDays[day]).fill(1, fromMinutes, toMinutes);
     });
+    //Get time strings (solves timeslot overlaps).
     getTimes(statusMap);
   };
 
@@ -130,7 +143,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     getSubjectStatus(value).then(res => handleStatus(res));
   };
 
-  //Rendering subject availability based on employee time schedule
+  //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
     if (timeSlots && timeSlots.length === 0 && formControls.value) {
       return (
@@ -149,10 +162,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       });
     }
   };
-
-  //Set the status from request subjectStatus
-  const textChat = true;
-  const videoChat = false;
 
   return (
     <div className="sectioncontainer">
@@ -174,7 +183,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           value={formControls.value}
           onChange={event => handleChange(event)}
         />
-
         {renderStatusMessage()}
       </form>
       <button
