@@ -55,7 +55,7 @@ const QuestionPage = (props: IProps, state: IState) => {
             />
             <SectionAnswer answer={question.answer} />
           </div>
-          <SectionFeedback questionId={parseInt(props.questionId)} />
+          <SectionFeedback questionID={parseInt(props.questionId)} />
           <SectionServiceDescription />
         </div>
       )}

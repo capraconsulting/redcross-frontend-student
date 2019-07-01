@@ -38,15 +38,15 @@ export function getSubjectStatus(id: string) {
 export function postQuestion(question) {
   // Which type will this be? Defined in backend
   return api
-    .post('questions', question)
+    .post('questions', { question })
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
 
-export function postFeedback(feedback) {
+export function postFeedback(questionID, feedbackText) {
   // Which type will this be? Defined in backend
   return api
-    .post(`questions/${feedback.questionID}`, feedback.feedbackText)
+    .post(`feedback/question/${questionID}`, { feedbackText })
     .then(res => res.data)
     .catch(e => console.error(e.getMessage));
 }
