@@ -9,3 +9,8 @@ export function NorwegianDate(date): string {
     tmpDate.getTime()
   );
 }
+
+export function NorwegianTime(date): string {
+  const tmpDate = new Date(date);
+  return tmpDate.getHours() + ':' + tmpDate.getMinutes();
+}
