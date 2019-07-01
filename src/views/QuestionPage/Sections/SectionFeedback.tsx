@@ -7,20 +7,15 @@ import '../../../styles/QuestionPage.less';
 import { postFeedback } from '../../../services/api-service';
 
 interface IProps {
-  questionId: number;
+  questionID: number;
 }
 
 export const SectionFeedback = (props: IProps) => {
   const [feedbackText, setFeedbackText] = useState('' as string);
 
   const handleSubmit = () => {
-    const { questionId } = props;
-    const feedback = {
-      questionId,
-      feedbackText,
-    };
-    console.log(feedback);
-    //postFeedback(feedback);
+    const { questionID } = props;
+    postFeedback(questionID, feedbackText).then(data => console.log(data));
   };
 
   return (
