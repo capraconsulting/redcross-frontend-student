@@ -42,6 +42,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     return subjectOptions;
   };
 
+  //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
   const weekDays = [
     'Mandag',
     'Tirsdag',
@@ -100,11 +101,13 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
               endDate.getMinutes(),
               endDate.getSeconds(),
             );
+            //Checks if current day and time is within a interval
             if (
               Number(now.getTime()) >= Number(before.getTime()) &&
               Number(now.getTime()) <= Number(after.getTime()) &&
               weekDays[now.getDay() - 1] === key
             ) {
+              //Enables chat and videochat button for current subject
               setStatusActive(true);
             }
           }
@@ -112,6 +115,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         }
       });
     });
+    //Looped over each day and created status messages, then sets the here state to render them.
     setTimeSlots(tempTimeSlots);
   };
 
