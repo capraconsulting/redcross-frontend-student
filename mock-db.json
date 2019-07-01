@@ -170,5 +170,12 @@
       "id": 3,
       "status": []
     }
+  ],
+  "subjectStatus": [
+    {
+      "day": "0",
+      "from": "HH:mm:ss",
+      "to": "HH:mm:ss"
+    }
   ]
 }

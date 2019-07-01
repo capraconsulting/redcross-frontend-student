@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import { ISubject, IStatus } from '../../../interfaces';
+import { ISubject } from '../../../interfaces';
 
 //Services
 import {
@@ -17,7 +17,8 @@ import {
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
-  const [subjectStatus, setSubjectStatus] = useState([] as IStatus[]);
+  const [timeSlots, setTimeSlots] = useState([] as string[]);
+  const [statusActive, setStatusActive] = useState(false);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
@@ -26,9 +27,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   useEffect(() => {
     try {
       getSubjectList().then(setSubjects);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }, []);
 
   const getSubjectOptions = (): Option[] => {
@@ -42,29 +41,125 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       });
     return subjectOptions;
   };
+
+  //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
+  const weekDays = [
+    'Mandag',
+    'Tirsdag',
+    'Onsdag',
+    'Torsdag',
+    'Fredag',
+    'Lørdag',
+    'Søndag',
+  ];
+
+  const getTimes = statusMap => {
+    let tempTimeSlots = [] as string[];
+    //Loop over the seven bitmaps (one per day) in the filled statusMaps.
+    statusMap.forEach((timeTable, key) => {
+      let start = 0;
+      let end = 0;
+      timeTable.map((timeSlot, index) => {
+        //Checks if bit is filled, and sets it as new interval end.
+        if (timeSlot === 1) {
+          end = index;
+        } else {
+          //Complete intervall.
+          if (end > start) {
+            let startDate = new Date(
+              start * 60000 - 60 * 6 * 10000 + 6 * 10000,
+            );
+            let endDate = new Date(end * 60000 - 60 * 6 * 10000 + 6 * 10000);
+            //Push time string to timeslots list.
+            tempTimeSlots.push(
+              key +
+                ' ' +
+                startDate.getHours() +
+                ':' +
+                (startDate.getMinutes() < 10
+                  ? '0' + startDate.getMinutes()
+                  : startDate.getMinutes()) +
+                '-' +
+                endDate.getHours() +
+                ':' +
+                (endDate.getMinutes() < 10
+                  ? '0' + endDate.getMinutes()
+                  : endDate.getMinutes()),
+            );
+            //Create dates to compare current time and subjects active periodes.
+            let now = new Date();
+            let before = new Date();
+            before.setHours(
+              startDate.getHours(),
+              startDate.getMinutes(),
+              startDate.getMinutes(),
+            );
+            let after = new Date();
+            after.setHours(
+              endDate.getHours(),
+              endDate.getMinutes(),
+              endDate.getSeconds(),
+            );
+            //Checks if current day and time is within a interval
+            if (
+              Number(now.getTime()) >= Number(before.getTime()) &&
+              Number(now.getTime()) <= Number(after.getTime()) &&
+              weekDays[now.getDay() - 1] === key
+            ) {
+              //Enables chat and videochat button for current subject
+              setStatusActive(true);
+            }
+          }
+          start = index;
+        }
+      });
+    });
+    //Looped over each day and created status messages, then sets the here state to render them.
+    setTimeSlots(tempTimeSlots);
+  };
+
+  const handleStatus = async subjectStatus => {
+    let statusMap = new Map();
+    //Creates bit map for each day in the week, 1560 minutes per day.
+    for (var i = 0; i < 7; i++) {
+      statusMap.set(weekDays[i], new Array(1560).fill(0));
+    }
+    //Loop the timeslots recieved from backend
+    await subjectStatus.map(status => {
+      let { from, to, day } = status;
+      let fromList = from.split(':');
+      let toList = to.split(':');
+      //Lower timeslot boundery in minutes
+      let fromMinutes = Number(fromList[0]) * 60 + Number(fromList[1]);
+      //Upper timeslot boundary in minutes
+      let toMinutes = Number(toList[0]) * 60 + Number(toList[1]);
+      //Fill the bitmap with 1s to cover the timeslots of 'Mandag' (day=0) to 'Søndag' (day=6).
+      statusMap.get(weekDays[day]).fill(1, fromMinutes, toMinutes);
+    });
+    //Get time strings (solves timeslot overlaps).
+    getTimes(statusMap);
+  };
+
   const handleChange = async event => {
     let { label, value } = event;
     await setFormControls({ label, value });
-    /** 
-    Activate this request when questions/status endpoint is created
-    getSubjectStatus(value).then(setSubjectStatus);
-    */
+    getSubjectStatus(value).then(res => handleStatus(res));
   };
 
-  //Rendering subject availability based on employee time schedule
+  //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
-    if (subjectStatus.length === 0 && formControls.value) {
+    if (timeSlots && timeSlots.length === 0 && formControls.value) {
       return (
         <p className="sectioncontainer--text">
           {formControls.label +
             ' er dessverre ikke tilgjengelig med det første.'}
         </p>
       );
-    } else if (subjectStatus.length > 0) {
-      return subjectStatus.map((status, index) => {
+    } else if (timeSlots && timeSlots.length > 0) {
+      return timeSlots.map((status, index) => {
         return (
           <p className="sectioncontainer--text" key={index}>
-            {status.day + ' ' + status.start + '-' + status.end}
+            {status}
           </p>
         );
       });
@@ -75,21 +170,15 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
       <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
-        Få{' '}
-        <a
-          onClick={() => history.push('leksehjelp')}
-          className="sectioncontainer--text--colored"
-        >
-          gratis leksehjelp
-        </a>{' '}
-        over chat eller video av våre frivillige!
+        Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive
+        tekster eller øve til prøver.
       </p>
       <form className="sectioncontainer--form">
         <div
           className="sectioncontainer--form--header"
           id="leksehjelp--form--header"
         >
-          Se når ditt fag er tilgjengelig
+          Velg tema
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
@@ -99,6 +188,21 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         />
         {renderStatusMessage()}
       </form>
+      <button
+        className="btn btn-submit"
+        disabled={!statusActive || formControls.value === ''}
+        onClick={() => history.push('leksehjelp')}
+      >
+        Chat
+      </button>{' '}
+      eller{' '}
+      <button
+        className="btn btn-submit"
+        disabled={!statusActive || formControls.value === ''}
+        onClick={() => history.push('leksehjelp')}
+      >
+        Videchat
+      </button>
     </div>
   );
 };

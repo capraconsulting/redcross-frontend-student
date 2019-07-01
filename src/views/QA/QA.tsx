@@ -84,15 +84,15 @@ export const QA = (props: IProps & RouteComponentProps) => {
   }, [page]);
 
   const getSubjectOptions = (): Option[] => {
-    return (
-      subjects &&
+    const subjectOptions = [{ value: '0', label: 'Alle fag' }] as Option[];
+    subjects &&
       subjects.map(subject => {
-        return {
+        subjectOptions.push({
           value: subject.id.toString(),
           label: subject.subject,
-        };
-      })
-    );
+        });
+      });
+    return subjectOptions;
   };
 
   const getFilterOptions = (): Option[] => {
@@ -109,12 +109,14 @@ export const QA = (props: IProps & RouteComponentProps) => {
   };
 
   const getGradeOptions = (): Option[] => {
-    return gradeList.map(grade => {
-      return {
+    const gradeOptions = [{ value: '0', label: 'Alle trinn' }] as Option[];
+    gradeList.map(grade => {
+      gradeOptions.push({
         value: grade.gradeID,
         label: grade.label,
-      };
+      });
     });
+    return gradeOptions;
   };
 
   const renderSearchForm = () => {
