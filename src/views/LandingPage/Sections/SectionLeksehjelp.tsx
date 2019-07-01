@@ -53,6 +53,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const getTimes = statusMap => {
     let tempTimeSlots = [] as string[];
+    let status = false;
     statusMap.forEach((timeTable, key) => {
       let start = 0;
       let end = 0;
@@ -80,6 +81,15 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
                   ? '0' + endDate.getMinutes()
                   : endDate.getMinutes()),
             );
+            let now = new Date();
+            if (
+              startDate.getHours() <= now.getHours() &&
+              startDate.getMinutes() <= now.getMinutes() &&
+              now.getHours() <= endDate.getHours() &&
+              now.getMinutes() <= endDate.getMinutes()
+            ) {
+              console.log('AKTIV!');
+            }
           }
           start = index;
         }
