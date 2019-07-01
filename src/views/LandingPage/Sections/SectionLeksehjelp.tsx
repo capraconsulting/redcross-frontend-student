@@ -86,7 +86,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
                   ? '0' + endDate.getMinutes()
                   : endDate.getMinutes()),
             );
-            //Create dates to compare time.
+            //Create dates to compare current time and subjects active periodes.
             let now = new Date();
             let before = new Date();
             before.setHours(
@@ -94,7 +94,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
               startDate.getMinutes(),
               startDate.getMinutes(),
             );
-            console.log(weekDays[now.getDay() - 1] === key);
             let after = new Date();
             after.setHours(
               endDate.getHours(),
