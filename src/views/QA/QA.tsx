@@ -119,12 +119,6 @@ export const QA = (props: IProps & RouteComponentProps) => {
     return gradeOptions;
   };
 
-  const isKeyPressed = event => {
-    if (event.keyCode === 13) {
-      handleSubmit();
-    }
-  };
-
   const renderSearchForm = () => {
     return (
       history && (
@@ -134,7 +128,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
           </h1>
           <div
             className={'searchcontainer'}
-            onKeyDown={event => event.keyKode === 13 && handleSubmit()}
+            onKeyDown={event => event.keyCode === 13 && handleSubmit()}
           >
             {' '}
             {/*input container start*/}
