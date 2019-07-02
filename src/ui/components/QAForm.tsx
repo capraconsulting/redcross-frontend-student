@@ -20,13 +20,13 @@ const defaultOptions = {
 const QAForm = () => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
 
-  const [userEmail, setUserEmail] = useState('' as string);
+  const [email, setEmail] = useState('' as string);
   const [questionText, setQuestionText] = useState('' as string);
 
   const [subject, setSubject] = useState(defaultOptions as Option);
   const [theme, setTheme] = useState(defaultOptions as Option);
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
-  const [anon, setAnon] = useState(true as boolean);
+  const [isPublic, setIsPublic] = useState(true as boolean);
 
   useEffect(() => {
     getSubjectList().then(setSubjects);
@@ -34,12 +34,12 @@ const QAForm = () => {
 
   const handleSubmit = () => {
     const questionForm: IQuestion = {
-      userEmail,
+      email,
       studentGrade: Number(studentGrade.value),
-      subjectId: Number(subject.value),
-      theme: Number(theme.value),
+      subjectID: Number(subject.value),
+      themeID: Number(theme.value),
       questionText,
-      anon,
+      isPublic,
       totalRows: 0,
     };
     // TODO: post question
@@ -52,7 +52,7 @@ const QAForm = () => {
       subjects.map(subject => {
         subjectOptions.push({
           value: subject.id.toString(),
-          label: subject.subject,
+          label: subject.subjectTitle,
         });
       });
     return subjectOptions;
@@ -60,7 +60,7 @@ const QAForm = () => {
 
   const getThemeOptions = (): Option[] => {
     const chosenSubject =
-      subjects && subjects.filter(c => c.subject === subject.label)[0]; // Will always only be one entry in array
+      subjects && subjects.filter(c => c.subjectTitle === subject.label)[0]; // Will always only be one entry in array
     if (chosenSubject) {
       return chosenSubject.themes.map(theme => {
         return {
@@ -124,8 +124,8 @@ const QAForm = () => {
           <label className={'form--label'}>E-post:</label>
           <input
             className={'email'}
-            value={userEmail}
-            onChange={event => setUserEmail(event.target.value)}
+            value={email}
+            onChange={event => setEmail(event.target.value)}
             type="email"
             name={'email'}
           />
@@ -133,8 +133,8 @@ const QAForm = () => {
             <label>
               <input
                 type="checkbox"
-                checked={anon}
-                onChange={() => setAnon(!anon)}
+                checked={isPublic}
+                onChange={() => setIsPublic(!isPublic)}
               />
               Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
             </label>

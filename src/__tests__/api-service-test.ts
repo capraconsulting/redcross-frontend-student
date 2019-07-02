@@ -58,12 +58,12 @@ describe('api-service', () => {
   });
 
   const questionForm: IQuestion = {
-    userEmail: 'testetestesen@testesen.no',
+    email: 'testetestesen@testesen.no',
     studentGrade: 8,
-    subjectId: 1,
-    theme: 1,
+    subjectID: 1,
+    themeID: 1,
     questionText: 'questionText',
-    anon: true,
+    isPublic: true,
     totalRows: 0,
   };
 
@@ -75,15 +75,13 @@ describe('api-service', () => {
 
     expect(call[0]).toEqual('questions');
     expect(call[1]).toEqual({
-      question: {
-        studentGrade: 8,
-        subjectId: 1,
-        theme: 1,
-        questionText: 'questionText',
-        anon: true,
-        totalRows: 0,
-        userEmail: 'testetestesen@testesen.no',
-      },
+      email: 'testetestesen@testesen.no',
+      studentGrade: 8,
+      subjectID: 1,
+      themeID: 1,
+      questionText: 'questionText',
+      isPublic: true,
+      totalRows: 0,
     });
   });
 });

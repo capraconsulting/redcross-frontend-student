@@ -36,7 +36,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       subjects.map(subject => {
         subjectOptions.push({
           value: subject.id.toString(),
-          label: subject.subject,
+          label: subject.subjectTitle,
         });
       });
     return subjectOptions;

@@ -1,13 +1,11 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
-fixture`Digital Leksehjelp`
-  .page('http://localhost:3000')
-  .beforeEach(async () => {
-    await waitForReact();
-  });
+fixture`LandingPage`.page('http://localhost:3000').beforeEach(async () => {
+  await waitForReact();
+});
 
 //Skipping all tests in selected fixture
-fixture.skip`Digital Leksehjelp`;
+//fixture.skip`Digital Leksehjelp`;
 
 class LandingPage {
   //Declaring selector type for each element to test
@@ -15,6 +13,7 @@ class LandingPage {
   public footer: Selector;
   public QA: Selector;
   public leksehjelp: Selector;
+  public frivillig: Selector;
 
   //Constructing elements to test
   public constructor() {
@@ -24,29 +23,32 @@ class LandingPage {
     this.leksehjelp = ReactSelector('p').withProps({
       id: 'leksehjelpcontainer--text',
     });
+    this.frivillig = ReactSelector('p').withProps({
+      id: 'sectionVolunteer--text',
+    });
   }
 
-  //Arrow functions fetching the selectors text content.
+  //Fetching the selectors text content.
   public getText = key => this[key].textContent;
 }
 
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
 console.log(landingPage.footer.length);
-//Test header text value
+
 test('Check header', async t => {
   await t.expect(landingPage.getText('headline')).eql('Digital Leksehjelp');
 });
 
-//Test leksehjelp section text value
-test('Check leksehjelp header', async t => {
+test('Check leksehjelp section description', async t => {
   await t
     .expect(landingPage.getText('leksehjelp'))
-    .eql('Få gratis leksehjelp over chat eller video av våre frivillige!');
+    .eql(
+      'Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver.',
+    );
 });
 
-//Test hero section text value
-test('Check QA description', async t => {
+test('Check QA section description', async t => {
   await t
     .expect(landingPage.getText('QA'))
     .eql(
@@ -54,7 +56,14 @@ test('Check QA description', async t => {
     );
 });
 
-//Test footer text value
-test('Check footer', async t => {
+test('Check footer facebook link', async t => {
   await t.expect(landingPage.getText('footer')).eql('Følg oss på Facebook');
+});
+
+test('Check frivillig section description', async t => {
+  await t
+    .expect(landingPage.getText('frivillig'))
+    .eql(
+      'På samme måte som de fleste andre aktiviteter i Røde Kors, er Digital Leksehjelp drevet av frivillige. Våre frivillige er trygge voksenpersoner som bruker sine fagkunnskaper og sitt engasjement til å gjøre elevers skolehverdag bedre og legge til rette for mestring, motivasjon og lærelyst. ',
+    );
 });

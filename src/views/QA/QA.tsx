@@ -89,7 +89,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
       subjects.map(subject => {
         subjectOptions.push({
           value: subject.id.toString(),
-          label: subject.subject,
+          label: subject.subjectTitle,
         });
       });
     return subjectOptions;
@@ -123,7 +123,9 @@ export const QA = (props: IProps & RouteComponentProps) => {
     return (
       history && (
         <div>
-          <h1 className={'searchcontainer--header'}>Søk blant spørsmål</h1>
+          <h1 className={'searchcontainer--header'} id="QAsearchForm--header">
+            Søk blant spørsmål
+          </h1>
           <form className={'searchcontainer'} onSubmit={handleSubmit}>
             {' '}
             {/*input container start*/}
@@ -198,7 +200,13 @@ export const QA = (props: IProps & RouteComponentProps) => {
   return (
     <div className="content">
       {renderSearchForm()}
-      {questions && SectionQAList(questions, totalHits)}
+      {questions && (
+        <SectionQAList
+          questions={questions}
+          totalHits={totalHits}
+          history={history}
+        />
+      )}
       {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
       <SectionHelper />
     </div>
