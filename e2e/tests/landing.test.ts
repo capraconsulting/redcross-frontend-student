@@ -15,6 +15,7 @@ class LandingPage {
   public footer: Selector;
   public QA: Selector;
   public leksehjelp: Selector;
+  public frivillig: Selector;
 
   //Constructing elements to test
   public constructor() {
@@ -23,6 +24,9 @@ class LandingPage {
     this.footer = ReactSelector('h1').withProps({ id: 'footer--content' });
     this.leksehjelp = ReactSelector('p').withProps({
       id: 'leksehjelpcontainer--text',
+    });
+    this.frivillig = ReactSelector('p').withProps({
+      id: 'sectionVolunteer--text',
     });
   }
 
@@ -39,7 +43,7 @@ test('Check header', async t => {
 });
 
 //Test leksehjelp section text value
-test('Check leksehjelp header', async t => {
+test('Check leksehjelp section description', async t => {
   await t
     .expect(landingPage.getText('leksehjelp'))
     .eql(
@@ -48,7 +52,7 @@ test('Check leksehjelp header', async t => {
 });
 
 //Test hero section text value
-test('Check QA description', async t => {
+test('Check QA section description', async t => {
   await t
     .expect(landingPage.getText('QA'))
     .eql(
@@ -57,6 +61,14 @@ test('Check QA description', async t => {
 });
 
 //Test footer text value
-test('Check footer', async t => {
+test('Check footer facebook link', async t => {
   await t.expect(landingPage.getText('footer')).eql('Følg oss på Facebook');
+});
+
+test('Check frivillig section description', async t => {
+  await t
+    .expect(landingPage.getText('frivillig'))
+    .eql(
+      'På samme måte som de fleste andre aktiviteter i Røde Kors, er Digital Leksehjelp drevet av frivillige. Våre frivillige er trygge voksenpersoner som bruker sine fagkunnskaper og sitt engasjement til å gjøre elevers skolehverdag bedre og legge til rette for mestring, motivasjon og lærelyst. ',
+    );
 });
