@@ -200,7 +200,13 @@ export const QA = (props: IProps & RouteComponentProps) => {
   return (
     <div className="content">
       {renderSearchForm()}
-      {questions && SectionQAList(questions, totalHits)}
+      {questions && (
+        <SectionQAList
+          questions={questions}
+          totalHits={totalHits}
+          history={history}
+        />
+      )}
       {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
       <SectionHelper />
     </div>

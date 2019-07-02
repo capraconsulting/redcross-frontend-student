@@ -16,8 +16,15 @@ import { IQuestion } from '../../../interfaces';
 //Services
 import { NorwegianDate } from '../../../services/date-service';
 
-const SectionQAList = (questions: IQuestion[], totalHits: number) => {
+interface IProps {
+  questions: IQuestion[];
+  totalHits: number;
+  history;
+}
+
+export const SectionQAList = (props: IProps) => {
   /*This array can be null (before we fetch it)*/
+  const { questions, totalHits, history } = props;
   return questions && questions.length > 0 ? (
     <div>
       <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
@@ -29,7 +36,7 @@ const SectionQAList = (questions: IQuestion[], totalHits: number) => {
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
                   <p>
-                    {question.subjectId}, {question.studentGrade},{' '}
+                    {question.subjectID}, {question.studentGrade},{' '}
                     {NorwegianDate(question.questionDate)}
                   </p>
                 </AccordionItemButton>
@@ -43,7 +50,14 @@ const SectionQAList = (questions: IQuestion[], totalHits: number) => {
                 <hr />
 
                 <p>{question.answer}</p>
+                <p
+                  onClick={() => history.push(`/questions/${question.id}`)}
+                  className="plink"
+                >
+                  Les mer...
+                </p>
               </AccordionItemPanel>
+
               <div className="underline"></div>
             </AccordionItem>
           );
