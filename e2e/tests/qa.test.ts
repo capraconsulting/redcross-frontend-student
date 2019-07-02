@@ -1,21 +1,21 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
-fixture`QuestionPage`
-  .page('http://localhost:3000/questions/1')
-  .beforeEach(async () => {
-    await waitForReact();
-  });
+fixture`QAPage`.page('http://localhost:3000/questions').beforeEach(async () => {
+  await waitForReact();
+});
 
 //Skipping all tests in selected fixture
-fixture.skip`QuestionPage`;
+//fixture.skip`QuestionPage`;
 
 class LandingPage {
   //Declaring selector type for each element to test
-  public answer: Selector;
+  public searchFormHeader: Selector;
 
   //Constructing elements to test
   public constructor() {
-    this.answer = ReactSelector('p').withProps({ id: 'showAnswer--info' });
+    this.searchFormHeader = ReactSelector('h1').withProps({
+      id: 'QAsearchForm--header',
+    });
   }
 
   //Fetching the selectors text content.
@@ -25,8 +25,8 @@ class LandingPage {
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
 
-test('Check answer headline', async t => {
+test('Check QA search form header text', async t => {
   await t
-    .expect(landingPage.getText('answer'))
-    .eql('Svaret er skrevet av en frivillig hos Digital Leksehjelp.');
+    .expect(landingPage.getText('searchFormHeader'))
+    .eql('Søk blant spørsmål');
 });
