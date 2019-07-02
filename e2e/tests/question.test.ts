@@ -7,7 +7,7 @@ fixture`QuestionPage`
   });
 
 //Skipping all tests in selected fixture
-//fixture.skip`Digital Leksehjelp`;
+fixture.skip`QuestionPage`;
 
 class LandingPage {
   //Declaring selector type for each element to test
