@@ -22,7 +22,8 @@ export const createEnterQueueMessage = (
   grade: string,
   introText: string,
   subject: string,
-  course: string): ISocketMessage => {
+  course: string,
+): ISocketMessage => {
   const msg: IEnterQueueMessage = {
     uniqueID,
     nickname,
