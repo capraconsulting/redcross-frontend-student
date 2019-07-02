@@ -119,6 +119,12 @@ export const QA = (props: IProps & RouteComponentProps) => {
     return gradeOptions;
   };
 
+  const isKeyPressed = event => {
+    if (event.keyCode === 13) {
+      handleSubmit();
+    }
+  };
+
   const renderSearchForm = () => {
     return (
       history && (
@@ -126,7 +132,10 @@ export const QA = (props: IProps & RouteComponentProps) => {
           <h1 className={'searchcontainer--header'} id="QAsearchForm--header">
             Søk blant spørsmål
           </h1>
-          <form className={'searchcontainer'} onSubmit={handleSubmit}>
+          <div
+            className={'searchcontainer'}
+            onKeyDown={event => event.keyKode === 13 && handleSubmit()}
+          >
             {' '}
             {/*input container start*/}
             <input
@@ -168,7 +177,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
                 })
               }
             />
-          </form>
+          </div>
           <div className="helpText">
             <button
               onClick={() => handleSubmit()}
