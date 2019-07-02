@@ -16,9 +16,20 @@ const createMessage = (
   };
 };
 
-export const createEnterQueueMessage = (uniqueID: string): ISocketMessage => {
+export const createEnterQueueMessage = (
+  uniqueID: string,
+  nickname: string,
+  grade: string,
+  introText: string,
+  subject: string,
+  course: string): ISocketMessage => {
   const msg: IEnterQueueMessage = {
     uniqueID,
+    nickname,
+    grade,
+    introText,
+    course,
+    subject,
     datetime: new Date(0),
   };
   return createMessage(msg, 'enterQueueMessage');

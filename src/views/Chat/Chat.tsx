@@ -12,8 +12,14 @@ const Chat = () => {
   const [roomID, setRoomID] = useState('' as string);
   const [uniqueID, setUniqueID] = useState('' as string);
 
+  const course = "Mattefaen";
+  const nickname = "Hænsyboi";
+  const introText = "TRENGER NO HJÆLP MED MATTA, OG DET BRENNKVIKT";
+  const grade = "VG3";
+  const subject = "Jesus take the fucking wheel";
+
   useEffect(() => {
-    setSocket(new WebSocket('ws://localhost:3001/events'));
+    setSocket(new WebSocket('ws://localhost:3002/events'));
   }, []);
 
   const generateTextMessageFromPayload = (
@@ -66,7 +72,14 @@ const Chat = () => {
   };
 
   const sendEnterQueueMessage = () => {
-    const msg = createEnterQueueMessage(uniqueID);
+    const msg = createEnterQueueMessage(
+      uniqueID,
+      course,
+      nickname,
+      introText,
+      grade,
+      subject
+    );
     socket.send(JSON.stringify(msg));
   };
   return (
