@@ -49,7 +49,7 @@ export const SectionQAList = (props: IProps) => {
 
                 <hr />
 
-                <p>{question.answer}</p>
+                <p>{question.answerText}</p>
                 <p
                   onClick={() => history.push(`/questions/${question.id}`)}
                   className="plink"

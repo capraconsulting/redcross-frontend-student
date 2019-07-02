@@ -39,6 +39,7 @@ const QuestionPage = (props: IProps, state: IState) => {
     });
   }, []);
 
+  console.log(question);
   return (
     <div className="content">
       {question && (
@@ -53,7 +54,7 @@ const QuestionPage = (props: IProps, state: IState) => {
               questionText={question.questionText}
               studentGrade={question.studentGrade}
             />
-            <SectionAnswer answer={question.answer} />
+            <SectionAnswer answerText={question.answerText} />
           </div>
           <SectionFeedback questionID={parseInt(props.questionId)} />
           <SectionServiceDescription />
