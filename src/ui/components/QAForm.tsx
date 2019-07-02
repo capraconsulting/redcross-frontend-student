@@ -52,7 +52,7 @@ const QAForm = () => {
       subjects.map(subject => {
         subjectOptions.push({
           value: subject.id.toString(),
-          label: subject.subject,
+          label: subject.subjectTitle,
         });
       });
     return subjectOptions;
@@ -60,7 +60,7 @@ const QAForm = () => {
 
   const getThemeOptions = (): Option[] => {
     const chosenSubject =
-      subjects && subjects.filter(c => c.subject === subject.label)[0]; // Will always only be one entry in array
+      subjects && subjects.filter(c => c.subjectTitle === subject.label)[0]; // Will always only be one entry in array
     if (chosenSubject) {
       return chosenSubject.themes.map(theme => {
         return {

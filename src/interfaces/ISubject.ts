@@ -6,5 +6,5 @@ interface ITheme {
 export default interface ISubject {
   id: number;
   themes: ITheme[];
-  subject: string;
+  subjectTitle: string;
 }

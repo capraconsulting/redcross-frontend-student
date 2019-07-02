@@ -89,7 +89,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
       subjects.map(subject => {
         subjectOptions.push({
           value: subject.id.toString(),
-          label: subject.subject,
+          label: subject.subjectTitle,
         });
       });
     return subjectOptions;
