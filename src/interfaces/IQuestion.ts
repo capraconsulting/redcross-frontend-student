@@ -3,7 +3,7 @@ export default interface IQuestion {
   title?: string;
   email?: string;
   questionText: string;
-  answer?: string;
+  answerText?: string;
   studentGrade: number;
   questionDate?: string;
   answerDate?: string;
