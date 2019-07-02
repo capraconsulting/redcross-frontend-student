@@ -7,7 +7,7 @@ fixture`Digital Leksehjelp`
   });
 
 //Skipping all tests in selected fixture
-fixture.skip`Digital Leksehjelp`;
+//fixture.skip`Digital Leksehjelp`;
 
 class LandingPage {
   //Declaring selector type for each element to test
@@ -42,7 +42,9 @@ test('Check header', async t => {
 test('Check leksehjelp header', async t => {
   await t
     .expect(landingPage.getText('leksehjelp'))
-    .eql('Få gratis leksehjelp over chat eller video av våre frivillige!');
+    .eql(
+      'Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver.',
+    );
 });
 
 //Test hero section text value
