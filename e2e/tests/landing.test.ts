@@ -1,10 +1,8 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
-fixture`Digital Leksehjelp`
-  .page('http://localhost:3000')
-  .beforeEach(async () => {
-    await waitForReact();
-  });
+fixture`LandingPage`.page('http://localhost:3000').beforeEach(async () => {
+  await waitForReact();
+});
 
 //Skipping all tests in selected fixture
 //fixture.skip`Digital Leksehjelp`;
@@ -30,19 +28,18 @@ class LandingPage {
     });
   }
 
-  //Arrow functions fetching the selectors text content.
+  //Fetching the selectors text content.
   public getText = key => this[key].textContent;
 }
 
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
 console.log(landingPage.footer.length);
-//Test header text value
+
 test('Check header', async t => {
   await t.expect(landingPage.getText('headline')).eql('Digital Leksehjelp');
 });
 
-//Test leksehjelp section text value
 test('Check leksehjelp section description', async t => {
   await t
     .expect(landingPage.getText('leksehjelp'))
@@ -51,7 +48,6 @@ test('Check leksehjelp section description', async t => {
     );
 });
 
-//Test hero section text value
 test('Check QA section description', async t => {
   await t
     .expect(landingPage.getText('QA'))
@@ -60,7 +56,6 @@ test('Check QA section description', async t => {
     );
 });
 
-//Test footer text value
 test('Check footer facebook link', async t => {
   await t.expect(landingPage.getText('footer')).eql('Følg oss på Facebook');
 });

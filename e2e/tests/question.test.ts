@@ -1,6 +1,6 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
-fixture`Digital Leksehjelp`
+fixture`QuestionPage`
   .page('http://localhost:3000/questions/1')
   .beforeEach(async () => {
     await waitForReact();
@@ -18,14 +18,13 @@ class LandingPage {
     this.answer = ReactSelector('p').withProps({ id: 'showAnswer--info' });
   }
 
-  //Arrow functions fetching the selectors text content.
+  //Fetching the selectors text content.
   public getText = key => this[key].textContent;
 }
 
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
 
-//Test header text value
 test('Check answer headline', async t => {
   await t
     .expect(landingPage.getText('answer'))

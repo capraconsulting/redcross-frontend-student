@@ -15,7 +15,7 @@ const SectionRecruiting = () => {
       </div>
       <div className="volunteersPage--section--div">
         <div className="volunteer--header">Bli frivillig hos oss</div>
-        <p className="volunteer--text">
+        <p className="volunteer--text" id="sectionRecruiting--text">
           Vi trenger stadig nye frivillige med ulik bakgrunn. Du trenger ikke
           være ekspert, men en som er glad i fag, og som liker å formidle,
           motivere og veilede. Har du lyst til å bidra, les mer og meld deg som
