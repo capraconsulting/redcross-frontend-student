@@ -19,7 +19,12 @@ export interface ITextMessage {
 }
 
 export interface IEnterQueueMessage {
+  nickname: string;
+  subject: string;
+  grade: string;
   uniqueID: string;
+  introText: string;
+  course: string;
   datetime: Date;
 }
 
