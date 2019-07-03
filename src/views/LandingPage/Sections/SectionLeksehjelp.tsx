@@ -201,7 +201,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         disabled={!statusActive || formControls.value === ''}
         onClick={() => history.push('leksehjelp')}
       >
-        Videchat
+        Videochat
       </button>
     </div>
   );

@@ -49,7 +49,7 @@ const SectionMestring = (props: RouteComponentProps) => {
             disabled={!videoChat}
             onClick={() => history.push('mestring')}
           >
-            Videchat
+            Videochat
           </button>
         </div>
         <div className="cross-my-heart">

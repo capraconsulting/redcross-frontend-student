@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 
 // Interfaces
-import { IQuestion, ISubject } from '../../interfaces';
+import { IQuestion, ISubject } from '../../../interfaces';
 
 //Services
-import { postQuestion, getSubjectList } from '../../services/api-service';
+import { postQuestion, getSubjectList } from '../../../services/api-service';
 
 //Styles
-import '../../styles/QAForm.less';
+import '../../../styles/QAForm.less';
 
-import gradeList from '../../grades';
+import gradeList from '../../../grades';
 
 const defaultOptions = {
   value: '',
@@ -86,7 +86,7 @@ const QAForm = () => {
         <div className="form--input-container">
           {' '}
           {/*input container start*/}
-          <label className={'form--label'}>Tema:</label>
+          <label className={'form--label'}>Tema</label>
           <Dropdown
             placeholder={'Velg fag'}
             options={getSubjectOptions()}
@@ -104,7 +104,7 @@ const QAForm = () => {
               setTheme({ value: event.value, label: event.label })
             }
           />
-          <label className={'form--label'}>Klassetrinn:</label>
+          <label className={'form--label'}>Klassetrinn</label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
             options={getGradeOptions()}
@@ -113,6 +113,7 @@ const QAForm = () => {
               setGrade({ value: event.value, label: event.label })
             }
           />
+          <label className={'form--label'}>Spørsmål</label>
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -121,8 +122,9 @@ const QAForm = () => {
             value={questionText}
             onChange={event => setQuestionText(event.target.value)}
           />
-          <label className={'form--label'}>E-post:</label>
+          <label className={'form--label'}>E-post</label>
           <input
+            placeholder={'Skriv e-postadressen din'}
             className={'email'}
             value={email}
             onChange={event => setEmail(event.target.value)}

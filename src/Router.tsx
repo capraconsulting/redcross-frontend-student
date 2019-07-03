@@ -17,7 +17,7 @@ import Question from './views/QuestionPage/QuestionPage';
 import Leksehjelp from './views/Leksehjelp/LeksehjelpPage';
 import Mestring from './views/Mestring/MestringPage';
 import Frivillige from './views/Frivillige/FrivilligePage';
-import QAForm from './ui/components/QAForm';
+import NewQuestionPage from './views/NewQuestion/NewQuestionPage';
 import Chat from './views/Chat/Chat';
 
 export const AppRouter = () => {
@@ -26,7 +26,7 @@ export const AppRouter = () => {
       <Route path="/" component={Header} />
       <Switch>
         <Route path="/questions" exact component={QA} />
-        <Route path="/questions/new" exact component={QAForm} />
+        <Route path="/questions/new" exact component={NewQuestionPage} />
         <Route
           path="/questions/:id"
           exact
