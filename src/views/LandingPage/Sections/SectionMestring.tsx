@@ -12,6 +12,7 @@ const SectionMestring = (props: RouteComponentProps) => {
     <div className="help">
       <div>
         <div className="mestring">
+          <div className="mestring--badge_new">Ny tjeneste!</div>
           <a
             onClick={() => history.push(`mestring`)}
             style={{ textDecoration: 'none', color: 'black' }}
