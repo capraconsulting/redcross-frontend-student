@@ -25,10 +25,10 @@ sio.on('connection', socket => {
     socket.to(roomID).emit('message', message);
   });
 
-  socket.on('file', (file) => {
+  socket.on('file', file => {
     socket.emit('file', file);
     console.log(file);
-  })
+  });
 });
 
 sio.listen(port);
