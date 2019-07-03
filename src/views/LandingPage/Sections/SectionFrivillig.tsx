@@ -23,6 +23,12 @@ const SectionFrivillig = (props: RouteComponentProps) => {
         Les mer...
       </a>
       <div className="volunteer--image">
+        <a
+          className="volunteer--image--badge_new"
+          onClick={() => history.push('frivillige')}
+        >
+          Bli frivillig!
+        </a>
         <img
           src={require('../../../assets/images/volunteers_1.jpg')}
           className="volunteer--image--content"

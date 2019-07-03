@@ -12,6 +12,7 @@ const SectionQuestions = (props: RouteComponentProps) => {
 
   return (
     <div className="sectioncontainer">
+      <div className="sectioncontainer--badge_new">Alltid åpen!</div>
       <div className="sectioncontainer--header">Spørsmål og svar</div>
       <p className="sectioncontainer--text" id="sectionquestions--text">
         Her kan du lete etter svar blant{' '}
