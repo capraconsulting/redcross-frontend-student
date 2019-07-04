@@ -11,13 +11,13 @@ import {
 // Pages and components
 import Header from './ui/components/Header';
 import Footer from './ui/components/Footer';
-import LandingPage from './views/LandingPage/LandingPage';
-import QA from './views/QA/QA';
-import Question from './views/QuestionPage/QuestionPage';
+import LandingPage from './views/Landing/LandingPage';
+import QAPage from './views/QA/QAPage';
+import QuestionPage from './views/Question/QuestionPage';
 import NewQuestionPage from './views/NewQuestion/NewQuestionPage';
-import Leksehjelp from './views/Leksehjelp/LeksehjelpPage';
-import Mestring from './views/Mestring/MestringPage';
-import Frivillige from './views/Frivillige/FrivilligePage';
+import LeksehjelpPage from './views/Leksehjelp/LeksehjelpPage';
+import MestringPage from './views/Mestring/MestringPage';
+import FrivilligePage from './views/Frivillige/FrivilligePage';
 import Chat from './views/Chat/Chat';
 
 interface IProps {
@@ -31,16 +31,16 @@ export const AppRouter = (props: IProps) => {
     <Router>
       <Route path="/" component={Header} />
       <Switch>
-        <Route path="/questions" exact component={QA} />
+        <Route path="/questions" exact component={QAPage} />
         <Route path="/questions/new" exact component={NewQuestionPage} />
         <Route
           path="/questions/:id"
           exact
-          render={({ match }) => <Question questionId={match.params.id} />}
+          render={({ match }) => <QuestionPage questionId={match.params.id} />}
         />
-        <Route path="/leksehjelp" exact component={Leksehjelp} />
-        <Route path="/mestring" exact component={Mestring} />
-        <Route path="/frivillige" exact component={Frivillige} />
+        <Route path="/leksehjelp" exact component={LeksehjelpPage} />
+        <Route path="/mestring" exact component={MestringPage} />
+        <Route path="/frivillige" exact component={FrivilligePage} />
         <Route path="/meldinger" exact component={Chat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
