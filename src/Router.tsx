@@ -14,13 +14,19 @@ import Footer from './ui/components/Footer';
 import LandingPage from './views/LandingPage/LandingPage';
 import QA from './views/QA/QA';
 import Question from './views/QuestionPage/QuestionPage';
+import NewQuestionPage from './views/NewQuestion/NewQuestionPage';
 import Leksehjelp from './views/Leksehjelp/LeksehjelpPage';
 import Mestring from './views/Mestring/MestringPage';
 import Frivillige from './views/Frivillige/FrivilligePage';
-import NewQuestionPage from './views/NewQuestion/NewQuestionPage';
 import Chat from './views/Chat/Chat';
 
-export const AppRouter = () => {
+interface IProps {
+  history?: {
+    location;
+  };
+}
+
+export const AppRouter = (props: IProps) => {
   return (
     <Router>
       <Route path="/" component={Header} />
@@ -39,7 +45,12 @@ export const AppRouter = () => {
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>
-      <Route path="/" component={Footer} />
+      <Route
+        path="/"
+        render={props => {
+          return props.history.location.pathname !== '/meldinger' && <Footer />;
+        }}
+      />
     </Router>
   );
 };
