@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
+import ReactFilestack from 'filestack-react';
+import { useDropzone } from 'react-dropzone';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
 
 //Interfaces
-import { IQuestion, ISubject, IModal } from '../../../interfaces';
+import { IQuestion, ISubject, IFile } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
@@ -32,6 +34,7 @@ const SectionForm = () => {
   const [theme, setTheme] = useState(defaultOptions as Option);
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [isPublic, setIsPublic] = useState(true as boolean);
+  const [files, setFiles] = useState([] as IFile[]);
 
   useEffect(() => {
     getSubjectList().then(setSubjects);
@@ -48,6 +51,42 @@ const SectionForm = () => {
       totalRows: 0,
     };
     postQuestion(questionForm).then(res => console.log(res));
+  };
+
+  const Dropzone = () => {
+    const { getRootProps, acceptedFiles } = useDropzone();
+    const dropzoneFiles = acceptedFiles.map(file => (
+      <li key={file['path']}>{file['path']}</li>
+    ));
+    const filestackFiles = files.map(file => {
+      <li key={file['filename']}>{file['filename']}</li>;
+    });
+
+    return (
+      <section>
+        <div {...getRootProps({ className: 'dropzone' })}>
+          {' '}
+          <span className="message-text">
+            <ReactFilestack
+              apikey={'AF5u9vwYTKepOr5sGHkl1z'}
+              onSuccess={result => setFiles(result.filesUploaded)}
+              componentDisplayMode={{
+                type: 'button',
+                customText: '+',
+                customClass: 'upload',
+              }}
+            />
+            <span>Legg til filer </span>
+            <span className="grey">(max 5 mb)</span>
+          </span>
+        </div>
+        <aside>
+          <h5>Filer:</h5>
+          <ul>{filestackFiles}</ul>
+          <ul>{dropzoneFiles}</ul>
+        </aside>
+      </section>
+    );
   };
 
   const getSubjectOptions = (): Option[] => {
@@ -125,6 +164,16 @@ const SectionForm = () => {
     );
   };
 
+  const sendFile = (file: File) => {
+    const fr = new FileReader();
+    console.log(file);
+    fr.onload = () => {
+      const dataURL = String(fr.result);
+      console.log(dataURL);
+    };
+    console.log(fr.readAsDataURL(file));
+  };
+  console.log(files);
   return (
     <div className={'form-container'}>
       <form className={'form'} onSubmit={handleSubmit}>
@@ -166,6 +215,17 @@ const SectionForm = () => {
             className={'textarea'}
             value={questionText}
             onChange={event => setQuestionText(event.target.value)}
+          />
+          <Dropzone />
+          <input
+            onChange={event =>
+              event.target.files && sendFile(event.target.files[0])
+            }
+            type="file"
+            name="attachment"
+            id="qa-file-input"
+            accept="image/*|.pdf|.doc|.docx"
+            className="file"
           />
           <label className={'form--label'}>E-post</label>
           <input
