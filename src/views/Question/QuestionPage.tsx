@@ -39,7 +39,6 @@ const QuestionPage = (props: IProps, state: IState) => {
     });
   }, []);
 
-  console.log(question);
   return (
     <div className="content">
       {question && (

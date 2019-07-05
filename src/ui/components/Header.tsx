@@ -10,7 +10,6 @@ import getApplicationTitle from '../../services/header-service';
 export const Header = (props: RouteComponentProps) => {
   let { history } = props;
 
-  //Constructing state
   const [time, setTime] = useState(new Date() as Date);
   const [isOpen] = useState(false as boolean);
 

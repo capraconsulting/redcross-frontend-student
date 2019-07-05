@@ -1,4 +1,4 @@
-import QAForm from './QAForm';
+import SectionForm from './SectionForm';
 import SectionHeader from './SectionHeader';
 
-export { QAForm, SectionHeader };
+export { SectionForm, SectionHeader };

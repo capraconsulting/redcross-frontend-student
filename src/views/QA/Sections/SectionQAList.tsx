@@ -30,7 +30,6 @@ export const SectionQAList = (props: IProps) => {
       <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
       <Accordion allowZeroExpanded={true}>
         {questions.map(question => {
-          console.log(question);
           return (
             <AccordionItem key={`question-${question.id}`}>
               <AccordionItemHeading>

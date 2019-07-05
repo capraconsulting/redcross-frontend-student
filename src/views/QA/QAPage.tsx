@@ -67,7 +67,6 @@ export const QA = (props: IProps & RouteComponentProps) => {
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     history.push({ pathname: '/questions', search: queryString });
     // note that `search` automatically prepends a question mark in browser window
-    console.log(queryString);
     getQuestionList(queryString.length > 0 ? '?' + queryString : '').then(
       setQuestions,
     );

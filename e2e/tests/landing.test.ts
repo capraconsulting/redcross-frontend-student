@@ -34,7 +34,6 @@ class LandingPage {
 
 // Constructiong the landing page referance
 const landingPage = new LandingPage();
-console.log(landingPage.footer.length);
 
 test('Check header', async t => {
   await t.expect(landingPage.getText('headline')).eql('Digital Leksehjelp');

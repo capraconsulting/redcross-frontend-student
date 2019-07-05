@@ -4,13 +4,13 @@ import React from 'react';
 import '../../styles/NewQuestionPage.less';
 
 // Sections
-import { QAForm, SectionHeader } from './Sections';
+import { SectionForm, SectionHeader } from './Sections';
 
 const NewQuestionPage = () => {
   return (
     <div className="content">
       {SectionHeader()}
-      {QAForm()}
+      {SectionForm()}
     </div>
   );
 };
