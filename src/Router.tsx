@@ -8,17 +8,20 @@ import {
   Switch,
 } from 'react-router-dom';
 
-// Pages and components
-import Header from './ui/components/Header';
-import Footer from './ui/components/Footer';
-import LandingPage from './views/Landing/LandingPage';
-import QAPage from './views/QA/QAPage';
-import QuestionPage from './views/Question/QuestionPage';
-import NewQuestionPage from './views/NewQuestion/NewQuestionPage';
-import LeksehjelpPage from './views/Leksehjelp/LeksehjelpPage';
-import MestringPage from './views/Mestring/MestringPage';
-import FrivilligePage from './views/Frivillige/FrivilligePage';
-import Chat from './views/Chat/Chat';
+// Pages
+import {
+  LandingPage,
+  QAPage,
+  QuestionPage,
+  NewQuestionPage,
+  LeksehjelpPage,
+  MestringPage,
+  FrivilligePage,
+  Chat as ChatPage,
+} from './views';
+
+//Components
+import { Header, Footer } from './ui/components';
 
 interface IProps {
   history?: {
@@ -41,7 +44,7 @@ export const AppRouter = (props: IProps) => {
         <Route path="/leksehjelp" exact component={LeksehjelpPage} />
         <Route path="/mestring" exact component={MestringPage} />
         <Route path="/frivillige" exact component={FrivilligePage} />
-        <Route path="/meldinger" exact component={Chat} />
+        <Route path="/meldinger" exact component={ChatPage} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>
