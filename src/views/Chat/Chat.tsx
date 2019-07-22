@@ -37,14 +37,14 @@ const Chat = () => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
 
-    if (parsedMessage.type === 'textMessage') {
+    if (parsedMessage.msgType === 'TEXT') {
       setMessages(messages => [
         ...messages,
         generateTextMessageFromPayload(parsedMessage),
       ]);
-    } else if (parsedMessage.type === 'distributeRoomMessage') {
+    } else if (parsedMessage.msgType === 'DISTRIBUTE_ROOM') {
       setRoomID(parsedMessage.payload['roomID']);
-    } else if (parsedMessage.type === 'connectionMessage') {
+    } else if (parsedMessage.msgType === 'CONNECTION') {
       setUniqueID(parsedMessage.payload['uniqueID']);
     }
   };

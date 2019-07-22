@@ -8,7 +8,7 @@ fixture`LandingPage`.page('http://localhost:3000').beforeEach(async () => {
 //fixture.skip`Digital Leksehjelp`;
 
 class LandingPage {
-  //Declaring selector type for each element to test
+  //Declaring selector msgType for each element to test
   public headline: Selector;
   public footer: Selector;
   public QA: Selector;

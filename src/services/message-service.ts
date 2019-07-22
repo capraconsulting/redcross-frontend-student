@@ -8,10 +8,10 @@ import {
 
 const createMessage = (
   payload: ITextMessage | IEnterQueueMessage | IGenerateRoomMessage,
-  type: string,
+  msgType: string,
 ): ISocketMessage => {
   return {
-    type,
+    msgType,
     payload,
   };
 };
@@ -30,10 +30,9 @@ export const createEnterQueueMessage = (
     grade,
     introText,
     course,
-    subject,
-    datetime: new Date(0),
+    subject
   };
-  return createMessage(msg, 'enterQueueMessage');
+  return createMessage(msg, 'ENTER_QUEUE');
 };
 
 export const createTextMessage = (
@@ -46,7 +45,6 @@ export const createTextMessage = (
     uniqueID,
     roomID,
     message,
-    datetime: new Date(),
   };
-  return createMessage(msg, 'textMessage');
+  return createMessage(msg, 'TEXT');
 };
