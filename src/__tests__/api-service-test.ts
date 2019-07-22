@@ -20,7 +20,7 @@ describe('api-service', () => {
   });
 
   it('TEST: getSubjectList \n Should return list of subjects', async () => {
-    const subjectList = await getSubjectList();
+    const subjectList = await getSubjectList('?isMestring=0');
     expect(subjectList.length).toBeGreaterThanOrEqual(1);
   });
 

@@ -19,6 +19,7 @@ import LeksehjelpPage from './views/Leksehjelp/LeksehjelpPage';
 import MestringPage from './views/Mestring/MestringPage';
 import FrivilligePage from './views/Frivillige/FrivilligePage';
 import Chat from './views/Chat/Chat';
+import MestringChat from './views/Chat/MestringChat';
 
 interface IProps {
   history?: {
@@ -42,6 +43,7 @@ export const AppRouter = (props: IProps) => {
         <Route path="/mestring" exact component={MestringPage} />
         <Route path="/frivillige" exact component={FrivilligePage} />
         <Route path="/meldinger" exact component={Chat} />
+        <Route path="/mestringmeldinger" exact component={MestringChat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>

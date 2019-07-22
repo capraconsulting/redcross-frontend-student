@@ -34,7 +34,7 @@ const SectionForm = () => {
   const [isPublic, setIsPublic] = useState(true as boolean);
 
   useEffect(() => {
-    getSubjectList().then(setSubjects);
+    getSubjectList('?isMestring=0').then(setSubjects);
   }, []);
 
   const handleSubmit = () => {

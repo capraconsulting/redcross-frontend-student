@@ -3,11 +3,11 @@ import {
   IGenerateRoomMessage,
   IEnterQueueMessage,
   ISocketMessage,
-  ITextMessage,
+  ITextMessage, IEnterMestringQueueMessage,
 } from '../interfaces/IMessage';
 
 const createMessage = (
-  payload: ITextMessage | IEnterQueueMessage | IGenerateRoomMessage,
+  payload: ITextMessage | IEnterQueueMessage | IGenerateRoomMessage | IEnterMestringQueueMessage,
   msgType: string,
 ): ISocketMessage => {
   return {
@@ -35,6 +35,24 @@ export const createEnterQueueMessage = (
   return createMessage(msg, 'ENTER_QUEUE');
 };
 
+export const createEnterMestringQueueMessage = (
+  uniqueID: string,
+  course: string,
+  nickname: string,
+  introText: string,
+  subject: string,
+  grade: string
+): ISocketMessage => {
+  const msg: IEnterMestringQueueMessage = {
+    uniqueID,
+    course,
+    nickname,
+    introText,
+    subject,
+    grade
+  };
+  return createMessage(msg, 'ENTER_QUEUE');
+}
 export const createTextMessage = (
   message: string | ISocketFile,
   uniqueID: string,

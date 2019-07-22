@@ -27,6 +27,15 @@ export interface IEnterQueueMessage {
   course: string;
 }
 
+export interface IEnterMestringQueueMessage {
+  uniqueID: string;
+  course: string;
+  nickname: string;
+  introText: string;
+  subject: string;
+  grade: string;
+}
+
 export interface IGenerateRoomMessage {
   uniqueID: string;
   studentID: string;
@@ -34,5 +43,5 @@ export interface IGenerateRoomMessage {
 
 export interface ISocketMessage {
   msgType: string;
-  payload: ITextMessage | IGenerateRoomMessage | IEnterQueueMessage;
+  payload: ITextMessage | IGenerateRoomMessage | IEnterQueueMessage | IEnterMestringQueueMessage;
 }
