@@ -4,7 +4,7 @@ import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
 import { ISocketMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-import { EnterQueueMessageBuilder } from '../../services/message-service';
+import { QueueMessageBuilder } from '../../services/message-service';
 import { SocketContext } from '../../providers';
 import { addMessageAction } from '../../reducers';
 
@@ -36,7 +36,7 @@ const Chat = () => {
   };
 
   const sendEnterQueueMessage = () => {
-    const msg = new EnterQueueMessageBuilder(uniqueID)
+    const msg = new QueueMessageBuilder(uniqueID)
       .withCourse(course)
       .withGrade(grade)
       .withIntroText(introText)

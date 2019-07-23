@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { ISocketMessage, ITextMessage } from '../interfaces/IMessage';
-import { CHAT_URL } from '../../config';
+import { CHAT_URL, MESSAGE_TYPES } from '../../config';
 import { addMessageAction, chatReducer } from '../reducers';
 import { IAction } from '../interfaces';
 
@@ -34,12 +34,15 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
-    if (parsedMessage.msgType === 'TEXT') {
+    const { msgType, payload } = parsedMessage;
+    const { CONNECTION, DISTRIBUTE_ROOM, TEXT } = MESSAGE_TYPES;
+
+    if (msgType === TEXT) {
       dispatchMessages(addMessageAction(parsedMessage));
-    } else if (parsedMessage.msgType === 'DISTRIBUTE_ROOM') {
-      setRoomID(parsedMessage.payload['roomID']);
-    } else if (parsedMessage.msgType === 'CONNECTION') {
-      setUniqueID(parsedMessage.payload['uniqueID']);
+    } else if (msgType === DISTRIBUTE_ROOM) {
+      setRoomID(payload['roomID']);
+    } else if (msgType === CONNECTION) {
+      setUniqueID(payload['uniqueID']);
     }
   };
 
