@@ -42,6 +42,7 @@ describe('api-service', () => {
       date: '15.06.19',
       course: 'Naturfag',
       answered: true,
+      files: ['Hei'],
     });
   });
 
@@ -65,6 +66,7 @@ describe('api-service', () => {
     questionText: 'questionText',
     isPublic: true,
     totalRows: 0,
+    files: ['Hei'],
   };
 
   it('TEST: postQuestion \n Should work', async () => {
@@ -82,6 +84,7 @@ describe('api-service', () => {
       questionText: 'questionText',
       isPublic: true,
       totalRows: 0,
+      files: ['Hei'],
     });
   });
 });

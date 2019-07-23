@@ -34,17 +34,14 @@ const fileService = azure.createFileService(
   azureConfig.accountKey,
 );
 
-const a = fileService.getUrl('student', 'questions', 'Gustav.jpg');
-
-const b = fileService.getFileToText(
+const downloadLink = fileService.getUrl(
   'student',
   'questions',
-  'Gustav.jpg',
-  function(error, result, response) {
-    if (!error) {
-    }
-  },
+  'Itinerary.pdf',
+  azureConfig.SAS_TOKEN,
 );
+
+console.log(downloadLink + '&sr=f&sv=2018-03-28');
 
 const SectionForm = () => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
@@ -55,9 +52,43 @@ const SectionForm = () => {
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [isPublic, setIsPublic] = useState(true as boolean);
   const [files, setFiles] = useState([] as IFile[]);
-
+  const [azureToken, setAzureToken] = useState('' as string);
   useEffect(() => {
     getSubjectList().then(setSubjects);
+  }, []);
+
+  useEffect(() => {
+    const currentTime = new Date(Date.now());
+    const expiredTime = new Date(Date.now());
+    const weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+    expiredTime.setTime(expiredTime.getTime() + weekInMilliseconds);
+    const localAzureToken = window.localStorage.getItem('azuretoken');
+    const generatedToken = {
+      token: localAzureToken
+        ? JSON.parse(localAzureToken).token
+        : fileService.generateSharedAccessSignature(
+            'student',
+            'questions',
+            '',
+            {
+              AccessPolicy: {
+                Start: currentTime,
+                Expiry: expiredTime,
+                Permissions: 'rw',
+              },
+            },
+          ),
+    };
+    window.localStorage.setItem('azuretoken', JSON.stringify(generatedToken));
+    setAzureToken(generatedToken.token);
+
+    const downloadLinkUSER = fileService.getUrl(
+      'student',
+      'questions',
+      'Itinerary.pdf',
+      generatedToken.token,
+    );
+    console.log(downloadLinkUSER);
   }, []);
 
   const handleSubmit = () => {
@@ -69,6 +100,7 @@ const SectionForm = () => {
       questionText,
       isPublic,
       totalRows: 0,
+      files: [] as string[],
     };
     postQuestion(questionForm).then(res => console.log(res));
   };
@@ -92,7 +124,13 @@ const SectionForm = () => {
             myFileBuffer.byteLength,
             function(error, result, response) {
               if (!error) {
-                file = { file, azure: result };
+                const fileLink = fileService.getUrl(
+                  'student',
+                  'questions',
+                  result.name,
+                  azureToken,
+                );
+                let file = { filename: result.name, url: fileLink };
                 setFiles([...files, file]);
               }
             },
@@ -126,14 +164,14 @@ const SectionForm = () => {
         {files.map((file, index) => (
           <li key={index}>
             <span>
-              <a>{file.file.name} </a>
+              <a href={file.url}>{file.filename} </a>
               <IconButton
                 onClick={() => {
                   setFiles(files.filter((_, i) => i !== index)),
                     fileService.deleteFileIfExists(
                       'student',
                       'questions',
-                      file.file.name,
+                      file.filename,
                       function(error, result, response) {
                         if (!error) {
                           //let ber = readFileSync(result, 'utf8');
@@ -223,6 +261,7 @@ const SectionForm = () => {
       </div>
     );
   };
+  console.log(files);
   return (
     <div className={'form-container'}>
       <form className={'form'} onSubmit={handleSubmit}>

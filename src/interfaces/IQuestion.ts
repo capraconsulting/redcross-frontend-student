@@ -12,4 +12,5 @@ export default interface IQuestion {
   isPublic?: boolean;
   subject?: string;
   totalRows: number;
+  files: string[];
 }
