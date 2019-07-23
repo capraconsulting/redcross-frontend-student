@@ -8,7 +8,7 @@ import '../../styles/QuestionPage.less';
 import { getQuestion } from '../../services/api-service';
 
 // Interfaces
-import IQuestion from '../../interfaces/IQuestion';
+import { IQuestion } from '../../interfaces';
 
 // Sections
 import {
