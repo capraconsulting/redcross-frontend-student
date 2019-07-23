@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { ISocketMessage } from '../../../interfaces/IMessage';
 import { TextMessageBuilder } from '../../../services/message-service';
-import { ISocketFile } from '../../../interfaces';
 import '../../../styles/ChatInput.less';
 
 interface IProps {
@@ -12,12 +10,15 @@ interface IProps {
 
 const ChatInput = (props: IProps) => {
   const [message, setMessage] = useState<string>('');
-  const {uniqueID, roomID, send} = props;
+  const { uniqueID, roomID, send } = props;
 
   const sendTextMessage = event => {
     event.preventDefault();
     if (message.length > 0) {
-      const msg = new TextMessageBuilder(uniqueID).withMessage(message).toRoom(roomID).build();
+      const msg = new TextMessageBuilder(uniqueID)
+        .withMessage(message)
+        .toRoom(roomID)
+        .build();
       send(msg.createMessage);
       setMessage('');
     }

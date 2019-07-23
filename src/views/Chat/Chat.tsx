@@ -1,24 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ChatBody from './Sections/ChatBody';
 import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
-import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
+import { ISocketMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
 import { EnterQueueMessageBuilder } from '../../services/message-service';
 import { SocketContext } from '../../providers';
 import { addMessageAction } from '../../reducers';
 
 const Chat = () => {
-
-  const {uniqueID, socketSend, dispatchMessages, messages, roomID} = useContext(SocketContext);
+  const {
+    uniqueID,
+    socketSend,
+    dispatchMessages,
+    messages,
+    roomID,
+  } = useContext(SocketContext);
 
   const course = 'Mattefaen';
   const nickname = 'Hænsyboi';
   const introText = 'TRENGER NO HJÆLP MED MATTA, OG DET BRENNKVIKT';
   const grade = 'VG3';
   const subject = 'Jesus take the fucking wheel';
-
-
 
   useEffect(() => {
     const display = document.querySelector('.display');

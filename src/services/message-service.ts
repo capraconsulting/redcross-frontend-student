@@ -1,4 +1,3 @@
-import { ISocketFile } from '../interfaces';
 import {
   IGenerateRoomMessage,
   IEnterQueueMessage,
@@ -16,70 +15,25 @@ const createMessage = (
   };
 };
 
-export class EnterQueueMessageBuilder {
-  private readonly _uniqueID: string;
-  private _nickname: string;
-  private _grade: string;
-  private _introText: string;
-  private _subject: string;
-  private _course: string;
+class TextMessage {
+  private readonly roomID: string;
+  private readonly uniqueID: string;
+  private readonly message: string;
 
-  constructor(uniqueID: string) {
-    this._uniqueID = uniqueID;
-    return this;
+  public constructor(textMessageBuilder: TextMessageBuilder) {
+    this.roomID = textMessageBuilder.roomID;
+    this.message = textMessageBuilder.message;
+    this.uniqueID = textMessageBuilder.uniqueID;
   }
 
-  withNickname(value: string): EnterQueueMessageBuilder {
-    this._nickname = value;
-    return this;
-  }
-
-  withGrade(value: string): EnterQueueMessageBuilder {
-    this._grade = value;
-    return this;
-  }
-
-  withIntroText(value: string): EnterQueueMessageBuilder {
-    this._introText = value;
-    return this;
-  }
-
-  withSubject(value: string): EnterQueueMessageBuilder {
-    this._subject = value;
-    return this;
-  }
-
-  withCourse(value: string): EnterQueueMessageBuilder {
-    this._course = value;
-    return this;
-  }
-
-  build(): EnterQueueMessage {
-    return new EnterQueueMessage(this);
-  }
-
-  get uniqueID(): string {
-    return this._uniqueID;
-  }
-
-  get nickname(): string {
-    return this._nickname;
-  }
-
-  get grade(): string {
-    return this._grade;
-  }
-
-  get introText(): string {
-    return this._introText;
-  }
-
-  get subject(): string {
-    return this._subject;
-  }
-
-  get course(): string {
-    return this._course;
+  public get createMessage(): ISocketMessage {
+    const msg: ITextMessage = {
+      author: 'student',
+      uniqueID: this.uniqueID,
+      roomID: this.roomID,
+      message: this.message,
+    };
+    return createMessage(msg, 'TEXT');
   }
 }
 
@@ -91,7 +45,7 @@ class EnterQueueMessage {
   private readonly subject: string;
   private readonly course: string;
 
-  constructor(enterQueueMessageBuilder: EnterQueueMessageBuilder) {
+  public constructor(enterQueueMessageBuilder: EnterQueueMessageBuilder) {
     this.uniqueID = enterQueueMessageBuilder.uniqueID;
     this.nickname = enterQueueMessageBuilder.nickname;
     this.grade = enterQueueMessageBuilder.grade;
@@ -100,7 +54,7 @@ class EnterQueueMessage {
     this.course = enterQueueMessageBuilder.course;
   }
 
-  get createMessage(): ISocketMessage {
+  public get createMessage(): ISocketMessage {
     const msg: IEnterQueueMessage = {
       uniqueID: this.uniqueID,
       nickname: this.nickname,
@@ -113,61 +67,106 @@ class EnterQueueMessage {
   }
 }
 
+export class EnterQueueMessageBuilder {
+  private readonly _uniqueID: string;
+  private _nickname: string;
+  private _grade: string;
+  private _introText: string;
+  private _subject: string;
+  private _course: string;
+
+  public constructor(uniqueID: string) {
+    this._uniqueID = uniqueID;
+    return this;
+  }
+
+  public withNickname(value: string): EnterQueueMessageBuilder {
+    this._nickname = value;
+    return this;
+  }
+
+  public withGrade(value: string): EnterQueueMessageBuilder {
+    this._grade = value;
+    return this;
+  }
+
+  public withIntroText(value: string): EnterQueueMessageBuilder {
+    this._introText = value;
+    return this;
+  }
+
+  public withSubject(value: string): EnterQueueMessageBuilder {
+    this._subject = value;
+    return this;
+  }
+
+  public withCourse(value: string): EnterQueueMessageBuilder {
+    this._course = value;
+    return this;
+  }
+
+  public build(): EnterQueueMessage {
+    return new EnterQueueMessage(this);
+  }
+
+  public get uniqueID(): string {
+    return this._uniqueID;
+  }
+
+  public get nickname(): string {
+    return this._nickname;
+  }
+
+  public get grade(): string {
+    return this._grade;
+  }
+
+  public get introText(): string {
+    return this._introText;
+  }
+
+  public get subject(): string {
+    return this._subject;
+  }
+
+  public get course(): string {
+    return this._course;
+  }
+}
+
 export class TextMessageBuilder {
   private readonly _uniqueID: string;
   private _roomID: string;
   private _message: string;
 
-  constructor(uniqueID: string) {
+  public constructor(uniqueID: string) {
     this._uniqueID = uniqueID;
     return this;
   }
 
-  withMessage(message: string): TextMessageBuilder {
+  public withMessage(message: string): TextMessageBuilder {
     this._message = message;
     return this;
   }
 
-  toRoom(roomID: string): TextMessageBuilder {
+  public toRoom(roomID: string): TextMessageBuilder {
     this._roomID = roomID;
     return this;
   }
 
-  build(): TextMessage {
+  public build(): TextMessage {
     return new TextMessage(this);
   }
 
-  get roomID(): string {
+  public get roomID(): string {
     return this._roomID;
   }
 
-  get uniqueID(): string {
+  public get uniqueID(): string {
     return this._uniqueID;
   }
 
-  get message(): string {
+  public get message(): string {
     return this._message;
-  }
-}
-
-class TextMessage {
-  private readonly roomID: string;
-  private readonly uniqueID: string;
-  private readonly message: string;
-
-  constructor(textMessageBuilder: TextMessageBuilder) {
-    this.roomID = textMessageBuilder.roomID;
-    this.message = textMessageBuilder.message;
-    this.uniqueID = textMessageBuilder.uniqueID;
-  }
-
-  get createMessage(): ISocketMessage {
-    const msg: ITextMessage = {
-      author: 'student',
-      uniqueID: this.uniqueID,
-      roomID: this.roomID,
-      message: this.message,
-    };
-    return createMessage(msg, 'TEXT');
   }
 }

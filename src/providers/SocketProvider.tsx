@@ -5,10 +5,7 @@ import React, {
   useReducer,
   useState,
 } from 'react';
-import {
-  ISocketMessage,
-  ITextMessage,
-} from '../interfaces/IMessage';
+import { ISocketMessage, ITextMessage } from '../interfaces/IMessage';
 import { CHAT_URL } from '../../config';
 import { addMessageAction, chatReducer } from '../reducers';
 import { IAction } from '../interfaces';
