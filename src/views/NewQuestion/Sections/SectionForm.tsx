@@ -304,13 +304,15 @@ const SectionForm = () => {
             key={1}
           />
           <div className={'anon'}>
-            <label>
+            <label className="checkboxcontainer">
+              Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
               <input
                 type="checkbox"
                 checked={isPublic}
                 onChange={() => setIsPublic(!isPublic)}
+                className=""
               />
-              Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
+              <span className="checkmark"></span>
             </label>
           </div>
         </div>
