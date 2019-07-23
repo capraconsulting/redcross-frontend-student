@@ -4,7 +4,7 @@ import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
 import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-import { createEnterQueueMessage } from '../../services/message-service';
+import { EnterQueueMessageBuilder } from '../../services/message-service';
 
 const Chat = () => {
   const [socket, setSocket] = useState(null as any);
@@ -72,15 +72,14 @@ const Chat = () => {
   };
 
   const sendEnterQueueMessage = () => {
-    const msg = createEnterQueueMessage(
-      uniqueID,
-      course,
-      nickname,
-      introText,
-      grade,
-      subject,
-    );
-    socket.send(JSON.stringify(msg));
+    const msg = new EnterQueueMessageBuilder(uniqueID)
+      .withCourse(course)
+      .withGrade(grade)
+      .withIntroText(introText)
+      .withNickname(nickname)
+      .withSubject(subject)
+      .build();
+    socket.send(JSON.stringify(msg.createMessage));
   };
   return (
     <div className={'chat'}>
