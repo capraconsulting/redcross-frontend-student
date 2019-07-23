@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import ReactFilestack from 'filestack-react';
+import azure from 'azure-storage';
+import stream from 'stream';
 import { useDropzone } from 'react-dropzone';
 
 //Material UI Core
@@ -16,15 +18,33 @@ import { postQuestion, getSubjectList } from '../../../services/api-service';
 import '../../../styles/QAForm.less';
 
 //Components
-import { SimpleModal } from '../../../ui/components';
+import { SimpleModal, IconButton } from '../../../ui/components';
 
 //Persistent grade list
 import gradeList from '../../../grades';
+import azureConfig from '../../../../azureconfig';
 
 const defaultOptions = {
   value: '',
   label: '',
 };
+
+const fileService = azure.createFileService(
+  azureConfig.accountName,
+  azureConfig.accountKey,
+);
+
+const a = fileService.getUrl('student', 'questions', 'Gustav.jpg');
+
+const b = fileService.getFileToText(
+  'student',
+  'questions',
+  'Gustav.jpg',
+  function(error, result, response) {
+    if (!error) {
+    }
+  },
+);
 
 const SectionForm = () => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
@@ -53,39 +73,79 @@ const SectionForm = () => {
     postQuestion(questionForm).then(res => console.log(res));
   };
 
-  const Dropzone = () => {
-    const { getRootProps, acceptedFiles } = useDropzone();
-    const dropzoneFiles = acceptedFiles.map(file => (
-      <li key={file['path']}>{file['path']}</li>
-    ));
-    const filestackFiles = files.map(file => {
-      <li key={file['filename']}>{file['filename']}</li>;
+  function MyDropzone() {
+    const onDrop = useCallback(acceptedFiles => {
+      var file = acceptedFiles[0];
+      const fr = new FileReader();
+      fr.readAsArrayBuffer(file);
+      const fileStream = new stream.Readable();
+      fr.onload = () => {
+        let myFileBuffer: ArrayBuffer = fr.result as ArrayBuffer;
+        if (myFileBuffer) {
+          fileStream.push(myFileBuffer[0]);
+          fileStream.push(null);
+          fileService.createFileFromStream(
+            'student',
+            'questions',
+            file.name,
+            fileStream,
+            myFileBuffer.byteLength,
+            function(error, result, response) {
+              if (!error) {
+                file = { file, azure: result };
+                setFiles([...files, file]);
+              }
+            },
+          );
+        }
+      };
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
     });
 
     return (
-      <section>
-        <div {...getRootProps({ className: 'dropzone' })}>
-          {' '}
+      <div {...getRootProps({ className: 'dropzone' })}>
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
           <span className="message-text">
-            <ReactFilestack
-              apikey={'AF5u9vwYTKepOr5sGHkl1z'}
-              onSuccess={result => setFiles(result.filesUploaded)}
-              componentDisplayMode={{
-                type: 'button',
-                customText: '+',
-                customClass: 'upload',
-              }}
-            />
+            <button className="upload">+</button>
             <span>Legg til filer </span>
             <span className="grey">(max 5 mb)</span>
           </span>
-        </div>
-        <aside>
-          <h5>Filer:</h5>
-          <ul>{filestackFiles}</ul>
-          <ul>{dropzoneFiles}</ul>
-        </aside>
-      </section>
+        )}
+      </div>
+    );
+  }
+
+  const FileList = () => {
+    return (
+      <ul className="filelist">
+        {files.map((file, index) => (
+          <li key={index}>
+            <span>
+              <a>{file.file.name} </a>
+              <IconButton
+                onClick={() => {
+                  setFiles(files.filter((_, i) => i !== index)),
+                    fileService.deleteFileIfExists(
+                      'student',
+                      'questions',
+                      file.file.name,
+                      function(error, result, response) {
+                        if (!error) {
+                          //let ber = readFileSync(result, 'utf8');
+                        }
+                      },
+                    );
+                }}
+              ></IconButton>
+            </span>
+          </li>
+        ))}
+      </ul>
     );
   };
 
@@ -163,17 +223,6 @@ const SectionForm = () => {
       </div>
     );
   };
-
-  const sendFile = (file: File) => {
-    const fr = new FileReader();
-    console.log(file);
-    fr.onload = () => {
-      const dataURL = String(fr.result);
-      console.log(dataURL);
-    };
-    console.log(fr.readAsDataURL(file));
-  };
-  console.log(files);
   return (
     <div className={'form-container'}>
       <form className={'form'} onSubmit={handleSubmit}>
@@ -216,17 +265,8 @@ const SectionForm = () => {
             value={questionText}
             onChange={event => setQuestionText(event.target.value)}
           />
-          <Dropzone />
-          <input
-            onChange={event =>
-              event.target.files && sendFile(event.target.files[0])
-            }
-            type="file"
-            name="attachment"
-            id="qa-file-input"
-            accept="image/*|.pdf|.doc|.docx"
-            className="file"
-          />
+          <MyDropzone />
+          <FileList />
           <label className={'form--label'}>E-post</label>
           <input
             placeholder={'Skriv e-postadressen din'}
@@ -248,6 +288,7 @@ const SectionForm = () => {
             </label>
           </div>
         </div>
+
         {/*Input container end*/}
       </form>
       <SimpleModal
