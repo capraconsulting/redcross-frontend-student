@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
-import ReactFilestack from 'filestack-react';
-import azure from 'azure-storage';
 import stream from 'stream';
 import { useDropzone } from 'react-dropzone';
 
@@ -13,6 +11,7 @@ import { IQuestion, ISubject, IFile } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
+import { fileService } from '../../../services/azure-service';
 
 //Styles
 import '../../../styles/QAForm.less';
@@ -22,26 +21,11 @@ import { SimpleModal, IconButton } from '../../../ui/components';
 
 //Persistent grade list
 import gradeList from '../../../grades';
-import azureConfig from '../../../../azureconfig';
 
 const defaultOptions = {
   value: '',
   label: '',
 };
-
-const fileService = azure.createFileService(
-  azureConfig.accountName,
-  azureConfig.accountKey,
-);
-
-const downloadLink = fileService.getUrl(
-  'student',
-  'questions',
-  'Itinerary.pdf',
-  azureConfig.SAS_TOKEN,
-);
-
-console.log(downloadLink + '&sr=f&sv=2018-03-28');
 
 const SectionForm = () => {
   const [subjects, setSubjects] = useState([] as ISubject[]);
@@ -53,10 +37,12 @@ const SectionForm = () => {
   const [isPublic, setIsPublic] = useState(true as boolean);
   const [files, setFiles] = useState([] as IFile[]);
   const [azureToken, setAzureToken] = useState('' as string);
+
   useEffect(() => {
     getSubjectList().then(setSubjects);
   }, []);
 
+  // Set azureToken state from localstorage or generate new token if localstorage is empty.
   useEffect(() => {
     const currentTime = new Date(Date.now());
     const expiredTime = new Date(Date.now());
@@ -69,7 +55,7 @@ const SectionForm = () => {
         : fileService.generateSharedAccessSignature(
             'student',
             'questions',
-            '',
+            '*',
             {
               AccessPolicy: {
                 Start: currentTime,
@@ -79,16 +65,9 @@ const SectionForm = () => {
             },
           ),
     };
+
     window.localStorage.setItem('azuretoken', JSON.stringify(generatedToken));
     setAzureToken(generatedToken.token);
-
-    const downloadLinkUSER = fileService.getUrl(
-      'student',
-      'questions',
-      'Itinerary.pdf',
-      generatedToken.token,
-    );
-    console.log(downloadLinkUSER);
   }, []);
 
   const handleSubmit = () => {
@@ -100,7 +79,7 @@ const SectionForm = () => {
       questionText,
       isPublic,
       totalRows: 0,
-      files: [] as string[],
+      files,
     };
     postQuestion(questionForm).then(res => console.log(res));
   };
@@ -122,7 +101,7 @@ const SectionForm = () => {
             file.name,
             fileStream,
             myFileBuffer.byteLength,
-            function(error, result, response) {
+            function(error, result) {
               if (!error) {
                 const fileLink = fileService.getUrl(
                   'student',
@@ -130,7 +109,7 @@ const SectionForm = () => {
                   result.name,
                   azureToken,
                 );
-                let file = { filename: result.name, url: fileLink };
+                let file = { fileName: result.name, fileUrl: fileLink };
                 setFiles([...files, file]);
               }
             },
@@ -161,28 +140,37 @@ const SectionForm = () => {
   const FileList = () => {
     return (
       <ul className="filelist">
-        {files.map((file, index) => (
-          <li key={index}>
-            <span>
-              <a href={file.url}>{file.filename} </a>
-              <IconButton
-                onClick={() => {
-                  setFiles(files.filter((_, i) => i !== index)),
-                    fileService.deleteFileIfExists(
-                      'student',
-                      'questions',
-                      file.filename,
-                      function(error, result, response) {
-                        if (!error) {
-                          //let ber = readFileSync(result, 'utf8');
-                        }
-                      },
-                    );
-                }}
-              ></IconButton>
-            </span>
-          </li>
-        ))}
+        {files.map((file, index) => {
+          const { fileName, fileUrl } = file;
+          return (
+            <li key={index}>
+              <span>
+                <a
+                  href={fileUrl}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                  download
+                >
+                  {fileName}{' '}
+                </a>
+                <IconButton
+                  onClick={() => {
+                    setFiles(files.filter((_, i) => i !== index)),
+                      fileService.deleteFileIfExists(
+                        'student',
+                        'questions',
+                        fileName,
+                        function(error, result, response) {
+                          if (!error) {
+                            //let ber = readFileSync(result, 'utf8');
+                          }
+                        },
+                      );
+                  }}
+                ></IconButton>
+              </span>
+            </li>
+          );
+        })}
       </ul>
     );
   };
@@ -261,10 +249,9 @@ const SectionForm = () => {
       </div>
     );
   };
-  console.log(files);
   return (
     <div className={'form-container'}>
-      <form className={'form'} onSubmit={handleSubmit}>
+      <form className={'form'}>
         <div className="form--input-container">
           {' '}
           {/*input container start*/}

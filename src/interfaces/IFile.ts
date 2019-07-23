@@ -1,4 +1,4 @@
 export default interface IFile {
-  filename: string;
-  url?: string;
+  fileName: string;
+  fileUrl?: string;
 }
