@@ -14,10 +14,10 @@ const SectionMestring = (props: RouteComponentProps) => {
 
   useEffect(() => {
     try {
-      getSubjectList('?isMestring=true').then(setSubjects);
+      getSubjectList('?isMestring=1').then(setSubjects);
     } catch (e) {}
   }, []);
-  
+
   const getSubjectOptions = (): Option[] => {
     let subjectOptions: Option[] = [];
     subjects &&

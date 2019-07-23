@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="377d775c-8ada-4e07-83d4-abd0ae9fc252" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Router.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__tests__/api-service-test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/__tests__/api-service-test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/IMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/IMessage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/api-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/message-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/message-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Landing/Sections/SectionLeksehjelp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Landing/Sections/SectionLeksehjelp.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Landing/Sections/SectionMestring.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Landing/Sections/SectionMestring.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/NewQuestion/Sections/SectionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/NewQuestion/Sections/SectionForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/QA/QAPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/QA/QAPage.tsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -88,8 +79,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Landing/Sections/SectionMestring.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+            <state relative-caret-position="205">
+              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
               <folding>
                 <element signature="e#176#218#0" expanded="true" />
               </folding>
@@ -289,12 +280,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1563788821724</updated>
-      <workItem from="1563788823727" duration="7055000" />
+      <workItem from="1563788823727" duration="7459000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7055000" />
+    <option name="totallyTimeSpent" value="7459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="42" width="1280" height="777" extended-state="0" />
@@ -476,8 +467,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Landing/Sections/SectionMestring.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+        <state relative-caret-position="205">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
           <folding>
             <element signature="e#176#218#0" expanded="true" />
           </folding>
