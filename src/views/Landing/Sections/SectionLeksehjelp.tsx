@@ -172,7 +172,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const enterChatQueue = (chatType: string) => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
-      .withCourse(formControls.value)
+      .withCourse(formControls.label)
       .withNickname('TODO nickname')
       .withUniqueID(uniqueID)
       .withChatType(chatType)
