@@ -363,7 +363,6 @@ const SectionForm = () => {
         buttonText={'Send'}
         disabled={formControls()}
       ></SimpleModal>
-      <button onClick={() => handleSubmit()}></button>
     </div>
   );
 };
