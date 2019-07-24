@@ -5,12 +5,15 @@ import './styles/base.less';
 
 //Router
 import AppRouter from './Router';
+import { SocketProvider } from './providers';
 
 export const App = () => {
   return (
-    <div className="base">
-      <AppRouter />
-    </div>
+    <SocketProvider>
+      <div className="base">
+        <AppRouter />
+      </div>
+    </SocketProvider>
   );
 };
 
