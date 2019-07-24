@@ -17,7 +17,7 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
     grade: '' as string,
     introText: '' as string,
   });
-  const {history} = props;
+  const { history } = props;
 
   const update = () => {
     updateStudentInfo(partialStudentInfo);
@@ -44,7 +44,9 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
       </div>
       <button
         disabled={roomID.length < 1}
-        className="btn btn-submit" onClick={() => history.push('meldinger')}>
+        className="btn btn-submit"
+        onClick={() => history.push('meldinger')}
+      >
         Gå til chat
       </button>
     </div>
