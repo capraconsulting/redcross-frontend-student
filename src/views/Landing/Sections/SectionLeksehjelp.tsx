@@ -204,7 +204,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       </form>
       <button
         className="btn btn-submit"
-        disabled={!statusActive || formControls.value === ''}
+        /*disabled={!statusActive || formControls.value === ''}*/
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
         Chat

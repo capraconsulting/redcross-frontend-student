@@ -4,9 +4,10 @@ import { IPartialQueueMessage } from '../../interfaces/IMessage';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
 import '../../styles/LeksehjelpPage.less';
+import { RouteComponentProps } from 'react-router';
 
-export const LeksehjelpPage = () => {
-  const { socketSend, studentInfo, updateStudentInfo } = useContext(
+export const LeksehjelpPage = (props: RouteComponentProps) => {
+  const { socketSend, studentInfo, updateStudentInfo, roomID } = useContext(
     SocketContext,
   );
   const [partialStudentInfo, setPartialStudentInfo] = useState<
@@ -16,6 +17,7 @@ export const LeksehjelpPage = () => {
     grade: '' as string,
     introText: '' as string,
   });
+  const {history} = props;
 
   const update = () => {
     updateStudentInfo(partialStudentInfo);
@@ -40,6 +42,11 @@ export const LeksehjelpPage = () => {
           Mens du venter kan du begynne å forklare hva du lurer på.
         </p>
       </div>
+      <button
+        disabled={roomID.length < 1}
+        className="btn btn-submit" onClick={() => history.push('meldinger')}>
+        Gå til chat
+      </button>
     </div>
   );
 };

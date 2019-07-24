@@ -56,6 +56,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     course: '' as string,
     chatType: '' as string,
   });
+  const { CONNECTION, DISTRIBUTE_ROOM, TEXT, CONFIRMED_QUEUE } = MESSAGE_TYPES;
 
   const updateStudentInfo = (partial: IPartialQueueMessage) => {
     const newStudentInfo: IQueueMessage = studentInfo;
@@ -68,17 +69,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
     const { msgType, payload } = parsedMessage;
-    const {
-      CONNECTION,
-      DISTRIBUTE_ROOM,
-      TEXT,
-      CONFIRMED_QUEUE,
-    } = MESSAGE_TYPES;
 
     if (msgType === TEXT) {
       dispatchMessages(addMessageAction(parsedMessage));
     } else if (msgType === DISTRIBUTE_ROOM) {
       setRoomID(payload['roomID']);
+      console.log(roomID);
     } else if (msgType === CONNECTION) {
       setUniqueID(payload['uniqueID']);
     } else if (msgType === CONFIRMED_QUEUE) {
