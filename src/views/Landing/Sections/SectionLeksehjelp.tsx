@@ -173,7 +173,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   const enterChatQueue = (chatType: string) => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
       .withCourse(formControls.label)
-      .withNickname('TODO nickname')
       .withUniqueID(uniqueID)
       .withChatType(chatType)
       .build();
@@ -205,7 +204,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       </form>
       <button
         className="btn btn-submit"
-        /*disabled={!statusActive || formControls.value === ''}*/
+        disabled={!statusActive || formControls.value === ''}
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
         Chat
