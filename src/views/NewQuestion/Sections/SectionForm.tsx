@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import stream from 'stream';
 import { useDropzone } from 'react-dropzone';
+import jws from 'jws';
+import secureRandom from 'secure-random';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
@@ -35,87 +37,138 @@ const SectionForm = () => {
   const [theme, setTheme] = useState(defaultOptions as Option);
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [isPublic, setIsPublic] = useState(true as boolean);
-  const [files, setFiles] = useState([] as IFile[]);
   const [azureToken, setAzureToken] = useState('' as string);
+  const [tempFiles, setTempFiles] = useState([] as any[]);
 
   useEffect(() => {
     getSubjectList().then(setSubjects);
   }, []);
 
-  // Set azureToken state from localstorage or generate new token if localstorage is empty.
   useEffect(() => {
-    const currentTime = new Date(Date.now());
-    const expiredTime = new Date(Date.now());
-    const weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
-    expiredTime.setTime(expiredTime.getTime() + weekInMilliseconds);
-    const localAzureToken = window.localStorage.getItem('azuretoken');
+    window.sessionStorage.clear();
+    const localAzureToken = window.sessionStorage.getItem('azuretoken');
     const generatedToken = {
       token: localAzureToken
         ? JSON.parse(localAzureToken).token
-        : fileService.generateSharedAccessSignature(
-            'student',
-            'questions',
-            '*',
-            {
-              AccessPolicy: {
-                Start: currentTime,
-                Expiry: expiredTime,
-                Permissions: 'rw',
-              },
-            },
-          ),
+        : jws.sign({
+            header: { alg: 'HS256' },
+            payload: 'Questionfiles',
+            secret: secureRandom(256, { type: 'Buffer' }),
+          }),
     };
-
-    window.localStorage.setItem('azuretoken', JSON.stringify(generatedToken));
+    window.sessionStorage.setItem('azuretoken', JSON.stringify(generatedToken));
     setAzureToken(generatedToken.token);
   }, []);
 
-  const handleSubmit = () => {
-    const questionForm: IQuestion = {
-      email,
-      studentGrade: Number(studentGrade.value),
-      subjectID: Number(subject.value),
-      themeID: Number(theme.value),
-      questionText,
-      isPublic,
-      totalRows: 0,
-      files,
-    };
-    postQuestion(questionForm).then(res => console.log(res));
-  };
+  /** KEEP TO USE IN FRIVILLIG APP
+  const handleDirectoryDelete = () => {
+    console.log('Kjører frem til if check');
+    files.length > 0 &&
+      azureToken.length > 0 &&
+      files.map((file, index) => {
+        console.log(file);
+        fileService.deleteFileIfExists(
+          'questionfiles',
+          azureToken,
+          file.fileName,
+          function(error, response) {
+            if (!error) {
+            }
+          },
+        );
+        if (index == files.length - 1) {
+          setFiles([] as IFile[]);
+          fileService.deleteDirectoryIfExists(
+            'questionfiles',
+            azureToken,
+            function(error, result, response) {
+              if (!error) {
+                console.log(result);
+                console.log(response);
+              }
+            },
+          );
+        }
+      });
+  };*/
 
-  function MyDropzone() {
-    const onDrop = useCallback(acceptedFiles => {
-      var file = acceptedFiles[0];
-      const fr = new FileReader();
-      fr.readAsArrayBuffer(file);
-      const fileStream = new stream.Readable();
+  const uploadFileToAzure = async file => {
+    const fr = new FileReader();
+    fr.readAsArrayBuffer(file);
+    const fileStream = new stream.Readable();
+    return new Promise<IFile>((resolve, reject) => {
       fr.onload = () => {
         let myFileBuffer: ArrayBuffer = fr.result as ArrayBuffer;
         if (myFileBuffer) {
           fileStream.push(myFileBuffer[0]);
           fileStream.push(null);
-          fileService.createFileFromStream(
-            'student',
-            'questions',
-            file.name,
-            fileStream,
-            myFileBuffer.byteLength,
-            function(error, result) {
-              if (!error) {
-                const fileLink = fileService.getUrl(
-                  'student',
-                  'questions',
-                  result.name,
+          azureToken.length > 0 &&
+            fileService.createDirectoryIfNotExists(
+              'questionfiles',
+              azureToken,
+              function() {
+                fileService.createFileFromStream(
+                  'questionfiles',
                   azureToken,
+                  file.name,
+                  fileStream,
+                  myFileBuffer.byteLength,
+                  function(error, result) {
+                    if (!error) {
+                      const { share, directory, name } = result;
+                      const fileLink = fileService.getUrl(
+                        'questionfiles',
+                        azureToken,
+                        result.name,
+                        azureToken,
+                      );
+                      let file: IFile = {
+                        share,
+                        directory,
+                        fileName: name,
+                        fileUrl: fileLink,
+                      };
+                      resolve(file);
+                    } else {
+                      reject();
+                    }
+                  },
                 );
-                let file = { fileName: result.name, fileUrl: fileLink };
-                setFiles([...files, file]);
-              }
-            },
-          );
+              },
+            );
         }
       };
+    });
+  };
+
+  const uploadPromises = tempFiles => {
+    return tempFiles.map(async file => {
+      return uploadFileToAzure(file);
+    });
+  };
+
+  const handleSubmit = () => {
+    return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
+      const questionForm: IQuestion = {
+        email,
+        studentGrade: Number(studentGrade.value),
+        subjectID: Number(subject.value),
+        themeID: Number(theme.value),
+        questionText,
+        isPublic,
+        totalRows: 0,
+        files: results,
+      };
+      postQuestion(questionForm).then(() => {
+        //TODO: Redirect to "question posted successfully" page
+      });
+    });
+  };
+
+  function MyDropzone() {
+    const onDrop = useCallback(acceptedFiles => {
+      var file = acceptedFiles[0];
+      setTempFiles([...tempFiles, file]);
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
@@ -140,31 +193,17 @@ const SectionForm = () => {
   const FileList = () => {
     return (
       <ul className="filelist">
-        {files.map((file, index) => {
-          const { fileName, fileUrl } = file;
+        {tempFiles.map((file, index) => {
+          const { name } = file;
           return (
             <li key={index}>
               <span>
-                <a
-                  href={fileUrl}
-                  style={{ color: 'black', textDecoration: 'none' }}
-                  download
-                >
-                  {fileName}{' '}
+                <a style={{ color: 'black', textDecoration: 'none' }} download>
+                  {name}{' '}
                 </a>
                 <IconButton
                   onClick={() => {
-                    setFiles(files.filter((_, i) => i !== index)),
-                      fileService.deleteFileIfExists(
-                        'student',
-                        'questions',
-                        fileName,
-                        function(error, result, response) {
-                          if (!error) {
-                            //let ber = readFileSync(result, 'utf8');
-                          }
-                        },
-                      );
+                    setTempFiles(tempFiles.filter((_, i) => i !== index));
                   }}
                 ></IconButton>
               </span>
@@ -324,6 +363,7 @@ const SectionForm = () => {
         buttonText={'Send'}
         disabled={formControls()}
       ></SimpleModal>
+      <button onClick={() => handleSubmit()}></button>
     </div>
   );
 };
