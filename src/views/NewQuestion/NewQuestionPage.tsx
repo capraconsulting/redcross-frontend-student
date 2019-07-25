@@ -10,7 +10,7 @@ const NewQuestionPage = () => {
   return (
     <div className="content">
       {SectionHeader()}
-      {SectionForm()}
+      <SectionForm />
     </div>
   );
 };
