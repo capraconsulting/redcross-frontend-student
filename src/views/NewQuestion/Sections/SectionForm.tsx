@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';
 import { withRouter, RouteComponentProps } from 'react-router';
+import Zoom from 'react-reveal/Zoom';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
@@ -153,21 +154,23 @@ const SectionForm = (props: RouteComponentProps) => {
           const { name } = file;
           return (
             <li key={index}>
-              <span>
-                <a
-                  className="filelist-ankertag"
-                  href={URL.createObjectURL(file)}
-                  title={name}
-                  download={name}
-                >
-                  {name}{' '}
-                </a>
-                <IconButton
-                  onClick={() => {
-                    setTempFiles(tempFiles.filter((_, i) => i !== index));
-                  }}
-                ></IconButton>{' '}
-              </span>
+              <Zoom>
+                <span>
+                  <a
+                    className="filelist-ankertag"
+                    href={URL.createObjectURL(file)}
+                    title={name}
+                    download={name}
+                  >
+                    {name}{' '}
+                  </a>
+                  <IconButton
+                    onClick={() => {
+                      setTempFiles(tempFiles.filter((_, i) => i !== index));
+                    }}
+                  ></IconButton>{' '}
+                </span>
+              </Zoom>
             </li>
           );
         })}
