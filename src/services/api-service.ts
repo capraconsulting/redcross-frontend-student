@@ -11,21 +11,21 @@ export function getQuestionList(query): Promise<IQuestion[]> {
   return api
     .get(`questions/public${query}`)
     .then(res => res.data)
-    .catch(e => console.log('Could not get question list'));
+    .catch(e => console.error('Could not get question list'));
 }
 
 export function getGradeList(): Promise<IGrade[]> {
   return api
     .get('grades')
     .then(res => res.data)
-    .catch(e => console.log('Could not get grade list'));
+    .catch(e => console.error('Could not get grade list'));
 }
 
 export function getSubjectList(): Promise<ISubject[]> {
   return api
     .get('subjects')
     .then(res => res.data)
-    .catch(e => console.log('Could not get subject list'));
+    .catch(e => console.error('Could not get subject list'));
 }
 
 export function getSubjectStatus(id: string) {
@@ -37,7 +37,6 @@ export function getSubjectStatus(id: string) {
 
 export function postQuestion(question) {
   // Which msgType will this be? Defined in backend
-  console.log(question);
   return api
     .post('questions', question)
     .then(res => res.data)
@@ -46,7 +45,6 @@ export function postQuestion(question) {
 
 export function postFeedback(questionID, feedbackText) {
   // Which msgType will this be? Defined in backend
-  console.log(feedbackText);
   return api
     .post(`feedback/question/${questionID}`, { feedbackText })
     .then(res => res.data)
