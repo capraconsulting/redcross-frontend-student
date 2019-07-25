@@ -124,8 +124,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
   function MyDropzone() {
     const onDrop = useCallback(acceptedFiles => {
-      var file = acceptedFiles[0];
-      setTempFiles([...tempFiles, file]);
+      setTempFiles([...tempFiles, ...acceptedFiles]);
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
