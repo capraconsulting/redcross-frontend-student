@@ -31,3 +31,5 @@ npm run test
 ```
 npm run lint
 ```
+### Node:
+- Azure Storage: Used to create and read files from Azure Filestorage.
