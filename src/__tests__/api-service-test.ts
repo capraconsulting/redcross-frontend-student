@@ -42,14 +42,6 @@ describe('api-service', () => {
       date: '15.06.19',
       course: 'Naturfag',
       answered: true,
-      files: [
-        {
-          share: 'questionfiles',
-          directory: 'hei',
-          fileName: 'Hei',
-          fileUrl: 'hei',
-        },
-      ],
     });
   });
 
