@@ -5,8 +5,13 @@ import React, {
   useReducer,
   useState,
 } from 'react';
-import { ISocketMessage, ITextMessage } from '../interfaces/IMessage';
-import { CHAT_URL } from '../../config';
+import {
+  IPartialQueueMessage,
+  IQueueMessage,
+  ISocketMessage,
+  ITextMessage,
+} from '../interfaces/IMessage';
+import { CHAT_URL, MESSAGE_TYPES } from '../../config';
 import { addMessageAction, chatReducer } from '../reducers';
 import { IAction } from '../interfaces';
 
@@ -16,6 +21,17 @@ export const SocketContext = createContext({
   messages: [] as ITextMessage[],
   dispatchMessages(action: IAction) {},
   socketSend(message: ISocketMessage): void {},
+  studentInfo: {
+    // IQueueMessage
+    nickname: '' as string,
+    subject: '' as string,
+    grade: '' as string,
+    uniqueID: '' as string,
+    introText: '' as string,
+    course: '' as string,
+    chatType: '' as string,
+  },
+  updateStudentInfo(partial: IPartialQueueMessage): void {},
 });
 
 let socket;
@@ -31,15 +47,38 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const [uniqueID, setUniqueID] = useState<string>('');
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
+  const [studentInfo, setStudentInfo] = useState<IQueueMessage>({
+    nickname: '' as string,
+    subject: '' as string,
+    grade: '' as string,
+    uniqueID: '' as string,
+    introText: '' as string,
+    course: '' as string,
+    chatType: '' as string,
+  });
+  const { CONNECTION, DISTRIBUTE_ROOM, TEXT, CONFIRMED_QUEUE } = MESSAGE_TYPES;
+
+  const updateStudentInfo = (partial: IPartialQueueMessage) => {
+    const newStudentInfo: IQueueMessage = studentInfo;
+    newStudentInfo.subject = partial.subject;
+    newStudentInfo.introText = partial.introText;
+    newStudentInfo.grade = partial.grade;
+    setStudentInfo(newStudentInfo);
+  };
 
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
-    if (parsedMessage.msgType === 'TEXT') {
+    const { msgType, payload } = parsedMessage;
+
+    if (msgType === TEXT) {
       dispatchMessages(addMessageAction(parsedMessage));
-    } else if (parsedMessage.msgType === 'DISTRIBUTE_ROOM') {
-      setRoomID(parsedMessage.payload['roomID']);
-    } else if (parsedMessage.msgType === 'CONNECTION') {
-      setUniqueID(parsedMessage.payload['uniqueID']);
+    } else if (msgType === DISTRIBUTE_ROOM) {
+      setRoomID(payload['roomID']);
+      console.log(roomID);
+    } else if (msgType === CONNECTION) {
+      setUniqueID(payload['uniqueID']);
+    } else if (msgType === CONFIRMED_QUEUE) {
+      setStudentInfo(payload['info']);
     }
   };
 
@@ -53,7 +92,15 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
   return (
     <SocketContext.Provider
-      value={{ uniqueID, roomID, messages, dispatchMessages, socketSend }}
+      value={{
+        uniqueID,
+        roomID,
+        messages,
+        dispatchMessages,
+        socketSend,
+        studentInfo,
+        updateStudentInfo,
+      }}
     >
       {children}
     </SocketContext.Provider>
