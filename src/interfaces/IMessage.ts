@@ -1,4 +1,5 @@
 import { ISocketFile } from './';
+import { IFile } from './IFile';
 
 /*export default interface IMessage {
   author: string;
@@ -14,8 +15,9 @@ export interface ITextMessage {
   author: string;
   roomID: string;
   uniqueID: string;
-  message: string | ISocketFile;
+  message?: string;
   datetime?: Date;
+  files?: IFile[];
 }
 
 export interface IQueueMessage {
