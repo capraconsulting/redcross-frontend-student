@@ -154,14 +154,19 @@ const SectionForm = (props: RouteComponentProps) => {
           return (
             <li key={index}>
               <span>
-                <a className="filelist-ankertag" download>
+                <a
+                  className="filelist-ankertag"
+                  href={URL.createObjectURL(file)}
+                  title={name}
+                  download={name}
+                >
                   {name}{' '}
                 </a>
                 <IconButton
                   onClick={() => {
                     setTempFiles(tempFiles.filter((_, i) => i !== index));
                   }}
-                ></IconButton>
+                ></IconButton>{' '}
               </span>
             </li>
           );
