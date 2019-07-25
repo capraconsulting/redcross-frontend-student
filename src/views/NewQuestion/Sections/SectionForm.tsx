@@ -154,7 +154,7 @@ const SectionForm = (props: RouteComponentProps) => {
           return (
             <li key={index}>
               <span>
-                <a style={{ color: 'black', textDecoration: 'none' }} download>
+                <a className="filelist-ankertag" download>
                   {name}{' '}
                 </a>
                 <IconButton
