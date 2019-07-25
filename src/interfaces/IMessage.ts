@@ -1,4 +1,4 @@
-import { ISocketFile } from '.';
+import { ISocketFile } from './';
 
 /*export default interface IMessage {
   author: string;

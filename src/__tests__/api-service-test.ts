@@ -65,6 +65,14 @@ describe('api-service', () => {
     questionText: 'questionText',
     isPublic: true,
     totalRows: 0,
+    files: [
+      {
+        share: 'questionfiles',
+        directory: 'hei',
+        fileName: 'Hei',
+        fileUrl: 'hei',
+      },
+    ],
   };
 
   it('TEST: postQuestion \n Should work', async () => {
@@ -82,6 +90,14 @@ describe('api-service', () => {
       questionText: 'questionText',
       isPublic: true,
       totalRows: 0,
+      files: [
+        {
+          share: 'questionfiles',
+          directory: 'hei',
+          fileName: 'Hei',
+          fileUrl: 'hei',
+        },
+      ],
     });
   });
 });
