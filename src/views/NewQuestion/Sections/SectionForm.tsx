@@ -4,6 +4,7 @@ import stream from 'stream';
 import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +14,7 @@ import { IQuestion, ISubject, IFile } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
-import { fileService } from '../../../services/azure-service';
+import { uploadFileToAzureFileStorage } from '../../../services/azure-service';
 
 //Styles
 import '../../../styles/QAForm.less';
@@ -29,7 +30,8 @@ const defaultOptions = {
   label: '',
 };
 
-const SectionForm = () => {
+const SectionForm = (props: RouteComponentProps) => {
+  const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
   const [email, setEmail] = useState('' as string);
   const [questionText, setQuestionText] = useState('' as string);
@@ -60,7 +62,7 @@ const SectionForm = () => {
     setAzureToken(generatedToken.token);
   }, []);
 
-  /** KEEP TO USE IN FRIVILLIG APP
+  /** KEEP TO USE IN FRIVILLIG APP TO HANDLE FILE AND DIRECTORY DELETION
   const handleDirectoryDelete = () => {
     console.log('Kjører frem til if check');
     files.length > 0 &&
@@ -92,58 +94,14 @@ const SectionForm = () => {
       });
   };*/
 
-  const uploadFileToAzure = async file => {
-    const fr = new FileReader();
-    fr.readAsArrayBuffer(file);
-    const fileStream = new stream.Readable();
-    return new Promise<IFile>((resolve, reject) => {
-      fr.onload = () => {
-        let myFileBuffer: ArrayBuffer = fr.result as ArrayBuffer;
-        if (myFileBuffer) {
-          fileStream.push(myFileBuffer[0]);
-          fileStream.push(null);
-          azureToken.length > 0 &&
-            fileService.createDirectoryIfNotExists(
-              'questionfiles',
-              azureToken,
-              function() {
-                fileService.createFileFromStream(
-                  'questionfiles',
-                  azureToken,
-                  file.name,
-                  fileStream,
-                  myFileBuffer.byteLength,
-                  function(error, result) {
-                    if (!error) {
-                      const { share, directory, name } = result;
-                      const fileLink = fileService.getUrl(
-                        'questionfiles',
-                        azureToken,
-                        result.name,
-                        azureToken,
-                      );
-                      let file: IFile = {
-                        share,
-                        directory,
-                        fileName: name,
-                        fileUrl: fileLink,
-                      };
-                      resolve(file);
-                    } else {
-                      reject();
-                    }
-                  },
-                );
-              },
-            );
-        }
-      };
-    });
-  };
-
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
-      return uploadFileToAzure(file);
+      return uploadFileToAzureFileStorage(
+        'questionfiles',
+        azureToken,
+        file,
+        azureToken,
+      );
     });
   };
 
@@ -160,7 +118,7 @@ const SectionForm = () => {
         files: results,
       };
       postQuestion(questionForm).then(() => {
-        //TODO: Redirect to "question posted successfully" page
+        history.push({ pathname: '/questions/new/success' });
       });
     });
   };
@@ -367,4 +325,4 @@ const SectionForm = () => {
   );
 };
 
-export default SectionForm;
+export default withRouter(SectionForm);

@@ -17,6 +17,7 @@ import {
   LeksehjelpPage,
   MestringPage,
   FrivilligePage,
+  NewQuestionSuccessPage,
   Chat as ChatPage,
 } from './views';
 
@@ -36,6 +37,11 @@ export const AppRouter = (props: IProps) => {
       <Switch>
         <Route path="/questions" exact component={QAPage} />
         <Route path="/questions/new" exact component={NewQuestionPage} />
+        <Route
+          path="/questions/new/success"
+          exact
+          component={NewQuestionSuccessPage}
+        />
         <Route
           path="/questions/:id"
           exact

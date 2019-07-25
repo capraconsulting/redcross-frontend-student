@@ -4,6 +4,7 @@ import MestringPage from './Mestring/MestringPage';
 import LeksehjelpPage from './Leksehjelp/LeksehjelpPage';
 import LandingPage from './Landing/LandingPage';
 import NewQuestionPage from './NewQuestion/NewQuestionPage';
+import NewQuestionSuccessPage from './NewQuestionSuccess/NewQuestionSuccessPage';
 import FrivilligePage from './Frivillige/FrivilligePage';
 import Chat from './Chat/Chat';
 
@@ -15,5 +16,6 @@ export {
   LandingPage,
   NewQuestionPage,
   FrivilligePage,
+  NewQuestionSuccessPage,
   Chat,
 };
