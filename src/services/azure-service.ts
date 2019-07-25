@@ -1,4 +1,3 @@
-//npm packages
 import azure from 'azure-storage';
 import stream from 'stream';
 
@@ -6,16 +5,14 @@ import stream from 'stream';
 import { IFile } from '../interfaces';
 
 //Configs
-import azureConfig from '../../azureconfig.js';
+import { publicAzureToken } from '../../config';
 
 // Creates Azure Fileservice with restricted access
-export const fileService = azure.createFileService(
-  azureConfig.SAS_TOKEN_RESTRICTED,
-);
+export const fileService = azure.createFileService(publicAzureToken);
 
 /**
  * Uploads file to azure file storage.
- * Returns promise that returns the uploaded file's URL inside an IFile object.
+ * Returns promise that returns the uploaded file's URL inside object of type IFile - See interfaces/IFile.
  * */
 export const uploadFileToAzureFileStorage = async (
   share: string,

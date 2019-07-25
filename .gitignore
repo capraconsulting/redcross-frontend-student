@@ -4,4 +4,4 @@ build/
 .DS_Store
 *.log
 mock-db.json
-azureconfig.js
+azureconfig.ts
