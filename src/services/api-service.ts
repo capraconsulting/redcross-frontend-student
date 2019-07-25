@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
-import { IQuestion, IGrade, ISubject } from '../interfaces/index';
+import { IQuestion, IGrade, ISubject } from '../interfaces';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -36,7 +36,7 @@ export function getSubjectStatus(id: string) {
 }
 
 export function postQuestion(question) {
-  // Which type will this be? Defined in backend
+  // Which msgType will this be? Defined in backend
   console.log(question);
   return api
     .post('questions', question)
@@ -45,7 +45,7 @@ export function postQuestion(question) {
 }
 
 export function postFeedback(questionID, feedbackText) {
-  // Which type will this be? Defined in backend
+  // Which msgType will this be? Defined in backend
   console.log(feedbackText);
   return api
     .post(`feedback/question/${questionID}`, { feedbackText })

@@ -3,7 +3,7 @@ interface ITheme {
   theme: string;
 }
 
-export default interface ISubject {
+export interface ISubject {
   id: number;
   themes: ITheme[];
   subjectTitle: string;

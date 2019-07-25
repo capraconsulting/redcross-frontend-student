@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
-import stream from 'stream';
 import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';

@@ -15,7 +15,7 @@ export interface ITextMessage {
   roomID: string;
   uniqueID: string;
   message: string | ISocketFile;
-  datetime: Date;
+  datetime?: Date;
 }
 
 export interface IEnterQueueMessage {
@@ -25,7 +25,6 @@ export interface IEnterQueueMessage {
   uniqueID: string;
   introText: string;
   course: string;
-  datetime: Date;
 }
 
 export interface IGenerateRoomMessage {
@@ -34,6 +33,6 @@ export interface IGenerateRoomMessage {
 }
 
 export interface ISocketMessage {
-  type: string;
+  msgType: string;
   payload: ITextMessage | IGenerateRoomMessage | IEnterQueueMessage;
 }

@@ -1,4 +1,4 @@
-export default interface IFile {
+export interface IFile {
   share: string;
   directory?: string;
   fileName: string;

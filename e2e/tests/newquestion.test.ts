@@ -10,7 +10,7 @@ fixture`NewQuestionPage`
 //fixture.skip`QuestionPage`;
 
 class LandingPage {
-  //Declaring selector type for each element to test
+  //Declaring selector msgType for each element to test
   public newQuestionText: Selector;
 
   //Constructing elements to test

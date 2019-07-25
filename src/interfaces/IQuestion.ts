@@ -1,6 +1,6 @@
-import { IFile } from '.';
+import { IFile } from './IFile';
 
-export default interface IQuestion {
+export interface IQuestion {
   id?: number;
   title?: string;
   email?: string;
