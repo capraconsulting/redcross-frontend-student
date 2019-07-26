@@ -12,7 +12,7 @@ import {
   ITextMessage,
 } from '../interfaces/IMessage';
 import { CHAT_URL, MESSAGE_TYPES } from '../../config';
-import { addMessageAction, chatReducer } from '../reducers';
+import { addMessageAction, chatClosedAction, chatReducer, hasLeftChatAction } from '../reducers';
 import { IAction } from '../interfaces';
 
 export const SocketContext = createContext({
@@ -56,7 +56,14 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     course: '' as string,
     chatType: '' as string,
   });
-  const { CONNECTION, DISTRIBUTE_ROOM, TEXT, CONFIRMED_QUEUE } = MESSAGE_TYPES;
+  const {
+    CONNECTION,
+    DISTRIBUTE_ROOM,
+    TEXT,
+    CONFIRMED_QUEUE,
+    LEAVE_CHAT,
+    CLOSE_CHAT,
+  } = MESSAGE_TYPES;
 
   const updateStudentInfo = (partial: IPartialQueueMessage) => {
     const newStudentInfo: IQueueMessage = studentInfo;
@@ -69,16 +76,31 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
     const { msgType, payload } = parsedMessage;
+    let action;
 
-    if (msgType === TEXT) {
-      dispatchMessages(addMessageAction(parsedMessage));
-    } else if (msgType === DISTRIBUTE_ROOM) {
-      setRoomID(payload['roomID']);
-      console.log(roomID);
-    } else if (msgType === CONNECTION) {
-      setUniqueID(payload['uniqueID']);
-    } else if (msgType === CONFIRMED_QUEUE) {
-      setStudentInfo(payload['info']);
+    console.log(msgType);
+
+    switch (msgType) {
+      case TEXT:
+        dispatchMessages(addMessageAction(parsedMessage));
+        break;
+      case DISTRIBUTE_ROOM:
+        setRoomID(payload['roomID']);
+        break;
+      case CONNECTION:
+        setUniqueID(payload['uniqueID']);
+        break;
+      case CONFIRMED_QUEUE:
+        setStudentInfo(payload['info']);
+        break;
+      case LEAVE_CHAT:
+        action = hasLeftChatAction(payload['name']);
+        dispatchMessages(action);
+        break;
+      case CLOSE_CHAT:
+        action = chatClosedAction();
+        dispatchMessages(action);
+        break;
     }
   };
 
