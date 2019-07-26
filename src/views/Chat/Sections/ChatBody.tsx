@@ -1,7 +1,7 @@
 import React from 'react';
 import ChatMessage from './ChatMessage';
 import '../../../styles/ChatBody';
-import { ITextMessage } from '../../../interfaces/IMessage';
+import { ITextMessage } from '../../../interfaces';
 
 interface IProps {
   messages: ITextMessage[];

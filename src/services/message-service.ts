@@ -1,20 +1,17 @@
 import {
   IGenerateRoomMessage,
-  IQueueMessage,
+  IQueueMessage, IReconnectMessage,
   ISocketMessage,
   ITextMessage,
-} from '../interfaces/IMessage';
+} from '../interfaces';
 import { MESSAGE_TYPES } from '../../config';
 
 const {
   TEXT,
-  DISTRIBUTE_ROOM,
-  CONNECTION,
-  ENTER_QUEUE,
-  UPDATE_QUEUE,
+  RECONNECT
 } = MESSAGE_TYPES;
 const createMessage = (
-  payload: ITextMessage | IQueueMessage | IGenerateRoomMessage,
+  payload: ITextMessage | IQueueMessage | IGenerateRoomMessage | IReconnectMessage,
   msgType: string,
 ): ISocketMessage => {
   return {
@@ -22,6 +19,66 @@ const createMessage = (
     payload,
   };
 };
+
+class ReconnectMessage {
+  private readonly oldUniqueID: string;
+  private readonly uniqueID: string;
+  private readonly roomIDs: string[];
+
+  public constructor(reconnectMessageBuilder: ReconnectMessageBuilder) {
+    this.oldUniqueID = reconnectMessageBuilder.oldUniqueID;
+    this.uniqueID = reconnectMessageBuilder.uniqueID;
+    this.roomIDs = reconnectMessageBuilder.roomIDs;
+  }
+
+  public get createMessage(): ISocketMessage {
+    const msg: IReconnectMessage = {
+      oldUniqueID: this.oldUniqueID,
+      uniqueID: this.uniqueID,
+      roomIDs: this.roomIDs
+    };
+    return createMessage(msg, RECONNECT);
+  }
+}
+
+export class ReconnectMessageBuilder {
+  private readonly _uniqueID: string;
+  private _oldUniqueID: string;
+  private _roomIDs: string[];
+
+  public constructor(uniqueID: string) {
+    this._uniqueID = uniqueID;
+    return this;
+  }
+
+
+  public withOldUniqueID(value: string): ReconnectMessageBuilder {
+    this._oldUniqueID = value;
+    return this;
+  }
+
+  public withRoomIDs(value: string[]): ReconnectMessageBuilder {
+    this._roomIDs = value;
+    return this;
+  }
+
+  public build(): ReconnectMessage {
+    return new ReconnectMessage(this);
+  }
+
+
+  public get uniqueID(): string {
+    return this._uniqueID;
+  }
+
+  public get oldUniqueID(): string {
+    return this._oldUniqueID;
+  }
+
+  public get roomIDs(): string[] {
+    return this._roomIDs;
+  }
+}
 
 class TextMessage {
   private readonly roomID: string;

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import ChatBody from './Sections/ChatBody';
 import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
-import { ISocketMessage } from '../../interfaces/IMessage';
+import { ISocketMessage } from '../../interfaces/ISocketMessage';
 import '../../styles/Chat.less';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { SocketContext } from '../../providers';

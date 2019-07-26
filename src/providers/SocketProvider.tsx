@@ -5,12 +5,6 @@ import React, {
   useReducer,
   useState,
 } from 'react';
-import {
-  IPartialQueueMessage,
-  IQueueMessage,
-  ISocketMessage,
-  ITextMessage,
-} from '../interfaces/IMessage';
 import { CHAT_URL, MESSAGE_TYPES } from '../../config';
 import {
   addMessageAction,
@@ -18,7 +12,14 @@ import {
   chatReducer,
   hasLeftChatAction,
 } from '../reducers';
-import { IAction } from '../interfaces';
+import {
+  IAction,
+  IPartialQueueMessage,
+  IQueueMessage,
+  ISocketMessage,
+  ITextMessage,
+} from '../interfaces';
+import { ReconnectMessageBuilder } from '../services/message-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -108,6 +109,31 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
     }
   };
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('roomID')) {
+      sessionStorage.setItem('roomID', roomID);
+    }
+  }, [roomID]);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('oldUniqueID')) {
+      sessionStorage.setItem('oldUniqueID', uniqueID);
+    }
+  }, [uniqueID]);
+
+  useEffect(() => {
+    // Reconnect socket
+    const room = sessionStorage.getItem('roomID') || '';
+    const oldUniqueID = sessionStorage.getItem('oldUniqueID');
+    if (oldUniqueID) {
+      const msg = new ReconnectMessageBuilder(uniqueID)
+        .withOldUniqueID(oldUniqueID)
+        .withRoomIDs([room])
+        .build();
+      socketSend(msg.createMessage);
+    }
+  }, []);
 
   useEffect(() => {
     getSocket().onmessage = socketHandler;

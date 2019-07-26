@@ -1,4 +1,4 @@
-import { ISocketMessage, ITextMessage } from '../interfaces/IMessage';
+import { ISocketMessage, ITextMessage } from '../interfaces';
 import { createAction, createReducer } from 'typesafe-actions';
 import { IAction } from '../interfaces';
 
