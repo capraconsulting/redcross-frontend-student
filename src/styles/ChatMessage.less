@@ -14,17 +14,19 @@
       color: @welcome-message-body;
       font-size: 1rem;
       > .author-name {
-        color: @primary-color
+        color: @primary-color;
       }
     }
   }
 
   &--file-name {
-    font-weight: bold;
+    font-weight: 550;
     font-size: 1rem;
+    color: @black;
   }
   &--file-size {
     font-size: 0.8rem;
+    color: @black;
   }
 
   &:hover {
@@ -36,16 +38,18 @@
     padding: 0.3rem;
     overflow-wrap: break-spaces;
   }
-  &--download {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    cursor: pointer;
-  }
+
   &--self {
     background-color: gray;
     color: white;
     margin-left: 10%;
+  }
+  &--download {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    border: solid 1px @select-color;
   }
   &--other {
     background-color: @primary-color--light;
@@ -68,4 +72,5 @@
 .svg-download {
   height: 1.5rem;
   padding: 0.6rem;
+  cursor: pointer;
 }

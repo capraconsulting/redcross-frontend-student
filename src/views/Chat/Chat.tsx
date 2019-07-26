@@ -29,6 +29,7 @@ const Chat = () => {
     socketSend(message);
   };
 
+  console.log(messages);
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />

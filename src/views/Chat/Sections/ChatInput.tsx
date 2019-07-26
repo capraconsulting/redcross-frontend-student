@@ -13,7 +13,7 @@ import '../../../styles/ChatInput.less';
 import { IconButton } from '../../../ui/components';
 
 //Interfaces
-import { IQuestion, ISubject, IFile } from '../../../interfaces';
+import { IFile } from '../../../interfaces';
 
 interface IProps {
   uniqueID: string;
@@ -37,21 +37,23 @@ const ChatInput = (props: IProps) => {
     });
   };
 
-  const sendTextMessage = event => {
+  const sendTextMessage = (event, results) => {
     event.preventDefault();
-    if (message.length > 0) {
+    if (message.length > 0 || results.length > 0) {
       const msg = new TextMessageBuilder(uniqueID)
         .withMessage(message)
+        .withFiles(results)
         .toRoom(roomID)
         .build();
       send(msg.createMessage);
       setMessage('');
+      setTempFiles([] as any[]);
     }
   };
 
   const handleSubmit = event => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
-      //sendTextMessage(event);
+      sendTextMessage(event, results);
     });
   };
 
@@ -132,7 +134,9 @@ const ChatInput = (props: IProps) => {
               className={'message-text'}
               type="textarea"
               value={message}
-              onChange={event => setMessage(event.target.value)}
+              onChange={event => {
+                setMessage(event.target.value);
+              }}
             />
             <button
               onClick={event => handleSubmit(event)}
@@ -146,18 +150,11 @@ const ChatInput = (props: IProps) => {
               </svg>
             </button>
           </form>
-          <IconButton
-            onClick={event => {
-              handleSubmit(event);
-            }}
-          ></IconButton>
           <FileList />
         </div>
       </div>
     );
   };
-
-  console.log(tempFiles);
 
   return <DropzoneWithoutClick />;
 };

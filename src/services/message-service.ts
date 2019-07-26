@@ -207,7 +207,7 @@ export class TextMessageBuilder {
     this._roomID = roomID;
     return this;
   }
-  public withFile(files: IFile[]): TextMessageBuilder {
+  public withFiles(files: IFile[]): TextMessageBuilder {
     this._files = files;
     return this;
   }

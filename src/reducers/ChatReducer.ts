@@ -24,6 +24,7 @@ const addMessageHandler = (
     uniqueID,
     message,
     datetime,
+    files,
   } = action.payload.message.payload;
   const newMessage: ITextMessage = {
     author,
@@ -31,6 +32,7 @@ const addMessageHandler = (
     uniqueID,
     message,
     datetime,
+    files,
   };
   state.push(newMessage);
   return [...state];
