@@ -27,11 +27,11 @@ const ChatMessage = (props: IProps) => {
       files.map((file, index) => {
         return (
           <div className={'cm'} key={index}>
-            <div className={`cm--${authorType} cm--download`}>
+            <div
+              className={`cm--download cm--${authorType} cm--${authorType}--file`}
+            >
               <p className={`cm--message`}>
-                <span className="cm--file-name">
-                  {file.fileName} {' | '}
-                </span>
+                <span className="cm--file-name">{file.fileName} </span>
                 <span className="cm--file-size">
                   {(1000000 / 1000000).toPrecision(3)} MB
                 </span>
@@ -53,7 +53,11 @@ const ChatMessage = (props: IProps) => {
     return (
       message &&
       message.length > 0 && (
-        <p className={`cm--message cm--${authorType}`}>{message}</p>
+        <p
+          className={`cm--message cm--${authorType} cm--${authorType}--message`}
+        >
+          {message}
+        </p>
       )
     );
   };

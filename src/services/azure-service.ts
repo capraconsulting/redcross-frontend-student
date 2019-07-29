@@ -53,6 +53,7 @@ export const uploadFileToAzureFileStorage = async (
                     fileUrl: fileLink,
                   };
                   resolve(file);
+                  console.log(file.fileUrl);
                 } else {
                   reject();
                 }
