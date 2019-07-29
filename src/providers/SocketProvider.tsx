@@ -10,7 +10,7 @@ import {
   addMessageAction,
   chatClosedAction,
   chatReducer,
-  hasLeftChatAction,
+  hasLeftChatAction, reconnectChatAction,
 } from '../reducers';
 import {
   IAction,
@@ -69,6 +69,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     CONFIRMED_QUEUE,
     LEAVE_CHAT,
     CLOSE_CHAT,
+    RECONNECT,
   } = MESSAGE_TYPES;
 
   const updateStudentInfo = (partial: IPartialQueueMessage) => {
@@ -95,6 +96,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case CONNECTION:
         setUniqueID(payload['uniqueID']);
+        reconnectHandler(payload['uniqueID']);
         break;
       case CONFIRMED_QUEUE:
         setStudentInfo(payload['info']);
@@ -107,39 +109,61 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         action = chatClosedAction();
         dispatchMessages(action);
         break;
+      case RECONNECT:
+        reconnectSuccessHandler(payload['roomIDs']);
+        break;
+    }
+  };
+
+  const reconnectSuccessHandler = (roomIDs: string): void => {
+    const messagesFromSessionStorage = localStorage.getItem('messages');
+    if (messagesFromSessionStorage) {
+      const parsedMessagesFromSessionStorage: ITextMessage[] = JSON.parse(messagesFromSessionStorage);
+      if (roomIDs.includes(parsedMessagesFromSessionStorage[0].roomID)) {
+        dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
+        console.log('reconnected successfully');
+      }
     }
   };
 
   useEffect(() => {
+    if (messages.length > 0) {
+      sessionStorage.setItem('messages', JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
+      console.log('roomID stored');
     }
   }, [roomID]);
 
   useEffect(() => {
     if (!sessionStorage.getItem('oldUniqueID')) {
       sessionStorage.setItem('oldUniqueID', uniqueID);
+      console.log('old Unique ID stored');
     }
   }, [uniqueID]);
 
-  useEffect(() => {
-    // Reconnect socket
+  const reconnectHandler = (uniqueID: string): void => {
     const room = sessionStorage.getItem('roomID') || '';
     const oldUniqueID = sessionStorage.getItem('oldUniqueID');
     if (oldUniqueID) {
+      // Should still be able to reconenct without roomID
       const msg = new ReconnectMessageBuilder(uniqueID)
         .withOldUniqueID(oldUniqueID)
         .withRoomIDs([room])
         .build();
       socketSend(msg.createMessage);
     }
-  }, []);
+  };
 
   useEffect(() => {
     getSocket().onmessage = socketHandler;
   });
 
-  const socketSend = (message: ISocketMessage) => {
+  const socketSend = (message: ISocketMessage): void => {
     getSocket().send(JSON.stringify(message));
   };
 

@@ -14,6 +14,10 @@ export const chatClosedAction = createAction('CLOSE_CHAT', cb => {
   return () => cb({});
 });
 
+export const reconnectChatAction = createAction('RECONNECT', cb => {
+  return (messages: ITextMessage[]) => cb({});
+});
+
 const addMessageHandler = (
   state: ITextMessage[],
   action: IAction,
@@ -57,7 +61,12 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
   return [...state];
 };
 
+const handleReconnectChat = (state: ITextMessage[], action: IAction) => {
+  return action.payload.messages;
+};
+
 export const chatReducer = createReducer<ITextMessage[], IAction>([])
   .handleAction(addMessageAction, addMessageHandler)
   .handleAction(hasLeftChatAction, handleHasLeftChat)
-  .handleAction(chatClosedAction, handleChatClosed);
+  .handleAction(chatClosedAction, handleChatClosed)
+  .handleAction(reconnectChatAction, handleReconnectChat);
