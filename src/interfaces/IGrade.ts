@@ -1,4 +1,4 @@
-export default interface IGrade {
+export interface IGrade {
   id: number;
   grade: string;
 }

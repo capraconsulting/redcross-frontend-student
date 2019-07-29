@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { ISocketMessage } from '../../../interfaces/IMessage';
-import { createTextMessage } from '../../../services/message-service';
-import { ISocketFile } from '../../../interfaces';
+import { TextMessageBuilder } from '../../../services/message-service';
 import '../../../styles/ChatInput.less';
 
 interface IProps {
@@ -11,18 +9,18 @@ interface IProps {
 }
 
 const ChatInput = (props: IProps) => {
-  const [message, setMessage] = useState('' as string);
+  const [message, setMessage] = useState<string>('');
+  const { uniqueID, roomID, send } = props;
 
   const sendTextMessage = event => {
     event.preventDefault();
     if (message.length > 0) {
-      const msg: ISocketMessage = createTextMessage(
-        message,
-        props.uniqueID,
-        props.roomID,
-      );
+      const msg = new TextMessageBuilder(uniqueID)
+        .withMessage(message)
+        .toRoom(roomID)
+        .build();
+      send(msg.createMessage);
       setMessage('');
-      props.send(msg);
     }
   };
 
@@ -34,23 +32,7 @@ const ChatInput = (props: IProps) => {
   };
 
   const sendFileMessage = (file: File) => {
-    const fr = new FileReader();
-    console.log(file);
-    fr.onload = () => {
-      const socketFile: ISocketFile = {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        dataURL: String(fr.result),
-      };
-      const msg: ISocketMessage = createTextMessage(
-        socketFile,
-        props.uniqueID,
-        props.roomID,
-      );
-      props.send(msg);
-    };
-    fr.readAsDataURL(file);
+    // TODO: do with azure
   };
 
   return (

@@ -1,4 +1,4 @@
-export default interface IModal {
+export interface IModal {
   content?;
   buttonText: string;
   disabled;
