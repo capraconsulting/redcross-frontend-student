@@ -10,7 +10,7 @@ const SectionMestring = (props: RouteComponentProps) => {
   const { history } = props;
   const textChat = true;
   const videoChat = false;
-  const [subjects, setSubjects] = useState([] as ISubject[]);
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
 
   useEffect(() => {
     try {
@@ -19,15 +19,12 @@ const SectionMestring = (props: RouteComponentProps) => {
   }, []);
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-    subjects.map(subject => {
-      subjectOptions.push({
+    return subjects.map(subject => {
+      return {
         value: subject.id.toString(),
         label: subject.subjectTitle,
-      });
+      };
     });
-    return subjectOptions;
   };
 
   return (

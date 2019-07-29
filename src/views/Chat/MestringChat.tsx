@@ -4,7 +4,7 @@ import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
 import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-import { createEnterMestringQueueMessage } from '../../services/message-service';
+import { createEnterQueueMessage } from '../../services/message-service';
 
 const MestringChat = () => {
   const [socket, setSocket] = useState(null as any);
@@ -72,7 +72,7 @@ const MestringChat = () => {
   };
 
   const sendEnterQueueMessage = () => {
-    const msg = createEnterMestringQueueMessage(
+    const msg = createEnterQueueMessage(
       uniqueID,
       course,
       introText,
