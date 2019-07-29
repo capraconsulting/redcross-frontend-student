@@ -2,7 +2,7 @@ import {
   IGenerateRoomMessage,
   IEnterQueueMessage,
   ISocketMessage,
-  ITextMessage
+  ITextMessage,
 } from '../interfaces/IMessage';
 
 const createMessage = (

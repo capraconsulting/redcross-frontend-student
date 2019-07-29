@@ -84,7 +84,9 @@ const MestringChat = () => {
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Mestring" />
-      <button onClick={() => sendEnterQueueMessage()}>Enter mestring queue</button>
+      <button onClick={() => sendEnterQueueMessage()}>
+        Enter mestring queue
+      </button>
       <ChatBody messages={messages} />
       <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />
     </div>

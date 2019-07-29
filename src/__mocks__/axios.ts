@@ -42,7 +42,7 @@ export default {
   create() {
     return {
       get(url: string) {
-        const [_, parameter] = url.split('/');
+        const [parameter] = url.split('/');
         if (isNaN(parseInt(parameter)) === true) {
           return Promise.resolve({ data: url });
         } else {
