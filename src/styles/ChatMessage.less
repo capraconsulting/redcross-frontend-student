@@ -4,12 +4,27 @@
   margin: 0.5rem;
   display: flex;
   flex-direction: column;
+
+  &--notification {
+    border-top: @message-separator 1px solid;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    &--body {
+      white-space: pre-wrap;
+      color: @welcome-message-body;
+      font-size: 1rem;
+      > .author-name {
+        color: @primary-color
+      }
+    }
+  }
+
   &--file-name {
     font-weight: bold;
     font-size: 1rem;
   }
   &--file-size {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   &:hover {
