@@ -14,7 +14,11 @@ import { IQuestion, ISubject, IFile } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
-import { uploadFileToAzureFileStorage } from '../../../services/azure-service';
+import {
+  uploadFileToAzureFileStorage,
+  uploadFileToAzureBlobStorage,
+  blobService,
+} from '../../../services/azure-service';
 
 //Styles
 import '../../../styles/QAForm.less';
@@ -62,46 +66,9 @@ const SectionForm = (props: RouteComponentProps) => {
     setAzureToken(generatedToken.token);
   }, []);
 
-  /** KEEP TO USE IN FRIVILLIG APP TO HANDLE FILE AND DIRECTORY DELETION
-  const handleDirectoryDelete = () => {
-    console.log('Kjører frem til if check');
-    files.length > 0 &&
-      azureToken.length > 0 &&
-      files.map((file, index) => {
-        console.log(file);
-        fileService.deleteFileIfExists(
-          'questionfiles',
-          azureToken,
-          file.fileName,
-          function(error, response) {
-            if (!error) {
-            }
-          },
-        );
-        if (index == files.length - 1) {
-          setFiles([] as IFile[]);
-          fileService.deleteDirectoryIfExists(
-            'questionfiles',
-            azureToken,
-            function(error, result, response) {
-              if (!error) {
-                console.log(result);
-                console.log(response);
-              }
-            },
-          );
-        }
-      });
-  };*/
-
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
-      return uploadFileToAzureFileStorage(
-        'questionfiles',
-        azureToken,
-        file,
-        azureToken,
-      );
+      return uploadFileToAzureBlobStorage('questionfiles', 'mappe1', file);
     });
   };
 
@@ -160,7 +127,6 @@ const SectionForm = (props: RouteComponentProps) => {
                     className="filelist-ankertag"
                     href={URL.createObjectURL(file)}
                     title={name}
-                    download={name}
                   >
                     {name}{' '}
                   </a>
@@ -170,6 +136,7 @@ const SectionForm = (props: RouteComponentProps) => {
                     }}
                   ></IconButton>{' '}
                 </span>
+                <IconButton onClick={() => handleSubmit()}></IconButton>
               </Zoom>
             </li>
           );

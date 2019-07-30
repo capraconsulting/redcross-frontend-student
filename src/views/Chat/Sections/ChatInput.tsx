@@ -4,7 +4,7 @@ import Zoom from 'react-reveal/Zoom';
 
 //Services
 import { TextMessageBuilder } from '../../../services/message-service';
-import { uploadFileToAzureFileStorage } from '../../../services/azure-service';
+import { uploadFileToAzureBlobStorage } from '../../../services/azure-service';
 
 //Styles
 import '../../../styles/ChatInput.less';
@@ -14,6 +14,7 @@ import { IconButton } from '../../../ui/components';
 
 //Interfaces
 import { IFile } from '../../../interfaces';
+import { azureTokens } from '../../../../config';
 
 interface IProps {
   uniqueID: string;
@@ -28,12 +29,7 @@ const ChatInput = (props: IProps) => {
 
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
-      return uploadFileToAzureFileStorage(
-        'chatfiles',
-        uniqueID,
-        file,
-        uniqueID,
-      );
+      return uploadFileToAzureBlobStorage('chatfiles', roomID, file);
     });
   };
 

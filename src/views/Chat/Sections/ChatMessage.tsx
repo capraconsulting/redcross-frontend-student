@@ -12,7 +12,6 @@ const ChatMessage = (props: IProps) => {
   const authorType = author === 'student' ? 'self' : 'other';
 
   const downloadFile = file => {
-    console.log(file.fileUrl);
     const a = document.createElement('a');
     a.href = String(file.fileUrl);
     a['download'] = file.fileName;
