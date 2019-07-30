@@ -32,12 +32,12 @@ const ChatInput = (props: IProps) => {
     });
   };
 
-  const sendTextMessage = (event, results) => {
+  const sendTextMessage = (event, files) => {
     event.preventDefault();
-    if (message.length > 0 || results.length > 0) {
+    if (message.length > 0 || files.length > 0) {
       const msg = new TextMessageBuilder(uniqueID)
         .withMessage(message)
-        .withFiles(results)
+        .withFiles(files)
         .toRoom(roomID)
         .build();
       send(msg.createMessage);
