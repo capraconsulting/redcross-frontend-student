@@ -51,7 +51,8 @@ const handleHasLeftChat = (state: ITextMessage[], action: IAction) => {
 const handleChatClosed = (state: ITextMessage[], action: IAction) => {
   state.push({
     author: '',
-    message: 'Alle frivillige har forlatt chatten.\n Du kan fortsette å lese meldingene og se filene som er sendt så lenge nettleservinduet er åpent.',
+    message:
+      'Alle frivillige har forlatt chatten.\n Du kan fortsette å lese meldingene og se filene som er sendt så lenge nettleservinduet er åpent.',
     roomID: '',
     uniqueID: 'NOTIFICATION',
   });

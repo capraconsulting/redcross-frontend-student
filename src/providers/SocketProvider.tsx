@@ -12,7 +12,12 @@ import {
   ITextMessage,
 } from '../interfaces/IMessage';
 import { CHAT_URL, MESSAGE_TYPES } from '../../config';
-import { addMessageAction, chatClosedAction, chatReducer, hasLeftChatAction } from '../reducers';
+import {
+  addMessageAction,
+  chatClosedAction,
+  chatReducer,
+  hasLeftChatAction,
+} from '../reducers';
 import { IAction } from '../interfaces';
 
 export const SocketContext = createContext({
