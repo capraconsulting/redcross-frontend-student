@@ -127,6 +127,7 @@ const SectionForm = (props: RouteComponentProps) => {
                     className="filelist-ankertag"
                     href={URL.createObjectURL(file)}
                     title={name}
+                    download={name}
                   >
                     {name}{' '}
                   </a>
