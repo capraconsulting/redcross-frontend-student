@@ -136,7 +136,6 @@ const SectionForm = (props: RouteComponentProps) => {
                     }}
                   ></IconButton>{' '}
                 </span>
-                <IconButton onClick={() => handleSubmit()}></IconButton>
               </Zoom>
             </li>
           );

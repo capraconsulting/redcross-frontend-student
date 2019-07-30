@@ -36,6 +36,7 @@ export function getSubjectStatus(id: string) {
 
 export function postQuestion(question) {
   // Which msgType will this be? Defined in backend
+  console.log(question);
   return api
     .post('questions', question)
     .then(res => res.data)
