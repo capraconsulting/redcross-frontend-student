@@ -18,7 +18,8 @@ import {
   MestringPage,
   FrivilligePage,
   NewQuestionSuccessPage,
-  Chat as ChatPage,
+  Chat,
+  MestringChat,
 } from './views';
 
 //Components
@@ -50,7 +51,7 @@ export const AppRouter = (props: IProps) => {
         <Route path="/leksehjelp" exact component={LeksehjelpPage} />
         <Route path="/mestring" exact component={MestringPage} />
         <Route path="/frivillige" exact component={FrivilligePage} />
-        <Route path="/meldinger" exact component={ChatPage} />
+        <Route path="/meldinger" exact component={Chat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>

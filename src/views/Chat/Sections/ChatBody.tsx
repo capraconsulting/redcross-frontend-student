@@ -1,7 +1,7 @@
 import React from 'react';
 import ChatMessage from './ChatMessage';
 import '../../../styles/ChatBody';
-import { ITextMessage } from '../../../interfaces/IMessage';
+import { ITextMessage } from '../../../interfaces';
 
 interface IProps {
   messages: ITextMessage[];
@@ -9,6 +9,9 @@ interface IProps {
 
 const ChatBody = (props: IProps) => {
   const mapMessages = () => {
+    if (!props.messages) {
+      return null;
+    }
     return props.messages.map((message, index) => {
       return <ChatMessage key={index} message={message} />;
     });
