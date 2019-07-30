@@ -19,7 +19,7 @@ import {
   FrivilligePage,
   NewQuestionSuccessPage,
   Chat,
-  MestringChat
+  MestringChat,
 } from './views';
 
 //Components
