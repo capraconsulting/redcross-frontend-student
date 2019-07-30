@@ -47,9 +47,15 @@ const ChatInput = (props: IProps) => {
   };
 
   const handleSubmit = event => {
+    event.preventDefault();
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       sendTextMessage(event, results);
     });
+  };
+
+  const openFileDialog = () => {
+    const ref = document.getElementById('file-dialog');
+    ref && ref.click();
   };
 
   const onDrop = useCallback(
@@ -130,7 +136,27 @@ const ChatInput = (props: IProps) => {
       />
       <div className={'message-form-container'}>
         <form className={'message-form'}>
-          <button type="button" className="upload" onClick={open}>
+          <button
+            type="button"
+            className="upload"
+            onClick={() => openFileDialog()}
+          >
+            <input
+              type="file"
+              id="file-dialog"
+              className="input-file"
+              accept="image/*|.pdf|.doc|.docx|.csv"
+              onChange={event => {
+                let { files } = event.target;
+                let newFiles = [] as any;
+                let steps = (files && files.length) || 0;
+                for (var i = 0; i < steps; i++) {
+                  let item = (files && files.item(i)) || 'null';
+                  newFiles.push(item);
+                }
+                files && setTempFiles([...tempFiles, ...newFiles]);
+              }}
+            />
             <span className="plus">+</span>
             <div className="tooltip">
               Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller
@@ -138,10 +164,7 @@ const ChatInput = (props: IProps) => {
             </div>
           </button>
           {renderInput()}
-          <button
-            onClick={event => handleSubmit(event)}
-            className={'send-message'}
-          >
+          <button onClick={handleSubmit} className={'send-message'}>
             <svg width="30px" height="30px" viewBox="0 0 30 30">
               <polygon
                 className="arrow"
