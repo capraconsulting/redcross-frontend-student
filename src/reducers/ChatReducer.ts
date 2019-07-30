@@ -1,4 +1,4 @@
-import { ISocketMessage, ITextMessage } from '../interfaces';
+import { ISocketMessage, ITextMessage, IFile } from '../interfaces';
 import { createAction, createReducer } from 'typesafe-actions';
 import { IAction } from '../interfaces';
 
@@ -28,6 +28,7 @@ const addMessageHandler = (
     uniqueID,
     message,
     datetime,
+    files,
   } = action.payload.message.payload;
   const newMessage: ITextMessage = {
     author,
@@ -35,6 +36,7 @@ const addMessageHandler = (
     uniqueID,
     message,
     datetime,
+    files,
   };
   state.push(newMessage);
   return [...state];
@@ -46,6 +48,7 @@ const handleHasLeftChat = (state: ITextMessage[], action: IAction) => {
     message: 'Har forlatt chatten.',
     roomID: '',
     uniqueID: 'NOTIFICATION',
+    files: [] as IFile[],
   });
   return [...state];
 };
@@ -57,6 +60,7 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
       'Alle frivillige har forlatt chatten.\n Du kan fortsette å lese meldingene og se filene som er sendt så lenge nettleservinduet er åpent.',
     roomID: '',
     uniqueID: 'NOTIFICATION',
+    files: [] as IFile[],
   });
   return [...state];
 };

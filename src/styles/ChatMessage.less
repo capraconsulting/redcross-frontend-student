@@ -1,9 +1,11 @@
 @import 'colors';
 
+//Chat message styling
 .cm {
   margin: 0.5rem;
   display: flex;
   flex-direction: column;
+  border-radius: 10%;
 
   &--notification {
     border-top: @message-separator 1px solid;
@@ -14,17 +16,19 @@
       color: @welcome-message-body;
       font-size: 1rem;
       > .author-name {
-        color: @primary-color
+        color: @primary-color;
       }
     }
   }
 
   &--file-name {
-    font-weight: bold;
+    font-weight: 550;
     font-size: 1rem;
+    color: @black;
   }
   &--file-size {
     font-size: 0.8rem;
+    color: @black;
   }
 
   &:hover {
@@ -35,21 +39,37 @@
     font-size: 1rem;
     padding: 0.3rem;
     overflow-wrap: break-spaces;
+    border: solid 0px @select-color;
+    border-radius: 0.2rem;
+  }
+
+  &--self {
+    &--message {
+      margin-left: 10%;
+      color: @white;
+      background-color: @self-chat-message-color;
+    }
+    &--file {
+      margin-left: 50%;
+    }
   }
   &--download {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    cursor: pointer;
-  }
-  &--self {
-    background-color: gray;
-    color: white;
-    margin-left: 10%;
+    background-color: @white;
+    border: solid 1px @select-color;
+    border-radius: 0.2rem;
   }
   &--other {
-    background-color: @primary-color--light;
-    margin-right: 10%;
+    &--message {
+      margin-right: 10%;
+      background-color: @other-chat-message-color;
+    }
+    &--file {
+      margin-right: 50%;
+      background-color: @white;
+    }
   }
   &--author-self {
     text-align: right;
@@ -68,4 +88,5 @@
 .svg-download {
   height: 1.5rem;
   padding: 0.6rem;
+  cursor: pointer;
 }

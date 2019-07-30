@@ -1,17 +1,20 @@
 import {
   IGenerateRoomMessage,
-  IQueueMessage, IReconnectMessage,
+  IQueueMessage,
+  IReconnectMessage,
   ISocketMessage,
   ITextMessage,
 } from '../interfaces';
 import { MESSAGE_TYPES } from '../../config';
+import { IFile } from '../interfaces';
 
-const {
-  TEXT,
-  RECONNECT
-} = MESSAGE_TYPES;
+const { TEXT, RECONNECT } = MESSAGE_TYPES;
 const createMessage = (
-  payload: ITextMessage | IQueueMessage | IGenerateRoomMessage | IReconnectMessage,
+  payload:
+    | ITextMessage
+    | IQueueMessage
+    | IGenerateRoomMessage
+    | IReconnectMessage,
   msgType: string,
 ): ISocketMessage => {
   return {
@@ -35,7 +38,7 @@ class ReconnectMessage {
     const msg: IReconnectMessage = {
       oldUniqueID: this.oldUniqueID,
       uniqueID: this.uniqueID,
-      roomIDs: this.roomIDs
+      roomIDs: this.roomIDs,
     };
     return createMessage(msg, RECONNECT);
   }
@@ -51,7 +54,6 @@ export class ReconnectMessageBuilder {
     return this;
   }
 
-
   public withOldUniqueID(value: string): ReconnectMessageBuilder {
     this._oldUniqueID = value;
     return this;
@@ -65,7 +67,6 @@ export class ReconnectMessageBuilder {
   public build(): ReconnectMessage {
     return new ReconnectMessage(this);
   }
-
 
   public get uniqueID(): string {
     return this._uniqueID;
@@ -84,21 +85,28 @@ class TextMessage {
   private readonly roomID: string;
   private readonly uniqueID: string;
   private readonly message: string;
+  private readonly files: IFile[];
 
   public constructor(textMessageBuilder: TextMessageBuilder) {
     this.roomID = textMessageBuilder.roomID;
     this.message = textMessageBuilder.message;
     this.uniqueID = textMessageBuilder.uniqueID;
+    this.files = textMessageBuilder.files;
   }
 
-  public get createMessage(): ISocketMessage {
+  public get createMessage(): ISocketMessage | null {
     const msg: ITextMessage = {
       author: 'student',
       uniqueID: this.uniqueID,
       roomID: this.roomID,
       message: this.message,
+      files: this.files,
     };
-    return createMessage(msg, TEXT);
+    if (this.files.length > 0 || this.message.length > 0) {
+      return createMessage(msg, TEXT);
+    } else {
+      return null;
+    }
   }
 }
 
@@ -240,6 +248,7 @@ export class TextMessageBuilder {
   private readonly _uniqueID: string;
   private _roomID: string;
   private _message: string;
+  private _files: IFile[];
 
   public constructor(uniqueID: string) {
     this._uniqueID = uniqueID;
@@ -253,6 +262,11 @@ export class TextMessageBuilder {
 
   public toRoom(roomID: string): TextMessageBuilder {
     this._roomID = roomID;
+    return this;
+  }
+
+  public withFiles(files: IFile[]): TextMessageBuilder {
+    this._files = files;
     return this;
   }
 
@@ -270,5 +284,9 @@ export class TextMessageBuilder {
 
   public get message(): string {
     return this._message;
+  }
+
+  public get files(): IFile[] {
+    return this._files;
   }
 }

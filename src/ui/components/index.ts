@@ -5,5 +5,15 @@ import Footer from './Footer';
 import Header from './Header';
 import SimpleModal from './SimpleModal';
 import IconButton from './IconButton';
+import DropZone from './DropZoneComponent';
 
-export { Chat, ChatHeader, ChatBody, Footer, Header, SimpleModal, IconButton };
+export {
+  Chat,
+  ChatHeader,
+  ChatBody,
+  Footer,
+  Header,
+  SimpleModal,
+  IconButton,
+  DropZone,
+};
