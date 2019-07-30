@@ -1,4 +1,4 @@
-import { ISocketFile } from '.';
+import { ISocketFile } from './';
 
 /*export default interface IMessage {
   author: string;
@@ -18,13 +18,20 @@ export interface ITextMessage {
   datetime?: Date;
 }
 
-export interface IEnterQueueMessage {
+export interface IQueueMessage {
   nickname: string;
   subject: string;
   grade: string;
   uniqueID: string;
   introText: string;
   course: string;
+  chatType: string;
+}
+
+export interface IPartialQueueMessage {
+  subject: string;
+  grade: string;
+  introText: string;
 }
 
 export interface IGenerateRoomMessage {
@@ -34,5 +41,5 @@ export interface IGenerateRoomMessage {
 
 export interface ISocketMessage {
   msgType: string;
-  payload: ITextMessage | IGenerateRoomMessage | IEnterQueueMessage;
+  payload: ITextMessage | IGenerateRoomMessage | IQueueMessage;
 }

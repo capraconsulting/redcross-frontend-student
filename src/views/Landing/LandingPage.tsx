@@ -1,5 +1,6 @@
 // Sections for this page
 import React from 'react';
+import Zoom from 'react-reveal/Zoom';
 
 //Styles
 import '../../styles/LandingPage.less';
@@ -16,11 +17,13 @@ import {
 const LandingPage = () => {
   return (
     <div className="content">
-      <SectionHero />
-      <SectionQuestions />
-      <SectionLeksehjelp />
-      <SectionMestring />
-      <SectionFrivillig />
+      <Zoom>
+        <SectionHero />
+        <SectionQuestions />
+        <SectionLeksehjelp />
+        <SectionMestring />
+        <SectionFrivillig />
+      </Zoom>
     </div>
   );
 };

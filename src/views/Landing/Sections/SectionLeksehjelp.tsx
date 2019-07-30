@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
 
@@ -13,12 +13,16 @@ import {
   getSubjectList,
   getSubjectStatus,
 } from '../../../services/api-service';
+import { SocketContext } from '../../../providers';
+import { QueueMessageBuilder } from '../../../services/message-service';
+import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
-  const [subjects, setSubjects] = useState([] as ISubject[]);
-  const [timeSlots, setTimeSlots] = useState([] as string[]);
-  const [statusActive, setStatusActive] = useState(false);
+  const { uniqueID, socketSend } = useContext(SocketContext);
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const [statusActive, setStatusActive] = useState<boolean>(false);
   const [formControls, setFormControls] = useState({
     value: '',
     label: '',
@@ -166,6 +170,16 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     }
   };
 
+  const enterChatQueue = (chatType: string) => {
+    const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
+      .withCourse(formControls.label)
+      .withUniqueID(uniqueID)
+      .withChatType(chatType)
+      .build();
+    socketSend(msg.createMessage);
+    history.push('leksehjelp');
+  };
+
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
@@ -190,8 +204,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       </form>
       <button
         className="btn btn-submit"
-        disabled={!statusActive || formControls.value === ''}
-        onClick={() => history.push('leksehjelp')}
+        /*disabled={!statusActive || formControls.value === ''}*/
+        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
         Chat
       </button>{' '}
@@ -199,7 +213,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       <button
         className="btn btn-submit"
         disabled={!statusActive || formControls.value === ''}
-        onClick={() => history.push('leksehjelp')}
+        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >
         Videochat
       </button>

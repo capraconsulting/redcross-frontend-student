@@ -4,3 +4,4 @@ export * from './IQuestion';
 export * from './ISocketFile';
 export * from './IModal';
 export * from './IAction';
+export * from './IFile';

@@ -1,3 +1,5 @@
+import { IFile } from './IFile';
+
 export interface IQuestion {
   id?: number;
   title?: string;
@@ -12,4 +14,5 @@ export interface IQuestion {
   isPublic?: boolean;
   subject?: string;
   totalRows: number;
+  files: IFile[];
 }
