@@ -18,7 +18,8 @@ import {
   MestringPage,
   FrivilligePage,
   NewQuestionSuccessPage,
-  Chat as ChatPage,
+  Chat,
+  MestringChat
 } from './views';
 
 //Components

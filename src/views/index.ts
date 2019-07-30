@@ -1,21 +1,12 @@
-import QAPage from './QA/QAPage';
-import QuestionPage from './Question/QuestionPage';
-import MestringPage from './Mestring/MestringPage';
-import LeksehjelpPage from './Leksehjelp/LeksehjelpPage';
-import LandingPage from './Landing/LandingPage';
-import NewQuestionPage from './NewQuestion/NewQuestionPage';
-import NewQuestionSuccessPage from './NewQuestionSuccess/NewQuestionSuccessPage';
-import FrivilligePage from './Frivillige/FrivilligePage';
-import Chat from './Chat/Chat';
-
+export { default as QAPage } from './QA/QAPage';
+export { default as QuestionPage } from './Question/QuestionPage';
+export { default as MestringPage } from './Mestring/MestringPage';
+export { default as LeksehjelpPage } from './Leksehjelp/LeksehjelpPage';
+export { default as LandingPage } from './Landing/LandingPage';
+export { default as NewQuestionPage } from './NewQuestion/NewQuestionPage';
 export {
-  QAPage,
-  QuestionPage,
-  MestringPage,
-  LeksehjelpPage,
-  LandingPage,
-  NewQuestionPage,
-  FrivilligePage,
-  NewQuestionSuccessPage,
-  Chat,
-};
+  default as NewQuestionSuccessPage,
+} from './NewQuestionSuccess/NewQuestionSuccessPage';
+export { default as FrivilligePage } from './Frivillige/FrivilligePage';
+export { default as Chat } from './Chat/Chat';
+export { default as MestringChat } from './Chat/MestringChat';

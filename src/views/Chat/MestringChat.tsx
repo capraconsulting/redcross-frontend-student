@@ -4,7 +4,8 @@ import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
 import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
 import '../../styles/Chat.less';
-import { EnterQueueMessageBuilder } from '../../services/message-service';
+import { QueueMessageBuilder } from '../../services/message-service';
+import { CHAT_TYPES } from '../../../config';
 
 const MestringChat = () => {
   const [socket, setSocket] = useState(null as any);
@@ -71,21 +72,22 @@ const MestringChat = () => {
     ]);
   };
 
-  const sendEnterQueueMessage = () => {
-    const msg = new EnterQueueMessageBuilder(uniqueID)
+  const sendEnterQueueMessage = (chatType: string) => {
+    const msg = new QueueMessageBuilder(uniqueID)
       .withCourse(course)
       .withGrade(grade)
       .withIntroText(introText)
       .withNickname(nickname)
       .withSubject(subject)
+      .withChatType(chatType)
       .build();
     socket.send(msg.createMessage);
   };
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Mestring" />
-      <button onClick={() => sendEnterQueueMessage()}>
-        Enter mestring queue
+      <button onClick={() => sendEnterQueueMessage(CHAT_TYPES.MESTRING_TEXT)}>
+        Enter mestring text queue
       </button>
       <ChatBody messages={messages} />
       <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />
