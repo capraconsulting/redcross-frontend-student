@@ -52,7 +52,6 @@ export const AppRouter = (props: IProps) => {
         <Route path="/mestring" exact component={MestringPage} />
         <Route path="/frivillige" exact component={FrivilligePage} />
         <Route path="/meldinger" exact component={Chat} />
-        <Route path="/mestringmeldinger" exact component={MestringChat} />
         <Route path="/" exact component={LandingPage} />
         <Redirect to="/" />
       </Switch>

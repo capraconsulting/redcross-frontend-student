@@ -14,12 +14,13 @@ import {
   reconnectChatAction,
 } from '../reducers';
 import {
-  IAction,
   IPartialQueueMessage,
   IQueueMessage,
   ISocketMessage,
   ITextMessage,
+  IAction,
 } from '../interfaces';
+
 import { ReconnectMessageBuilder } from '../services/message-service';
 
 export const SocketContext = createContext({
@@ -133,7 +134,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case CONNECTION:
         setUniqueID(payload['uniqueID']);
-        reconnectHandler(payload['uniqueID']);
+        //reconnectHandler(payload['uniqueID']);
         break;
       case CONFIRMED_QUEUE:
         setStudentInfo(payload['info']);
@@ -147,11 +148,11 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchMessages(action);
         break;
       case RECONNECT:
-        reconnectSuccessHandler(payload['roomIDs']);
+        //reconnectSuccessHandler(payload['roomIDs']);
         break;
     }
   };
-
+  /** 
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
@@ -171,7 +172,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       console.log('old Unique ID stored');
     }
   }, [uniqueID]);
-
+*/
   useEffect(() => {
     getSocket().onmessage = socketHandler;
   });

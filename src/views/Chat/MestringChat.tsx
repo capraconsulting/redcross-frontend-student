@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChatBody from './Sections/ChatBody';
 import ChatHeader from './Sections/ChatHeader';
 import ChatInput from './Sections/ChatInput';
-import { ISocketMessage, ITextMessage } from '../../interfaces/IMessage';
+import { ISocketMessage, ITextMessage } from '../../interfaces';
 import '../../styles/Chat.less';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { CHAT_TYPES } from '../../../config';
@@ -32,6 +32,7 @@ const MestringChat = () => {
       uniqueID: message.payload['uniqueID'],
       message: message.payload['message'],
       datetime: message.payload['datetime'],
+      files: message.payload['files'],
     };
   };
 
