@@ -9,6 +9,9 @@ interface IProps {
 
 const ChatBody = (props: IProps) => {
   const mapMessages = () => {
+    if (!props.messages) {
+      return null;
+    }
     return props.messages.map((message, index) => {
       return <ChatMessage key={index} message={message} />;
     });
