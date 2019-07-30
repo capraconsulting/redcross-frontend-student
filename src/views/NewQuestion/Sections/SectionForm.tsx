@@ -47,7 +47,6 @@ const SectionForm = (props: RouteComponentProps) => {
   }, []);
 
   useEffect(() => {
-    window.sessionStorage.clear();
     const localAzureToken = window.sessionStorage.getItem('azuretoken');
     const generatedToken = {
       token: localAzureToken

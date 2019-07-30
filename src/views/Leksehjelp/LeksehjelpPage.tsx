@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SocketContext } from '../../providers';
-import { IPartialQueueMessage } from '../../interfaces/IMessage';
+import { IPartialQueueMessage } from '../../interfaces/';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
 import '../../styles/LeksehjelpPage.less';

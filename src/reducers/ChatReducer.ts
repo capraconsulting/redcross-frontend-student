@@ -1,4 +1,4 @@
-import { ISocketMessage, ITextMessage } from '../interfaces/IMessage';
+import { ISocketMessage, ITextMessage } from '../interfaces';
 import { createAction, createReducer } from 'typesafe-actions';
 import { IAction } from '../interfaces';
 
@@ -12,6 +12,10 @@ export const hasLeftChatAction = createAction('HAS_LEFT_CHAT', cb => {
 
 export const chatClosedAction = createAction('CLOSE_CHAT', cb => {
   return () => cb({});
+});
+
+export const reconnectChatAction = createAction('RECONNECT', cb => {
+  return (messages: ITextMessage[]) => cb({});
 });
 
 const addMessageHandler = (
@@ -57,7 +61,12 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
   return [...state];
 };
 
+const handleReconnectChat = (state: ITextMessage[], action: IAction) => {
+  return action.payload.messages;
+};
+
 export const chatReducer = createReducer<ITextMessage[], IAction>([])
   .handleAction(addMessageAction, addMessageHandler)
   .handleAction(hasLeftChatAction, handleHasLeftChat)
-  .handleAction(chatClosedAction, handleChatClosed);
+  .handleAction(chatClosedAction, handleChatClosed)
+  .handleAction(reconnectChatAction, handleReconnectChat);
