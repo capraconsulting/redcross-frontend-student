@@ -5,3 +5,4 @@ build/
 *.log
 mock-db.json
 azureconfig.ts
+.idea/

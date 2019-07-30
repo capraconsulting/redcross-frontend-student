@@ -43,7 +43,7 @@ const SectionForm = (props: RouteComponentProps) => {
   const [tempFiles, setTempFiles] = useState([] as any[]);
 
   useEffect(() => {
-    getSubjectList().then(setSubjects);
+    getSubjectList('?isMestring=0').then(setSubjects);
   }, []);
 
   useEffect(() => {

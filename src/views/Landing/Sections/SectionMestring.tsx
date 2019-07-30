@@ -1,13 +1,32 @@
-import React from 'react';
-import Dropdown from 'react-dropdown';
+import React, { useEffect, useState } from 'react';
+import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
 // Styes
 import '../../../styles/LandingPage.less';
+import { ISubject } from '../../../interfaces';
+import { getSubjectList } from '../../../services/api-service';
 
 const SectionMestring = (props: RouteComponentProps) => {
   const { history } = props;
-  const textChat = false;
+  const textChat = true;
   const videoChat = false;
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
+
+  useEffect(() => {
+    try {
+      getSubjectList('?isMestring=1').then(setSubjects);
+    } catch (e) {}
+  }, []);
+
+  const getSubjectOptions = (): Option[] => {
+    return subjects.map(subject => {
+      return {
+        value: subject.id.toString(),
+        label: subject.subjectTitle,
+      };
+    });
+  };
+
   return (
     <div className="help">
       <div>
@@ -32,14 +51,14 @@ const SectionMestring = (props: RouteComponentProps) => {
           <form className="mestring--form">
             <div className="mestring--form--header">Velg tema</div>
             <Dropdown
-              options={[]}
+              options={getSubjectOptions()}
               placeholder="F.eks motivasjon, læringsmetoder"
             />
           </form>
           <button
             className="btn btn-submit"
             disabled={!textChat}
-            onClick={() => history.push('mestring')}
+            onClick={() => history.push('mestringmeldinger')}
           >
             Chat
           </button>{' '}
