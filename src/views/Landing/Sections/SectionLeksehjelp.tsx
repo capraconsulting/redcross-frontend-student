@@ -196,6 +196,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
+          placeholderClassName={'dropdown-placeholder'}
           options={getSubjectOptions()}
           value={formControls.value}
           onChange={event => handleChange(event)}
@@ -209,9 +210,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       >
         Chat
       </button>{' '}
-      eller{' '}
       <button
-        className="btn btn-submit"
+        className="btn btn-submit btn-right"
         /*disabled={!statusActive || formControls.value === ''}*/
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >

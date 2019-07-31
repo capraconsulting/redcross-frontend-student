@@ -4,7 +4,6 @@ import Zoom from 'react-reveal/Zoom';
 
 //Styles
 import '../../styles/LandingPage.less';
-
 // Sections
 import {
   SectionHero,

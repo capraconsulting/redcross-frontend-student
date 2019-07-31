@@ -11,10 +11,6 @@
   @media (min-width: 768px) {
     font-size: 20px;
   }
-
-  @media (max-width: 768px) {
-    margin: 0;
-  }
 }
 
 .base-flex {
@@ -131,12 +127,34 @@
   font-size: 20px;
   text-align: center;
   cursor: pointer;
+  @media (max-width: 440px) {
+    height: 2.5rem;
+    width: 5rem;
+    font-size: 0.8rem;
+  }
+  @media (max-width: 340px) {
+    height: 2.2rem;
+    width: 4.4rem;
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 310px) {
+    height: 2rem;
+    width: 4rem;
+    font-size: 0.6rem;
+  }
 
   &-submit {
     background-color: @secondary-color;
 
     &[disabled] {
       background-color: @disabled-color;
+    }
+  }
+
+  &-right {
+    @media (max-width: 700px) {
+      float: right;
     }
   }
 }
