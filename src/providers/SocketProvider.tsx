@@ -40,6 +40,7 @@ export const SocketContext = createContext({
     chatType: '' as string,
   },
   updateStudentInfo(partial: IPartialQueueMessage): void {},
+  talkyID: '' as string,
 });
 
 let socket;
@@ -55,6 +56,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const [uniqueID, setUniqueID] = useState<string>('');
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
+  const [talkyID, setTalkyID] = useState<string>('');
   const [studentInfo, setStudentInfo] = useState<IQueueMessage>({
     nickname: '' as string,
     subject: '' as string,
@@ -131,6 +133,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case DISTRIBUTE_ROOM:
         setRoomID(payload['roomID']);
+        setTalkyID(payload['talkyID']);
         break;
       case CONNECTION:
         setUniqueID(payload['uniqueID']);
@@ -152,14 +155,14 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
     }
   };
-  /** 
+  /**
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
     }
   }, [messages]);
 
-  useEffect(() => {
+   useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
       console.log('roomID stored');
@@ -187,6 +190,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         socketSend,
         studentInfo,
         updateStudentInfo,
+        talkyID,
       }}
     >
       {children}
