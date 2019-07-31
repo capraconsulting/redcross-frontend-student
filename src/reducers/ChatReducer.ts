@@ -15,7 +15,7 @@ export const chatClosedAction = createAction('CLOSE_CHAT', cb => {
 });
 
 export const reconnectChatAction = createAction('RECONNECT', cb => {
-  return (messages: ITextMessage[]) => cb({});
+  return (messages: ITextMessage[]) => cb({messages});
 });
 
 const addMessageHandler = (

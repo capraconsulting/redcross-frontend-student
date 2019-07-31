@@ -89,34 +89,39 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   };
 
   const reconnectHandler = (uniqueID: string): void => {
-    const room = sessionStorage.getItem('roomID') || '';
+    const room = sessionStorage.getItem('roomID');
     const oldUniqueID = sessionStorage.getItem('oldUniqueID');
     if (oldUniqueID) {
       // Should still be able to reconenct without roomID
-      const msg = new ReconnectMessageBuilder(uniqueID)
-        .withOldUniqueID(oldUniqueID)
-        .withRoomIDs([room])
-        .build();
+      let msg;
+      if (room) {
+        msg = new ReconnectMessageBuilder(uniqueID)
+          .withOldUniqueID(oldUniqueID)
+          .withRoomIDs([room])
+          .build();
+      } else {
+        msg = new ReconnectMessageBuilder(uniqueID)
+          .withOldUniqueID(oldUniqueID)
+          .build();
+      }
       socketSend(msg.createMessage);
     }
   };
 
-  const reconnectSuccessHandler = (roomIDs: string): void => {
+  const reconnectSuccessHandler = (): void => {
     const messagesFromSessionStorage = sessionStorage.getItem('messages');
     const roomIDFromSessionStorage = sessionStorage.getItem('roomID');
+
+    if (roomIDFromSessionStorage) {
+      setRoomID(roomIDFromSessionStorage);
+    }
 
     if (messagesFromSessionStorage) {
       const parsedMessagesFromSessionStorage: ITextMessage[] = JSON.parse(
         messagesFromSessionStorage,
       );
-      if (
-        roomIDFromSessionStorage &&
-        roomIDs.includes(roomIDFromSessionStorage)
-      ) {
-        setRoomID(roomIDFromSessionStorage);
-        dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
-        console.log('reconnected successfully');
-      }
+      dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
+      console.log('reconnected successfully');
     }
   };
 
@@ -129,6 +134,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
     switch (msgType) {
       case TEXT:
+        console.log('got here');
         dispatchMessages(addMessageAction(parsedMessage));
         break;
       case DISTRIBUTE_ROOM:
@@ -137,7 +143,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case CONNECTION:
         setUniqueID(payload['uniqueID']);
-        //reconnectHandler(payload['uniqueID']);
+        reconnectHandler(payload['uniqueID']);
         break;
       case CONFIRMED_QUEUE:
         setStudentInfo(payload['info']);
@@ -151,18 +157,16 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchMessages(action);
         break;
       case RECONNECT:
-        //reconnectSuccessHandler(payload['roomIDs']);
+        reconnectSuccessHandler();
         break;
     }
   };
-  /**
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
     }
   }, [messages]);
-
-   useEffect(() => {
+  useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
       console.log('roomID stored');
@@ -170,12 +174,13 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   }, [roomID]);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('oldUniqueID')) {
+    const oldUniqueIDFromSessionStorage = sessionStorage.getItem('oldUniqueID');
+    if (!oldUniqueIDFromSessionStorage) {
       sessionStorage.setItem('oldUniqueID', uniqueID);
       console.log('old Unique ID stored');
     }
   }, [uniqueID]);
-*/
+
   useEffect(() => {
     getSocket().onmessage = socketHandler;
   });
