@@ -14,11 +14,7 @@ import { IQuestion, ISubject, IFile } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
-import {
-  uploadFileToAzureFileStorage,
-  uploadFileToAzureBlobStorage,
-  blobService,
-} from '../../../services/azure-service';
+import { uploadFileToAzureBlobStorage } from '../../../services/azure-service';
 
 //Styles
 import '../../../styles/QAForm.less';
@@ -67,7 +63,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
-      return uploadFileToAzureBlobStorage('questionfiles', 'mappe1', file);
+      return uploadFileToAzureBlobStorage('questionfiles', azureToken, file);
     });
   };
 
@@ -222,7 +218,6 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
-  console.log(tempFiles);
   return (
     <div className={'form-container'}>
       <form className={'form'}>
