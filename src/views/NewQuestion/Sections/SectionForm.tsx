@@ -90,6 +90,9 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   function MyDropzone() {
+    if (window.event) {
+      window.event.preventDefault();
+    }
     const onDrop = useCallback(acceptedFiles => {
       setTempFiles([...tempFiles, ...acceptedFiles]);
     }, []);
@@ -218,6 +221,8 @@ const SectionForm = (props: RouteComponentProps) => {
       </div>
     );
   };
+
+  console.log(tempFiles);
   return (
     <div className={'form-container'}>
       <form className={'form'}>

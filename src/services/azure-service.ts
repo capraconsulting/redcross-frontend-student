@@ -29,7 +29,7 @@ export const uploadFileToAzureBlobStorage = async (
     fileReader.onload = () => {
       let myFileBuffer: ArrayBuffer = fileReader.result as ArrayBuffer;
       if (myFileBuffer) {
-        fileStream.push(myFileBuffer[0]);
+        fileStream.push(myFileBuffer[1]);
         fileStream.push(null);
         blobService.createContainerIfNotExists(share, function() {
           blobService.createBlockBlobFromStream(
@@ -52,6 +52,8 @@ export const uploadFileToAzureBlobStorage = async (
                   fileUrl: fileLink + '&sr=b&sv=2018-03-28',
                 };
                 resolve(promisedFile);
+                console.log(promisedFile.fileUrl);
+                console.log(fileLink);
               } else {
                 reject();
               }
