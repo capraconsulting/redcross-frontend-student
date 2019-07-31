@@ -155,14 +155,14 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
     }
   };
-  /** 
+  /**
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
     }
   }, [messages]);
 
-  useEffect(() => {
+   useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
       console.log('roomID stored');
@@ -190,7 +190,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         socketSend,
         studentInfo,
         updateStudentInfo,
-        talkyID
+        talkyID,
       }}
     >
       {children}

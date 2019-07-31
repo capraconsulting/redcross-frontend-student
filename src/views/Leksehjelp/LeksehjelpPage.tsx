@@ -34,7 +34,9 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
   };
 
   const openTalky = () => {
-    window.open(`https://talky.io/${talkyID}`);
+    if (talkyID) {
+      window.open(`https://talky.io/${talkyID}`);
+    }
   };
 
   return (
@@ -55,11 +57,13 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
         <button
           disabled={roomID.length < 1}
           className="btn btn-submit"
-          onClick={() => history.push('meldinger')}
+          onClick={() => {
+            openTalky();
+            history.push('meldinger');
+          }}
         >
           Gå til chat
         </button>
-        {talkyID && <button className="btn btn-submit" onClick={openTalky}>Åpne videoChat</button>}
       </div>
     </div>
   );
