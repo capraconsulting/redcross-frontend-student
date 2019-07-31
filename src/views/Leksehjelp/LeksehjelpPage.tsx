@@ -7,9 +7,13 @@ import '../../styles/LeksehjelpPage.less';
 import { RouteComponentProps } from 'react-router';
 
 export const LeksehjelpPage = (props: RouteComponentProps) => {
-  const { socketSend, studentInfo, updateStudentInfo, roomID } = useContext(
-    SocketContext,
-  );
+  const {
+    socketSend,
+    studentInfo,
+    updateStudentInfo,
+    roomID,
+    talkyID,
+  } = useContext(SocketContext);
   const [partialStudentInfo, setPartialStudentInfo] = useState<
     IPartialQueueMessage
   >({
@@ -29,6 +33,12 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
     socketSend(msg.createMessage);
   };
 
+  const openTalky = () => {
+    if (talkyID) {
+      window.open(`https://talky.io/${talkyID}`);
+    }
+  };
+
   return (
     <div className="content">
       <div className="header">
@@ -42,13 +52,19 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
           Mens du venter kan du begynne å forklare hva du lurer på.
         </p>
       </div>
-      <button
-        disabled={roomID.length < 1}
-        className="btn btn-submit"
-        onClick={() => history.push('meldinger')}
-      >
-        Gå til chat
-      </button>
+
+      <div className="button-container">
+        <button
+          disabled={roomID.length < 1}
+          className="btn btn-submit"
+          onClick={() => {
+            openTalky();
+            history.push('meldinger');
+          }}
+        >
+          Gå til chat
+        </button>
+      </div>
     </div>
   );
 };

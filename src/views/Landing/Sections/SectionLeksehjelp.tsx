@@ -212,7 +212,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
       eller{' '}
       <button
         className="btn btn-submit"
-        disabled={!statusActive || formControls.value === ''}
+        /*disabled={!statusActive || formControls.value === ''}*/
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >
         Videochat
