@@ -82,6 +82,11 @@
         width: 50vw;
         font-size: 0.7rem;
       }
+      &--modal {
+        width: 60%;
+        margin-right: 1rem;
+        margin-top: 1rem;
+      }
     }
 
     &--gradeselector {
@@ -357,5 +362,31 @@
     width: 2.5px;
     height: 5px;
     border-width: 0 2px 2px 0;
+  }
+}
+
+.modal-input {
+  width: 100%;
+  &.input {
+    width: 70vw;
+    padding: 0.5rem;
+    border: solid 1px @select-color;
+    border-radius: 0;
+    -webkit-appearance: none;
+    height: 2.8;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    @media (max-width: 800px) {
+      width: 60vw;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 440px) {
+      width: 50vw;
+      font-size: 0.7rem;
+    }
+
+    &.error {
+      border-color: @error-color;
+    }
   }
 }

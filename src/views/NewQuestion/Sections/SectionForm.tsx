@@ -20,7 +20,13 @@ import { uploadFileToAzureBlobStorage } from '../../../services/azure-service';
 import '../../../styles/QAForm.less';
 
 //Components
-import { SimpleModal, IconButton, Checkbox } from '../../../ui/components';
+import {
+  SimpleModal,
+  IconButton,
+  Checkbox,
+  Modal,
+  InputSearch,
+} from '../../../ui/components';
 
 //Persistent grade list
 import gradeList from '../../../grades';
@@ -41,6 +47,7 @@ const SectionForm = (props: RouteComponentProps) => {
   const [isPublic, setIsPublic] = useState(true as boolean);
   const [azureToken, setAzureToken] = useState('' as string);
   const [tempFiles, setTempFiles] = useState([] as any[]);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(setSubjects);
@@ -185,37 +192,6 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
-  interface IContent {
-    email;
-    method;
-  }
-
-  const ModalContent = (props: IContent) => {
-    return (
-      <div>
-        <Typography variant="h6" id="modal-title">
-          Er dette din epostadresse?
-        </Typography>
-        <input
-          placeholder={'Skriv e-postadressen din'}
-          className={'email'}
-          value={props.email}
-          onChange={event => props.method(event.target.value)}
-          type="email"
-          name={'email'}
-          key={1}
-        />
-        <button
-          className="btn btn-submit"
-          disabled={email.length < 1}
-          onClick={() => handleSubmit()}
-        >
-          Ja, send spørsmål
-        </button>
-      </div>
-    );
-  };
-
   return (
     <div className={'form-container'}>
       <form className={'form'}>
@@ -288,8 +264,30 @@ const SectionForm = (props: RouteComponentProps) => {
 
         {/*Input container end*/}
       </form>
+
       <SimpleModal
-        content={<ModalContent method={setEmail} email={email} />}
+        content={
+          <div className="searchcontainer">
+            <Typography variant="h6" id="modal-title">
+              Er dette din epostadresse?
+            </Typography>
+            <InputSearch
+              defaultValue={email}
+              placeholder="Skriv e-posten din"
+              onClick={handleSubmit}
+              onChange={setEmail}
+              button={
+                <button
+                  className="btn btn-submit"
+                  disabled={email.length < 1}
+                  onClick={handleSubmit}
+                >
+                  Ja, send spørsmål
+                </button>
+              }
+            />
+          </div>
+        }
         buttonText={'Send'}
         disabled={formControls()}
       ></SimpleModal>

@@ -14,9 +14,14 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   > .text {
     font-weight: 550;
     font-size: 3rem;
     width: 70vw;
+    @media (max-width: 520px) {
+      font-weight: 400;
+      font-size: 2rem;
+    }
   }
 }

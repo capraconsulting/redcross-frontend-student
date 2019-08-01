@@ -7,6 +7,8 @@ import SimpleModal from './SimpleModal';
 import IconButton from './IconButton';
 import DropZone from './DropZoneComponent';
 import CheckboxComponent from './CheckBox';
+import CustomizedInputBase from './InputSearch';
+import ModalComponent from './ModalComponent';
 
 export {
   Chat,
@@ -18,4 +20,6 @@ export {
   IconButton,
   DropZone,
   CheckboxComponent as Checkbox,
+  ModalComponent as Modal,
+  CustomizedInputBase as InputSearch,
 };
