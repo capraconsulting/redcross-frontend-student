@@ -20,7 +20,7 @@ import { uploadFileToAzureBlobStorage } from '../../../services/azure-service';
 import '../../../styles/QAForm.less';
 
 //Components
-import { SimpleModal, IconButton } from '../../../ui/components';
+import { SimpleModal, IconButton, Checkbox } from '../../../ui/components';
 
 //Persistent grade list
 import gradeList from '../../../grades';
@@ -216,6 +216,10 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
+  const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPublic(!isPublic);
+  };
+
   return (
     <div className={'form-container'}>
       <form className={'form'}>
@@ -276,17 +280,13 @@ const SectionForm = (props: RouteComponentProps) => {
             name={'email'}
             key={1}
           />
-          <div className={'anon'}>
-            <label className="checkboxcontainer">
-              Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no
-              <input
-                type="checkbox"
-                checked={isPublic}
-                onChange={() => setIsPublic(!isPublic)}
-                className=""
-              />
-              <span className="checkmark"></span>
-            </label>
+          <div className={'anon'} onClick={() => setIsPublic(!isPublic)}>
+            <Checkbox
+              label={
+                'Dere kan poste spørsmålet og svaret mitt på digitalleksehjelp.no'
+              }
+              value={isPublic}
+            />
           </div>
         </div>
 

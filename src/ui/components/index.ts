@@ -6,6 +6,7 @@ import Header from './Header';
 import SimpleModal from './SimpleModal';
 import IconButton from './IconButton';
 import DropZone from './DropZoneComponent';
+import CheckboxComponent from './CheckBox';
 
 export {
   Chat,
@@ -16,4 +17,5 @@ export {
   SimpleModal,
   IconButton,
   DropZone,
+  CheckboxComponent as Checkbox,
 };
