@@ -216,10 +216,6 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
-  const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPublic(!isPublic);
-  };
-
   return (
     <div className={'form-container'}>
       <form className={'form'}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 
@@ -18,6 +17,7 @@ interface IProps {
   label: string;
   value: boolean;
 }
+
 export default function CheckboxComponent(props: IProps) {
   const { label, value } = props;
 
