@@ -21,7 +21,7 @@ import {
   IAction,
 } from '../interfaces';
 
-import { ReconnectMessageBuilder } from '../services/message-service';
+import { createReconnectMessage } from '../services/message-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -89,34 +89,45 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   };
 
   const reconnectHandler = (uniqueID: string): void => {
-    const room = sessionStorage.getItem('roomID') || '';
     const oldUniqueID = sessionStorage.getItem('oldUniqueID');
+
     if (oldUniqueID) {
-      // Should still be able to reconenct without roomID
-      const msg = new ReconnectMessageBuilder(uniqueID)
-        .withOldUniqueID(oldUniqueID)
-        .withRoomIDs([room])
-        .build();
-      socketSend(msg.createMessage);
+      setUniqueID(oldUniqueID);
+      const msg = createReconnectMessage(oldUniqueID);
+      socketSend(msg);
+    } else {
+      setUniqueID(uniqueID);
     }
   };
 
-  const reconnectSuccessHandler = (roomIDs: string): void => {
+  const reconnectSuccessHandler = (roomIDs: string[]): void => {
     const messagesFromSessionStorage = sessionStorage.getItem('messages');
     const roomIDFromSessionStorage = sessionStorage.getItem('roomID');
+    const talkyIDFromSessionStorage = sessionStorage.getItem('talkyID');
+
+    if (
+      talkyIDFromSessionStorage &&
+      talkyIDFromSessionStorage !== 'undefined'
+    ) {
+      setTalkyID(talkyIDFromSessionStorage);
+    }
+
+    if (
+      roomIDFromSessionStorage &&
+      roomIDs.includes(roomIDFromSessionStorage)
+    ) {
+      setRoomID(roomIDFromSessionStorage);
+    } else {
+      sessionStorage.removeItem('messages');
+      sessionStorage.removeItem('roomID');
+      return;
+    }
 
     if (messagesFromSessionStorage) {
       const parsedMessagesFromSessionStorage: ITextMessage[] = JSON.parse(
         messagesFromSessionStorage,
       );
-      if (
-        roomIDFromSessionStorage &&
-        roomIDs.includes(roomIDFromSessionStorage)
-      ) {
-        setRoomID(roomIDFromSessionStorage);
-        dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
-        console.log('reconnected successfully');
-      }
+      dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
     }
   };
 
@@ -125,10 +136,9 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     const { msgType, payload } = parsedMessage;
     let action;
 
-    console.log(msgType);
-
     switch (msgType) {
       case TEXT:
+        console.log('got here');
         dispatchMessages(addMessageAction(parsedMessage));
         break;
       case DISTRIBUTE_ROOM:
@@ -136,8 +146,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         setTalkyID(payload['talkyID']);
         break;
       case CONNECTION:
-        setUniqueID(payload['uniqueID']);
-        //reconnectHandler(payload['uniqueID']);
+        reconnectHandler(payload['uniqueID']);
         break;
       case CONFIRMED_QUEUE:
         setStudentInfo(payload['info']);
@@ -151,31 +160,35 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchMessages(action);
         break;
       case RECONNECT:
-        //reconnectSuccessHandler(payload['roomIDs']);
+        reconnectSuccessHandler(payload['roomIDs']);
         break;
     }
   };
-  /**
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
     }
   }, [messages]);
-
-   useEffect(() => {
+  useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
-      console.log('roomID stored');
     }
   }, [roomID]);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('oldUniqueID')) {
+    const talkyIDFromSessionStorage = sessionStorage.getItem('talkyID');
+    if (!talkyIDFromSessionStorage) {
+      sessionStorage.setItem('talkyID', talkyID);
+    }
+  }, [talkyID]);
+
+  useEffect(() => {
+    const oldUniqueIDFromSessionStorage = sessionStorage.getItem('oldUniqueID');
+    if (!oldUniqueIDFromSessionStorage) {
       sessionStorage.setItem('oldUniqueID', uniqueID);
-      console.log('old Unique ID stored');
     }
   }, [uniqueID]);
-*/
+
   useEffect(() => {
     getSocket().onmessage = socketHandler;
   });
