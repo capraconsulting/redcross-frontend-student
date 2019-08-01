@@ -12,8 +12,11 @@
     font-size: 20px;
   }
 
-  @media (max-width: 768px) {
-    margin: 0;
+  @media (max-width: 520px) {
+    margin-left: 0.9rem;
+    margin-right: 0.9rem;
+    line-height: 1.4;
+    font-size: 1rem;
   }
 }
 
@@ -131,12 +134,56 @@
   font-size: 20px;
   text-align: center;
   cursor: pointer;
+  @media (max-width: 440px) {
+    height: 2.5rem;
+    width: 5rem;
+    font-size: 0.8rem;
+  }
+  @media (max-width: 340px) {
+    height: 2.2rem;
+    width: 4.4rem;
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 310px) {
+    height: 2rem;
+    width: 4rem;
+    font-size: 0.6rem;
+  }
 
   &-submit {
     background-color: @secondary-color;
 
     &[disabled] {
       background-color: @disabled-color;
+    }
+  }
+
+  &-right {
+    @media (max-width: 700px) {
+      float: right;
+    }
+  }
+
+  &-search {
+    height: 2.6rem;
+    width: 5rem;
+    font-size: 0.8rem;
+    @media (max-width: 440px) {
+      height: 2.4rem;
+      width: 5rem;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 340px) {
+      height: 2.2rem;
+      width: 4.4rem;
+      font-size: 0.7rem;
+    }
+
+    @media (max-width: 310px) {
+      height: 2rem;
+      width: 4rem;
+      font-size: 0.6rem;
     }
   }
 }

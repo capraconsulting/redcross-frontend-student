@@ -53,6 +53,8 @@ const SectionMestring = (props: RouteComponentProps) => {
             <Dropdown
               options={getSubjectOptions()}
               placeholder="F.eks motivasjon, læringsmetoder"
+              placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
             />
           </form>
           <button
@@ -62,9 +64,8 @@ const SectionMestring = (props: RouteComponentProps) => {
           >
             Chat
           </button>{' '}
-          eller{' '}
           <button
-            className="btn btn-submit"
+            className="btn btn-submit btn-right"
             disabled={!videoChat}
             onClick={() => history.push('mestring')}
           >

@@ -131,15 +131,26 @@ export const QA = (props: IProps & RouteComponentProps) => {
           >
             {' '}
             {/*input container start*/}
-            <input
-              className={'searchcontainer--input--searchkey'}
-              value={search}
-              onChange={event => setSearch(event.target.value)}
-              type="text"
-              placeholder="Hva lurer du på?"
-            />
+            <span className={'searchcontainer--input'}>
+              <input
+                className={'searchcontainer--input--searchkey'}
+                value={search}
+                onChange={event => setSearch(event.target.value)}
+                type="text"
+                placeholder="Hva lurer du på?"
+              />{' '}
+              <button
+                onClick={() => handleSubmit()}
+                className={'btn btn-submit btn-search'}
+                type={'button'}
+              >
+                Søk
+              </button>
+            </span>
             <Dropdown
               className={'searchcontainer--input--gradeselector'}
+              placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
               placeholder={'Velg fag'}
               options={getSubjectOptions()}
               value={(subject.value && subject.label && subject) || ''}
@@ -149,6 +160,8 @@ export const QA = (props: IProps & RouteComponentProps) => {
             />
             <Dropdown
               className={'searchcontainer--input--subjectselector'}
+              placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
               placeholder={'Velg trinn'}
               options={getGradeOptions()}
               value={(grade.value && grade.label && grade) || ''}
@@ -158,6 +171,8 @@ export const QA = (props: IProps & RouteComponentProps) => {
             />
             <Dropdown
               className={'searchcontainer--input--subjectselector'}
+              placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
               placeholder={'Sorter etter'}
               options={getFilterOptions()}
               value={
@@ -170,24 +185,6 @@ export const QA = (props: IProps & RouteComponentProps) => {
                 })
               }
             />
-          </div>
-          <div className="helpText">
-            <button
-              onClick={() => handleSubmit()}
-              className={'btn btn-submit'}
-              type={'button'}
-            >
-              Send
-            </button>
-            <div>
-              Eller{' '}
-              <a
-                onClick={() => history.push('questions/new')}
-                className="helpText--colored"
-              >
-                still et spørsmål
-              </a>
-            </div>
           </div>
         </div>
       )

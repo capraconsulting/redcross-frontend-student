@@ -1,8 +1,5 @@
 import React from 'react';
 
-//Styles
-import '../../../styles/NewQuestionPage.less';
-
 export const SectionHeader = () => {
   return (
     <div>
