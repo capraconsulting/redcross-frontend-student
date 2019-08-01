@@ -277,11 +277,23 @@
 }
 
 .volunteer {
-  margin-top: 2rem;
+  margin-top: 1.4rem;
+  @media (max-width: 550px) {
+    margin-top: 1.6rem;
+  }
+  @media (max-width: 330px) {
+    margin-top: 1rem;
+  }
   &--header {
     font-size: 2.5rem;
+    margin-bottom: 0.7rem;
     @media (max-width: 550px) {
       font-size: 1.8rem;
+      margin-top: 1.6rem;
+    }
+    @media (max-width: 330px) {
+      font-size: 1.4rem;
+      margin-top: 1rem;
     }
     color: @hero-black;
   }
@@ -328,7 +340,7 @@
       }
 
       @media (max-width: 340px) {
-        font-size: 0.9rem;
+        font-size: 0.3rem;
         padding: 3rem 1rem;
         right: -7em;
         top: -3em;
@@ -381,5 +393,8 @@
   font-size: 1.4rem;
   @media (max-width: 550px) {
     font-size: 0.9rem;
+  }
+  @media (max-width: 330px) {
+    font-size: 0.75rem;
   }
 }

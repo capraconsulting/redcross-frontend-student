@@ -118,24 +118,22 @@ const SectionForm = (props: RouteComponentProps) => {
         {tempFiles.map((file, index) => {
           const { name } = file;
           return (
-            <li key={index}>
-              <Zoom>
-                <span>
-                  <a
-                    className="filelist-ankertag"
-                    href={URL.createObjectURL(file)}
-                    title={name}
-                    download={name}
-                  >
-                    {name}{' '}
-                  </a>
-                  <IconButton
-                    onClick={() => {
-                      setTempFiles(tempFiles.filter((_, i) => i !== index));
-                    }}
-                  ></IconButton>{' '}
-                </span>
-              </Zoom>
+            <li className="element" key={index}>
+              <span>
+                <a
+                  className="filelist-ankertag"
+                  href={URL.createObjectURL(file)}
+                  title={name}
+                  download={name}
+                >
+                  {name}{' '}
+                </a>
+                <IconButton
+                  onClick={() => {
+                    setTempFiles(tempFiles.filter((_, i) => i !== index));
+                  }}
+                ></IconButton>{' '}
+              </span>
             </li>
           );
         })}
@@ -224,9 +222,11 @@ const SectionForm = (props: RouteComponentProps) => {
         <div className="form--input-container">
           {' '}
           {/*input container start*/}
-          <label className={'form--label'}>Tema</label>
+          <label className={'formLabel'}>Tema</label>
           <Dropdown
             placeholder={'Velg fag'}
+            placeholderClassName={'dropdown-placeholder'}
+            menuClassName={'dropdown-placeholder'}
             options={getSubjectOptions()}
             value={subject.value && subject}
             onChange={event =>
@@ -236,22 +236,26 @@ const SectionForm = (props: RouteComponentProps) => {
           <Dropdown
             disabled={!subject.value}
             placeholder={'Velg undertema'}
+            placeholderClassName={'dropdown-placeholder'}
+            menuClassName={'dropdown-placeholder'}
             options={getThemeOptions()}
             value={theme.value && theme}
             onChange={event =>
               setTheme({ value: event.value, label: event.label })
             }
           />
-          <label className={'form--label'}>Klassetrinn</label>
+          <label className={'formLabel'}>Klassetrinn</label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
+            placeholderClassName={'dropdown-placeholder'}
+            menuClassName={'dropdown-placeholder'}
             options={getGradeOptions()}
             value={studentGrade.value && studentGrade}
             onChange={event =>
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'form--label'}>Spørsmål</label>
+          <label className={'formLabel'}>Spørsmål</label>
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -262,7 +266,7 @@ const SectionForm = (props: RouteComponentProps) => {
           />
           <MyDropzone />
           <FileList />
-          <label className={'form--label'}>E-post</label>
+          <label className={'formLabel'}>E-post</label>
           <input
             placeholder={'Skriv e-postadressen din'}
             className={'email'}
