@@ -54,6 +54,7 @@ const SectionMestring = (props: RouteComponentProps) => {
               options={getSubjectOptions()}
               placeholder="F.eks motivasjon, læringsmetoder"
               placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
             />
           </form>
           <button

@@ -197,6 +197,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
           placeholderClassName={'dropdown-placeholder'}
+          menuClassName={'dropdown-placeholder'}
           options={getSubjectOptions()}
           value={formControls.value}
           onChange={event => handleChange(event)}

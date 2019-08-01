@@ -63,22 +63,25 @@
   display: flex;
   flex-wrap: wrap;
   &--input {
+    width: 100%;
+
     &--searchkey {
+      width: 70vw;
       padding: 0.5rem;
       border: solid 1px @select-color;
       border-radius: 0;
       -webkit-appearance: none;
-
-      font-size: 1.2rem;
       height: 2.8;
       margin-bottom: 1rem;
-      margin-right: 0.6rem;
-
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid #d1d1d1;
-      border-radius: 0;
-      -webkit-appearance: none;
+      font-size: 1.2rem;
+      @media (max-width: 800px) {
+        width: 60vw;
+        font-size: 0.9rem;
+      }
+      @media (max-width: 440px) {
+        width: 50vw;
+        font-size: 0.7rem;
+      }
     }
 
     &--gradeselector {
@@ -96,13 +99,20 @@
   }
 
   &--header {
-    font-size: 1.25rem;
+    font-size: 2rem;
     margin-bottom: 0.6rem;
     font-weight: normal;
     color: @hero-black;
 
     @media (min-width: 768px) {
       font-size: 40px;
+    }
+
+    @media (max-width: 550px) {
+      font-size: 1.7rem;
+    }
+    @media (max-width: 330px) {
+      font-size: 1.4rem;
     }
   }
 }
