@@ -1,4 +1,5 @@
 import React from 'react';
+import Zoom from 'react-reveal/Zoom';
 
 //Sections
 import { SectionInfo, SectionRecruiting } from './Sections';
@@ -10,8 +11,10 @@ export const FrivilligePage = () => {
   return (
     <div className="content">
       <div className="volunteersPage">
-        <SectionInfo />
-        <SectionRecruiting />
+        <Zoom>
+          <SectionInfo />
+          <SectionRecruiting />
+        </Zoom>
       </div>
     </div>
   );

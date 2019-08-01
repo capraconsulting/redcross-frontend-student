@@ -47,7 +47,6 @@ const SectionForm = (props: RouteComponentProps) => {
   const [isPublic, setIsPublic] = useState(true as boolean);
   const [azureToken, setAzureToken] = useState('' as string);
   const [tempFiles, setTempFiles] = useState([] as any[]);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(setSubjects);
