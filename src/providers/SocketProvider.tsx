@@ -105,11 +105,17 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     const roomIDFromSessionStorage = sessionStorage.getItem('roomID');
     const talkyIDFromSessionStorage = sessionStorage.getItem('talkyID');
 
-    if (talkyIDFromSessionStorage && talkyIDFromSessionStorage !== 'undefined') {
+    if (
+      talkyIDFromSessionStorage &&
+      talkyIDFromSessionStorage !== 'undefined'
+    ) {
       setTalkyID(talkyIDFromSessionStorage);
     }
 
-    if (roomIDFromSessionStorage && roomIDs.includes(roomIDFromSessionStorage)) {
+    if (
+      roomIDFromSessionStorage &&
+      roomIDs.includes(roomIDFromSessionStorage)
+    ) {
       setRoomID(roomIDFromSessionStorage);
     } else {
       sessionStorage.removeItem('messages');
