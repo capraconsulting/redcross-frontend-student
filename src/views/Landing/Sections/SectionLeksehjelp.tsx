@@ -10,15 +10,24 @@ import { ISubject } from '../../../interfaces';
 
 //Services
 import {
+  getIsLeksehjelpOpen,
   getSubjectList,
   getSubjectStatus,
 } from '../../../services/api-service';
 import { SocketContext } from '../../../providers';
 import { QueueMessageBuilder } from '../../../services/message-service';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
-import gradeList from '../../../grades';
 import grades from '../../../grades';
-import { createAction } from 'typesafe-actions';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
+toast.configure({
+  autoClose: 8000,
+  draggable: false,
+  position: 'top-center',
+  closeButton: false,
+  closeOnClick: true,
+});
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
@@ -199,14 +208,20 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   };
 
   const enterChatQueue = (chatType: string) => {
-    const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
-      .withCourse(course.label)
-      .withGrade(grade.label)
-      .withUniqueID(uniqueID)
-      .withChatType(chatType)
-      .build();
-    socketSend(msg.createMessage);
-    history.push('leksehjelp');
+    getIsLeksehjelpOpen().then(data => {
+      if (data.isopen) {
+        const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
+          .withCourse(course.label)
+          .withGrade(grade.label)
+          .withUniqueID(uniqueID)
+          .withChatType(chatType)
+          .build();
+        socketSend(msg.createMessage);
+        history.push('leksehjelp');
+      } else {
+        toast.error('Leksehjelpen er dessverre ikke åpen');
+      }
+    });
   };
 
   return (

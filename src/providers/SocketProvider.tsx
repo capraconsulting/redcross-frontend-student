@@ -22,6 +22,7 @@ import {
 } from '../interfaces';
 
 import { createReconnectMessage } from '../services/message-service';
+import { getIsLeksehjelpOpen } from '../services/api-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -164,11 +165,13 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
     }
   };
+
   useEffect(() => {
     if (messages && messages.length > 0) {
       sessionStorage.setItem('messages', JSON.stringify(messages));
     }
   }, [messages]);
+
   useEffect(() => {
     if (!sessionStorage.getItem('roomID')) {
       sessionStorage.setItem('roomID', roomID);
@@ -191,7 +194,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
   useEffect(() => {
     getSocket().onmessage = socketHandler;
-  });
+  }, []);
 
   return (
     <SocketContext.Provider

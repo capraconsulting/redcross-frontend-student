@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
-import { IQuestion, IGrade, ISubject } from '../interfaces';
+import { IQuestion, IGrade, ISubject, IOpen } from '../interfaces';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -56,4 +56,11 @@ export function getQuestion(url: string) {
     .get(url)
     .then(res => res)
     .catch(err => err);
+}
+
+export function getIsLeksehjelpOpen<T>(): Promise<IOpen> {
+  return api
+    .get('isopen')
+    .then(res => res.data)
+    .catch(e => console.error(e.getMessage));
 }
