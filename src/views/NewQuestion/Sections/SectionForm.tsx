@@ -4,7 +4,6 @@ import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';
 import { withRouter, RouteComponentProps } from 'react-router';
-import Zoom from 'react-reveal/Zoom';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
@@ -24,7 +23,6 @@ import {
   SimpleModal,
   IconButton,
   Checkbox,
-  Modal,
   InputSearch,
 } from '../../../ui/components';
 
@@ -138,7 +136,7 @@ const SectionForm = (props: RouteComponentProps) => {
                   onClick={() => {
                     setTempFiles(tempFiles.filter((_, i) => i !== index));
                   }}
-                ></IconButton>{' '}
+                />{' '}
               </span>
             </li>
           );
@@ -183,12 +181,16 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const formControls = () => {
     return (
-      email.length < 1 ||
+      !emailValidator(email) ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
-      studentGrade.value.length < 1 ||
-      theme.value.length < 1
+      studentGrade.value.length < 1
     );
+  };
+
+  const emailValidator = (email: string) => {
+    const re: RegExp = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)])/g;
+    return re.test(String(email).toLowerCase());
   };
 
   return (
@@ -197,7 +199,7 @@ const SectionForm = (props: RouteComponentProps) => {
         <div className="form--input-container">
           {' '}
           {/*input container start*/}
-          <label className={'formLabel'}>Tema</label>
+          <label className={'formLabel'}>Tema <span className="error-message">*</span></label>
           <Dropdown
             placeholder={'Velg fag'}
             placeholderClassName={'dropdown-placeholder'}
@@ -219,7 +221,7 @@ const SectionForm = (props: RouteComponentProps) => {
               setTheme({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Klassetrinn</label>
+          <label className={'formLabel'}>Klassetrinn <span className="error-message">*</span></label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
             placeholderClassName={'dropdown-placeholder'}
@@ -230,7 +232,7 @@ const SectionForm = (props: RouteComponentProps) => {
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Spørsmål</label>
+          <label className={'formLabel'}>Spørsmål <span className="error-message">*</span></label>
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -241,7 +243,7 @@ const SectionForm = (props: RouteComponentProps) => {
           />
           <MyDropzone />
           <FileList />
-          <label className={'formLabel'}>E-post</label>
+          <label className={'formLabel'}>E-post <span className="error-message">*</span></label>
           <input
             placeholder={'Skriv e-postadressen din'}
             className={'email'}
@@ -251,6 +253,14 @@ const SectionForm = (props: RouteComponentProps) => {
             name={'email'}
             key={1}
           />
+          <div className="error-message--text">
+            {(!emailValidator(email) && email) ?
+              <p>
+                Eposten er ikke gyldig
+              </p> :
+              <p> </p>
+            }
+          </div>
           <div className={'anon'} onClick={() => setIsPublic(!isPublic)}>
             <Checkbox
               label={
@@ -289,7 +299,7 @@ const SectionForm = (props: RouteComponentProps) => {
         }
         buttonText={'Send'}
         disabled={formControls()}
-      ></SimpleModal>
+      />
     </div>
   );
 };
