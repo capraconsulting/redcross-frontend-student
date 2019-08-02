@@ -26,6 +26,7 @@ export const SectionQAList = (props: IProps) => {
   /*This array can be null (before we fetch it)*/
   const { questions, totalHits, history } = props;
 
+  //Temporary to render upcoming feature
   const themeList = [
     {
       themeName: 'Analyse',
@@ -43,7 +44,8 @@ export const SectionQAList = (props: IProps) => {
             <AccordionItem key={`question-${question.id}`}>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  {question.title} {/*question title*/}
+                  <a className="qa-list-header">{question.title} </a>
+                  {/*question title*/}
                   <div className="subject--list">
                     {themeList.map(({ themeName }, index) => (
                       <div

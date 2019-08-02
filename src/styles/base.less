@@ -248,6 +248,7 @@
   display: flex;
   flex-wrap: wrap;
   float: right;
+  margin-right: 1rem;
   &-element {
     border: thin solid @tag-color;
     display: flex;
@@ -258,10 +259,33 @@
     margin-right: 0.5rem;
     margin-bottom: 1rem;
     height: 2rem;
+    @media (max-width: 440px) {
+      height: 1.9rem;
+    }
+    @media (max-width: 370px) {
+      height: 1.7rem;
+    }
+
+    @media (max-width: 330px) {
+      height: 1.4rem;
+    }
     p {
       padding: 0 0.5rem;
       padding-bottom: 1rem;
       font-size: 1rem;
+      @media (max-width: 440px) {
+        font-size: 0.8rem;
+        padding-bottom: 0.8em;
+      }
+      @media (max-width: 340px) {
+        font-size: 0.7rem;
+        padding-bottom: 0.7em;
+      }
+
+      @media (max-width: 310px) {
+        font-size: 0.6rem;
+        padding-bottom: 0.6em;
+      }
     }
   }
 }
