@@ -23,12 +23,12 @@ import {
   SimpleModal,
   IconButton,
   Checkbox,
-  Modal,
   InputSearch,
 } from '../../../ui/components';
 
 //Persistent grade list
 import gradeList from '../../../grades';
+import { emailValidatorRegExp } from '../../../../config';
 
 const defaultOptions = {
   value: '',
@@ -65,6 +65,10 @@ const SectionForm = (props: RouteComponentProps) => {
     window.sessionStorage.setItem('azuretoken', JSON.stringify(generatedToken));
     setAzureToken(generatedToken.token);
   }, []);
+
+  const emailValidator = (email: string) => {
+    return emailValidatorRegExp.test(String(email).toLowerCase());
+  };
 
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
@@ -138,7 +142,7 @@ const SectionForm = (props: RouteComponentProps) => {
                   onClick={() => {
                     setTempFiles(tempFiles.filter((_, i) => i !== index));
                   }}
-                ></IconButton>{' '}
+                />{' '}
               </span>
             </li>
           );
@@ -183,22 +187,22 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const formControls = () => {
     return (
-      email.length < 1 ||
+      !emailValidator(email) ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
-      studentGrade.value.length < 1 ||
-      theme.value.length < 1
+      studentGrade.value.length < 1
     );
   };
 
-  console.log(tempFiles);
   return (
     <div className={'form-container'}>
       <form className={'form'}>
         <div className="form--input-container">
           {' '}
           {/*input container start*/}
-          <label className={'formLabel'}>Tema</label>
+          <label className={'formLabel'}>
+            Tema <span className="error-message">*</span>
+          </label>
           <Dropdown
             placeholder={'Velg fag'}
             placeholderClassName={'dropdown-placeholder'}
@@ -220,7 +224,9 @@ const SectionForm = (props: RouteComponentProps) => {
               setTheme({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Klassetrinn</label>
+          <label className={'formLabel'}>
+            Klassetrinn <span className="error-message">*</span>
+          </label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
             placeholderClassName={'dropdown-placeholder'}
@@ -231,7 +237,9 @@ const SectionForm = (props: RouteComponentProps) => {
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Spørsmål</label>
+          <label className={'formLabel'}>
+            Spørsmål <span className="error-message">*</span>
+          </label>
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -242,7 +250,9 @@ const SectionForm = (props: RouteComponentProps) => {
           />
           <MyDropzone />
           <FileList />
-          <label className={'formLabel'}>E-post</label>
+          <label className={'formLabel'}>
+            E-post <span className="error-message">*</span>
+          </label>
           <input
             placeholder={'Skriv e-postadressen din'}
             className={'email'}
@@ -252,6 +262,13 @@ const SectionForm = (props: RouteComponentProps) => {
             name={'email'}
             key={1}
           />
+          <div className="error-message--text">
+            {!emailValidator(email) && email ? (
+              <p>Eposten er ikke gyldig</p>
+            ) : (
+              <p> </p>
+            )}
+          </div>
           <div className={'anon'} onClick={() => setIsPublic(!isPublic)}>
             <Checkbox
               label={
@@ -291,7 +308,7 @@ const SectionForm = (props: RouteComponentProps) => {
         }
         buttonText={'Send'}
         disabled={formControls()}
-      ></SimpleModal>
+      />
     </div>
   );
 };
