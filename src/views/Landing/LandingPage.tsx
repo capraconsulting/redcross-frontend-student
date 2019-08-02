@@ -16,13 +16,11 @@ import {
 const LandingPage = () => {
   return (
     <div className="content">
-      <Zoom>
-        <SectionHero />
-        <SectionQuestions />
-        <SectionLeksehjelp />
-        <SectionMestring />
-        <SectionFrivillig />
-      </Zoom>
+      <SectionHero />
+      <SectionQuestions />
+      <SectionLeksehjelp />
+      <SectionMestring />
+      <SectionFrivillig />
     </div>
   );
 };

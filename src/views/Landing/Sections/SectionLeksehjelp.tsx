@@ -16,6 +16,9 @@ import {
 import { SocketContext } from '../../../providers';
 import { QueueMessageBuilder } from '../../../services/message-service';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
+import gradeList from '../../../grades';
+import grades from '../../../grades';
+import { createAction } from 'typesafe-actions';
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
@@ -23,7 +26,11 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [statusActive, setStatusActive] = useState<boolean>(false);
-  const [formControls, setFormControls] = useState({
+  const [course, setCourse] = useState({
+    value: '',
+    label: '',
+  });
+  const [grade, setGrade] = useState({
     value: '',
     label: '',
   });
@@ -44,6 +51,15 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         });
       });
     return subjectOptions;
+  };
+
+  const getGradeOptions = (): Option[] => {
+    return grades.map(grade => {
+      return {
+        value: grade.gradeID,
+        label: grade.label,
+      };
+    });
   };
 
   //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
@@ -125,7 +141,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   const handleStatus = async subjectStatus => {
     let statusMap = new Map();
     //Creates bit map for each day in the week, 1560 minutes per day.
-    for (var i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) {
       statusMap.set(weekDays[i], new Array(1560).fill(0));
     }
     //Loop the timeslots recieved from backend
@@ -144,19 +160,31 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     getTimes(statusMap);
   };
 
-  const handleChange = async event => {
+  const handleChange = async (event, type: string) => {
     let { label, value } = event;
-    await setFormControls({ label, value });
-    getSubjectStatus(value).then(res => handleStatus(res));
+    switch (type) {
+      case 'course':
+        setCourse({
+          label,
+          value,
+        });
+        getSubjectStatus(value).then(res => handleStatus(res));
+        break;
+      case 'grade':
+        setGrade({
+          label,
+          value,
+        });
+        break;
+    }
   };
 
   //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
-    if (timeSlots && timeSlots.length === 0 && formControls.value) {
+    if (timeSlots && timeSlots.length === 0 && course.value) {
       return (
         <p className="sectioncontainer--text">
-          {formControls.label +
-            ' er dessverre ikke tilgjengelig med det første.'}
+          {course.label + ' er dessverre ikke tilgjengelig med det første.'}
         </p>
       );
     } else if (timeSlots && timeSlots.length > 0) {
@@ -172,7 +200,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   const enterChatQueue = (chatType: string) => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
-      .withCourse(formControls.label)
+      .withCourse(course.label)
+      .withGrade(grade.label)
       .withUniqueID(uniqueID)
       .withChatType(chatType)
       .build();
@@ -192,28 +221,53 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           className="sectioncontainer--form--header"
           id="leksehjelp--form--header"
         >
-          Velg tema
+          Velg tema <span className="error-message">*</span>
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}
           placeholderClassName={'dropdown-placeholder'}
           menuClassName={'dropdown-placeholder'}
           options={getSubjectOptions()}
-          value={formControls.value}
-          onChange={event => handleChange(event)}
+          value={course.value}
+          onChange={event => handleChange(event, 'course')}
         />
+        {course.value && (
+          <div>
+            <div
+              className="sectioncontainer--form--header"
+              id="leksehjelp--form--header"
+            >
+              Velg klassetrinn <span className="error-message">*</span>
+            </div>
+            <Dropdown
+              className="dropdown"
+              placeholder={'F.eks. 9. klasse, 10. klasse eller Vg 1'}
+              placeholderClassName={'dropdown-placeholder'}
+              menuClassName={'dropdown-placeholder'}
+              options={getGradeOptions()}
+              value={grade.value}
+              onChange={event => handleChange(event, 'grade')}
+            />
+          </div>
+        )}
         {renderStatusMessage()}
       </form>
       <button
         className="btn btn-submit"
-        /*disabled={!statusActive || formControls.value === ''}*/
+        disabled={
+          /*!statusActive || TODO: uncomment in prod*/
+          course.value === '' || grade.value === ''
+        }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
         Chat
       </button>{' '}
       <button
         className="btn btn-submit btn-right"
-        /*disabled={!statusActive || formControls.value === ''}*/
+        disabled={
+          /*!statusActive || TODO: uncomment in prod*/
+          course.value === '' || grade.value === ''
+        }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >
         Videochat
