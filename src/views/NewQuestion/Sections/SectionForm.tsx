@@ -66,6 +66,10 @@ const SectionForm = (props: RouteComponentProps) => {
     setAzureToken(generatedToken.token);
   }, []);
 
+  const emailValidator = (email: string) => {
+    return emailValidatorRegExp.test(String(email).toLowerCase());
+  };
+
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
       return uploadFileToAzureBlobStorage('questionfiles', azureToken, file);
@@ -190,17 +194,15 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
-  const emailValidator = (email: string) => {
-    return emailValidatorRegExp.test(String(email).toLowerCase());
-  };
-
   return (
     <div className={'form-container'}>
       <form className={'form'}>
         <div className="form--input-container">
           {' '}
           {/*input container start*/}
-          <label className={'formLabel'}>Tema <span className="error-message">*</span></label>
+          <label className={'formLabel'}>
+            Tema <span className="error-message">*</span>
+          </label>
           <Dropdown
             placeholder={'Velg fag'}
             placeholderClassName={'dropdown-placeholder'}
@@ -222,7 +224,9 @@ const SectionForm = (props: RouteComponentProps) => {
               setTheme({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Klassetrinn <span className="error-message">*</span></label>
+          <label className={'formLabel'}>
+            Klassetrinn <span className="error-message">*</span>
+          </label>
           <Dropdown
             placeholder={'Velg klassetrinn'}
             placeholderClassName={'dropdown-placeholder'}
@@ -233,7 +237,9 @@ const SectionForm = (props: RouteComponentProps) => {
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>Spørsmål <span className="error-message">*</span></label>
+          <label className={'formLabel'}>
+            Spørsmål <span className="error-message">*</span>
+          </label>
           <textarea
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
@@ -244,7 +250,9 @@ const SectionForm = (props: RouteComponentProps) => {
           />
           <MyDropzone />
           <FileList />
-          <label className={'formLabel'}>E-post <span className="error-message">*</span></label>
+          <label className={'formLabel'}>
+            E-post <span className="error-message">*</span>
+          </label>
           <input
             placeholder={'Skriv e-postadressen din'}
             className={'email'}
@@ -255,12 +263,11 @@ const SectionForm = (props: RouteComponentProps) => {
             key={1}
           />
           <div className="error-message--text">
-            {(!emailValidator(email) && email) ?
-              <p>
-                Eposten er ikke gyldig
-              </p> :
+            {!emailValidator(email) && email ? (
+              <p>Eposten er ikke gyldig</p>
+            ) : (
               <p> </p>
-            }
+            )}
           </div>
           <div className={'anon'} onClick={() => setIsPublic(!isPublic)}>
             <Checkbox
