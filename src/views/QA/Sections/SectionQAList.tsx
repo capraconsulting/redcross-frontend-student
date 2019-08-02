@@ -11,7 +11,7 @@ import {
 import '../../../styles/QAList.less';
 
 //Interfaces
-import { IQuestion } from '../../../interfaces';
+import { IQuestion, IFile } from '../../../interfaces';
 
 //Services
 import { NorwegianDate } from '../../../services/date-service';
@@ -25,6 +25,15 @@ interface IProps {
 export const SectionQAList = (props: IProps) => {
   /*This array can be null (before we fetch it)*/
   const { questions, totalHits, history } = props;
+
+  const themeList = [
+    {
+      themeName: 'Analyse',
+    },
+    {
+      themeName: 'Definisjon',
+    },
+  ];
   return questions && questions.length > 0 ? (
     <div>
       <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
@@ -35,6 +44,16 @@ export const SectionQAList = (props: IProps) => {
               <AccordionItemHeading>
                 <AccordionItemButton>
                   {question.title} {/*question title*/}
+                  <div className="subject--list">
+                    {themeList.map(({ themeName }, index) => (
+                      <div
+                        key={index}
+                        className="subject--list-element subject--list-element-right"
+                      >
+                        <p>{themeName}</p>
+                      </div>
+                    ))}
+                  </div>
                   <p>
                     {question.subject}, {question.studentGrade},{' '}
                     {NorwegianDate(question.questionDate)}
