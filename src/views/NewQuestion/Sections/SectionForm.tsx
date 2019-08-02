@@ -28,6 +28,7 @@ import {
 
 //Persistent grade list
 import gradeList from '../../../grades';
+import { emailValidatorRegExp } from '../../../../config';
 
 const defaultOptions = {
   value: '',
@@ -73,7 +74,8 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const handleSubmit = () => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
-      const questionForm: IQuestion = {
+      console.log(results);
+      /** const questionForm: IQuestion = {
         email,
         studentGrade: Number(studentGrade.value),
         subjectID: Number(subject.value),
@@ -85,7 +87,7 @@ const SectionForm = (props: RouteComponentProps) => {
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
-      });
+      });*/
     });
   };
 
@@ -189,8 +191,7 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const emailValidator = (email: string) => {
-    const re: RegExp = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)])/g;
-    return re.test(String(email).toLowerCase());
+    return emailValidatorRegExp.test(String(email).toLowerCase());
   };
 
   return (
@@ -273,6 +274,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
         {/*Input container end*/}
       </form>
+      <div onClick={() => handleSubmit()}>HEI</div>
 
       <SimpleModal
         content={

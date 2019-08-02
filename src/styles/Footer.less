@@ -6,7 +6,8 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: @primary-color;
+  background-color: @white;
+  opacity: 0.8;
   color: @white;
 
   &--container {
@@ -16,6 +17,7 @@
       padding: 0.1rem 2.1rem;
     }
     &--text {
+      color: @hero-black;
       font-size: 0.9rem;
       @media (min-width: 380px) {
         font-size: 1.2rem;
@@ -26,12 +28,14 @@
       vertical-align: center;
 
       &--link {
-        color: @white;
+        color: @hero-black;
+        cursor: pointer;
       }
     }
     &--logo {
       float: left;
       margin-top: 3px;
+      cursor: pointer;
     }
   }
 
