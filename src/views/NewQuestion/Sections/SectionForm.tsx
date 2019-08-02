@@ -4,7 +4,6 @@ import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';
 import { withRouter, RouteComponentProps } from 'react-router';
-import Zoom from 'react-reveal/Zoom';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
@@ -75,7 +74,8 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const handleSubmit = () => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
-      const questionForm: IQuestion = {
+      console.log(results);
+      /** const questionForm: IQuestion = {
         email,
         studentGrade: Number(studentGrade.value),
         subjectID: Number(subject.value),
@@ -87,7 +87,7 @@ const SectionForm = (props: RouteComponentProps) => {
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
-      });
+      });*/
     });
   };
 
@@ -191,6 +191,7 @@ const SectionForm = (props: RouteComponentProps) => {
     );
   };
 
+  console.log(tempFiles);
   return (
     <div className={'form-container'}>
       <form className={'form'}>
@@ -263,6 +264,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
         {/*Input container end*/}
       </form>
+      <div onClick={() => handleSubmit()}>HEI</div>
 
       <SimpleModal
         content={
