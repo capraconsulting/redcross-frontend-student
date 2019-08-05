@@ -1,5 +1,4 @@
 import azure from 'azure-storage/browser/azure-storage.blob.export';
-import stream from 'stream';
 
 //Interfaces
 import { IFile } from '../interfaces';

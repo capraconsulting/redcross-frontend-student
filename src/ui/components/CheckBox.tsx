@@ -24,7 +24,7 @@ export default function CheckboxComponent(props: IProps) {
   return (
     <FormControlLabel
       control={<GreenCheckbox checked={value} value={value} />}
-      label={label}
+      label={<p className="label">{label}</p>}
     />
   );
 }
