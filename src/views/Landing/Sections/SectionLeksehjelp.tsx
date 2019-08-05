@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import { ISubject } from '../../../interfaces';
+import { IQueueMessage, ISubject } from '../../../interfaces';
 
 //Services
 import {
@@ -20,6 +20,7 @@ import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { initStudentInfoAction } from '../../../reducers';
 
 toast.configure({
   autoClose: 8000,
@@ -31,7 +32,7 @@ toast.configure({
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
-  const { uniqueID, socketSend } = useContext(SocketContext);
+  const { uniqueID, socketSend, dispatchStudentInfo } = useContext(SocketContext);
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [statusActive, setStatusActive] = useState<boolean>(false);
@@ -213,11 +214,15 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     getIsLeksehjelpOpen().then(data => {
       if (data.isopen) {
         const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
-          .withCourse(course.label)
+          .withSubject(course.label)
           .withGrade(grade.label)
           .withUniqueID(uniqueID)
           .withChatType(chatType)
           .build();
+        dispatchStudentInfo(initStudentInfoAction(msg.createMessage.payload as IQueueMessage));
+        sessionStorage.setItem('studentInfo', JSON.stringify(msg.createMessage.payload));
+        const x: IQueueMessage = JSON.parse(sessionStorage.getItem('studentInfo')!);
+        console.log(x);
         socketSend(msg.createMessage);
         history.push('leksehjelp');
       } else {

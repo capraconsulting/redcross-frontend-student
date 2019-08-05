@@ -16,8 +16,8 @@ const MestringChat = () => {
   const grade = 'VG1';
   const nickname = 'Mestringsboi';
   const introText = 'NERVER SOM GÅR AMOK, HJELP MEG FÅ RO I SJELA FØR EKSAMEN';
-  const subject = 'Matte';
-  const course = 'Norsk';
+  const themes = ['Matte'];
+  const subject = 'Norsk';
 
   useEffect(() => {
     setSocket(new WebSocket('ws://localhost:3002/events'));
@@ -75,8 +75,8 @@ const MestringChat = () => {
 
   const sendEnterQueueMessage = (chatType: string) => {
     const msg = new QueueMessageBuilder(uniqueID)
-      .withCourse(course)
       .withGrade(grade)
+      .withThemes(themes)
       .withIntroText(introText)
       .withNickname(nickname)
       .withSubject(subject)

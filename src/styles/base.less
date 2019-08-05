@@ -211,37 +211,23 @@
   }
 }
 
-.leksehjelp--button {
-  &-success {
-    background-color: @secondary-color;
-    &:hover {
-      background-color: @link-hover-color;
-    }
-  }
+textarea {
+  resize: none;
+}
 
-  &-warning {
-    background-color: @danger-color;
-    &:hover {
-      background-color: @danger-hover-color;
-    }
-  }
-  &-close {
-    background: none;
-    color: inherit;
-    padding: 0.5rem;
-    font: inherit;
-    outline: inherit;
-    margin: 0;
-    width: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  &-abort {
-    border: thin solid @danger-color;
-    color: @danger-color;
-    padding: 0.5rem;
-    margin: 0;
+.leksehjelp--button-close {
+  background: none;
+  color: inherit;
+  padding: 0.5rem;
+  font: inherit;
+  outline: inherit;
+  margin: 0;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    filter: brightness(80%);
   }
 }
 
