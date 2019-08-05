@@ -137,7 +137,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
             ) {
               //Enables chat and videochat button for current subject
               getIsLeksehjelpOpen().then(data => {
-                setStatusActive(data.isopen)
+                setStatusActive(data.isopen);
               });
             }
           }
