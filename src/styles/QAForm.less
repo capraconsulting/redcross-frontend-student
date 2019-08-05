@@ -66,22 +66,28 @@
     width: 100%;
 
     &--searchkey {
+      max-width: 676px;
       width: 70vw;
       padding: 0.5rem;
       border: solid 1px @select-color;
       border-radius: 0;
       -webkit-appearance: none;
-      height: 2.8;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
+      font-size: 0.8rem;
+      height: 1.55rem;
+
       @media (max-width: 800px) {
         width: 60vw;
-        font-size: 0.9rem;
       }
       @media (max-width: 440px) {
+        height: 1.4rem;
         width: 50vw;
+        font-size: 0.8rem;
+      }
+      @media (max-width: 340px) {
         font-size: 0.7rem;
       }
+
       &--modal {
         width: 60%;
         margin-right: 1rem;
@@ -388,5 +394,15 @@
     &.error {
       border-color: @error-color;
     }
+  }
+}
+
+.label {
+  font-size: 1.2rem;
+  @media (max-width: 800px) {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 440px) {
+    font-size: 0.7rem;
   }
 }
