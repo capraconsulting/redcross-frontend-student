@@ -12,6 +12,7 @@ import {
 import { Picker } from '../../ui/components';
 import { Option } from 'react-dropdown';
 import { getSubjectList } from '../../services/api-service';
+import Textarea from 'react-textarea-autosize';
 
 const LeksehjelpPage = (props: RouteComponentProps) => {
   const {
@@ -76,8 +77,7 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
     <div className="content">
       <div className="header">
         <p className="text">
-          Du står nå i kø for{' '}
-          <span className="course">{studentInfo.subject}</span>
+          Du står nå i kø for <span className="course">{studentInfo.subject}</span>
         </p>
       </div>
       <div className="body">
@@ -85,15 +85,16 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
           <p className="text">
             Mens du venter kan du begynne å forklare hva du lurer på.
           </p>
-          <textarea
-            cols={70}
-            rows={10}
+          <Textarea
+            autoFocus
+            cols={window.scrollX}
+            minRows={15}
             onChange={event =>
               dispatchStudentInfo(setIntroTextAction(event.target.value))
             }
           >
             {studentInfo.introText}
-          </textarea>
+          </Textarea>
         </div>
         {themes && (
           <div className="item">
