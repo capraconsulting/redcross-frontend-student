@@ -136,7 +136,9 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
               weekDays[now.getDay() - 1] === key
             ) {
               //Enables chat and videochat button for current subject
-              setStatusActive(true);
+              getIsLeksehjelpOpen().then(data => {
+                setStatusActive(data.isopen)
+              });
             }
           }
           start = index;
