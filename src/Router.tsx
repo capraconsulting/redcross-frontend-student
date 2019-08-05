@@ -44,7 +44,7 @@ export const AppRouter = (props: IProps) => {
           component={NewQuestionSuccessPage}
         />
         <Route
-          path="/questions/:id"
+          path="/questions/public/:id"
           exact
           render={({ match }) => <QuestionPage questionId={match.params.id} />}
         />

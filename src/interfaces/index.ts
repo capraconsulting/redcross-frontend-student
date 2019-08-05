@@ -11,3 +11,4 @@ export * from './IQueueMessage';
 export * from './ITextMessage';
 export * from './ISocketMessage';
 export * from './IOpen';
+export * from './ITheme';
