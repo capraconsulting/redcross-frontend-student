@@ -78,8 +78,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const handleSubmit = () => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
-      console.log(results);
-      /** const questionForm: IQuestion = {
+      const questionForm: IQuestion = {
         email,
         studentGrade: Number(studentGrade.value),
         subjectID: Number(subject.value),
@@ -91,7 +90,7 @@ const SectionForm = (props: RouteComponentProps) => {
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
-      });*/
+      });
     });
   };
 
@@ -187,7 +186,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const formControls = () => {
     return (
-      emailValidator(email) ||
+      email.length < 1 ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
       studentGrade.value.length < 1
