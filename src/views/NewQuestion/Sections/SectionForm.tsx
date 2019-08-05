@@ -262,7 +262,7 @@ const SectionForm = (props: RouteComponentProps) => {
             key={1}
           />
           <div className="error-message--text">
-            {!emailValidator(email) && email ? (
+            {!emailValidator(email) && email.length > 0 ? (
               <p>Eposten er ikke gyldig</p>
             ) : (
               <p> </p>
