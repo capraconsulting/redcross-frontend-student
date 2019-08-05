@@ -27,14 +27,6 @@ export const SectionQAList = (props: IProps) => {
   const { questions, totalHits, history } = props;
 
   //Temporary to render upcoming feature
-  const themeList = [
-    {
-      themeName: 'Analyse',
-    },
-    {
-      themeName: 'Definisjon',
-    },
-  ];
   return questions && questions.length > 0 ? (
     <div>
       <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
@@ -47,12 +39,12 @@ export const SectionQAList = (props: IProps) => {
                   <a className="qa-list-header">{question.title} </a>
                   {/*question title*/}
                   <div className="subject--list">
-                    {themeList.map(({ themeName }, index) => (
+                    {question.themes.map(({ theme }, index) => (
                       <div
                         key={index}
                         className="subject--list-element subject--list-element-right"
                       >
-                        <p>{themeName}</p>
+                        <p>{theme}</p>
                       </div>
                     ))}
                   </div>
@@ -72,7 +64,9 @@ export const SectionQAList = (props: IProps) => {
 
                 <p>{question.answerText}</p>
                 <p
-                  onClick={() => history.push(`/questions/${question.id}`)}
+                  onClick={() =>
+                    history.push(`/questions/public/${question.id}`)
+                  }
                   className="plink"
                 >
                   Les mer...
