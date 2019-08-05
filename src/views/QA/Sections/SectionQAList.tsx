@@ -72,7 +72,9 @@ export const SectionQAList = (props: IProps) => {
 
                 <p>{question.answerText}</p>
                 <p
-                  onClick={() => history.push(`/questions/${question.id}`)}
+                  onClick={() =>
+                    history.push(`/questions/public/${question.id}`)
+                  }
                   className="plink"
                 >
                   Les mer...
