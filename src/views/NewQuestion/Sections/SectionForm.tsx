@@ -187,7 +187,7 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const formControls = () => {
     return (
-      !emailValidator(email) ||
+      emailValidator(email) ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
       studentGrade.value.length < 1
@@ -281,8 +281,6 @@ const SectionForm = (props: RouteComponentProps) => {
 
         {/*Input container end*/}
       </form>
-      <div onClick={() => handleSubmit()}>HEI</div>
-
       <SimpleModal
         content={
           <div className="searchcontainer">
