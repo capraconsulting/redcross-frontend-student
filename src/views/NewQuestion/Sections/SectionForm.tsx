@@ -86,7 +86,7 @@ const SectionForm = (props: RouteComponentProps) => {
         isPublic,
         totalRows: 0,
         files: results,
-        themes: [],
+        themes: [{ id: 1, theme: 'Dikt' }], // TODO: Fix this
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
