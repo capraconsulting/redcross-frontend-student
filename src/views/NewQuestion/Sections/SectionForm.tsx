@@ -82,11 +82,11 @@ const SectionForm = (props: RouteComponentProps) => {
         email,
         studentGrade: Number(studentGrade.value),
         subjectID: Number(subject.value),
-        themeID: Number(theme.value),
         questionText,
         isPublic,
         totalRows: 0,
         files: results,
+        themes: [],
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });

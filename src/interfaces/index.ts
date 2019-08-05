@@ -10,3 +10,4 @@ export * from './IPartialQueueMessage';
 export * from './IQueueMessage';
 export * from './ITextMessage';
 export * from './ISocketMessage';
+export * from './ITheme';

@@ -61,10 +61,15 @@ describe('api-service', () => {
     email: 'testetestesen@testesen.no',
     studentGrade: 8,
     subjectID: 1,
-    themeID: 1,
     questionText: 'questionText',
     isPublic: true,
     totalRows: 0,
+    themes: [
+      {
+        theme: 'yes',
+        id: 0,
+      },
+    ],
     files: [
       {
         share: 'questionfiles',
@@ -86,7 +91,6 @@ describe('api-service', () => {
       email: 'testetestesen@testesen.no',
       studentGrade: 8,
       subjectID: 1,
-      themeID: 1,
       questionText: 'questionText',
       isPublic: true,
       totalRows: 0,
@@ -96,6 +100,12 @@ describe('api-service', () => {
           directory: 'hei',
           fileName: 'Hei',
           fileUrl: 'hei',
+        },
+      ],
+      themes: [
+        {
+          id: 0,
+          theme: 'yes',
         },
       ],
     });
