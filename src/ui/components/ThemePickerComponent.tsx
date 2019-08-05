@@ -33,7 +33,7 @@ const ThemePickerComponent = ({
         <div key={index} className="theme--list-element">
           <p>{theme}</p>
           <button
-            className="theme--button"
+            className="theme--button-close"
             onClick={e => removeTheme(id, theme, e)}
           >
             <Cross color="#8b51c6" />
