@@ -26,7 +26,7 @@ const SectionMestring = (props: RouteComponentProps) => {
   });
   const [subject, setSubject] = useState<Option>({
     label: '',
-    value: ''
+    value: '',
   });
 
   useEffect(() => {

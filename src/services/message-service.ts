@@ -59,7 +59,7 @@ class TextMessage {
     }
   }
 }
-  class QueueMessage {
+class QueueMessage {
   private readonly uniqueID: string;
   private readonly nickname: string;
   private readonly grade: string;

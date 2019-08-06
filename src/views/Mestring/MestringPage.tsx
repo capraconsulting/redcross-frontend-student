@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DropZone, Picker } from '../../ui/components';
 import { SocketContext } from '../../providers';
-import { Option } from "react-dropdown";
+import { Option } from 'react-dropdown';
 import { getSubjectList } from '../../services/api-service';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
-import { addThemeAction, removeThemeAction, setIntroTextAction } from '../../reducers';
+import {
+  addThemeAction,
+  removeThemeAction,
+  setIntroTextAction,
+} from '../../reducers';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import '../../styles/LeksehjelpPage.less';

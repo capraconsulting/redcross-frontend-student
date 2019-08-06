@@ -76,24 +76,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     getSocket().send(JSON.stringify(message));
   };
 
-  const cleanState = (): void => {
-    // Clean sessionStorage
-    sessionStorage.clear();
-
-    // Clean state
-    dispatchMessages(cleanChatAction());
-    dispatchStudentInfo(cleanStudentInfoAction());
-
-    setTalkyID('');
-    setRoomID('');
-    setUniqueID('');
-    setInQueue(false);
-
-    // clean socket
-    socket = null;
-    getSocket().onmessage = socketHandler;
-  };
-
   const reconnectHandler = (uniqueID: string): void => {
     const oldUniqueID = sessionStorage.getItem('oldUniqueID');
 
@@ -183,6 +165,24 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
+  };
+
+  const cleanState = (): void => {
+    // Clean sessionStorage
+    sessionStorage.clear();
+
+    // Clean state
+    dispatchMessages(cleanChatAction());
+    dispatchStudentInfo(cleanStudentInfoAction());
+
+    setTalkyID('');
+    setRoomID('');
+    setUniqueID('');
+    setInQueue(false);
+
+    // clean socket
+    socket = null;
+    getSocket().onmessage = socketHandler;
   };
 
   useEffect(() => {

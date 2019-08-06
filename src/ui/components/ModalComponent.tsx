@@ -72,18 +72,12 @@ const ModalComponent = (props: IProps & RouteComponentProps) => {
           {!hideButtons && (
             <div className="modal--button-container">
               {successButtonText && (
-                <button
-                  onClick={successCallback}
-                  className="btn btn-submit"
-                >
+                <button onClick={successCallback} className="btn btn-submit">
                   {successButtonText}
                 </button>
               )}
               {warningButtonText && (
-                <button
-                  onClick={warningCallback}
-                  className="btn btn-warning"
-                >
+                <button onClick={warningCallback} className="btn btn-warning">
                   {warningButtonText}
                 </button>
               )}
