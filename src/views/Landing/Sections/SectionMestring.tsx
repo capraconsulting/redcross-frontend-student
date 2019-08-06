@@ -1,20 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
 // Styes
 import '../../../styles/LandingPage.less';
 import { ISubject } from '../../../interfaces';
-import { getSubjectList } from '../../../services/api-service';
+import {
+  getIsLeksehjelpOpen,
+  getSubjectList,
+} from '../../../services/api-service';
+import { QueueMessageBuilder } from '../../../services/message-service';
+import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
+import { toast } from 'react-toastify';
+import { SocketContext } from '../../../providers';
 
 const SectionMestring = (props: RouteComponentProps) => {
   const { history } = props;
   const textChat = true;
   const videoChat = false;
   const [subjects, setSubjects] = useState<ISubject[]>([]);
+  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+  const { socketSend, uniqueID } = useContext(SocketContext);
+  const { MESTRING_VIDEO, MESTRING_TEXT } = CHAT_TYPES;
 
   useEffect(() => {
     try {
       getSubjectList('?isMestring=1').then(setSubjects);
+      getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
     } catch (e) {}
   }, []);
 
@@ -24,6 +35,21 @@ const SectionMestring = (props: RouteComponentProps) => {
         value: subject.id.toString(),
         label: subject.subjectTitle,
       };
+    });
+  };
+
+  const enterChatQueue = (chatType: string) => {
+    getIsLeksehjelpOpen().then(data => {
+      if (data.isopen) {
+        const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
+          .withUniqueID(uniqueID)
+          .withChatType(chatType)
+          .build();
+        socketSend(msg.createMessage);
+        history.push('mestring');
+      } else {
+        toast.error('Mestringschatten er dessverre ikke åpen');
+      }
     });
   };
 
@@ -59,15 +85,15 @@ const SectionMestring = (props: RouteComponentProps) => {
           </form>
           <button
             className="btn btn-submit"
-            disabled={!textChat}
-            onClick={() => history.push('mestringmeldinger')}
+            disabled={!isLeksehjelpOpen}
+            onClick={() => enterChatQueue(MESTRING_TEXT)}
           >
             Chat
           </button>{' '}
           <button
             className="btn btn-submit btn-right"
-            disabled={!videoChat}
-            onClick={() => history.push('mestring')}
+            disabled={!isLeksehjelpOpen}
+            onClick={() => enterChatQueue(MESTRING_VIDEO)}
           >
             Videochat
           </button>

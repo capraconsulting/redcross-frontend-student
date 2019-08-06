@@ -2,7 +2,6 @@ import { mocked } from 'ts-jest/utils';
 import axios from 'axios';
 import { IQuestion } from '../interfaces';
 import {
-  getQuestion,
   getQuestionList,
   getSubjectList,
   postFeedback,

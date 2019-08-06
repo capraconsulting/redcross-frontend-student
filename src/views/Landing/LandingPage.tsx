@@ -1,5 +1,5 @@
 // Sections for this page
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Zoom from 'react-reveal/Zoom';
 
 //Styles
@@ -12,14 +12,31 @@ import {
   SectionMestring,
   SectionFrivillig,
 } from './Sections';
+import { getIsLeksehjelpOpen } from '../../services/api-service';
 
 const LandingPage = () => {
+  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
+  }, []);
+
   return (
     <div className="content">
       <SectionHero />
-      <SectionQuestions />
-      <SectionLeksehjelp />
-      <SectionMestring />
+      {isLeksehjelpOpen ? (
+        <div>
+          <SectionLeksehjelp />
+          <SectionMestring />
+          <SectionQuestions />
+        </div>
+      ) : (
+        <div>
+          <SectionQuestions />
+          <SectionLeksehjelp />
+          <SectionMestring />
+        </div>
+      )}
       <SectionFrivillig />
     </div>
   );
