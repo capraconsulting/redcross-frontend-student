@@ -105,7 +105,7 @@ const SectionForm = (props: RouteComponentProps) => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,
-        studentGrade: Number(studentGrade.value),
+        studentGrade: studentGrade.value,
         subjectID: Number(subject.value),
         questionText,
         isPublic,
@@ -113,6 +113,7 @@ const SectionForm = (props: RouteComponentProps) => {
         files: results,
         themes: selectedList,
       };
+      console.log(questionForm.files);
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
       });

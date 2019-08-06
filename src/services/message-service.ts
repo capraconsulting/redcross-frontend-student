@@ -33,21 +33,24 @@ class TextMessage {
   private readonly uniqueID: string;
   private readonly message: string;
   private readonly files: IFile[];
+  private readonly imgUrl: string;
 
   public constructor(textMessageBuilder: TextMessageBuilder) {
     this.roomID = textMessageBuilder.roomID;
     this.message = textMessageBuilder.message;
     this.uniqueID = textMessageBuilder.uniqueID;
     this.files = textMessageBuilder.files;
+    this.imgUrl = textMessageBuilder.imgUrl;
   }
 
-  public get createMessage(): ISocketMessage | null {
+  public get createMessage() {
     const msg: ITextMessage = {
       author: 'student',
       uniqueID: this.uniqueID,
       roomID: this.roomID,
       message: this.message,
       files: this.files,
+      imgUrl: this.imgUrl,
     };
     if (this.files.length > 0 || this.message.length > 0) {
       return createMessage(msg, TEXT);
@@ -56,8 +59,7 @@ class TextMessage {
     }
   }
 }
-
-class QueueMessage {
+  class QueueMessage {
   private readonly uniqueID: string;
   private readonly nickname: string;
   private readonly grade: string;
@@ -184,6 +186,7 @@ export class TextMessageBuilder {
   private _roomID: string;
   private _message: string;
   private _files: IFile[];
+  private _imgUrl: string;
 
   public constructor(uniqueID: string) {
     this._uniqueID = uniqueID;
@@ -200,6 +203,11 @@ export class TextMessageBuilder {
     return this;
   }
 
+  public withImgUrl(imgUrl: string): TextMessageBuilder {
+    this._imgUrl = imgUrl;
+    return this;
+  }
+
   public withFiles(files: IFile[]): TextMessageBuilder {
     this._files = files;
     return this;
@@ -213,6 +221,9 @@ export class TextMessageBuilder {
     return this._roomID;
   }
 
+  public get imgUrl(): string {
+    return this._imgUrl;
+  }
   public get uniqueID(): string {
     return this._uniqueID;
   }

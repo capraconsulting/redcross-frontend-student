@@ -4,7 +4,7 @@ import React from 'react';
 import '../../../styles/QuestionPage.less';
 
 interface IProps {
-  studentGrade: number;
+  studentGrade: string;
   questionText: string;
 }
 
