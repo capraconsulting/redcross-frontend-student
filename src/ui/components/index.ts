@@ -11,17 +11,3 @@ export { default as DropZone } from './DropZoneComponent';
 export { default as Checkbox } from './CheckBox';
 export { default as InputSearch } from './InputSearch';
 export { default as ModalComponent } from './ModalComponent';
-
-export {
-  Chat,
-  ChatHeader,
-  ChatBody,
-  Footer,
-  Header,
-  SimpleModal,
-  IconButton,
-  DropZone,
-  CheckboxComponent as Checkbox,
-  ModalComponent as Modal,
-  CustomizedInputBase as InputSearch,
-};

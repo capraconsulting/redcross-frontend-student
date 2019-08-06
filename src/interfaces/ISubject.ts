@@ -1,7 +1,4 @@
-export interface ITheme {
-  id: number;
-  theme: string;
-}
+import { ITheme } from './';
 
 export interface ISubject {
   id: number;
