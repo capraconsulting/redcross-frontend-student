@@ -61,6 +61,8 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     LEAVE_CHAT,
     CLOSE_CHAT,
     RECONNECT,
+    UPDATE_QUEUE,
+    CONFIRMED_QUEUE,
   } = MESSAGE_TYPES;
 
   const socketSend = (message: ISocketMessage): void => {
@@ -116,8 +118,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         initStudentInfoAction(parsedStudentInfoFromSessionStorage),
       );
     }
-
-
   };
 
   const socketHandler = message => {
@@ -127,7 +127,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
     switch (msgType) {
       case TEXT:
-        console.log('got here');
         dispatchMessages(addMessageAction(parsedMessage));
         break;
       case DISTRIBUTE_ROOM:
@@ -147,6 +146,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case RECONNECT:
         reconnectSuccessHandler(payload['roomIDs']);
+        break;
+      case UPDATE_QUEUE:
+        dispatchStudentInfo(initStudentInfoAction(payload['info']));
+        break;
+      case CONFIRMED_QUEUE:
+        dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
   };
@@ -176,6 +181,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       sessionStorage.setItem('oldUniqueID', uniqueID);
     }
   }, [uniqueID]);
+
+  useEffect(() => {
+    if (studentInfo.subject && studentInfo.subject.length > 0) {
+      sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+    }
+  }, [studentInfo]);
 
   useEffect(() => {
     getSocket().onmessage = socketHandler;

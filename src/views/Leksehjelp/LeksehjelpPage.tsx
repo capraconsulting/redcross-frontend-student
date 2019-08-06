@@ -44,17 +44,15 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
     });
   }, [studentInfo.subject]);
 
-  useEffect(() => {
-    if (studentInfo.subject && studentInfo.subject.length > 0) {
-      sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
-    }
-  }, [studentInfo]);
-
   const update = () => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.UPDATE_QUEUE)
+      .withGrade(studentInfo.grade)
+      .withChatType(studentInfo.chatType)
+      .withNickname(studentInfo.nickname)
       .withSubject(studentInfo.subject)
       .withThemes(studentInfo.themes)
       .withIntroText(studentInfo.introText)
+      .withUniqueID(studentInfo.uniqueID)
       .build();
     socketSend(msg.createMessage);
   };
@@ -77,8 +75,12 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
     <div className="content">
       <div className="header">
         <p className="text">
-          Du står nå i kø for <span className="course">{studentInfo.subject}</span>
+          Du står nå i kø for{' '}
+          <span className="course">{studentInfo.subject}</span>
         </p>
+        <span className="queue">
+          Du er nr. {studentInfo.positionInQueue} i køen.
+        </span>
       </div>
       <div className="body">
         <div className="item">
@@ -89,12 +91,11 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
             autoFocus
             cols={window.scrollX}
             minRows={15}
+            value={studentInfo.introText}
             onChange={event =>
               dispatchStudentInfo(setIntroTextAction(event.target.value))
             }
-          >
-            {studentInfo.introText}
-          </Textarea>
+          />
         </div>
         {themes && (
           <div className="item">

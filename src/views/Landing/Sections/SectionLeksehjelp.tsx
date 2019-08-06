@@ -32,7 +32,9 @@ toast.configure({
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
-  const { uniqueID, socketSend, dispatchStudentInfo } = useContext(SocketContext);
+  const { uniqueID, socketSend, dispatchStudentInfo } = useContext(
+    SocketContext,
+  );
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [statusActive, setStatusActive] = useState<boolean>(false);
@@ -219,10 +221,9 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           .withUniqueID(uniqueID)
           .withChatType(chatType)
           .build();
-        dispatchStudentInfo(initStudentInfoAction(msg.createMessage.payload as IQueueMessage));
-        sessionStorage.setItem('studentInfo', JSON.stringify(msg.createMessage.payload));
-        const x: IQueueMessage = JSON.parse(sessionStorage.getItem('studentInfo')!);
-        console.log(x);
+        dispatchStudentInfo(
+          initStudentInfoAction(msg.createMessage.payload as IQueueMessage),
+        );
         socketSend(msg.createMessage);
         history.push('leksehjelp');
       } else {

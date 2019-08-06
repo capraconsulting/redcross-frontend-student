@@ -23,7 +23,6 @@ const handleSetIntroText = (state: IQueueMessage, action: IAction) => {
 };
 
 const handleInitStudentInfo = (state: IQueueMessage, action: IAction) => {
-  console.log(action.payload.info);
   return action.payload.info;
 };
 

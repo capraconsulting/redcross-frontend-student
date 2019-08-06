@@ -6,4 +6,5 @@ export interface IQueueMessage {
   uniqueID: string;
   introText: string;
   chatType: string;
+  positionInQueue?: number;
 }
