@@ -9,6 +9,7 @@ import DropZone from './DropZoneComponent';
 import CheckboxComponent from './CheckBox';
 import CustomizedInputBase from './InputSearch';
 import ModalComponent from './ModalComponent';
+import ThemePickerComponent from './ThemePickerComponent';
 
 export {
   Chat,
@@ -22,4 +23,5 @@ export {
   CheckboxComponent as Checkbox,
   ModalComponent as Modal,
   CustomizedInputBase as InputSearch,
+  ThemePickerComponent,
 };
