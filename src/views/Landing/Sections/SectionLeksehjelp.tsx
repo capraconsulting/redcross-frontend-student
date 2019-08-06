@@ -49,8 +49,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   useEffect(() => {
     try {
-      getSubjectList('?isMestring=0').then(setSubjects);
-    } catch (e) {}
+      getSubjectList('?isMestring=false').then(setSubjects);
+    } catch (e) { }
   }, []);
 
   const getSubjectOptions = (): Option[] => {
@@ -105,18 +105,18 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
             //Push time string to timeslots list.
             tempTimeSlots.push(
               key +
-                ' ' +
-                startDate.getHours() +
-                ':' +
-                (startDate.getMinutes() < 10
-                  ? '0' + startDate.getMinutes()
-                  : startDate.getMinutes()) +
-                '-' +
-                endDate.getHours() +
-                ':' +
-                (endDate.getMinutes() < 10
-                  ? '0' + endDate.getMinutes()
-                  : endDate.getMinutes()),
+              ' ' +
+              startDate.getHours() +
+              ':' +
+              (startDate.getMinutes() < 10
+                ? '0' + startDate.getMinutes()
+                : startDate.getMinutes()) +
+              '-' +
+              endDate.getHours() +
+              ':' +
+              (endDate.getMinutes() < 10
+                ? '0' + endDate.getMinutes()
+                : endDate.getMinutes()),
             );
             //Create dates to compare current time and subjects active periodes.
             let now = new Date();

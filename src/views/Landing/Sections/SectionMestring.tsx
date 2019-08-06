@@ -24,9 +24,9 @@ const SectionMestring = (props: RouteComponentProps) => {
 
   useEffect(() => {
     try {
-      getSubjectList('?isMestring=1').then(setSubjects);
+      getSubjectList('?isMestring=true').then(setSubjects);
       getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
   const getSubjectOptions = (): Option[] => {
