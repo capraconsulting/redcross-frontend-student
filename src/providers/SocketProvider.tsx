@@ -31,8 +31,7 @@ export const SocketContext = createContext({
   dispatchMessages(action: IAction): void {},
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
-  imgUrl: '' as string
-
+  imgUrl: '' as string,
   dispatchStudentInfo(action: IAction): void {},
   studentInfo: {} as IQueueMessage,
 });
