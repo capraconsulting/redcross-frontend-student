@@ -63,9 +63,8 @@ class QueueMessage {
   private readonly grade: string;
   private readonly introText: string;
   private readonly subject: string;
-  private readonly course: string;
   private readonly chatType: string;
-
+  private readonly themes: string[];
   private readonly messageType: string;
 
   public constructor(queueMessageBuilder: QueueMessageBuilder) {
@@ -74,9 +73,8 @@ class QueueMessage {
     this.grade = queueMessageBuilder.grade;
     this.introText = queueMessageBuilder.introText;
     this.subject = queueMessageBuilder.subject;
-    this.course = queueMessageBuilder.course;
     this.chatType = queueMessageBuilder.chatType;
-
+    this.themes = queueMessageBuilder.themes;
     this.messageType = queueMessageBuilder.messageType;
   }
 
@@ -86,9 +84,9 @@ class QueueMessage {
       nickname: this.nickname,
       grade: this.grade,
       introText: this.introText,
-      course: this.course,
       subject: this.subject,
       chatType: this.chatType,
+      themes: this.themes,
     };
     return createMessage(msg, this.messageType);
   }
@@ -101,23 +99,13 @@ export class QueueMessageBuilder {
   private _grade: string;
   private _introText: string;
   private _subject: string;
-  private _course: string;
   private _chatType: string;
+  private _themes: string[];
 
   public constructor(messageType: string) {
     this._messageType = messageType;
     return this;
   }
-
-  /*public withQueueMessageJSON(obj: IQueueMessage) {
-    this._uniqueID = obj.uniqueID;
-    this._nickname = obj.nickname;
-    this._grade = obj.grade;
-    this._introText = obj.introText;
-    this._subject = obj.subject;
-    this._course = obj.course;
-    this._chatType = obj.chatType;
-  }*/
 
   public withChatType(value: string): QueueMessageBuilder {
     this._chatType = value;
@@ -144,13 +132,13 @@ export class QueueMessageBuilder {
     return this;
   }
 
-  public withCourse(value: string): QueueMessageBuilder {
-    this._course = value;
+  public withUniqueID(value: string): QueueMessageBuilder {
+    this._uniqueID = value;
     return this;
   }
 
-  public withUniqueID(value: string): QueueMessageBuilder {
-    this._uniqueID = value;
+  public withThemes(value: string[]): QueueMessageBuilder {
+    this._themes = value;
     return this;
   }
 
@@ -178,16 +166,16 @@ export class QueueMessageBuilder {
     return this._subject;
   }
 
-  public get course(): string {
-    return this._course;
-  }
-
   public get chatType(): string {
     return this._chatType;
   }
 
   public get messageType(): string {
     return this._messageType;
+  }
+
+  public get themes(): string[] {
+    return this._themes;
   }
 }
 

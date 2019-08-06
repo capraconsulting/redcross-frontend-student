@@ -1,5 +1,7 @@
 @import 'colors';
 .content {
+  display: flex;
+  flex-direction: column;
   > .button-container {
     display: flex;
     flex-direction: row;
@@ -9,8 +11,14 @@
   }
   .header {
     margin: 0 auto;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    > .queue {
+      color: @primary-color;
+    }
     > .text {
-      font-size: 2rem;
+    font-size: 2rem;
       > .course {
         color: @primary-color;
       }
@@ -18,8 +26,12 @@
   }
 
   .body {
-    > .text {
-      font-size: 1.2rem;
+    > .item {
+      > .text {
+        margin: 4rem .5rem 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
     }
   }
 }

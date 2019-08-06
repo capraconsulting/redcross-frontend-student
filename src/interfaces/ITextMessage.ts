@@ -5,6 +5,6 @@ export interface ITextMessage {
   roomID: string;
   uniqueID: string;
   message: string;
-  datetime?: Date;
+  datetime?: string;
   files: IFile[];
 }

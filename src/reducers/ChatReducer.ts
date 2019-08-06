@@ -1,6 +1,7 @@
 import { ISocketMessage, ITextMessage, IFile } from '../interfaces';
 import { createAction, createReducer } from 'typesafe-actions';
 import { IAction } from '../interfaces';
+import { getTimeStringNow } from '../services/date-service';
 
 export const addMessageAction = createAction('ADD_MESSAGE', cb => {
   return (message: ISocketMessage) => cb({ message });
@@ -27,7 +28,6 @@ const addMessageHandler = (
     roomID,
     uniqueID,
     message,
-    datetime,
     files,
   } = action.payload.message.payload;
   const newMessage: ITextMessage = {
@@ -35,7 +35,7 @@ const addMessageHandler = (
     roomID,
     uniqueID,
     message,
-    datetime,
+    datetime: getTimeStringNow(),
     files,
   };
   state.push(newMessage);

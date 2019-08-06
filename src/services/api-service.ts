@@ -24,7 +24,7 @@ export function getSubjectList(mestring: string): Promise<ISubject[]> {
   return api
     .get('subjects' + mestring)
     .then(res => res.data)
-    .catch(e => console.log('Could not get subject list'));
+    .catch(e => console.error('Could not get subject list'));
 }
 
 export function getSubjectStatus(id: string) {
@@ -36,7 +36,6 @@ export function getSubjectStatus(id: string) {
 
 export function postQuestion(question) {
   // Which msgType will this be? Defined in backend
-  console.log(question);
   return api
     .post('questions', question)
     .then(res => res.data)
