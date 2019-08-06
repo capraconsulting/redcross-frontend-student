@@ -1,5 +1,4 @@
 export interface IPartialQueueMessage {
-  subject: string;
-  grade: string;
+  subjects: string[];
   introText: string;
 }

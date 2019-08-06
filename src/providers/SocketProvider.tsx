@@ -11,10 +11,11 @@ import {
   chatClosedAction,
   chatReducer,
   hasLeftChatAction,
+  initStudentInfoAction,
+  queueInfoReducer,
   reconnectChatAction,
 } from '../reducers';
 import {
-  IPartialQueueMessage,
   IQueueMessage,
   ISocketMessage,
   ITextMessage,
@@ -22,26 +23,17 @@ import {
 } from '../interfaces';
 
 import { createReconnectMessage } from '../services/message-service';
-import { getIsLeksehjelpOpen } from '../services/api-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
   roomID: '' as string,
   messages: [] as ITextMessage[],
-  dispatchMessages(action: IAction) {},
+  dispatchMessages(action: IAction): void {},
   socketSend(message: ISocketMessage): void {},
-  studentInfo: {
-    // IQueueMessage
-    nickname: '' as string,
-    subject: '' as string,
-    grade: '' as string,
-    uniqueID: '' as string,
-    introText: '' as string,
-    course: '' as string,
-    chatType: '' as string,
-  },
-  updateStudentInfo(partial: IPartialQueueMessage): void {},
   talkyID: '' as string,
+
+  dispatchStudentInfo(action: IAction): void {},
+  studentInfo: {} as IQueueMessage,
 });
 
 let socket;
@@ -58,35 +50,23 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
   const [talkyID, setTalkyID] = useState<string>('');
-  const [studentInfo, setStudentInfo] = useState<IQueueMessage>({
-    nickname: '' as string,
-    subject: '' as string,
-    grade: '' as string,
-    uniqueID: '' as string,
-    introText: '' as string,
-    course: '' as string,
-    chatType: '' as string,
-  });
+  const [studentInfo, dispatchStudentInfo] = useReducer(
+    queueInfoReducer,
+    {} as IQueueMessage,
+  );
   const {
     CONNECTION,
     DISTRIBUTE_ROOM,
     TEXT,
-    CONFIRMED_QUEUE,
     LEAVE_CHAT,
     CLOSE_CHAT,
     RECONNECT,
+    UPDATE_QUEUE,
+    CONFIRMED_QUEUE,
   } = MESSAGE_TYPES;
 
   const socketSend = (message: ISocketMessage): void => {
     getSocket().send(JSON.stringify(message));
-  };
-
-  const updateStudentInfo = (partial: IPartialQueueMessage) => {
-    const newStudentInfo: IQueueMessage = studentInfo;
-    newStudentInfo.subject = partial.subject;
-    newStudentInfo.introText = partial.introText;
-    newStudentInfo.grade = partial.grade;
-    setStudentInfo(newStudentInfo);
   };
 
   const reconnectHandler = (uniqueID: string): void => {
@@ -105,6 +85,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     const messagesFromSessionStorage = sessionStorage.getItem('messages');
     const roomIDFromSessionStorage = sessionStorage.getItem('roomID');
     const talkyIDFromSessionStorage = sessionStorage.getItem('talkyID');
+    const studentInfoFromSessionStorage = sessionStorage.getItem('studentInfo');
 
     if (
       talkyIDFromSessionStorage &&
@@ -118,17 +99,24 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       roomIDs.includes(roomIDFromSessionStorage)
     ) {
       setRoomID(roomIDFromSessionStorage);
+      if (messagesFromSessionStorage) {
+        const parsedMessagesFromSessionStorage: ITextMessage[] = JSON.parse(
+          messagesFromSessionStorage,
+        );
+        dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
+      }
     } else {
       sessionStorage.removeItem('messages');
       sessionStorage.removeItem('roomID');
-      return;
     }
 
-    if (messagesFromSessionStorage) {
-      const parsedMessagesFromSessionStorage: ITextMessage[] = JSON.parse(
-        messagesFromSessionStorage,
+    if (studentInfoFromSessionStorage) {
+      const parsedStudentInfoFromSessionStorage: IQueueMessage = JSON.parse(
+        studentInfoFromSessionStorage,
       );
-      dispatchMessages(reconnectChatAction(parsedMessagesFromSessionStorage));
+      dispatchStudentInfo(
+        initStudentInfoAction(parsedStudentInfoFromSessionStorage),
+      );
     }
   };
 
@@ -139,7 +127,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
     switch (msgType) {
       case TEXT:
-        console.log('got here');
         dispatchMessages(addMessageAction(parsedMessage));
         break;
       case DISTRIBUTE_ROOM:
@@ -148,9 +135,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case CONNECTION:
         reconnectHandler(payload['uniqueID']);
-        break;
-      case CONFIRMED_QUEUE:
-        setStudentInfo(payload['info']);
         break;
       case LEAVE_CHAT:
         action = hasLeftChatAction(payload['name']);
@@ -162,6 +146,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case RECONNECT:
         reconnectSuccessHandler(payload['roomIDs']);
+        break;
+      case UPDATE_QUEUE:
+        dispatchStudentInfo(initStudentInfoAction(payload['info']));
+        break;
+      case CONFIRMED_QUEUE:
+        dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
   };
@@ -193,6 +183,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   }, [uniqueID]);
 
   useEffect(() => {
+    if (studentInfo.subject && studentInfo.subject.length > 0) {
+      sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+    }
+  }, [studentInfo]);
+
+  useEffect(() => {
     getSocket().onmessage = socketHandler;
   }, []);
 
@@ -205,7 +201,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchMessages,
         socketSend,
         studentInfo,
-        updateStudentInfo,
+        dispatchStudentInfo,
         talkyID,
       }}
     >
