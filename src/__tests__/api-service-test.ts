@@ -58,7 +58,7 @@ describe('api-service', () => {
 
   const questionForm: IQuestion = {
     email: 'testetestesen@testesen.no',
-    studentGrade: "8",
+    studentGrade: '8',
     subjectID: 1,
     questionText: 'questionText',
     isPublic: true,
@@ -88,7 +88,7 @@ describe('api-service', () => {
     expect(call[0]).toEqual('questions');
     expect(call[1]).toEqual({
       email: 'testetestesen@testesen.no',
-      studentGrade: "8",
+      studentGrade: '8',
       subjectID: 1,
       questionText: 'questionText',
       isPublic: true,
