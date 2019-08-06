@@ -105,7 +105,7 @@ const SectionForm = (props: RouteComponentProps) => {
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,
-        studentGrade: Number(studentGrade.value),
+        studentGrade: studentGrade.value,
         subjectID: Number(subject.value),
         questionText,
         isPublic,

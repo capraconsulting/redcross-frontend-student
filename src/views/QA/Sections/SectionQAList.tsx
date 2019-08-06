@@ -60,7 +60,8 @@ export const SectionQAList = (props: IProps) => {
                       ))}
                     </div>
                     <p>
-                      {subject}, {studentGradeFormat(studentGrade)}, {NorwegianDate(questionDate)}
+                      {subject}, {studentGradeFormat(studentGrade)},{' '}
+                      {NorwegianDate(questionDate)}
                     </p>
                   </AccordionItemButton>
                 </AccordionItemHeading>
@@ -89,8 +90,8 @@ export const SectionQAList = (props: IProps) => {
       </Accordion>
     </div>
   ) : (
-      <div className="resultStatus">Søket ditt ga ingen svar</div>
-    );
+    <div className="resultStatus">Søket ditt ga ingen svar</div>
+  );
 };
 
 export default SectionQAList;
