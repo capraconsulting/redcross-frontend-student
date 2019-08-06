@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, MouseEvent } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { useDropzone } from 'react-dropzone';
 import jws from 'jws';
 import secureRandom from 'secure-random';
+import ThemePickerComponent from '../../../ui/components/ThemePickerComponent';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 //Material UI Core
 import Typography from '@material-ui/core/Typography';
 
 //Interfaces
-import { IQuestion, ISubject, IFile } from '../../../interfaces';
+import { IQuestion, ISubject, IFile, ITheme } from '../../../interfaces';
 
 //Services
 import { postQuestion, getSubjectList } from '../../../services/api-service';
@@ -35,17 +36,41 @@ const defaultOptions = {
   label: '',
 };
 
+interface IOption {
+  value: string;
+  label: string;
+}
+
 const SectionForm = (props: RouteComponentProps) => {
   const { history } = props;
   const [subjects, setSubjects] = useState([] as ISubject[]);
   const [email, setEmail] = useState('' as string);
   const [questionText, setQuestionText] = useState('' as string);
   const [subject, setSubject] = useState(defaultOptions as Option);
-  const [theme, setTheme] = useState(defaultOptions as Option);
+  const [themeList, setThemeList] = useState([] as IOption[]);
   const [studentGrade, setGrade] = useState(defaultOptions as Option);
   const [isPublic, setIsPublic] = useState(true as boolean);
   const [azureToken, setAzureToken] = useState('' as string);
   const [tempFiles, setTempFiles] = useState([] as any[]);
+  const [selectedList, setSelectedList] = useState([] as ITheme[]);
+
+  const addTheme = (theme: IOption): void => {
+    const { value, label } = theme;
+    const selected = { theme: label, id: Number(value) };
+    if (!(selectedList.filter(e => e.id === Number(value)).length > 0)) {
+      setSelectedList([...[selected], ...selectedList]);
+    }
+    const themes = themeList.filter(e => e.value !== theme.value);
+    setThemeList(themes);
+  };
+
+  const removeTheme = (item: number, theme: string, e: MouseEvent): void => {
+    const list = selectedList.filter(({ id }) => id !== Number(item));
+    setSelectedList(list);
+    const themeObj = { label: theme, value: item.toString() };
+    setThemeList([...[themeObj], ...themeList]);
+    e.preventDefault();
+  };
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(setSubjects);
@@ -82,11 +107,11 @@ const SectionForm = (props: RouteComponentProps) => {
         email,
         studentGrade: Number(studentGrade.value),
         subjectID: Number(subject.value),
-        themeID: Number(theme.value),
         questionText,
         isPublic,
         totalRows: 0,
         files: results,
+        themes: selectedList,
       };
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
@@ -208,20 +233,18 @@ const SectionForm = (props: RouteComponentProps) => {
             menuClassName={'dropdown-placeholder'}
             options={getSubjectOptions()}
             value={subject.value && subject}
-            onChange={event =>
-              setSubject({ value: event.value, label: event.label })
-            }
+            onChange={event => {
+              setSubject({ value: event.value, label: event.label });
+              setSelectedList([]);
+            }}
           />
-          <Dropdown
-            disabled={!subject.value}
-            placeholder={'Velg undertema'}
-            placeholderClassName={'dropdown-placeholder'}
-            menuClassName={'dropdown-placeholder'}
-            options={getThemeOptions()}
-            value={theme.value && theme}
-            onChange={event =>
-              setTheme({ value: event.value, label: event.label })
-            }
+          <ThemePickerComponent
+            title="Velg undertema"
+            placeholder="Legg til undertema"
+            optionList={getThemeOptions()}
+            addTheme={addTheme}
+            selectedList={selectedList}
+            removeTheme={removeTheme}
           />
           <label className={'formLabel'}>
             Klassetrinn <span className="error-message">*</span>

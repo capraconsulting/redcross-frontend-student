@@ -1,4 +1,4 @@
-import { IFile } from './IFile';
+import { IFile, ITheme } from '.';
 
 export interface IQuestion {
   id?: number;
@@ -10,9 +10,9 @@ export interface IQuestion {
   questionDate?: string;
   answerDate?: string;
   subjectID: number;
-  themeID: number;
   isPublic?: boolean;
   subject?: string;
   totalRows: number;
   files: IFile[];
+  themes: ITheme[];
 }

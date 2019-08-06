@@ -1,3 +1,5 @@
+export { default as Picker } from './PickerComponent';
+export { default as ThemePickerComponent } from './ThemePickerComponent';
 export { default as Chat } from '../../views/Chat/Chat';
 export { default as ChatHeader } from '../../views/Chat/Sections/ChatHeader';
 export { default as ChatBody } from '../../views/Chat/Sections/ChatBody';
@@ -9,4 +11,17 @@ export { default as DropZone } from './DropZoneComponent';
 export { default as Checkbox } from './CheckBox';
 export { default as InputSearch } from './InputSearch';
 export { default as ModalComponent } from './ModalComponent';
-export { default as Picker } from './PickerComponent';
+
+export {
+  Chat,
+  ChatHeader,
+  ChatBody,
+  Footer,
+  Header,
+  SimpleModal,
+  IconButton,
+  DropZone,
+  CheckboxComponent as Checkbox,
+  ModalComponent as Modal,
+  CustomizedInputBase as InputSearch,
+};
