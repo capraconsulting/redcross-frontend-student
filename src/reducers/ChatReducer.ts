@@ -19,6 +19,10 @@ export const reconnectChatAction = createAction('RECONNECT', cb => {
   return (messages: ITextMessage[]) => cb({ messages });
 });
 
+export const cleanChatAction = createAction('CLEAN', cb => {
+  return () => cb({});
+});
+
 const addMessageHandler = (
   state: ITextMessage[],
   action: IAction,
@@ -69,6 +73,10 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
   return [...state];
 };
 
+const handleCleanChat = (state: ITextMessage[], action: IAction) => {
+  return [];
+};
+
 const handleReconnectChat = (state: ITextMessage[], action: IAction) => {
   return action.payload.messages;
 };
@@ -77,4 +85,5 @@ export const chatReducer = createReducer<ITextMessage[], IAction>([])
   .handleAction(addMessageAction, addMessageHandler)
   .handleAction(hasLeftChatAction, handleHasLeftChat)
   .handleAction(chatClosedAction, handleChatClosed)
-  .handleAction(reconnectChatAction, handleReconnectChat);
+  .handleAction(reconnectChatAction, handleReconnectChat)
+  .handleAction(cleanChatAction, handleCleanChat);

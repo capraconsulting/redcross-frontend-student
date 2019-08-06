@@ -10,6 +10,8 @@ import {
   addMessageAction,
   chatClosedAction,
   chatReducer,
+  cleanChatAction,
+  cleanStudentInfoAction,
   hasLeftChatAction,
   initStudentInfoAction,
   queueInfoReducer,
@@ -32,8 +34,14 @@ export const SocketContext = createContext({
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
   imgUrl: '' as string,
+<<<<<<< HEAD
+=======
+  cleanState(): void {},
+
+>>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
   dispatchStudentInfo(action: IAction): void {},
   studentInfo: {} as IQueueMessage,
+  inQueue: false as boolean,
 });
 
 let socket;
@@ -46,6 +54,7 @@ const getSocket = (): WebSocket => {
 };
 
 export const SocketProvider: FunctionComponent = ({ children }: any) => {
+  const [inQueue, setInQueue] = useState<boolean>(false);
   const [uniqueID, setUniqueID] = useState<string>('');
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
@@ -118,6 +127,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       dispatchStudentInfo(
         initStudentInfoAction(parsedStudentInfoFromSessionStorage),
       );
+      setInQueue(true);
     }
   };
 
@@ -154,9 +164,28 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
       case CONFIRMED_QUEUE:
+        setInQueue(true);
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
+  };
+
+  const cleanState = (): void => {
+    // Clean sessionStorage
+    sessionStorage.clear();
+
+    // Clean state
+    dispatchMessages(cleanChatAction());
+    dispatchStudentInfo(cleanStudentInfoAction());
+
+    setTalkyID('');
+    setRoomID('');
+    setUniqueID('');
+    setInQueue(false);
+
+    // clean socket
+    socket = null;
+    getSocket().onmessage = socketHandler;
   };
 
   useEffect(() => {
@@ -207,6 +236,11 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo,
         talkyID,
         imgUrl,
+<<<<<<< HEAD
+=======
+        inQueue,
+        cleanState,
+>>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
       }}
     >
       {children}

@@ -10,4 +10,3 @@ export { default as IconButton } from './IconButton';
 export { default as DropZone } from './DropZoneComponent';
 export { default as Checkbox } from './CheckBox';
 export { default as InputSearch } from './InputSearch';
-export { default as ModalComponent } from './ModalComponent';

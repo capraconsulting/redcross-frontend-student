@@ -36,3 +36,28 @@
     text-decoration: none;
   }
 }
+.header-button-container {
+  display: flex;
+  flex-direction: row;
+
+  > .header-button {
+    height: max-content;
+    border: thin solid @primary-color;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: max-content;
+    color: @primary-color;
+    transition: all .2s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  > p, .header-button {
+    margin-top: 0;
+    font-size: 1.2rem;
+  }
+  > p {
+    margin-right: .3rem;
+  }
+}

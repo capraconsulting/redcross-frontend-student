@@ -59,7 +59,11 @@ class TextMessage {
     }
   }
 }
+<<<<<<< HEAD
   class QueueMessage {
+=======
+class QueueMessage {
+>>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
   private readonly uniqueID: string;
   private readonly nickname: string;
   private readonly grade: string;

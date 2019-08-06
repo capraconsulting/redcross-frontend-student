@@ -32,7 +32,7 @@ toast.configure({
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
-  const { uniqueID, socketSend, dispatchStudentInfo } = useContext(
+  const { uniqueID, socketSend, dispatchStudentInfo, inQueue } = useContext(
     SocketContext,
   );
   const [subjects, setSubjects] = useState<ISubject[]>([]);
@@ -279,7 +279,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         className="btn btn-submit"
         disabled={
           /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === ''
+          course.value === '' || grade.value === '' || inQueue
         }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
@@ -289,7 +289,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         className="btn btn-submit btn-right"
         disabled={
           /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === ''
+          course.value === '' || grade.value === '' || inQueue
         }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >
