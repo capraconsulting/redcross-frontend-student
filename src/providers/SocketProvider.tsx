@@ -10,6 +10,8 @@ import {
   addMessageAction,
   chatClosedAction,
   chatReducer,
+  cleanChatAction,
+  cleanStudentInfoAction,
   hasLeftChatAction,
   initStudentInfoAction,
   queueInfoReducer,
@@ -31,9 +33,11 @@ export const SocketContext = createContext({
   dispatchMessages(action: IAction): void {},
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
+  cleanState(): void {},
 
   dispatchStudentInfo(action: IAction): void {},
   studentInfo: {} as IQueueMessage,
+  inQueue: false as boolean,
 });
 
 let socket;
@@ -46,6 +50,7 @@ const getSocket = (): WebSocket => {
 };
 
 export const SocketProvider: FunctionComponent = ({ children }: any) => {
+  const [inQueue, setInQueue] = useState<boolean>(false);
   const [uniqueID, setUniqueID] = useState<string>('');
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
@@ -67,6 +72,24 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
   const socketSend = (message: ISocketMessage): void => {
     getSocket().send(JSON.stringify(message));
+  };
+
+  const cleanState = (): void => {
+    // Clean sessionStorage
+    sessionStorage.clear();
+
+    // Clean state
+    dispatchMessages(cleanChatAction());
+    dispatchStudentInfo(cleanStudentInfoAction());
+
+    setTalkyID('');
+    setRoomID('');
+    setUniqueID('');
+    setInQueue(false);
+
+    // clean socket
+    socket = null;
+    getSocket().onmessage = socketHandler;
   };
 
   const reconnectHandler = (uniqueID: string): void => {
@@ -117,6 +140,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       dispatchStudentInfo(
         initStudentInfoAction(parsedStudentInfoFromSessionStorage),
       );
+      setInQueue(true);
     }
   };
 
@@ -151,6 +175,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
       case CONFIRMED_QUEUE:
+        setInQueue(true);
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
@@ -203,6 +228,8 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         studentInfo,
         dispatchStudentInfo,
         talkyID,
+        inQueue,
+        cleanState,
       }}
     >
       {children}

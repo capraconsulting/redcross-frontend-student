@@ -15,12 +15,19 @@ import { SocketContext } from '../../../providers';
 
 const SectionMestring = (props: RouteComponentProps) => {
   const { history } = props;
-  const textChat = true;
-  const videoChat = false;
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
-  const { socketSend, uniqueID } = useContext(SocketContext);
+  const { socketSend, uniqueID, inQueue } = useContext(SocketContext);
   const { MESTRING_VIDEO, MESTRING_TEXT } = CHAT_TYPES;
+
+  const [grade, setGrade] = useState<Option>({
+    label: '',
+    value: '',
+  });
+  const [subject, setSubject] = useState<Option>({
+    label: '',
+    value: ''
+  });
 
   useEffect(() => {
     try {
@@ -32,7 +39,7 @@ const SectionMestring = (props: RouteComponentProps) => {
   const getSubjectOptions = (): Option[] => {
     return subjects.map(subject => {
       return {
-        value: subject.id.toString(),
+        value: subject.subjectTitle,
         label: subject.subjectTitle,
       };
     });
@@ -42,9 +49,12 @@ const SectionMestring = (props: RouteComponentProps) => {
     getIsLeksehjelpOpen().then(data => {
       if (data.isopen) {
         const msg = new QueueMessageBuilder(MESSAGE_TYPES.ENTER_QUEUE)
+          .withSubject(subject.value)
+          .withGrade(grade.value)
           .withUniqueID(uniqueID)
           .withChatType(chatType)
           .build();
+
         socketSend(msg.createMessage);
         history.push('mestring');
       } else {
@@ -78,6 +88,8 @@ const SectionMestring = (props: RouteComponentProps) => {
             <div className="mestring--form--header">Velg tema</div>
             <Dropdown
               options={getSubjectOptions()}
+              value={subject.value}
+              onChange={option => setSubject(option)}
               placeholder="F.eks motivasjon, læringsmetoder"
               placeholderClassName={'dropdown-placeholder'}
               menuClassName={'dropdown-placeholder'}
@@ -85,14 +97,14 @@ const SectionMestring = (props: RouteComponentProps) => {
           </form>
           <button
             className="btn btn-submit"
-            disabled={!isLeksehjelpOpen}
+            disabled={!isLeksehjelpOpen || inQueue}
             onClick={() => enterChatQueue(MESTRING_TEXT)}
           >
             Chat
           </button>{' '}
           <button
             className="btn btn-submit btn-right"
-            disabled={!isLeksehjelpOpen}
+            disabled={!isLeksehjelpOpen || inQueue}
             onClick={() => enterChatQueue(MESTRING_VIDEO)}
           >
             Videochat
