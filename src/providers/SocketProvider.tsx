@@ -24,7 +24,7 @@ import {
   IAction,
 } from '../interfaces';
 
-import { createReconnectMessage } from '../services/message-service';
+import { createLeaveMessage, createReconnectMessage } from '../services/message-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -175,6 +175,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     dispatchMessages(cleanChatAction());
     dispatchStudentInfo(cleanStudentInfoAction());
 
+    socketSend(createLeaveMessage(uniqueID));
     setTalkyID('');
     setRoomID('');
     setUniqueID('');

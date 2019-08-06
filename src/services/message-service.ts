@@ -1,5 +1,5 @@
 import {
-  IGenerateRoomMessage,
+  IGenerateRoomMessage, ILeaveMessage,
   IQueueMessage,
   IReconnectMessage,
   ISocketMessage,
@@ -8,7 +8,7 @@ import {
 import { MESSAGE_TYPES } from '../../config';
 import { IFile } from '../interfaces';
 
-const { TEXT, RECONNECT } = MESSAGE_TYPES;
+const { TEXT, RECONNECT, STUDENT_LEAVE } = MESSAGE_TYPES;
 const createMessage = (
   payload:
     | ITextMessage
@@ -26,6 +26,11 @@ const createMessage = (
 export const createReconnectMessage = (uniqueID: string): ISocketMessage => {
   const msg: IReconnectMessage = { uniqueID };
   return createMessage(msg, RECONNECT);
+};
+
+export const createLeaveMessage = (uniqueID: string): ISocketMessage => {
+  const msg: ILeaveMessage = {uniqueID};
+  return createMessage(msg, STUDENT_LEAVE);
 };
 
 class TextMessage {
