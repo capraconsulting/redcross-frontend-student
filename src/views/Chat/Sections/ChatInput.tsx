@@ -25,7 +25,7 @@ interface IProps {
 const ChatInput = (props: IProps) => {
   const [message, setMessage] = useState<string>('');
   const [tempFiles, setTempFiles] = useState([] as any[]);
-  const {socketSend, dispatchMessages} = useContext(SocketContext);
+  const { socketSend, dispatchMessages } = useContext(SocketContext);
   const { uniqueID, roomID } = props;
 
   const uploadPromises = tempFiles => {
@@ -51,7 +51,6 @@ const ChatInput = (props: IProps) => {
         setMessage('');
         setTempFiles([] as any[]);
       }
-
     }
   };
 

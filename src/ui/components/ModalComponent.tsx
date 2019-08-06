@@ -42,11 +42,11 @@ const ModalComponent = (props: IProps & RouteComponentProps) => {
               defaultValue={inputField.inputText}
               disabled={inputField.isDisabled}
             />
-
             <button
-              className="btn btn-submit btn-modal"
-              disabled={inputField.inputText.length < 1}
-              onClick={() => inputField.callback()}
+              onClick={() => {
+                inputField.callback();
+              }}
+              className="button leksehjelp--button-success"
             >
               {inputField.buttonText}
             </button>
@@ -72,13 +72,13 @@ const ModalComponent = (props: IProps & RouteComponentProps) => {
           {!hideButtons && (
             <div className="modal--button-container">
               {successButtonText && (
-                <button className="btn btn-submit" onClick={successCallback}>
+                <button onClick={successCallback} className="btn btn-submit">
                   {successButtonText}
                 </button>
               )}
               {warningButtonText && (
-                <button className="btn btn-submit" onClick={warningCallback}>
-                  {warningCallback}
+                <button onClick={warningCallback} className="btn btn-warning">
+                  {warningButtonText}
                 </button>
               )}
             </div>
@@ -88,5 +88,4 @@ const ModalComponent = (props: IProps & RouteComponentProps) => {
     </div>
   );
 };
-
 export default withRouter(ModalComponent);
