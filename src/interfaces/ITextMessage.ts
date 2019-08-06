@@ -5,6 +5,7 @@ export interface ITextMessage {
   roomID: string;
   uniqueID: string;
   message: string;
+  imgUrl: string;
   datetime?: string;
   files: IFile[];
 }

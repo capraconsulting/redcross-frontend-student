@@ -33,6 +33,7 @@ const MestringChat = () => {
       message: message.payload['message'],
       datetime: message.payload['datetime'],
       files: message.payload['files'],
+      imgUrl: message.payload['imgUrl'],
     };
   };
 
@@ -91,7 +92,7 @@ const MestringChat = () => {
         Enter mestring text queue
       </button>
       <ChatBody messages={messages} />
-      <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />
+      <ChatInput uniqueID={uniqueID} roomID={roomID} />
     </div>
   );
 };

@@ -6,7 +6,7 @@ export interface IQuestion {
   email?: string;
   questionText: string;
   answerText?: string;
-  studentGrade: number;
+  studentGrade: string;
   questionDate?: string;
   answerDate?: string;
   subjectID: number;
