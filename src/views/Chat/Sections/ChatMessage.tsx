@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../../styles/ChatMessage.less';
 import { NorwegianTime } from '../../../services/date-service';
 import { ITextMessage } from '../../../interfaces';
+import { SocketContext } from '../../../providers';
 
 interface IProps {
   message: ITextMessage;
 }
 
 const ChatMessage = (props: IProps) => {
-  const { author, message, datetime, uniqueID, files } = props.message;
+  const { author, message, datetime, uniqueID, files, imgUrl } = props.message;
   const authorType = author === 'student' ? 'self' : 'other';
 
   const downloadFile = file => {
@@ -77,6 +78,7 @@ const ChatMessage = (props: IProps) => {
       <div>
         <div className={`cm`}>
           <p className={`cm--author-${authorType}`}>
+            <img height={10} width={10} src={imgUrl} />
             <span>{authorType === 'self' ? 'Deg' : author}</span>, kl.{' '}
             <span>{datetime}</span>
           </p>

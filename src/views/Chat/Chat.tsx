@@ -24,16 +24,12 @@ const Chat = () => {
     }
   }, [messages]);
 
-  const sendTextMessage = (message: ISocketMessage) => {
-    dispatchMessages(addMessageAction(message));
-    socketSend(message);
-  };
 
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />
       <ChatBody messages={messages} />
-      <ChatInput uniqueID={uniqueID} roomID={roomID} send={sendTextMessage} />
+      <ChatInput uniqueID={uniqueID} roomID={roomID} />
     </div>
   );
 };

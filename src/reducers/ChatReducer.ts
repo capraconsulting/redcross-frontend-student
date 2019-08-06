@@ -33,6 +33,7 @@ const addMessageHandler = (
     uniqueID,
     message,
     files,
+    imgUrl,
   } = action.payload.message.payload;
   const newMessage: ITextMessage = {
     author,
@@ -41,6 +42,7 @@ const addMessageHandler = (
     message,
     datetime: getTimeStringNow(),
     files,
+    imgUrl,
   };
   state.push(newMessage);
   return [...state];
@@ -53,6 +55,7 @@ const handleHasLeftChat = (state: ITextMessage[], action: IAction) => {
     roomID: '',
     uniqueID: 'NOTIFICATION',
     files: [] as IFile[],
+    imgUrl: '',
   });
   return [...state];
 };
@@ -65,6 +68,7 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
     roomID: '',
     uniqueID: 'NOTIFICATION',
     files: [] as IFile[],
+    imgUrl: '',
   });
   return [...state];
 };

@@ -33,6 +33,7 @@ export const SocketContext = createContext({
   dispatchMessages(action: IAction): void {},
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
+  imgUrl: '' as string,
   cleanState(): void {},
 
   dispatchStudentInfo(action: IAction): void {},
@@ -55,6 +56,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
   const [talkyID, setTalkyID] = useState<string>('');
+  const [imgUrl, setImgUrl] = useState<string>('');
   const [studentInfo, dispatchStudentInfo] = useReducer(
     queueInfoReducer,
     {} as IQueueMessage,
@@ -151,7 +153,9 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
     switch (msgType) {
       case TEXT:
+        setImgUrl(payload['imgUrl']);
         dispatchMessages(addMessageAction(parsedMessage));
+        console.log(parsedMessage);
         break;
       case DISTRIBUTE_ROOM:
         setRoomID(payload['roomID']);
@@ -228,6 +232,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         studentInfo,
         dispatchStudentInfo,
         talkyID,
+        imgUrl,
         inQueue,
         cleanState,
       }}

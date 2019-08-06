@@ -15,6 +15,7 @@ import { IQuestion, IFile } from '../../../interfaces';
 
 //Services
 import { NorwegianDate } from '../../../services/date-service';
+import { studentGradeFormat } from '../../../services/util-service';
 
 interface IProps {
   questions: IQuestion[];
@@ -31,52 +32,61 @@ export const SectionQAList = (props: IProps) => {
     <div>
       <div className="resultStatus">Søket ditt ga {totalHits} svar</div>
       <Accordion allowZeroExpanded={true}>
-        {questions.map(question => {
-          return (
-            <AccordionItem key={`question-${question.id}`}>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  <a className="qa-list-header">{question.title} </a>
-                  {/*question title*/}
-                  <div className="subject--list">
-                    {question.themes.map(({ theme }, index) => (
-                      <div
-                        key={index}
-                        className="subject--list-element subject--list-element-right"
-                      >
-                        <p>{theme}</p>
-                      </div>
-                    ))}
-                  </div>
+        {questions.map(
+          ({
+            id,
+            title,
+            themes,
+            subject,
+            studentGrade,
+            questionDate,
+            questionText,
+            answerText,
+          }) => {
+            return (
+              <AccordionItem key={`question-${id}`}>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    <a className="qa-list-header">{title} </a>
+                    {/*question title*/}
+                    <div className="subject--list">
+                      {themes.map(({ theme }, index) => (
+                        <div
+                          key={index}
+                          className="subject--list-element subject--list-element-right"
+                        >
+                          <p>{theme}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p>
+                      {subject}, {studentGradeFormat(studentGrade)},{' '}
+                      {NorwegianDate(questionDate)}
+                    </p>
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
                   <p>
-                    {question.subject}, {question.studentGrade},{' '}
-                    {NorwegianDate(question.questionDate)}
+                    {/*Question content*/}
+                    {questionText}
                   </p>
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <p>
-                  {/*Question content*/}
-                  {question.questionText}
-                </p>
 
-                <hr />
+                  <hr />
 
-                <p>{question.answerText}</p>
-                <p
-                  onClick={() =>
-                    history.push(`/questions/public/${question.id}`)
-                  }
-                  className="plink"
-                >
-                  Les mer...
-                </p>
-              </AccordionItemPanel>
+                  <p>{answerText}</p>
+                  <p
+                    onClick={() => history.push(`/questions/public/${id}`)}
+                    className="plink"
+                  >
+                    Les mer...
+                  </p>
+                </AccordionItemPanel>
 
-              <div className="underline"></div>
-            </AccordionItem>
-          );
-        })}
+                <div className="underline"></div>
+              </AccordionItem>
+            );
+          },
+        )}
       </Accordion>
     </div>
   ) : (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Zoom from 'react-reveal/Zoom';
 
@@ -13,18 +13,20 @@ import '../../../styles/ChatInput.less';
 import { IconButton } from '../../../ui/components';
 
 //Interfaces
-import { IFile } from '../../../interfaces';
+import { IFile, ISocketMessage } from '../../../interfaces';
+import { SocketContext } from '../../../providers';
+import { addMessageAction } from '../../../reducers';
 
 interface IProps {
   uniqueID: string;
   roomID: string;
-  send;
 }
 
 const ChatInput = (props: IProps) => {
   const [message, setMessage] = useState<string>('');
   const [tempFiles, setTempFiles] = useState([] as any[]);
-  const { uniqueID, roomID, send } = props;
+  const {socketSend, dispatchMessages} = useContext(SocketContext);
+  const { uniqueID, roomID } = props;
 
   const uploadPromises = tempFiles => {
     return tempFiles.map(async file => {
@@ -39,10 +41,17 @@ const ChatInput = (props: IProps) => {
         .withMessage(message)
         .withFiles(files)
         .toRoom(roomID)
+        .withImgUrl(message)
         .build();
-      send(msg.createMessage);
-      setMessage('');
-      setTempFiles([] as any[]);
+
+      const socketMessage = msg.createMessage;
+      if (socketMessage) {
+        socketSend(socketMessage);
+        dispatchMessages(addMessageAction(socketMessage));
+        setMessage('');
+        setTempFiles([] as any[]);
+      }
+
     }
   };
 
