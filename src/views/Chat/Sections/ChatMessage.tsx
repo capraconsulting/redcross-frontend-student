@@ -78,7 +78,7 @@ const ChatMessage = (props: IProps) => {
         <div className={`cm`}>
           <p className={`cm--author-${authorType}`}>
             <span>{authorType === 'self' ? 'Deg' : author}</span>, kl.{' '}
-            <span>{NorwegianTime(datetime)}</span>
+            <span>{datetime}</span>
           </p>
           {renderMessage()}
         </div>

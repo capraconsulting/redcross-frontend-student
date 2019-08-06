@@ -91,7 +91,7 @@ const ChatInput = (props: IProps) => {
                     onClick={() => {
                       setTempFiles(tempFiles.filter((_, i) => i !== index));
                     }}
-                  ></IconButton>{' '}
+                  />{' '}
                 </span>
               </Zoom>
             </li>
@@ -166,10 +166,7 @@ const ChatInput = (props: IProps) => {
           {renderInput()}
           <button onClick={handleSubmit} className={'send-message'}>
             <svg width="30px" height="30px" viewBox="0 0 30 30">
-              <polygon
-                className="arrow"
-                points="30 15 0 30 5.5 15 0 0"
-              ></polygon>
+              <polygon className="arrow" points="30 15 0 30 5.5 15 0 0" />
             </svg>
           </button>
         </form>
