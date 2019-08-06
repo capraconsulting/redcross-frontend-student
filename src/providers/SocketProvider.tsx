@@ -34,11 +34,8 @@ export const SocketContext = createContext({
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
   imgUrl: '' as string,
-<<<<<<< HEAD
-=======
   cleanState(): void {},
 
->>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
   dispatchStudentInfo(action: IAction): void {},
   studentInfo: {} as IQueueMessage,
   inQueue: false as boolean,
@@ -236,11 +233,8 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo,
         talkyID,
         imgUrl,
-<<<<<<< HEAD
-=======
         inQueue,
         cleanState,
->>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
       }}
     >
       {children}

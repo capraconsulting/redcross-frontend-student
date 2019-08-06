@@ -24,10 +24,6 @@ const Chat = () => {
     }
   }, [messages]);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b8ebda5a0461cecfd1b455a468fbf1713dd66056
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />
