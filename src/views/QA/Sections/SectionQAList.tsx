@@ -60,7 +60,7 @@ export const SectionQAList = (props: IProps) => {
                       ))}
                     </div>
                     <p>
-                      {subject}, {studentGradeFormat(studentGrade)}, {NorwegianDate(questionDate)}
+                      {subject}, {studentGradeFormat(studentGrade.toString())}, {NorwegianDate(questionDate)}
                     </p>
                   </AccordionItemButton>
                 </AccordionItemHeading>
