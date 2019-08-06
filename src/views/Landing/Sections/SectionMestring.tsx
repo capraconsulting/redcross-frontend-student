@@ -14,7 +14,7 @@ const SectionMestring = (props: RouteComponentProps) => {
 
   useEffect(() => {
     try {
-      // getSubjectList('?isMestring=1').then(setSubjects);
+      getSubjectList('?isMestring=1').then(setSubjects);
     } catch (e) {}
   }, []);
 
