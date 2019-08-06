@@ -21,7 +21,7 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
     grade: '' as string,
     introText: '' as string,
   });
-  const [themes, setThemes] = useState<ITheme[]>([])
+  const [themes, setThemes] = useState<ITheme[]>([]);
   const { history } = props;
 
   const update = () => {
@@ -52,17 +52,19 @@ export const LeksehjelpPage = (props: RouteComponentProps) => {
         <p className="text">
           Mens du venter kan du begynne å forklare hva du lurer på.
         </p>
-        {(window.innerWidth >= 770) &&
+        {window.innerWidth >= 770 && (
           <div className="iframe-container">
             <iframe
-              src={`http://www.google.com/search?igu=1&ei=&q=${themes.map(e => e + " ")}`}
+              src={`http://www.google.com/search?igu=1&ei=&q=${themes.map(
+                e => e + ' ',
+              )}`}
               className="frame"
               allowFullScreen
+              height="800"
               width="600"
-              height="450"
             />
           </div>
-        }
+        )}
       </div>
 
       <div className="button-container">

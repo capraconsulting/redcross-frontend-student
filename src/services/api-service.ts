@@ -21,9 +21,7 @@ export function getGradeList(): Promise<IGrade[]> {
     .catch(e => console.error('Could not get grade list'));
 }
 export function getSubjectList(mestring: string): Promise<ISubject[]> {
-  return api
-    .get('subjects' + mestring)
-    .then(res => res.data)
+  return api.get('subjects' + mestring).then(res => res.data);
 }
 
 export function getSubjectStatus(id: string) {
