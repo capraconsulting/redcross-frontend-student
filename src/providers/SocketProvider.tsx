@@ -28,6 +28,15 @@ import {
   createLeaveMessage,
   createReconnectMessage,
 } from '../services/message-service';
+import { toast } from 'react-toastify';
+
+toast.configure({
+  autoClose: 1500,
+  draggable: false,
+  position: 'top-center',
+  closeButton: false,
+  closeOnClick: true,
+});
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -162,6 +171,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case UPDATE_QUEUE:
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
+        toast.success('Informasjonen din ble oppdatert');
         break;
       case CONFIRMED_QUEUE:
         setInQueue(true);

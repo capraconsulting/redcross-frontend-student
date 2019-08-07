@@ -82,10 +82,10 @@ const SectionForm = (props: RouteComponentProps) => {
       token: localAzureToken
         ? JSON.parse(localAzureToken).token
         : jws.sign({
-          header: { alg: 'HS256' },
-          payload: 'Questionfiles',
-          secret: secureRandom(256, { type: 'Buffer' }),
-        }),
+            header: { alg: 'HS256' },
+            payload: 'Questionfiles',
+            secret: secureRandom(256, { type: 'Buffer' }),
+          }),
     };
     window.sessionStorage.setItem('azuretoken', JSON.stringify(generatedToken));
     setAzureToken(generatedToken.token);
@@ -137,12 +137,12 @@ const SectionForm = (props: RouteComponentProps) => {
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
-            <span className="message-text">
-              <button className="upload">+</button>
-              <span>Legg til filer </span>
-              <span className="grey">(max 5 mb)</span>
-            </span>
-          )}
+          <span className="message-text">
+            <button className="upload">+</button>
+            <span>Legg til filer </span>
+            <span className="grey">(max 5 mb)</span>
+          </span>
+        )}
       </div>
     );
   }
@@ -289,8 +289,8 @@ const SectionForm = (props: RouteComponentProps) => {
             {!emailValidator(email) && email.length > 0 ? (
               <p>Eposten er ikke gyldig</p>
             ) : (
-                <p> </p>
-              )}
+              <p> </p>
+            )}
           </div>
           <div className={'anon'} onClick={() => setIsPublic(!isPublic)}>
             <Checkbox
