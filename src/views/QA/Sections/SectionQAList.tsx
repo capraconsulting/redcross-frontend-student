@@ -39,7 +39,7 @@ export const SectionQAList = (props: IProps) => {
             themes,
             subject,
             studentGrade,
-            questionDate,
+            answerDate,
             questionText,
             answerText,
           }) => {
@@ -60,8 +60,8 @@ export const SectionQAList = (props: IProps) => {
                       ))}
                     </div>
                     <p>
-                      {subject}, {studentGradeFormat(studentGrade)},{' '}
-                      {NorwegianDate(questionDate)}
+                      {subject}, {studentGradeFormat(studentGrade)}
+                      {answerDate && ', ' + NorwegianDate(answerDate)}
                     </p>
                   </AccordionItemButton>
                 </AccordionItemHeading>
@@ -73,7 +73,11 @@ export const SectionQAList = (props: IProps) => {
 
                   <hr />
 
-                  <p>{answerText}</p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: answerText ? answerText : '<p>No answer<p>',
+                    }}
+                  ></div>
                   <p
                     onClick={() => history.push(`/questions/public/${id}`)}
                     className="plink"

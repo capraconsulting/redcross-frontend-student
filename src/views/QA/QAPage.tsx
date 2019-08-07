@@ -29,7 +29,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
 
   //Returns option to be filled out based on query params
   const getDefaultOptions = type => {
-    return { value: values[type] || type === 'page' ? '0' : '' };
+    return { value: values[type] || type === 'page' ? '1' : '' };
   };
 
   //Query states
@@ -62,7 +62,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
       subjectID: Number(subject.value),
       grade: Number(grade.value),
       orderByDate: orderByDate.value.toLocaleLowerCase() === 'true',
-      page: search === values.searchText ? parseInt(page.value) : 0,
+      page: parseInt(page.value),
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
     history.push({ pathname: '/questions', search: queryString });
@@ -196,6 +196,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
   const pageLimit = 10;
   const pageCount = Math.ceil(totalHits / pageLimit);
 
+  console.log(search);
   return (
     <div className="content">
       {renderSearchForm()}
