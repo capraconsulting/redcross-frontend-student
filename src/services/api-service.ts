@@ -11,27 +11,23 @@ export function getQuestionList(query): Promise<IQuestion[]> {
   return api
     .get(`questions/public${query}`)
     .then(res => res.data)
-    .catch(e => console.error('Could not get question list'));
 }
 
 export function getGradeList(): Promise<IGrade[]> {
   return api
     .get('grades')
     .then(res => res.data)
-    .catch(e => console.error('Could not get grade list'));
 }
 export function getSubjectList(mestring: string): Promise<ISubject[]> {
   return api
     .get('subjects' + mestring)
     .then(res => res.data)
-    .catch(e => console.error('Could not get subject list'));
 }
 
 export function getSubjectStatus(id: string) {
   return api
     .get(`timeslots/subject/${id}`)
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
 }
 
 export function postQuestion(question) {
@@ -39,7 +35,6 @@ export function postQuestion(question) {
   return api
     .post('questions', question)
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
 }
 
 export function postFeedback(questionID, feedbackText) {
@@ -47,19 +42,16 @@ export function postFeedback(questionID, feedbackText) {
   return api
     .post(`feedback/question/${questionID}`, { feedbackText })
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
 }
 
 export function getQuestion(url: string) {
   return api
     .get(url)
-    .then(res => res)
-    .catch(err => err);
+    .then(res => res.data)
 }
 
 export function getIsLeksehjelpOpen<T>(): Promise<IOpen> {
   return api
     .get('isopen')
     .then(res => res.data)
-    .catch(e => console.error(e.getMessage));
-}
+} 

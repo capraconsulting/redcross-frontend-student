@@ -34,9 +34,7 @@ const QuestionPage = (props: IProps, state: IState) => {
   const [error, setError] = useState(state.error);
 
   useEffect(() => {
-    getQuestion(`questions/public/${props.questionId}`).then(res => {
-      res.data ? setQuestion(res.data) : setError(res);
-    });
+    getQuestion(`questions/public/${props.questionId}`).then(setQuestion).catch(setError);
   }, []);
 
   return (
