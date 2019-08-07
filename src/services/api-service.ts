@@ -48,10 +48,11 @@ export function getQuestion(url: string) {
   return api
     .get(url)
     .then(res => res.data)
+    .then(res => res)
 }
 
 export function getIsLeksehjelpOpen<T>(): Promise<IOpen> {
   return api
     .get('isopen')
     .then(res => res.data)
-} 
+}
