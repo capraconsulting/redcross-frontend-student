@@ -22,13 +22,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { initStudentInfoAction } from '../../../reducers';
 
-toast.configure({
-  autoClose: 8000,
-  draggable: false,
-  position: 'top-center',
-  closeButton: false,
-  closeOnClick: true,
-});
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;

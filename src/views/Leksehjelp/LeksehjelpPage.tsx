@@ -73,9 +73,11 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
 
   const searchString = () => {
     if (studentInfo.themes) {
-      return `https://www.google.com/search?q=${studentInfo.subject},${studentInfo.themes.toString()}`;
+      return `https://www.google.com/search?q=${
+        studentInfo.subject
+      },${studentInfo.themes.toString()}`;
     }
-    return `https://www.google.com/search?q=${studentInfo.subject}`
+    return `https://www.google.com/search?q=${studentInfo.subject}`;
   };
 
   return (
@@ -119,7 +121,10 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
           )}
         </div>
         <div className="queue-link">
-          <a href={searchString()} target="_blank">Prøv gjerne å søke på google ved å trykke på denne linken mens du venter!</a>
+          <a href={searchString()} target="_blank">
+            Prøv gjerne å søke på google ved å trykke på denne linken mens du
+            venter!
+          </a>
         </div>
         <div className="button-container">
           <button className="btn btn-submit" onClick={update}>
@@ -137,7 +142,6 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
           </button>
         </div>
       </div>
-
     </div>
   );
 };
