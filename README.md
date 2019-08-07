@@ -1,6 +1,6 @@
 # Red Cross - Digital Leksehjelp - Student
 
-[![Build Status](https://jenkins.capra.tv/buildStatus/icon?job=redcross-digital-leksehjelp-frontend-frivillig/master)](https://jenkins.capra.tv/job/redcross-digital-leksehjelp-frontend-frivillig/job/master/)
+[![Build Status](https://jenkins.capra.tv/buildStatus/icon?job=redcross/redcross-digital-leksehjelp-frontend-student/master)](https://jenkins.capra.tv/job/redcross/job/redcross-digital-leksehjelp-frontend-student/job/master/)
 
 ### Technologies:
 
