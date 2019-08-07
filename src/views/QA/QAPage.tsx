@@ -82,6 +82,14 @@ export const QA = (props: IProps & RouteComponentProps) => {
     handleSubmit();
   }, [page]);
 
+  useEffect(() => {
+    questions.length < 1 &&
+      page.value !== '1' &&
+      setPage({ value: '1', label: '' });
+  }, [questions]);
+
+  useEffect(() => {});
+
   const getSubjectOptions = (): Option[] => {
     const subjectOptions = [{ value: '0', label: 'Alle fag' }] as Option[];
     subjects &&
@@ -207,7 +215,13 @@ export const QA = (props: IProps & RouteComponentProps) => {
           history={history}
         />
       )}
-      {SectionPagination({ page, pageLimit, totalHits, pageCount, setPage })}
+      <SectionPagination
+        page={page}
+        pageLimit={pageLimit}
+        totalHits={totalHits}
+        pageCount={pageCount}
+        setPage={setPage}
+      />
       <SectionHelper />
     </div>
   );
