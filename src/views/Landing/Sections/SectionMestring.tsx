@@ -33,7 +33,7 @@ const SectionMestring = (props: RouteComponentProps) => {
     try {
       getSubjectList('?isMestring=1').then(setSubjects);
       getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-    } catch (e) { }
+    } catch (e) {}
   }, []);
 
   const getSubjectOptions = (): Option[] => {

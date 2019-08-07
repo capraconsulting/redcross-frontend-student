@@ -63,47 +63,49 @@ export const MestringPage = (props: RouteComponentProps) => {
   };
 
   return (
-    <div className="content">
-      <div className="header">
-        <p className="text">
-          Du står nå i kø for{' '}
-          <span className="course">{studentInfo.subject}</span>
-        </p>
-        <span className="queue">
-          Du er nr. {studentInfo.positionInQueue} i køen.
-        </span>
-      </div>
-      <div className="body">
-        <div className="item">
+    <div className="waiting-container">
+      <div className="content">
+        <div className="header">
           <p className="text">
-            Mens du venter kan du begynne å forklare hva du lurer på.
+            Du står nå i kø for{' '}
+            <span className="course">{studentInfo.subject}</span>
           </p>
-          <Textarea
-            autoFocus
-            cols={window.scrollX}
-            minRows={15}
-            value={studentInfo.introText}
-            onChange={event =>
-              dispatchStudentInfo(setIntroTextAction(event.target.value))
-            }
-          />
+          <span className="queue">
+            Du er nr. {studentInfo.positionInQueue} i køen.
+          </span>
         </div>
-      </div>
+        <div className="body">
+          <div className="item">
+            <p className="text">
+              Mens du venter kan du begynne å forklare hva du lurer på.
+            </p>
+            <Textarea
+              autoFocus
+              cols={window.scrollX}
+              minRows={15}
+              value={studentInfo.introText}
+              onChange={event =>
+                dispatchStudentInfo(setIntroTextAction(event.target.value))
+              }
+            />
+          </div>
+        </div>
 
-      <div className="button-container">
-        <button className="btn btn-submit" onClick={update}>
-          Oppdater Informasjon
-        </button>
-        <button
-          disabled={roomID.length < 1}
-          className="btn btn-submit"
-          onClick={() => {
-            openTalky();
-            history.push('meldinger');
-          }}
-        >
-          Gå til chat
-        </button>
+        <div className="button-container">
+          <button className="btn btn-submit" onClick={update}>
+            Oppdater Informasjon
+          </button>
+          <button
+            disabled={roomID.length < 1}
+            className="btn btn-submit"
+            onClick={() => {
+              openTalky();
+              history.push('meldinger');
+            }}
+          >
+            Gå til chat
+          </button>
+        </div>
       </div>
     </div>
   );

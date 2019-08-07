@@ -171,7 +171,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case UPDATE_QUEUE:
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
-        toast.success("Informasjonen din ble oppdatert");
+        toast.success('Informasjonen din ble oppdatert');
         break;
       case CONFIRMED_QUEUE:
         setInQueue(true);

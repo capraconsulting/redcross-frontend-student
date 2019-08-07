@@ -121,7 +121,7 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
           )}
         </div>
         <div className="queue-link">
-          <a href={searchString()} target="_blank">
+          <a href={searchString()} target="_blank" rel="noopener noreferrer">
             Prøv gjerne å søke på google ved å trykke på denne linken mens du
             venter!
           </a>

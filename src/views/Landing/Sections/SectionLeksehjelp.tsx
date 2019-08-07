@@ -22,7 +22,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { initStudentInfoAction } from '../../../reducers';
 
-
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
   const { uniqueID, socketSend, dispatchStudentInfo, inQueue } = useContext(
@@ -43,7 +42,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   useEffect(() => {
     try {
       getSubjectList('?isMestring=0').then(setSubjects);
-    } catch (e) { }
+    } catch (e) {}
   }, []);
 
   const getSubjectOptions = (): Option[] => {
@@ -98,18 +97,18 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
             //Push time string to timeslots list.
             tempTimeSlots.push(
               key +
-              ' ' +
-              startDate.getHours() +
-              ':' +
-              (startDate.getMinutes() < 10
-                ? '0' + startDate.getMinutes()
-                : startDate.getMinutes()) +
-              '-' +
-              endDate.getHours() +
-              ':' +
-              (endDate.getMinutes() < 10
-                ? '0' + endDate.getMinutes()
-                : endDate.getMinutes()),
+                ' ' +
+                startDate.getHours() +
+                ':' +
+                (startDate.getMinutes() < 10
+                  ? '0' + startDate.getMinutes()
+                  : startDate.getMinutes()) +
+                '-' +
+                endDate.getHours() +
+                ':' +
+                (endDate.getMinutes() < 10
+                  ? '0' + endDate.getMinutes()
+                  : endDate.getMinutes()),
             );
             //Create dates to compare current time and subjects active periodes.
             let now = new Date();
