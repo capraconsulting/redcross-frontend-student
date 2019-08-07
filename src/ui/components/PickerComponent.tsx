@@ -24,6 +24,8 @@ const PickerComponent = ({
       options={optionList}
       onChange={option => addSelected(option)}
       placeholder={placeholder}
+      placeholderClassName={'dropdown-placeholder'}
+      menuClassName={'dropdown-placeholder'}
     />
     <div className="subject--list">
       {selectedList &&

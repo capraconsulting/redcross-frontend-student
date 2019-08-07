@@ -9,8 +9,8 @@ function Cross({ color }: IProps) {
     <svg
       viewBox="0 0 12.061 12.063"
       xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
+      width="17"
+      height="17"
     >
       <g
         transform="translate(-1476.2 -734.99)"

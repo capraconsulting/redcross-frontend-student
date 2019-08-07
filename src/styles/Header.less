@@ -48,16 +48,23 @@
     align-items: center;
     width: max-content;
     color: @primary-color;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     &:hover {
       transform: scale(1.1);
     }
   }
-  > p, .header-button {
+  > p,
+  .header-button {
     margin-top: 0;
     font-size: 1.2rem;
+    @media (max-width: 520px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 340px) {
+      font-size: 0.6rem;
+    }
   }
   > p {
-    margin-right: .3rem;
+    margin-right: 0.3rem;
   }
 }

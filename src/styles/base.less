@@ -173,6 +173,26 @@
     }
   }
 
+  &-queue {
+    margin-bottom: 1rem;
+    @media (max-width: 440px) {
+      height: 3.5rem;
+      width: 7rem;
+      font-size: 1rem;
+    }
+    @media (max-width: 340px) {
+      height: 2.5rem;
+      width: 5rem;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 310px) {
+      height: 2.5rem;
+      width: 5rem;
+      font-size: 0.8rem;
+    }
+  }
+
   &-search {
     height: 2.6rem;
     width: 5rem;
@@ -236,7 +256,7 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   &:hover {
     transform: scale(1.1);
   }

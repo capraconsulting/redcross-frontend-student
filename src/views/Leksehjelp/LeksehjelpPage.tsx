@@ -80,17 +80,15 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
     return `https://www.google.com/search?q=${studentInfo.subject}`;
   };
 
+  const { positionInQueue, subject, introText } = studentInfo;
   return (
     <div className="waiting-container">
       <div className="content">
         <div className="header">
           <p className="text">
-            Du står nå i kø for{' '}
-            <span className="course">{studentInfo.subject}</span>
+            Du står nå i kø for <span className="course">{subject}</span>
           </p>
-          <span className="queue">
-            Du er nr. {studentInfo.positionInQueue} i køen.
-          </span>
+          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
         </div>
         <div className="body">
           <div className="item">
@@ -100,8 +98,8 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
             <Textarea
               autoFocus
               cols={window.scrollX}
-              minRows={15}
-              value={studentInfo.introText}
+              minRows={6}
+              value={introText}
               onChange={event =>
                 dispatchStudentInfo(setIntroTextAction(event.target.value))
               }
@@ -120,19 +118,14 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
             </div>
           )}
         </div>
-        <div className="queue-link">
-          <a href={searchString()} target="_blank" rel="noopener noreferrer">
-            Prøv gjerne å søke på google ved å trykke på denne linken mens du
-            venter!
-          </a>
-        </div>
+
         <div className="button-container">
-          <button className="btn btn-submit" onClick={update}>
+          <button className="btn btn-submit btn-queue" onClick={update}>
             Oppdater Informasjon
           </button>
           <button
             disabled={roomID.length < 1}
-            className="btn btn-submit"
+            className="btn btn-submit btn-queue"
             onClick={() => {
               openTalky();
               history.push('meldinger');
@@ -140,6 +133,15 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
           >
             Gå til chat
           </button>
+        </div>
+        <div className="header">
+          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
+        </div>
+        <div className="queue-link">
+          <a href={searchString()} target="_blank" rel="noopener noreferrer">
+            Prøv gjerne å søke på google ved å trykke på denne linken mens du
+            venter!
+          </a>
         </div>
       </div>
     </div>
