@@ -11,10 +11,11 @@ interface IProps {
 
 const SectionPagination = (props: IProps) => {
   const { page, pageLimit, pageCount, totalHits, setPage } = props;
+  console.log(page);
   return (
     <ReactPaginate
       //Label for the previous button
-      previousLabel={parseInt(page.value) > 0 && totalHits > pageLimit && '<'}
+      previousLabel={parseInt(page.value) > 1 && totalHits > pageLimit && '<'}
       //Label for the next button
       nextLabel={pageCount > parseInt(page.value) + 1 && '>'}
       //Label for elipsis
@@ -27,7 +28,7 @@ const SectionPagination = (props: IProps) => {
       pageRangeDisplayed={4}
       //Method to call when a page is clicked. Expose the current page object as an argument.
       onPageChange={event => {
-        setPage({ value: event.selected.toString(), label: '' });
+        setPage({ value: (event.selected + 1).toString(), label: '' });
       }}
       //Classname of the pagination container
       containerClassName={'pagination-component'}
