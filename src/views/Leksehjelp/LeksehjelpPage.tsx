@@ -134,14 +134,15 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
             Gå til chat
           </button>
         </div>
-        <div className="header">
-          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
-        </div>
+
         <div className="queue-link">
           <a href={searchString()} target="_blank" rel="noopener noreferrer">
             Prøv gjerne å søke på google ved å trykke på denne linken mens du
             venter!
           </a>
+        </div>
+        <div className="header">
+          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
         </div>
       </div>
     </div>
