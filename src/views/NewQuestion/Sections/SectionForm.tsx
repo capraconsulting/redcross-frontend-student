@@ -113,6 +113,7 @@ const SectionForm = (props: RouteComponentProps) => {
         files: results,
         themes: selectedList,
       };
+      console.log(questionForm.files);
       postQuestion(questionForm).then(() => {
         history.push({ pathname: '/questions/new/success' });
       });

@@ -1,5 +1,6 @@
 import {
-  IGenerateRoomMessage, ILeaveMessage,
+  IGenerateRoomMessage,
+  ILeaveMessage,
   IQueueMessage,
   IReconnectMessage,
   ISocketMessage,
@@ -29,7 +30,7 @@ export const createReconnectMessage = (uniqueID: string): ISocketMessage => {
 };
 
 export const createLeaveMessage = (uniqueID: string): ISocketMessage => {
-  const msg: ILeaveMessage = {uniqueID};
+  const msg: ILeaveMessage = { uniqueID };
   return createMessage(msg, STUDENT_LEAVE);
 };
 

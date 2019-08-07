@@ -14,7 +14,11 @@ export const SectionAnswer = (props: IProps) => {
       <p className="showAnswer--info" id="showAnswer--info">
         {'Svaret er skrevet av en frivillig hos Digital Leksehjelp.'}
       </p>
-      {answerText}
+      <div
+        dangerouslySetInnerHTML={{
+          __html: answerText ? answerText : '<p>No answer<p>',
+        }}
+      />
     </div>
   );
 };

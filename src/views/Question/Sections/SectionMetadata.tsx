@@ -8,14 +8,14 @@ import '../../../styles/QuestionPage.less';
 
 interface IProps {
   subject;
-  questionDate?: string;
+  answerDate?: string;
 }
 
 export const SectionMetadata = (props: IProps) => {
-  const { subject, questionDate } = props;
+  const { subject, answerDate } = props;
   return (
     <div className="metadata">
-      {subject} {NorwegianDate(new Date(questionDate || ''))}
+      {subject} {NorwegianDate(new Date(answerDate || ''))}
     </div>
   );
 };
