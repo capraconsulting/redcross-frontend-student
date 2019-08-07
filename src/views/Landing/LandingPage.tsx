@@ -1,6 +1,5 @@
 // Sections for this page
 import React, { useContext, useEffect, useState } from 'react';
-import Zoom from 'react-reveal/Zoom';
 
 //Styles
 import '../../styles/LandingPage.less';

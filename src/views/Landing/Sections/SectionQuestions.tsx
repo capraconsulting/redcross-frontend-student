@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { withRouter, RouteComponentProps } from 'react-router';
-
+import Zoom from 'react-reveal/Zoom';
 //Material UI
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -20,7 +20,7 @@ const SectionQuestions = (props: RouteComponentProps) => {
         onClick={() => history.push('questions')}
         className="sectioncontainer--badge_new"
       >
-        Alltid åpen!
+        <Zoom>Alltid åpen!</Zoom>
       </div>
       <div className="sectioncontainer--header">Spørsmål og svar</div>
       <p className="sectioncontainer--text" id="sectionquestions--text">

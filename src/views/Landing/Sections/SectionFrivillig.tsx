@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
+import Zoom from 'react-reveal/Zoom';
 
 //Styles
 import '../../../styles/LandingPage.less';
@@ -27,7 +28,7 @@ const SectionFrivillig = (props: RouteComponentProps) => {
           className="volunteer--image--badge_new"
           onClick={() => history.push('frivillige')}
         >
-          Bli frivillig!
+          <Zoom>Bli frivillig!</Zoom>
         </a>
         <img
           src={require('../../../assets/images/volunteers_1.jpg')}

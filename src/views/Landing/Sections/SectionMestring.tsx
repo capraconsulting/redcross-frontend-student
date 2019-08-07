@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
+import Zoom from 'react-reveal/Zoom';
+
 // Styes
 import '../../../styles/LandingPage.less';
 import { ISubject } from '../../../interfaces';
@@ -67,7 +69,9 @@ const SectionMestring = (props: RouteComponentProps) => {
     <div className="help">
       <div>
         <div className="mestring">
-          <div className="mestring--badge_new">Ny tjeneste!</div>
+          <div className="mestring--badge_new">
+            <Zoom>Ny tjeneste!</Zoom>
+          </div>
           <a
             onClick={() => history.push(`mestring`)}
             style={{ textDecoration: 'none', color: 'black' }}
