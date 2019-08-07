@@ -46,7 +46,7 @@ const QuestionPage = (props: IProps, state: IState) => {
           <div className="showAnswer">
             <h1 className="showAnswer--header">{question.title}</h1>
             <SectionMetadata
-              questionDate={question.questionDate}
+              answerDate={question.answerDate}
               subject={question.subject}
             />
             <SectionQuestion
