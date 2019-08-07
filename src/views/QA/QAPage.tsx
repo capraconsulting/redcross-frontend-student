@@ -74,7 +74,7 @@ export const QA = (props: IProps & RouteComponentProps) => {
 
   //Fetch subject alternatives
   useEffect(() => {
-    getSubjectList('?isMestring=false').then(setSubjects);
+    getSubjectList('?isMestring=0').then(setSubjects);
   }, []);
 
   // Runs every time pagination event occures (every time page changes).

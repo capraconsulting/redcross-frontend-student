@@ -26,7 +26,7 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
   const { history } = props;
 
   useEffect(() => {
-    getSubjectList('?isMestring=false').then(data => {
+    getSubjectList('?isMestring=0').then(data => {
       const tmpSubject = data.find(
         subject => subject.subjectTitle === studentInfo.subject,
       );

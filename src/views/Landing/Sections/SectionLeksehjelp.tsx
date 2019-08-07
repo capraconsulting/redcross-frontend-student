@@ -49,7 +49,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   useEffect(() => {
     try {
-      getSubjectList('?isMestring=false').then(setSubjects);
+      getSubjectList('?isMestring=0').then(setSubjects);
     } catch (e) { }
   }, []);
 

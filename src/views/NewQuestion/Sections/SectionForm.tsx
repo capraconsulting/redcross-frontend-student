@@ -73,7 +73,7 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   useEffect(() => {
-    getSubjectList('?isMestring=false').then(setSubjects);
+    getSubjectList('?isMestring=0').then(setSubjects);
   }, []);
 
   useEffect(() => {
