@@ -10,6 +10,8 @@ import {
   addMessageAction,
   chatClosedAction,
   chatReducer,
+  cleanChatAction,
+  cleanStudentInfoAction,
   hasLeftChatAction,
   initStudentInfoAction,
   queueInfoReducer,
@@ -22,7 +24,7 @@ import {
   IAction,
 } from '../interfaces';
 
-import { createReconnectMessage } from '../services/message-service';
+import { createLeaveMessage, createReconnectMessage } from '../services/message-service';
 
 export const SocketContext = createContext({
   uniqueID: '' as string,
@@ -32,8 +34,11 @@ export const SocketContext = createContext({
   socketSend(message: ISocketMessage): void {},
   talkyID: '' as string,
   imgUrl: '' as string,
+  cleanState(): void {},
+
   dispatchStudentInfo(action: IAction): void {},
   studentInfo: {} as IQueueMessage,
+  inQueue: false as boolean,
 });
 
 let socket;
@@ -46,6 +51,7 @@ const getSocket = (): WebSocket => {
 };
 
 export const SocketProvider: FunctionComponent = ({ children }: any) => {
+  const [inQueue, setInQueue] = useState<boolean>(false);
   const [uniqueID, setUniqueID] = useState<string>('');
   const [roomID, setRoomID] = useState<string>('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
@@ -118,6 +124,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
       dispatchStudentInfo(
         initStudentInfoAction(parsedStudentInfoFromSessionStorage),
       );
+      setInQueue(true);
     }
   };
 
@@ -154,9 +161,29 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
       case CONFIRMED_QUEUE:
+        setInQueue(true);
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
         break;
     }
+  };
+
+  const cleanState = (): void => {
+    // Clean sessionStorage
+    sessionStorage.clear();
+
+    // Clean state
+    dispatchMessages(cleanChatAction());
+    dispatchStudentInfo(cleanStudentInfoAction());
+
+    socketSend(createLeaveMessage(uniqueID));
+    setTalkyID('');
+    setRoomID('');
+    setUniqueID('');
+    setInQueue(false);
+
+    // clean socket
+    socket = null;
+    getSocket().onmessage = socketHandler;
   };
 
   useEffect(() => {
@@ -207,6 +234,8 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         dispatchStudentInfo,
         talkyID,
         imgUrl,
+        inQueue,
+        cleanState,
       }}
     >
       {children}

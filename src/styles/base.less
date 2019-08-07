@@ -152,6 +152,13 @@
     font-size: 0.6rem;
   }
 
+  &-warning {
+    background-color: @danger-color;
+    &:hover {
+      background-color: @danger-hover-color;
+    }
+  }
+
   &-submit {
     background-color: @secondary-color;
 
@@ -223,14 +230,15 @@ textarea {
   color: inherit;
   padding: 0.5rem;
   font: inherit;
-  outline: inherit;
+  outline: none;
   margin: 0;
   width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all .2s ease-in-out;
   &:hover {
-    filter: brightness(80%);
+    transform: scale(1.1);
   }
 }
 

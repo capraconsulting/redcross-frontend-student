@@ -17,6 +17,10 @@ export const removeThemeAction = createAction('REMOVE_THEME', callback => {
   return (theme: string) => callback({ theme });
 });
 
+export const cleanStudentInfoAction = createAction('CLEAN', callback => {
+  return () => callback({});
+});
+
 const handleSetIntroText = (state: IQueueMessage, action: IAction) => {
   state.introText = action.payload.introText;
   return { ...state };
@@ -44,10 +48,15 @@ const handleRemoveTheme = (state: IQueueMessage, action: IAction) => {
   };
 };
 
+const handleCleanStudentInfo = (state: IQueueMessage, action: IAction) => {
+  return {} as IQueueMessage;
+};
+
 export const queueInfoReducer = createReducer<IQueueMessage, IAction>(
   {} as IQueueMessage,
 )
   .handleAction(initStudentInfoAction, handleInitStudentInfo)
   .handleAction(setIntroTextAction, handleSetIntroText)
   .handleAction(addThemeAction, handleAddTheme)
-  .handleAction(removeThemeAction, handleRemoveTheme);
+  .handleAction(removeThemeAction, handleRemoveTheme)
+  .handleAction(cleanStudentInfoAction, handleCleanStudentInfo);

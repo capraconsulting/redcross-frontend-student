@@ -13,3 +13,4 @@ export * from './ISocketMessage';
 export * from './IOpen';
 export * from './ITheme';
 export * from './IVolunteerSubject';
+export * from './ILeaveMessage';

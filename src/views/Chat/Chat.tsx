@@ -24,7 +24,6 @@ const Chat = () => {
     }
   }, [messages]);
 
-
   return (
     <div className={'chat'}>
       <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />
