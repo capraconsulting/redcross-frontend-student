@@ -11,4 +11,4 @@ export { default as DropZone } from './DropZoneComponent';
 export { default as Checkbox } from './CheckBox';
 export { default as InputSearch } from './InputSearch';
 export { default as ModalComponent } from './ModalComponent';
-export { default as DirectionSnackbar } from './SnackBarComponent';
+export { default as Snackbar } from './SnackBarComponent';

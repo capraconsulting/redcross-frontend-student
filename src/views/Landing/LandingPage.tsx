@@ -13,7 +13,7 @@ import {
   SectionFrivillig,
 } from './Sections';
 //Components
-import { DirectionSnackbar, ModalComponent } from '../../ui/components';
+import { Snackbar, ModalComponent } from '../../ui/components';
 import Button from '@material-ui/core/Button';
 
 //Services
@@ -22,7 +22,9 @@ import { SocketContext } from '../../providers';
 
 const LandingPage = (props: RouteComponentProps) => {
   const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
-  const { inQueue, roomID, cleanState } = useContext(SocketContext);
+  const { inQueue, roomID, cleanState, studentInfo } = useContext(
+    SocketContext,
+  );
   const [isOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { history } = props;
@@ -36,6 +38,7 @@ const LandingPage = (props: RouteComponentProps) => {
     history.push('/');
   };
 
+  const { chatType, positionInQueue } = studentInfo;
   return (
     <div className="content">
       <SectionHero />
@@ -53,28 +56,55 @@ const LandingPage = (props: RouteComponentProps) => {
         </div>
       )}
       <SectionFrivillig />
-      <DirectionSnackbar
-        event={inQueue}
-        content={
-          roomID ? 'Du er i en samtale med en frivillig' : 'Du står i kø'
-        }
-        actions={[
-          <Button
-            key="undo"
-            color="secondary"
-            size="small"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Avslutt
-          </Button>,
-        ]}
-      />
+      {
+        /**Show if user is already in a queue or active chat session */
+        <Snackbar
+          event={inQueue}
+          content={
+            inQueue && roomID
+              ? 'Du er i en samtale med en frivillig'
+              : 'Du står i kø for' +
+                (chatType && chatType.includes('LEKSEHJELP')
+                  ? ' leksehjelp, '
+                  : ' mestring, ') +
+                (positionInQueue
+                  ? 'som nummer ' + positionInQueue + ' i køen.'
+                  : '')
+          }
+          actions={[
+            <Button
+              key="do"
+              color="primary"
+              size="small"
+              onClick={() =>
+                history.push(
+                  roomID
+                    ? '/chat'
+                    : chatType == 'LEKSEHJELP_TEXT'
+                    ? '/leksehjelp'
+                    : '/mestring',
+                )
+              }
+            >
+              {roomID ? 'Gå til chat' : 'Åpne kø'}
+            </Button>,
+            <Button
+              key="undo"
+              color="secondary"
+              size="small"
+              onClick={() => setIsModalOpen(true)}
+            >
+              {roomID ? 'Avslutt samtalen' : 'Forlat kø'}
+            </Button>,
+          ]}
+        />
+      }
       {isModalOpen && (
         <ModalComponent
           content={
             roomID
               ? 'Er du sikker på at du vil avslutte samtalen?'
-              : 'Er du sikker på at du vil avslutte køen?'
+              : 'Er du sikker på at du vil forlate køen?'
           }
           warningButtonText="Avslutt"
           warningCallback={() => cancelQueueAndChat()}

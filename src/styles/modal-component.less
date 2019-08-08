@@ -1,4 +1,4 @@
-@import "colors";
+@import 'colors';
 
 .backdrop {
   height: 100%;
@@ -7,6 +7,7 @@
   top: 0;
   left: 0;
   background-color: @backdrop-color;
+  z-index: 9;
 }
 
 .modal {
@@ -21,7 +22,7 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  z-index: 10;
   background-color: @modal-color;
   > .content-text {
     padding: 2rem;
@@ -44,10 +45,10 @@
         -moz-appearance: none;
         font-size: 1rem;
         height: 3rem;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
       > .button {
-        margin: 0 0 .5rem .5rem;
+        margin: 0 0 0.5rem 0.5rem;
       }
     }
   }
@@ -58,9 +59,9 @@
     border: none;
   }
 }
-.available-volunteers{
+.available-volunteers {
   background-color: #d5d3d1;
-  flex:1;
+  flex: 1;
 }
 
 .x-container {

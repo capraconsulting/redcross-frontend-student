@@ -7,7 +7,6 @@
   bottom: 0;
   left: 0;
   background-color: @white;
-  opacity: 0.8;
   color: @white;
 
   &--container {
@@ -16,25 +15,15 @@
     @media (min-width: 768px) {
       padding: 0.1rem 2.1rem;
     }
-    &--text {
-      color: @hero-black;
-      font-size: 0.9rem;
-      @media (min-width: 380px) {
-        font-size: 1.2rem;
-      }
-      font-weight: normal;
-      float: right;
-      line-height: 1.3;
-      vertical-align: center;
-
-      &--link {
-        color: @hero-black;
-        cursor: pointer;
-      }
-    }
     &--logo {
       float: left;
       margin-top: 3px;
+      cursor: pointer;
+    }
+
+    &--icon {
+      float: right;
+      margin-bottom: 7px;
       cursor: pointer;
     }
   }

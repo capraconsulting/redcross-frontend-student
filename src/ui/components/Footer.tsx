@@ -1,30 +1,26 @@
 import React from 'react';
 import Zoom from 'react-reveal/Zoom';
+import { SocialIcon } from 'react-social-icons';
 
 //Styles
 import '../../styles/Footer.less';
 
 const Footer = () => (
   <div className="footer">
-    <Zoom>
-      <div className="footer--container">
-        <a href="https://www.rodekors.no/" className="footer--container--logo">
-          <img
-            className="footer--rk_logo"
-            src={require('../../assets/images/rk_logo.png')}
-          />
-        </a>
-        <h1 className="footer--container--text" id="footer--content">
-          Følg oss på{' '}
-          <a
-            className="footer--container--text--link"
-            href="https://www.facebook.com/digitalleksehjelp/"
-          >
-            Facebook
-          </a>
-        </h1>
-      </div>
-    </Zoom>
+    <div className="footer--container">
+      <a href="https://www.rodekors.no/" className="footer--container--logo">
+        <img
+          className="footer--rk_logo"
+          src={require('../../assets/images/rk_logo.png')}
+        />
+      </a>
+      <a className="footer--container--icon" id="footer--content">
+        <SocialIcon
+          url="https://www.facebook.com/digitalleksehjelp/"
+          style={{ height: 40, width: 40 }}
+        />
+      </a>
+    </div>
   </div>
 );
 

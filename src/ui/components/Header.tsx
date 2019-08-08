@@ -43,14 +43,11 @@ export const Header = (props: RouteComponentProps) => {
 
       {inQueue && (
         <div className="header-button-container">
-          <p>
-            {roomID ? 'Du er i en samtale med en frivillig' : 'Du står i kø'}
-          </p>
           <button
             className="header-button"
             onClick={() => setIsModalOpen(true)}
           >
-            Avslutt
+            {roomID ? 'Avslutt samtale' : 'Forlat kø'}
           </button>
         </div>
       )}
