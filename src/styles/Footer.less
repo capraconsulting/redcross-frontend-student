@@ -1,41 +1,27 @@
 @import 'colors.less';
 
-.footer {
-  height: 3rem;
-  width: 100%;
+.facebook-icon {
+  height: 2.2rem;
+  @media (max-width: 550px) {
+    height: 1.9rem;
+  }
   position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: @white;
-  color: @white;
+  bottom: 1rem;
+  vertical-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 2px;
+  right: 1rem;
+}
 
-  &--container {
-    padding: 0.1rem 1rem;
-
-    @media (min-width: 768px) {
-      padding: 0.1rem 2.1rem;
-    }
-    &--logo {
-      float: left;
-      margin-top: 3px;
-      cursor: pointer;
-    }
-
-    &--icon {
-      float: right;
-      margin-bottom: 7px;
-      cursor: pointer;
-    }
+.rk-icon {
+  height: 2.1rem;
+  @media (max-width: 550px) {
+    height: 1.9rem;
   }
-
-  &--rk_logo {
-    height: 2.2rem;
-    @media (max-width: 550px) {
-      height: 1.9rem;
-    }
-    vertical-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    margin-bottom: 2px;
-  }
+  bottom: 1rem;
+  vertical-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  left: 1rem;
 }
