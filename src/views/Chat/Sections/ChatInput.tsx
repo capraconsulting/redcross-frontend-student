@@ -84,7 +84,7 @@ const ChatInput = (props: IProps) => {
         {tempFiles.map((file, index) => {
           const { name } = file;
           return (
-            <li key={index}>
+            <li className="element" key={index}>
               <Zoom>
                 <span>
                   <a

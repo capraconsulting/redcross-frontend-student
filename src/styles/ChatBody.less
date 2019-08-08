@@ -1,11 +1,17 @@
 @import 'colors';
 
 .cb {
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
+  padding-bottom: 1.5rem;
+  @media (max-width: 550px) {
+    padding-bottom: 0.5rem;
+  }
+  @media (max-width: 349px) {
+    padding-bottom: 0.3rem;
+  }
 
   > .display {
     width: 100%;
@@ -26,4 +32,3 @@
     }
   }
 }
-
