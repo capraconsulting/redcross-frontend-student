@@ -8,22 +8,18 @@ import '../../styles/Footer.less';
 
 const Footer = () => (
   <div>
-    <Zoom>
-      <a href="https://www.rodekors.no/" className="footer--container--logo">
-        <img
-          className="rk-icon"
-          src={require('../../assets/images/rk_logo.png')}
-        />
-      </a>
-    </Zoom>
-    <Zoom>
-      <a className="facebook-icon" id="footer--content">
-        <SocialIcon
-          url="https://www.facebook.com/digitalleksehjelp/"
-          style={{ height: 40, width: 40 }}
-        />
-      </a>
-    </Zoom>
+    <a href="https://www.rodekors.no/" className="rk_logo_container">
+      <img
+        className="rk-icon"
+        src={require('../../assets/images/rk_logo.png')}
+      />
+    </a>
+    <a className="facebook-icon" id="footer--content">
+      <SocialIcon
+        url="https://www.facebook.com/digitalleksehjelp/"
+        style={{ height: '2rem', width: '2rem' }}
+      />
+    </a>
   </div>
 );
 

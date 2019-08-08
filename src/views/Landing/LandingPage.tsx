@@ -79,14 +79,14 @@ const LandingPage = (props: RouteComponentProps) => {
               onClick={() =>
                 history.push(
                   roomID
-                    ? '/chat'
+                    ? '/meldinger'
                     : chatType == 'LEKSEHJELP_TEXT'
                     ? '/leksehjelp'
                     : '/mestring',
                 )
               }
             >
-              {roomID ? 'Gå til chat' : 'Åpne kø'}
+              {roomID ? 'Gå til samtalen' : 'Åpne kø'}
             </Button>,
             <Button
               key="undo"
