@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 //Styles
 import '../../../styles/LandingPage.less';
@@ -14,13 +16,15 @@ import {
   getSubjectList,
   getSubjectStatus,
 } from '../../../services/api-service';
-import { SocketContext } from '../../../providers';
 import { QueueMessageBuilder } from '../../../services/message-service';
+
+//Providers & reducers
+import { SocketContext } from '../../../providers';
+import { initStudentInfoAction } from '../../../reducers';
+
+//Configurations
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { initStudentInfoAction } from '../../../reducers';
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;

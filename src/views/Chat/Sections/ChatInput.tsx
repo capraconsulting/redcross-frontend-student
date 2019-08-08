@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
-import Zoom from 'react-reveal/Zoom';
 
 //Services
 import { TextMessageBuilder } from '../../../services/message-service';
@@ -10,11 +9,8 @@ import { uploadFileToAzureBlobStorage } from '../../../services/azure-service';
 import '../../../styles/ChatInput.less';
 import Cross from '../../../assets/Cross';
 
-//Components
-import { IconButton } from '../../../ui/components';
-
 //Interfaces
-import { IFile, ISocketMessage } from '../../../interfaces';
+import { IFile } from '../../../interfaces';
 import { SocketContext } from '../../../providers';
 import { addMessageAction } from '../../../reducers';
 

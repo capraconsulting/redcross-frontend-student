@@ -1,18 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SocketContext } from '../../providers';
-import { QueueMessageBuilder } from '../../services/message-service';
-import { MESSAGE_TYPES } from '../../../config';
-import '../../styles/LeksehjelpPage.less';
 import { RouteComponentProps } from 'react-router';
+import { Option } from 'react-dropdown';
+import Textarea from 'react-textarea-autosize';
+
+//Components and styles
+import { Picker } from '../../ui/components';
+import '../../styles/LeksehjelpPage.less';
+
+//Services
+import { getSubjectList } from '../../services/api-service';
+import { QueueMessageBuilder } from '../../services/message-service';
+
+//Providers and reducers
+import { SocketContext } from '../../providers';
 import {
   addThemeAction,
   removeThemeAction,
   setIntroTextAction,
 } from '../../reducers';
-import { Picker } from '../../ui/components';
-import { Option } from 'react-dropdown';
-import { getSubjectList } from '../../services/api-service';
-import Textarea from 'react-textarea-autosize';
+
+//Config
+import { MESSAGE_TYPES } from '../../../config';
 
 const LeksehjelpPage = (props: RouteComponentProps) => {
   const {

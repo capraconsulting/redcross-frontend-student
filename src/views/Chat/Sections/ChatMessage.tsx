@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import '../../../styles/ChatMessage.less';
-import { NorwegianTime } from '../../../services/date-service';
 import { ITextMessage } from '../../../interfaces';
-import { SocketContext } from '../../../providers';
 
 interface IProps {
   message: ITextMessage;
