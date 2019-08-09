@@ -15,7 +15,8 @@ import {
   hasLeftChatAction,
   initStudentInfoAction,
   queueInfoReducer,
-  reconnectChatAction, setFrivilligNameAction,
+  reconnectChatAction,
+  setFrivilligNameAction,
 } from '../reducers';
 import {
   IQueueMessage,

@@ -97,7 +97,7 @@ class QueueMessage {
       subject: this.subject,
       chatType: this.chatType,
       themes: this.themes,
-      volName: this.volName
+      volName: this.volName,
     };
     return createMessage(msg, this.messageType);
   }

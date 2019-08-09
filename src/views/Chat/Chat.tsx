@@ -9,12 +9,7 @@ import { SocketContext } from '../../providers';
 import { addMessageAction } from '../../reducers';
 
 const Chat = () => {
-  const {
-    uniqueID,
-    messages,
-    roomID,
-    studentInfo
-  } = useContext(SocketContext);
+  const { uniqueID, messages, roomID, studentInfo } = useContext(SocketContext);
 
   useEffect(() => {
     const display = document.querySelector('.display');
@@ -25,7 +20,10 @@ const Chat = () => {
 
   return (
     <div className={'chat'}>
-      <ChatHeader connectedWith={studentInfo.volName} subject={studentInfo.subject} />
+      <ChatHeader
+        connectedWith={studentInfo.volName}
+        subject={studentInfo.subject}
+      />
       <ChatBody messages={messages} />
       <ChatInput uniqueID={uniqueID} roomID={roomID} />
     </div>
