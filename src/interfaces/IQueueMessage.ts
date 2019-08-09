@@ -7,4 +7,5 @@ export interface IQueueMessage {
   introText: string;
   chatType: string;
   positionInQueue?: number;
+  volName: string;
 }

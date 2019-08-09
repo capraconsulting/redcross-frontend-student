@@ -21,6 +21,10 @@ export const cleanStudentInfoAction = createAction('CLEAN', callback => {
   return () => callback({});
 });
 
+export const setFrivilligNameAction = createAction('FRIV_NAME', callback => {
+  return (volName: string) => callback({ volName });
+});
+
 const handleSetIntroText = (state: IQueueMessage, action: IAction) => {
   state.introText = action.payload.introText;
   return { ...state };
@@ -52,6 +56,13 @@ const handleCleanStudentInfo = (state: IQueueMessage, action: IAction) => {
   return {} as IQueueMessage;
 };
 
+const handleSetFrivilligName = (state: IQueueMessage, action: IAction) => {
+  return {
+    ...state,
+    volName: action.payload.volName,
+  };
+};
+
 export const queueInfoReducer = createReducer<IQueueMessage, IAction>(
   {} as IQueueMessage,
 )
@@ -59,4 +70,5 @@ export const queueInfoReducer = createReducer<IQueueMessage, IAction>(
   .handleAction(setIntroTextAction, handleSetIntroText)
   .handleAction(addThemeAction, handleAddTheme)
   .handleAction(removeThemeAction, handleRemoveTheme)
-  .handleAction(cleanStudentInfoAction, handleCleanStudentInfo);
+  .handleAction(cleanStudentInfoAction, handleCleanStudentInfo)
+  .handleAction(setFrivilligNameAction, handleSetFrivilligName);

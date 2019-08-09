@@ -61,6 +61,7 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
       .withThemes(studentInfo.themes)
       .withIntroText(studentInfo.introText)
       .withUniqueID(studentInfo.uniqueID)
+      .withVolName(studentInfo.volName)
       .build();
     socketSend(msg.createMessage);
   };

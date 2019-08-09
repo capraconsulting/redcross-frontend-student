@@ -15,7 +15,7 @@ import {
   hasLeftChatAction,
   initStudentInfoAction,
   queueInfoReducer,
-  reconnectChatAction,
+  reconnectChatAction, setFrivilligNameAction,
 } from '../reducers';
 import {
   IQueueMessage,
@@ -153,6 +153,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         break;
       case DISTRIBUTE_ROOM:
         setRoomID(payload['roomID']);
+        dispatchStudentInfo(setFrivilligNameAction(payload['volName']));
         setTalkyID(payload['talkyID']);
         break;
       case CONNECTION:

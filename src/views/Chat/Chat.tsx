@@ -11,10 +11,9 @@ import { addMessageAction } from '../../reducers';
 const Chat = () => {
   const {
     uniqueID,
-    socketSend,
-    dispatchMessages,
     messages,
     roomID,
+    studentInfo
   } = useContext(SocketContext);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const Chat = () => {
 
   return (
     <div className={'chat'}>
-      <ChatHeader connectedWith="Caroline Sandsbråten" subject="Engelsk" />
+      <ChatHeader connectedWith={studentInfo.volName} subject={studentInfo.subject} />
       <ChatBody messages={messages} />
       <ChatInput uniqueID={uniqueID} roomID={roomID} />
     </div>

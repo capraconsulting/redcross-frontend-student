@@ -150,7 +150,7 @@ const ChatInput = (props: IProps) => {
                   let { files } = event.target;
                   let newFiles = [] as any;
                   let steps = (files && files.length) || 0;
-                  for (var i = 0; i < steps; i++) {
+                  for (let i = 0; i < steps; i++) {
                     let item = (files && files.item(i)) || 'null';
                     newFiles.push(item);
                   }

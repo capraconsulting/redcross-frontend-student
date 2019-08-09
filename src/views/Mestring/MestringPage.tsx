@@ -52,6 +52,7 @@ export const MestringPage = (props: RouteComponentProps) => {
       .withSubject(studentInfo.subject)
       .withIntroText(studentInfo.introText)
       .withUniqueID(studentInfo.uniqueID)
+      .withVolName(studentInfo.volName)
       .build();
     socketSend(msg.createMessage);
   };

@@ -74,6 +74,7 @@ class QueueMessage {
   private readonly chatType: string;
   private readonly themes: string[];
   private readonly messageType: string;
+  private readonly volName: string;
 
   public constructor(queueMessageBuilder: QueueMessageBuilder) {
     this.uniqueID = queueMessageBuilder.uniqueID;
@@ -84,6 +85,7 @@ class QueueMessage {
     this.chatType = queueMessageBuilder.chatType;
     this.themes = queueMessageBuilder.themes;
     this.messageType = queueMessageBuilder.messageType;
+    this.volName = queueMessageBuilder.volName;
   }
 
   public get createMessage(): ISocketMessage {
@@ -95,6 +97,7 @@ class QueueMessage {
       subject: this.subject,
       chatType: this.chatType,
       themes: this.themes,
+      volName: this.volName
     };
     return createMessage(msg, this.messageType);
   }
@@ -109,9 +112,15 @@ export class QueueMessageBuilder {
   private _subject: string;
   private _chatType: string;
   private _themes: string[];
+  private _volName: string;
 
   public constructor(messageType: string) {
     this._messageType = messageType;
+    return this;
+  }
+
+  public withVolName(value: string): QueueMessageBuilder {
+    this._volName = value;
     return this;
   }
 
@@ -152,6 +161,10 @@ export class QueueMessageBuilder {
 
   public build(): QueueMessage {
     return new QueueMessage(this);
+  }
+
+  public get volName(): string {
+    return this._volName;
   }
 
   public get uniqueID(): string {
