@@ -1,6 +1,7 @@
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
 fixture`FrivilligePage`
+  .meta('requireBackend', 'false')
   .page('http://localhost:3000/frivillige')
   .beforeEach(async () => {
     await waitForReact();
