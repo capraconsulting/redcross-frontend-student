@@ -48,7 +48,7 @@
     "source-map-loader": "0.2.4",
     "style-loader": "0.23.1",
     "testcafe": "1.4.1",
-    "testcafe-react-selectors": "3.1.0",
+    "testcafe-react-selectors": "3.2.0",
     "ts-jest": "24.0.2",
     "typescript": "3.5.3",
     "webpack": "4.39.1",
