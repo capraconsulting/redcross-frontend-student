@@ -31,6 +31,11 @@ import {
 import gradeList from '../../../grades';
 import { emailValidatorRegExp } from '../../../../config';
 
+//Mixpanel
+import { MixpanelEvents } from '../../../mixpanel-events';
+
+declare const mixpanel: any;
+
 const defaultOptions = {
   value: '',
   label: '',
@@ -102,6 +107,7 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const handleSubmit = () => {
+    mixpanel.track(MixpanelEvents.NEW_QUESTION_SCHEMA);
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,
