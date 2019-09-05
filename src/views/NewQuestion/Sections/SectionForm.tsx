@@ -33,8 +33,7 @@ import { emailValidatorRegExp } from '../../../../config';
 
 //Mixpanel
 import { MixpanelEvents } from '../../../mixpanel-events';
-
-declare const mixpanel: any;
+import { MixpanelService } from '../../../services/mixpanel-service';
 
 const defaultOptions = {
   value: '',
@@ -107,7 +106,7 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const handleSubmit = () => {
-    mixpanel.track(MixpanelEvents.NEW_QUESTION_SCHEMA);
+    MixpanelService.track(MixpanelEvents.NEW_QUESTION_SCHEMA);
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,
