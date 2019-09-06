@@ -40,36 +40,35 @@ toast.configure({
 });
 
 export const SocketContext = createContext({
-  uniqueID: '' as string,
-  roomID: '' as string,
+  uniqueID: '',
+  roomID: '',
   messages: [] as ITextMessage[],
-  dispatchMessages(action: IAction): void {},
-  socketSend(message: ISocketMessage): void {},
-  talkyID: '' as string,
-  imgUrl: '' as string,
-  cleanState(): void {},
-
-  dispatchStudentInfo(action: IAction): void {},
+  dispatchMessages(action: IAction) {},
+  socketSend(message: ISocketMessage) {},
+  talkyID: '',
+  imgUrl: '',
+  cleanState() {},
+  dispatchStudentInfo(action: IAction) {},
   studentInfo: {} as IQueueMessage,
-  inQueue: false as boolean,
+  inQueue: false,
 });
 
-let socket;
-
-const getSocket = (): WebSocket => {
-  if (!socket) {
-    socket = new WebSocket(CHAT_URL);
-  }
-  return socket;
+const useSessionStorageBinding = (key: string, value: string) => {
+  useEffect(() => {
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, value);
+    }
+  }, [value]);
 };
 
-export const SocketProvider: FunctionComponent = ({ children }: any) => {
-  const [inQueue, setInQueue] = useState<boolean>(false);
-  const [uniqueID, setUniqueID] = useState<string>('');
-  const [roomID, setRoomID] = useState<string>('');
+export const SocketProvider: FunctionComponent = ({ children }) => {
+  const [socket, setSocket] = useState(new WebSocket(CHAT_URL));
+  const [inQueue, setInQueue] = useState(false);
+  const [uniqueID, setUniqueID] = useState('');
+  const [roomID, setRoomID] = useState('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
-  const [talkyID, setTalkyID] = useState<string>('');
-  const [imgUrl, setImgUrl] = useState<string>('');
+  const [talkyID, setTalkyID] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
   const [studentInfo, dispatchStudentInfo] = useReducer(
     queueInfoReducer,
     {} as IQueueMessage,
@@ -86,7 +85,7 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   } = MESSAGE_TYPES;
 
   const socketSend = (message: ISocketMessage): void => {
-    getSocket().send(JSON.stringify(message));
+    socket.send(JSON.stringify(message));
   };
 
   const reconnectHandler = (uniqueID: string): void => {
@@ -94,8 +93,12 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
 
     if (oldUniqueID) {
       setUniqueID(oldUniqueID);
-      const msg = createReconnectMessage(oldUniqueID);
-      socketSend(msg);
+      socketSend({
+        payload: {
+          uniqueID: oldUniqueID,
+        },
+        msgType: RECONNECT,
+      });
     } else {
       setUniqueID(uniqueID);
     }
@@ -144,7 +147,6 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
     const { msgType, payload } = parsedMessage;
-    let action;
 
     switch (msgType) {
       case TEXT:
@@ -161,12 +163,10 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
         reconnectHandler(payload['uniqueID']);
         break;
       case LEAVE_CHAT:
-        action = hasLeftChatAction(payload['name']);
-        dispatchMessages(action);
+        dispatchMessages(hasLeftChatAction(payload['name']));
         break;
       case CLOSE_CHAT:
-        action = chatClosedAction();
-        dispatchMessages(action);
+        dispatchMessages(chatClosedAction());
         break;
       case RECONNECT:
         reconnectSuccessHandler(payload['roomIDs']);
@@ -197,9 +197,15 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
     setInQueue(false);
 
     // clean socket
-    socket = null;
-    getSocket().onmessage = socketHandler;
+    setSocket(new WebSocket(CHAT_URL));
+    socket.onmessage = socketHandler;
   };
+
+  useSessionStorageBinding('roomID', roomID);
+
+  useSessionStorageBinding('talkyID', talkyID);
+
+  useSessionStorageBinding('oldUniqueID', uniqueID);
 
   useEffect(() => {
     if (messages && messages.length > 0) {
@@ -208,33 +214,13 @@ export const SocketProvider: FunctionComponent = ({ children }: any) => {
   }, [messages]);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('roomID')) {
-      sessionStorage.setItem('roomID', roomID);
-    }
-  }, [roomID]);
-
-  useEffect(() => {
-    const talkyIDFromSessionStorage = sessionStorage.getItem('talkyID');
-    if (!talkyIDFromSessionStorage) {
-      sessionStorage.setItem('talkyID', talkyID);
-    }
-  }, [talkyID]);
-
-  useEffect(() => {
-    const oldUniqueIDFromSessionStorage = sessionStorage.getItem('oldUniqueID');
-    if (!oldUniqueIDFromSessionStorage) {
-      sessionStorage.setItem('oldUniqueID', uniqueID);
-    }
-  }, [uniqueID]);
-
-  useEffect(() => {
     if (studentInfo.subject && studentInfo.subject.length > 0) {
       sessionStorage.setItem('studentInfo', JSON.stringify(studentInfo));
     }
   }, [studentInfo]);
 
   useEffect(() => {
-    getSocket().onmessage = socketHandler;
+    socket.onmessage = socketHandler;
   }, []);
 
   return (

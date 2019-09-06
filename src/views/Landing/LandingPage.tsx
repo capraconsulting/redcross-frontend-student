@@ -19,6 +19,8 @@ import Button from '@material-ui/core/Button';
 //Services
 import { getIsLeksehjelpOpen } from '../../services/api-service';
 import { SocketContext } from '../../providers';
+import { MixpanelService } from '../../services/mixpanel-service';
+import { MixpanelEvents } from '../../mixpanel-events';
 
 const LandingPage = (props: RouteComponentProps) => {
   const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
@@ -36,6 +38,15 @@ const LandingPage = (props: RouteComponentProps) => {
     cleanState();
     setIsModalOpen(false);
     history.push('/');
+  };
+
+  const trackStudentLeftQueue = () => {
+    MixpanelService.track(MixpanelEvents.STUDENT_LEFT_QUEUE, {
+      type: studentInfo.chatType,
+      grade: studentInfo.grade,
+      subject: studentInfo.subject,
+      theme: studentInfo.themes,
+    });
   };
 
   const { chatType, positionInQueue } = studentInfo;
@@ -107,7 +118,10 @@ const LandingPage = (props: RouteComponentProps) => {
               : 'Er du sikker på at du vil forlate køen?'
           }
           warningButtonText="Avslutt"
-          warningCallback={() => cancelQueueAndChat()}
+          warningCallback={() => {
+            cancelQueueAndChat();
+            trackStudentLeftQueue();
+          }}
           closingCallback={() => setIsModalOpen(false)}
         />
       )}

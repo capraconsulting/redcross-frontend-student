@@ -106,7 +106,12 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const handleSubmit = () => {
-    MixpanelService.track(MixpanelEvents.NEW_QUESTION_SCHEMA);
+    MixpanelService.track(MixpanelEvents.NEW_QUESTION_SCHEMA, {
+      subject: subject.label,
+      grade: studentGrade.label,
+      theme: selectedList,
+      canBePublic: isPublic,
+    });
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,

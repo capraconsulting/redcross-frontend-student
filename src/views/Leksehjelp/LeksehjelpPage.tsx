@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Option } from 'react-dropdown';
 import Textarea from 'react-textarea-autosize';
@@ -22,7 +27,9 @@ import {
 //Config
 import { MESSAGE_TYPES } from '../../../config';
 
-const LeksehjelpPage = (props: RouteComponentProps) => {
+const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
+  history,
+}) => {
   const {
     socketSend,
     studentInfo,
@@ -30,8 +37,7 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
     roomID,
     talkyID,
   } = useContext(SocketContext);
-  const [themes, setThemes] = useState<Option[]>();
-  const { history } = props;
+  const [themes, setThemes] = useState<Option[]>([]);
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
@@ -53,17 +59,10 @@ const LeksehjelpPage = (props: RouteComponentProps) => {
   }, [studentInfo.subject]);
 
   const update = () => {
-    const msg = new QueueMessageBuilder(MESSAGE_TYPES.UPDATE_QUEUE)
-      .withGrade(studentInfo.grade)
-      .withChatType(studentInfo.chatType)
-      .withNickname(studentInfo.nickname)
-      .withSubject(studentInfo.subject)
-      .withThemes(studentInfo.themes)
-      .withIntroText(studentInfo.introText)
-      .withUniqueID(studentInfo.uniqueID)
-      .withVolName(studentInfo.volName)
-      .build();
-    socketSend(msg.createMessage);
+    socketSend({
+      payload: studentInfo,
+      msgType: MESSAGE_TYPES.UPDATE_QUEUE,
+    });
   };
 
   const openTalky = () => {

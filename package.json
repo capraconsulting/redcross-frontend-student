@@ -69,6 +69,7 @@
     "azure-storage": "^2.10.3",
     "classnames": "^2.2.6",
     "clsx": "^1.0.4",
+    "dotenv-webpack": "^1.7.0",
     "filestack-react": "^3.0.1",
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
