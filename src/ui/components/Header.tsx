@@ -9,15 +9,11 @@ import '../../styles/Header.less';
 import getApplicationTitle from '../../services/header-service';
 import { SocketContext } from '../../providers';
 import ModalComponent from './ModalComponent';
-import { MixpanelService } from '../../services/mixpanel-service';
-import { MixpanelEvents } from '../../mixpanel-events';
 
 export const Header = (props: RouteComponentProps) => {
   let { history } = props;
 
-  const { inQueue, roomID, cleanState, studentInfo } = useContext(
-    SocketContext,
-  );
+  const { inQueue, roomID, cleanState } = useContext(SocketContext);
   const [time, setTime] = useState<Date>(new Date());
   const [isOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -30,15 +26,6 @@ export const Header = (props: RouteComponentProps) => {
     cleanState();
     setIsModalOpen(false);
     history.push('/');
-  };
-
-  const trackStudentLeftQueue = () => {
-    MixpanelService.track(MixpanelEvents.STUDENT_LEFT_QUEUE, {
-      type: studentInfo.chatType,
-      subject: studentInfo.subject,
-      grade: studentInfo.grade,
-      theme: studentInfo.themes,
-    });
   };
 
   return (
@@ -81,12 +68,7 @@ export const Header = (props: RouteComponentProps) => {
               : 'Er du sikker på at du vil avslutte køen?'
           }
           warningButtonText="Avslutt"
-          warningCallback={() => {
-            cancelQueueAndChat();
-            if (!roomID) {
-              trackStudentLeftQueue();
-            }
-          }}
+          warningCallback={() => cancelQueueAndChat()}
           closingCallback={() => setIsModalOpen(false)}
         />
       )}

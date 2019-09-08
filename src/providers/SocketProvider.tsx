@@ -53,6 +53,14 @@ export const SocketContext = createContext({
   inQueue: false,
 });
 
+let socket;
+const getSocket = (): WebSocket => {
+  if (!socket) {
+    socket = new WebSocket(CHAT_URL);
+  }
+  return socket;
+};
+
 const useSessionStorageBinding = (key: string, value: string) => {
   useEffect(() => {
     if (!sessionStorage.getItem(key)) {
@@ -62,7 +70,6 @@ const useSessionStorageBinding = (key: string, value: string) => {
 };
 
 export const SocketProvider: FunctionComponent = ({ children }) => {
-  const [socket, setSocket] = useState(new WebSocket(CHAT_URL));
   const [inQueue, setInQueue] = useState(false);
   const [uniqueID, setUniqueID] = useState('');
   const [roomID, setRoomID] = useState('');
@@ -85,7 +92,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
   } = MESSAGE_TYPES;
 
   const socketSend = (message: ISocketMessage): void => {
-    socket.send(JSON.stringify(message));
+    getSocket().send(JSON.stringify(message));
   };
 
   const reconnectHandler = (uniqueID: string): void => {
@@ -93,12 +100,8 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
 
     if (oldUniqueID) {
       setUniqueID(oldUniqueID);
-      socketSend({
-        payload: {
-          uniqueID: oldUniqueID,
-        },
-        msgType: RECONNECT,
-      });
+      const msg = createReconnectMessage(oldUniqueID);
+      socketSend(msg);
     } else {
       setUniqueID(uniqueID);
     }
@@ -140,7 +143,6 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
       dispatchStudentInfo(
         initStudentInfoAction(parsedStudentInfoFromSessionStorage),
       );
-      setInQueue(true);
     }
   };
 
@@ -197,8 +199,8 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
     setInQueue(false);
 
     // clean socket
-    setSocket(new WebSocket(CHAT_URL));
-    socket.onmessage = socketHandler;
+    socket = null;
+    getSocket().onmessage = socketHandler;
   };
 
   useSessionStorageBinding('roomID', roomID);
@@ -220,7 +222,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
   }, [studentInfo]);
 
   useEffect(() => {
-    socket.onmessage = socketHandler;
+    getSocket().onmessage = socketHandler;
   }, []);
 
   return (
