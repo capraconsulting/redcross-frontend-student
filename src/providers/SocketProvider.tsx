@@ -149,7 +149,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
     const { msgType, payload } = parsedMessage;
-
+    console.log(parsedMessage);
     switch (msgType) {
       case TEXT:
         setImgUrl(payload['imgUrl']);
@@ -192,7 +192,9 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
     dispatchMessages(cleanChatAction());
     dispatchStudentInfo(cleanStudentInfoAction());
 
-    socketSend(createLeaveMessage(uniqueID));
+    socketSend(
+      createLeaveMessage(uniqueID, roomID, studentInfo.nickname, 'student'),
+    );
     setTalkyID('');
     setRoomID('');
     setUniqueID('');
