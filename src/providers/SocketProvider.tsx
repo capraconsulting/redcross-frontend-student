@@ -56,8 +56,13 @@ export const SocketContext = createContext({
 let socket;
 const getSocket = (): WebSocket => {
   if (!socket) {
-    socket = new WebSocket(CHAT_URL);
+    if (process.env.NODE_ENV === 'production') {
+      socket = new WebSocket(process.env.CHAT_URL || '');
+    } else {
+      socket = new WebSocket(CHAT_URL);
+    }
   }
+
   return socket;
 };
 
@@ -149,7 +154,6 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
   const socketHandler = message => {
     const parsedMessage: ISocketMessage = JSON.parse(message.data);
     const { msgType, payload } = parsedMessage;
-    console.log(parsedMessage);
     switch (msgType) {
       case TEXT:
         setImgUrl(payload['imgUrl']);

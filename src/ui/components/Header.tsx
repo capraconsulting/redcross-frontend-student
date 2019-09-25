@@ -9,11 +9,17 @@ import '../../styles/Header.less';
 import getApplicationTitle from '../../services/header-service';
 import { SocketContext } from '../../providers';
 import ModalComponent from './ModalComponent';
+import { ICustomWindow } from '../../interfaces/ICustomWindow';
+import { CHAT_TYPES } from '../../../config';
+
+declare const window: ICustomWindow;
 
 export const Header = (props: RouteComponentProps) => {
   let { history } = props;
 
-  const { inQueue, roomID, cleanState } = useContext(SocketContext);
+  const { inQueue, roomID, cleanState, studentInfo } = useContext(
+    SocketContext,
+  );
   const [time, setTime] = useState<Date>(new Date());
   const [isOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -23,6 +29,13 @@ export const Header = (props: RouteComponentProps) => {
   }, []);
 
   const cancelQueueAndChat = () => {
+    if (
+      roomID &&
+      (studentInfo.chatType === CHAT_TYPES.LEKSEHJELP_TEXT ||
+        studentInfo.chatType === CHAT_TYPES.LEKSEHJELP_VIDEO)
+    ) {
+      window._gscq.push(['show', process.env.GETSITECONTROL_WIDGET_ID]);
+    }
     cleanState();
     setIsModalOpen(false);
     history.push('/');
@@ -40,7 +53,6 @@ export const Header = (props: RouteComponentProps) => {
           {isOpen && ' åpen'}
         </span>
       </a>
-
       {inQueue && (
         <div className="header-button-container">
           <button

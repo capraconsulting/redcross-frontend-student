@@ -5,13 +5,11 @@ export const HEADERS = {
 };
 
 export const azureTokens = {
-  PUBLIC_SAS_TOKEN:
-    '?sv=2018-03-28&ss=bf&srt=sco&sp=rwac&se=2019-11-30T23:40:43Z&st=2019-07-28T14:40:43Z&spr=https&sig=AUX0rslHKTcTfS7bsUf7UoYRY6gGiHdcdveXFccR9kA%3D',
-  CONNECTION_STRING:
-    'BlobEndpoint=https://redcrossstudent.blob.core.windows.net/;QueueEndpoint=https://redcrossstudent.queue.core.windows.net/;FileEndpoint=https://redcrossstudent.file.core.windows.net/;TableEndpoint=https://redcrossstudent.table.core.windows.net/;SharedAccessSignature=sv=2018-03-28&ss=bf&srt=sco&sp=rwac&se=2019-11-30T23:40:43Z&st=2019-07-28T14:40:43Z&spr=https&sig=AUX0rslHKTcTfS7bsUf7UoYRY6gGiHdcdveXFccR9kA%3D',
+  PUBLIC_SAS_TOKEN: process.env.PUBLIC_SAS_TOKEN,
+  CONNECTION_STRING: process.env.CONNECTION_STRING,
 };
 
-export const CHAT_URL = 'ws://localhost:3002/events';
+export const CHAT_URL = 'ws://localhost:8080/ws';
 
 export const CHAT_TYPES = {
   LEKSEHJELP_TEXT: 'LEKSEHJELP_TEXT',
