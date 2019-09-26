@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
-import { IQuestion, IGrade, ISubject, IOpen } from '../interfaces';
+import { IQuestion, IGrade, ISubject, IOpen, IVolunteerSubject } from '../interfaces';
 
 const api = axios.create({
   baseURL:
@@ -21,6 +21,10 @@ export function getSubjectList(mestring: string): Promise<ISubject[]> {
 
 export function getSubjectStatus(id: string) {
   return api.get(`timeslots/subject/${id}`).then(res => res.data);
+}
+
+export function getActiveSubjects(mestring: string): Promise<IVolunteerSubject[]> {
+  return api.get('subjects/active').then(res => res.data);
 }
 
 export function postQuestion(question) {

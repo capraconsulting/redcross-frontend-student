@@ -8,10 +8,15 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import { IQueueMessage, ISubject } from '../../../interfaces';
+import {
+  IQueueMessage,
+  ISubject,
+  IVolunteerSubject,
+} from '../../../interfaces';
 
 //Services
 import {
+  getActiveSubjects,
   getIsLeksehjelpOpen,
   getSubjectList,
   getSubjectStatus,
@@ -42,6 +47,14 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     value: '',
     label: '',
   });
+  // TODO: Sandra, se på hvordan oppdatere listen over activeSubjects.
+  const [activeSubjects, setActiveSubjects] = useState<IVolunteerSubject[]>([]);
+
+  useEffect(() => {
+    getActiveSubjects('?isMestring=0').then(data => {
+      setActiveSubjects(data);
+    });
+  }, []);
 
   useEffect(() => {
     try {
@@ -189,9 +202,29 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     }
   };
 
+  const isActiveSubject = (subject: string) => {
+    return activeSubjects.find(it => it.subject === subject);
+  };
+
   //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
-    if (timeSlots && timeSlots.length === 0 && course.value) {
+    if (course.label && isActiveSubject(course.label)) {
+      return (
+        <p className="sectioncontainer--text">
+          {course.label + ' er tilgjengelig.'}
+        </p>
+      );
+    } else {
+      return (
+        <p className="sectioncontainer--text">
+          {' Det er dessverre ingen som kan hjelpe deg med ' +
+            course.label.toLowerCase() +
+            ' nå.'}
+        </p>
+      );
+    }
+    // TODO: Use this when time schedule is implemented, and remove the logic above:
+    /*if (timeSlots && timeSlots.length === 0 && course.value) {
       return (
         <p className="sectioncontainer--text">
           {course.label + ' er dessverre ikke tilgjengelig med det første.'}
@@ -205,7 +238,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           </p>
         );
       });
-    }
+    }*/
   };
 
   const enterChatQueue = (chatType: string) => {
@@ -275,7 +308,10 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         className="btn btn-submit"
         disabled={
           /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === '' || inQueue
+          course.value === '' ||
+          grade.value === '' ||
+          inQueue ||
+          !isActiveSubject(course.label)
         }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
       >
@@ -285,7 +321,10 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
         className="btn btn-submit btn-right"
         disabled={
           /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === '' || inQueue
+          course.value === '' ||
+          grade.value === '' ||
+          inQueue ||
+          !isActiveSubject(course.label)
         }
         onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
       >
