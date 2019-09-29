@@ -3,6 +3,7 @@ import {
   IGenerateRoomMessage,
   IQueueMessage,
   ITextMessage,
+  IActiveSubjectsMessage,
 } from './';
 
 export interface ISocketMessage {
@@ -11,5 +12,6 @@ export interface ISocketMessage {
     | ITextMessage
     | IGenerateRoomMessage
     | IQueueMessage
-    | IReconnectMessage;
+    | IReconnectMessage
+    | IActiveSubjectsMessage;
 }

@@ -9,6 +9,7 @@ export * from './IGenerateRoomMessage';
 export * from './IPartialQueueMessage';
 export * from './IQueueMessage';
 export * from './ITextMessage';
+export * from './IActiveSubjectsMessage';
 export * from './ISocketMessage';
 export * from './IOpen';
 export * from './ITheme';

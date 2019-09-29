@@ -11,12 +11,10 @@ import '../../../styles/LandingPage.less';
 import {
   IQueueMessage,
   ISubject,
-  IVolunteerSubject,
 } from '../../../interfaces';
 
 //Services
 import {
-  getActiveSubjects,
   getIsLeksehjelpOpen,
   getSubjectList,
   getSubjectStatus,
@@ -33,9 +31,13 @@ import grades from '../../../grades';
 
 const SectionLeksehjelp = (props: RouteComponentProps) => {
   const { history } = props;
-  const { uniqueID, socketSend, dispatchStudentInfo, inQueue } = useContext(
-    SocketContext,
-  );
+  const {
+    uniqueID,
+    socketSend,
+    dispatchStudentInfo,
+    inQueue,
+    activeSubjects,
+  } = useContext(SocketContext);
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [statusActive, setStatusActive] = useState<boolean>(false);
@@ -47,14 +49,6 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     value: '',
     label: '',
   });
-  // TODO: Sandra, se på hvordan oppdatere listen over activeSubjects.
-  const [activeSubjects, setActiveSubjects] = useState<IVolunteerSubject[]>([]);
-
-  useEffect(() => {
-    getActiveSubjects('?isMestring=0').then(data => {
-      setActiveSubjects(data);
-    });
-  }, []);
 
   useEffect(() => {
     try {
@@ -63,24 +57,17 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
   }, []);
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
-      });
-    return subjectOptions;
+    return (subjects || []).map(subject => ({
+      value: subject.id.toString(),
+      label: subject.subjectTitle,
+    }));
   };
 
   const getGradeOptions = (): Option[] => {
-    return grades.map(grade => {
-      return {
-        value: grade.gradeID,
-        label: grade.label,
-      };
-    });
+    return grades.map(grade => ({
+      value: grade.gradeID,
+      label: grade.label,
+    }));
   };
 
   //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
@@ -191,7 +178,7 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
           label,
           value,
         });
-        getSubjectStatus(value).then(res => handleStatus(res));
+        getSubjectStatus(value).then(handleStatus);
         break;
       case 'grade':
         setGrade({
@@ -202,8 +189,8 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     }
   };
 
-  const isActiveSubject = (subject: string) => {
-    return activeSubjects.find(it => it.subject === subject);
+  const isActiveSubject = (subject: string): boolean => {
+    return activeSubjects.indexOf(subject) >= 0;
   };
 
   //Rendering subject availability based on employee time schedule (recieved time slots)
@@ -211,15 +198,14 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     if (course.label && isActiveSubject(course.label)) {
       return (
         <p className="sectioncontainer--text">
-          {course.label + ' er tilgjengelig.'}
+          {course.label} er tilgjengelig.
         </p>
       );
-    } else {
+    } else if (course.label && !isActiveSubject(course.label)) {
       return (
         <p className="sectioncontainer--text">
-          {' Det er dessverre ingen som kan hjelpe deg med ' +
-            course.label.toLowerCase() +
-            ' nå.'}
+          Det er dessverre ingen som kan hjelpe deg med{' '}
+          {course.label.toLowerCase()} nå.
         </p>
       );
     }

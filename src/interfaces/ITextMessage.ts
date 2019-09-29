@@ -8,4 +8,5 @@ export interface ITextMessage {
   imgUrl: string;
   datetime?: string;
   files: IFile[];
+  activeSubjects?: string;
 }
