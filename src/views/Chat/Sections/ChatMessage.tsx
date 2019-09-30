@@ -76,7 +76,6 @@ const ChatMessage = (props: IProps) => {
       <div>
         <div className={`cm`}>
           <p className={`cm--author-${authorType}`}>
-            <img height={10} width={10} src={imgUrl} />
             <span>{authorType === 'self' ? 'Deg' : author}</span>, kl.{' '}
             <span>{datetime}</span>
           </p>

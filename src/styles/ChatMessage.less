@@ -31,9 +31,6 @@
     color: @black;
   }
 
-  &:hover {
-    filter: brightness(120%);
-  }
   &--message {
     margin: 0;
     font-size: 1rem;
@@ -41,13 +38,15 @@
     overflow-wrap: break-spaces;
     border: solid 0px @select-color;
     border-radius: 0.2rem;
+    max-width: 50vw;
   }
 
   &--self {
     &--message {
-      margin-left: 25%;
+      margin-left: 50%;
+      overflow-wrap: break-word;
       @media (max-width: 550px) {
-        margin-left: 15%;
+        margin-left: 45%;
       }
       color: @white;
       background-color: @self-chat-message-color;
@@ -70,6 +69,7 @@
   &--other {
     &--message {
       margin-right: 25%;
+      overflow-wrap: break-word;
       @media (max-width: 550px) {
         margin-right: 15%;
       }
