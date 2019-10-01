@@ -246,18 +246,21 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
       {isLeksehjelpOpen ? (
-        <span className="sectioncontainer--header--status">
-          stenger klokken 21:00
-        </span>
+        <>
+          <span className="sectioncontainer--header--status">
+            stenger klokken 21:00
+          </span>
+          <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
+            Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,
+            skrive tekster eller øve til prøver. Start en chat eller
+            videosamtale!
+          </p>
+        </>
       ) : (
         <span className="sectioncontainer--header--status">
           åpner {nextOpeningDay} klokken 17:00
         </span>
       )}
-      <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
-        Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive
-        tekster eller øve til prøver.
-      </p>
       <form className="sectioncontainer--form">
         <div
           className="sectioncontainer--form--header"

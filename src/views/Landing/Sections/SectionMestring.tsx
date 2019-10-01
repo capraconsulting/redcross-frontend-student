@@ -96,18 +96,20 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           </div>
           <div className="mestring--header">Mestring og motivasjon</div>
           {isLeksehjelpOpen ? (
-            <span className="sectioncontainer--header--status">
-              stenger klokken 21:00
-            </span>
+            <>
+              <span className="sectioncontainer--header--status">
+                stenger klokken 21:00
+              </span>
+              <p className="sectioncontainer--text">
+                Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve
+                en ny læringsmetode?
+              </p>
+            </>
           ) : (
             <span className="sectioncontainer--header--status">
               åpner {nextOpeningDay} klokken 17:00
             </span>
           )}
-          <p className="sectioncontainer--text">
-            Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve
-            en ny lesestrategi?
-          </p>
           <p className="sectioncontainer--text">
             Snakk med en av våre frivillige, enten via chat eller på
             videosamtale!
