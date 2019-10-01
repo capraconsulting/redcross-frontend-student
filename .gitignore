@@ -7,5 +7,6 @@ mock-db.json
 azureconfig.ts
 .idea/
 .vscode/
+.env
 
 tags

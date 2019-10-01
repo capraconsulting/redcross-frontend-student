@@ -29,8 +29,13 @@ export const createReconnectMessage = (uniqueID: string): ISocketMessage => {
   return createMessage(msg, RECONNECT);
 };
 
-export const createLeaveMessage = (uniqueID: string): ISocketMessage => {
-  const msg: ILeaveMessage = { uniqueID };
+export const createLeaveMessage = (
+  uniqueID: string,
+  roomID: string,
+  name: string,
+  removedBy: string,
+): ISocketMessage => {
+  const msg: ILeaveMessage = { uniqueID, roomID, name, removedBy };
   return createMessage(msg, STUDENT_LEAVE);
 };
 

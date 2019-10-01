@@ -22,6 +22,6 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/interface-name-prefix": "always",
     "@typescript-eslint/no-object-literal-type-assertion": "false",
-    "react/prop-types": "false"
+    "react/prop-types": "off"
   }
 }

@@ -26,42 +26,29 @@ export const cleanChatAction = createAction('CLEAN', cb => {
 const addMessageHandler = (
   state: ITextMessage[],
   action: IAction,
-): ITextMessage[] => {
-  const {
-    author,
-    roomID,
-    uniqueID,
-    message,
-    files,
-    imgUrl,
-  } = action.payload.message.payload;
-  const newMessage: ITextMessage = {
-    author,
-    roomID,
-    uniqueID,
-    message,
+): ITextMessage[] => [
+  ...state,
+  {
+    ...action.payload.message.payload,
     datetime: getTimeStringNow(),
-    files,
-    imgUrl,
-  };
-  state.push(newMessage);
-  return [...state];
-};
+  },
+];
 
-const handleHasLeftChat = (state: ITextMessage[], action: IAction) => {
-  state.push({
+const handleHasLeftChat = (state: ITextMessage[], action: IAction) => [
+  ...state,
+  {
     author: action.payload.name,
-    message: 'Har forlatt chatten.',
+    message: 'har forlatt chatten.',
     roomID: '',
     uniqueID: 'NOTIFICATION',
     files: [] as IFile[],
     imgUrl: '',
-  });
-  return [...state];
-};
+  },
+];
 
-const handleChatClosed = (state: ITextMessage[], action: IAction) => {
-  state.push({
+const handleChatClosed = (state: ITextMessage[], action: IAction) => [
+  ...state,
+  {
     author: '',
     message:
       'Alle frivillige har forlatt chatten.\n Du kan fortsette å lese meldingene og se filene som er sendt så lenge nettleservinduet er åpent.',
@@ -69,9 +56,8 @@ const handleChatClosed = (state: ITextMessage[], action: IAction) => {
     uniqueID: 'NOTIFICATION',
     files: [] as IFile[],
     imgUrl: '',
-  });
-  return [...state];
-};
+  },
+];
 
 const handleCleanChat = (state: ITextMessage[], action: IAction) => {
   return [];

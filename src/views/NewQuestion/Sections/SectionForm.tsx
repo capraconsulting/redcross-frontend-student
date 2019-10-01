@@ -31,7 +31,7 @@ import {
 import gradeList from '../../../grades';
 import { emailValidatorRegExp } from '../../../../config';
 
-const defaultOptions = {
+const defaultOption: Option = {
   value: '',
   label: '',
 };
@@ -43,16 +43,16 @@ interface IOption {
 
 const SectionForm = (props: RouteComponentProps) => {
   const { history } = props;
-  const [subjects, setSubjects] = useState([] as ISubject[]);
-  const [email, setEmail] = useState('' as string);
-  const [questionText, setQuestionText] = useState('' as string);
-  const [subject, setSubject] = useState(defaultOptions as Option);
-  const [themeList, setThemeList] = useState([] as IOption[]);
-  const [studentGrade, setGrade] = useState(defaultOptions as Option);
-  const [isPublic, setIsPublic] = useState(true as boolean);
-  const [azureToken, setAzureToken] = useState('' as string);
-  const [tempFiles, setTempFiles] = useState([] as any[]);
-  const [selectedList, setSelectedList] = useState([] as ITheme[]);
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
+  const [email, setEmail] = useState('');
+  const [questionText, setQuestionText] = useState('');
+  const [subject, setSubject] = useState(defaultOption);
+  const [themeList, setThemeList] = useState<IOption[]>([]);
+  const [studentGrade, setGrade] = useState(defaultOption);
+  const [isPublic, setIsPublic] = useState(true);
+  const [azureToken, setAzureToken] = useState('');
+  const [tempFiles, setTempFiles] = useState<any[]>([]);
+  const [selectedList, setSelectedList] = useState<ITheme[]>([]);
 
   const addTheme = (theme: IOption): void => {
     const { value, label } = theme;
@@ -107,6 +107,7 @@ const SectionForm = (props: RouteComponentProps) => {
         email,
         studentGrade: studentGrade.value,
         subjectID: Number(subject.value),
+        subject: subject.label ? subject.label.toString() : undefined,
         questionText,
         isPublic,
         totalRows: 0,

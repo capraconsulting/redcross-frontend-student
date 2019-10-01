@@ -3,7 +3,8 @@ import { API_URL, HEADERS } from '../../config';
 import { IQuestion, IGrade, ISubject, IOpen } from '../interfaces';
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL:
+    process.env.NODE_ENV === 'production' ? process.env.API_URL : API_URL,
   headers: HEADERS,
 });
 
