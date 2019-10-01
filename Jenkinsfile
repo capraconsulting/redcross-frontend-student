@@ -30,10 +30,6 @@ buildConfig([
       stage('Generate build') {
         sh 'npm run build'
       }
-
-      stage('Run e2e tests') {
-        sh 'npm run test:e2e:jenkins'
-      }
     }
   }
 }

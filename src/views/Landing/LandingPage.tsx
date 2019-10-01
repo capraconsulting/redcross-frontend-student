@@ -44,15 +44,15 @@ const LandingPage = (props: RouteComponentProps) => {
       <SectionHero />
       {isLeksehjelpOpen ? (
         <div>
-          <SectionLeksehjelp />
-          <SectionMestring />
+          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
           <SectionQuestions />
         </div>
       ) : (
         <div>
           <SectionQuestions />
-          <SectionLeksehjelp />
-          <SectionMestring />
+          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
         </div>
       )}
       <SectionFrivillig />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
@@ -8,10 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '../../../styles/LandingPage.less';
 
 //Interfaces
-import {
-  IQueueMessage,
-  ISubject,
-} from '../../../interfaces';
+import { IQueueMessage, ISubject } from '../../../interfaces';
 
 //Services
 import {
@@ -29,8 +26,11 @@ import { initStudentInfoAction } from '../../../reducers';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
 
-const SectionLeksehjelp = (props: RouteComponentProps) => {
-  const { history } = props;
+interface IProps extends RouteComponentProps {
+  isLeksehjelpOpen: boolean;
+}
+
+const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
   const {
     uniqueID,
     socketSend,
@@ -72,13 +72,13 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
 
   //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
   const weekDays = [
+    'Søndag',
     'Mandag',
     'Tirsdag',
     'Onsdag',
     'Torsdag',
     'Fredag',
     'Lørdag',
-    'Søndag',
   ];
 
   const getTimes = statusMap => {
@@ -247,13 +247,36 @@ const SectionLeksehjelp = (props: RouteComponentProps) => {
     });
   };
 
+  const nextOpeningDay = useMemo(() => {
+    const nextOpeningDay = new Date();
+    if (nextOpeningDay.getHours() >= 17) {
+      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
+    }
+    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
+      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
+    }
+    return weekDays[nextOpeningDay.getDay()].toLowerCase();
+  }, []);
+
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
-      <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
-        Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive
-        tekster eller øve til prøver.
-      </p>
+      {isLeksehjelpOpen ? (
+        <>
+          <span className="sectioncontainer--header--status">
+            stenger klokken 21:00
+          </span>
+          <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
+            Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,
+            skrive tekster eller øve til prøver. Start en chat eller
+            videosamtale!
+          </p>
+        </>
+      ) : (
+        <span className="sectioncontainer--header--status">
+          åpner {nextOpeningDay} klokken 17:00
+        </span>
+      )}
       <form className="sectioncontainer--form">
         <div
           className="sectioncontainer--form--header"

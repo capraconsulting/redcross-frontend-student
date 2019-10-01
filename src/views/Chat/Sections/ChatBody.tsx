@@ -19,7 +19,7 @@ const ChatBody = (props: IProps) => {
 
   return (
     <div className={'cb'}>
-      <div className={'display'} id="message-display">
+      <div className="display" id="message-display">
         <div className={'welcome-container'}>
           <p className="welcome-header">Velkommen til chaten!</p>
           <p className="welcome-body">

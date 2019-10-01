@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { withRouter, RouteComponentProps } from 'react-router';
 import Zoom from 'react-reveal/Zoom';
 
-// Styes
+// Styles
 import '../../../styles/LandingPage.less';
 import { ISubject } from '../../../interfaces';
 import {
@@ -15,10 +15,12 @@ import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import { toast } from 'react-toastify';
 import { SocketContext } from '../../../providers';
 
-const SectionMestring = (props: RouteComponentProps) => {
-  const { history } = props;
+interface IProps extends RouteComponentProps {
+  isLeksehjelpOpen: boolean;
+}
+
+const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
   const [subjects, setSubjects] = useState<ISubject[]>([]);
-  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
   const { socketSend, uniqueID, inQueue } = useContext(SocketContext);
   const { MESTRING_VIDEO, MESTRING_TEXT } = CHAT_TYPES;
 
@@ -34,7 +36,6 @@ const SectionMestring = (props: RouteComponentProps) => {
   useEffect(() => {
     try {
       getSubjectList('?isMestring=1').then(setSubjects);
-      getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
     } catch (e) {}
   }, []);
 
@@ -65,6 +66,27 @@ const SectionMestring = (props: RouteComponentProps) => {
     });
   };
 
+  const weekDays = [
+    'Søndag',
+    'Mandag',
+    'Tirsdag',
+    'Onsdag',
+    'Torsdag',
+    'Fredag',
+    'Lørdag',
+  ];
+
+  const nextOpeningDay = useMemo(() => {
+    const nextOpeningDay = new Date();
+    if (nextOpeningDay.getHours() >= 17) {
+      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
+    }
+    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
+      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
+    }
+    return weekDays[nextOpeningDay.getDay()].toLowerCase();
+  }, []);
+
   return (
     <div className="help">
       <div>
@@ -72,18 +94,22 @@ const SectionMestring = (props: RouteComponentProps) => {
           <div className="mestring--badge_new">
             <Zoom>Ny tjeneste!</Zoom>
           </div>
-          <a
-            onClick={() => history.push(`mestring`)}
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <div className="mestring--header">
-              Mestring, motivasjon og veiledning
-            </div>
-          </a>
-          <p className="sectioncontainer--text">
-            Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve
-            en ny lesestrategi?
-          </p>
+          <div className="mestring--header">Mestring og motivasjon</div>
+          {isLeksehjelpOpen ? (
+            <>
+              <span className="sectioncontainer--header--status">
+                stenger klokken 21:00
+              </span>
+              <p className="sectioncontainer--text">
+                Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve
+                en ny læringsmetode?
+              </p>
+            </>
+          ) : (
+            <span className="sectioncontainer--header--status">
+              åpner {nextOpeningDay} klokken 17:00
+            </span>
+          )}
           <p className="sectioncontainer--text">
             Snakk med en av våre frivillige, enten via chat eller på
             videosamtale!
