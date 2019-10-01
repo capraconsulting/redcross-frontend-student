@@ -28,7 +28,6 @@ const ChatBody = (props: IProps) => {
           </p>
         </div>
         {mapMessages()}
-        <div className="chat-end" />
       </div>
     </div>
   );
