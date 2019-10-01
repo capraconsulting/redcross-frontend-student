@@ -8,8 +8,8 @@
     "build": "webpack --env.production --config webpack.js",
     "test": "jest src",
     "test:watch": "jest src --watch",
-    "lint": "eslint --ext js --ext jsx --ext ts --ext tsx src e2e",
-    "lint:fix": "eslint --fix --ext js --ext jsx --ext ts --ext tsx src e2e"
+    "lint": "eslint --ext js --ext jsx --ext ts --ext tsx src",
+    "lint:fix": "eslint --fix --ext js --ext jsx --ext ts --ext tsx src"
   },
   "license": "Apache-2.0",
   "devDependencies": {
