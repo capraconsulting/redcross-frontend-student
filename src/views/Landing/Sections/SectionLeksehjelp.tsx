@@ -195,13 +195,17 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
 
   //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
-    if (course.label && isActiveSubject(course.label)) {
+    if (course.label && isActiveSubject(course.label) && isLeksehjelpOpen) {
       return (
         <p className="sectioncontainer--text">
           {course.label} er tilgjengelig.
         </p>
       );
-    } else if (course.label && !isActiveSubject(course.label)) {
+    } else if (
+      course.label &&
+      !isActiveSubject(course.label) &&
+      isLeksehjelpOpen
+    ) {
       return (
         <p className="sectioncontainer--text">
           Det er dessverre ingen som kan hjelpe deg med{' '}
@@ -264,7 +268,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
       {isLeksehjelpOpen ? (
         <>
           <span className="sectioncontainer--header--status">
-            stenger klokken 21:00
+            åpen frem til kl. 21:00
           </span>
           <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
             Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,
@@ -313,32 +317,36 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
         )}
         {renderStatusMessage()}
       </form>
-      <button
-        className="btn btn-submit"
-        disabled={
-          /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' ||
-          grade.value === '' ||
-          inQueue ||
-          !isActiveSubject(course.label)
-        }
-        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
-      >
-        Chat
-      </button>{' '}
-      <button
-        className="btn btn-submit btn-right"
-        disabled={
-          /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' ||
-          grade.value === '' ||
-          inQueue ||
-          !isActiveSubject(course.label)
-        }
-        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
-      >
-        Videochat
-      </button>
+      {isLeksehjelpOpen && (
+        <>
+          <button
+            className="btn btn-submit"
+            disabled={
+              /*!statusActive || TODO: uncomment in prod*/
+              course.value === '' ||
+              grade.value === '' ||
+              inQueue ||
+              !isActiveSubject(course.label)
+            }
+            onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
+          >
+            Chat
+          </button>{' '}
+          <button
+            className="btn btn-submit btn-right"
+            disabled={
+              /*!statusActive || TODO: uncomment in prod*/
+              course.value === '' ||
+              grade.value === '' ||
+              inQueue ||
+              !isActiveSubject(course.label)
+            }
+            onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
+          >
+            Videochat
+          </button>
+        </>
+      )}
     </div>
   );
 };
