@@ -14,6 +14,7 @@ import { QueueMessageBuilder } from '../../../services/message-service';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import { toast } from 'react-toastify';
 import { SocketContext } from '../../../providers';
+import { useNextOpeningDay } from '../../../hooks/use-next-opening-day';
 
 interface IProps extends RouteComponentProps {
   isLeksehjelpOpen: boolean;
@@ -68,26 +69,7 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     });
   };
 
-  const weekDays = [
-    'Søndag',
-    'Mandag',
-    'Tirsdag',
-    'Onsdag',
-    'Torsdag',
-    'Fredag',
-    'Lørdag',
-  ];
-
-  const nextOpeningDay = useMemo(() => {
-    const nextOpeningDay = new Date();
-    if (nextOpeningDay.getHours() >= 17) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    return weekDays[nextOpeningDay.getDay()].toLowerCase();
-  }, []);
+  const nextOpeningDay = useNextOpeningDay();
 
   const isActiveSubject = (subject: string): boolean => {
     return activeSubjects.indexOf(subject) >= 0;

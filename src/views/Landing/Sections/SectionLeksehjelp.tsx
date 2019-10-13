@@ -25,6 +25,7 @@ import { initStudentInfoAction } from '../../../reducers';
 //Configurations
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
+import { useNextOpeningDay } from '../../../hooks/use-next-opening-day';
 
 interface IProps extends RouteComponentProps {
   isLeksehjelpOpen: boolean;
@@ -251,16 +252,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     });
   };
 
-  const nextOpeningDay = useMemo(() => {
-    const nextOpeningDay = new Date();
-    if (nextOpeningDay.getHours() >= 17) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    return weekDays[nextOpeningDay.getDay()].toLowerCase();
-  }, []);
+  const nextOpeningDay = useNextOpeningDay();
 
   return (
     <div className="sectioncontainer">
