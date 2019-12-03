@@ -25,15 +25,20 @@ import { initStudentInfoAction } from '../../../reducers';
 //Configurations
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
+import { useNextOpeningDay } from '../../../hooks/use-next-opening-day';
 
 interface IProps extends RouteComponentProps {
   isLeksehjelpOpen: boolean;
 }
 
 const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
-  const { uniqueID, socketSend, dispatchStudentInfo, inQueue } = useContext(
-    SocketContext,
-  );
+  const {
+    uniqueID,
+    socketSend,
+    dispatchStudentInfo,
+    inQueue,
+    activeSubjects,
+  } = useContext(SocketContext);
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [statusActive, setStatusActive] = useState<boolean>(false);
@@ -53,24 +58,35 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
   }, []);
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
+    return (subjects || [])
+      .map(subject => ({
+        value: subject.id.toString(),
+        label: subject.subjectTitle,
+      }))
+      .sort((s1, s2) => {
+        if (
+          activeSubjects.includes(s1.label) &&
+          !activeSubjects.includes(s2.label)
+        ) {
+          return -1;
+        }
+
+        if (
+          activeSubjects.includes(s2.label) &&
+          !activeSubjects.includes(s1.label)
+        ) {
+          return 1;
+        }
+
+        return 0;
       });
-    return subjectOptions;
   };
 
   const getGradeOptions = (): Option[] => {
-    return grades.map(grade => {
-      return {
-        value: grade.gradeID,
-        label: grade.label,
-      };
-    });
+    return grades.map(grade => ({
+      value: grade.gradeID,
+      label: grade.label,
+    }));
   };
 
   //statusMap keys, used for indexing of the Map with seven bit arrays in handleStatus().
@@ -181,7 +197,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           label,
           value,
         });
-        getSubjectStatus(value).then(res => handleStatus(res));
+        getSubjectStatus(value).then(handleStatus);
         break;
       case 'grade':
         setGrade({
@@ -192,9 +208,32 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     }
   };
 
+  const isActiveSubject = (subject: string): boolean => {
+    return activeSubjects.indexOf(subject) >= 0;
+  };
+
   //Rendering subject availability based on employee time schedule (recieved time slots)
   const renderStatusMessage = () => {
-    if (timeSlots && timeSlots.length === 0 && course.value) {
+    if (course.label && isActiveSubject(course.label) && isLeksehjelpOpen) {
+      return (
+        <p className="sectioncontainer--text">
+          {course.label} er tilgjengelig.
+        </p>
+      );
+    } else if (
+      course.label &&
+      !isActiveSubject(course.label) &&
+      isLeksehjelpOpen
+    ) {
+      return (
+        <p className="sectioncontainer--text">
+          Det er dessverre ingen som kan hjelpe deg med{' '}
+          {course.label.toLowerCase()} nå.
+        </p>
+      );
+    }
+    // TODO: Use this when time schedule is implemented, and remove the logic above:
+    /*if (timeSlots && timeSlots.length === 0 && course.value) {
       return (
         <p className="sectioncontainer--text">
           {course.label + ' er dessverre ikke tilgjengelig med det første.'}
@@ -208,7 +247,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           </p>
         );
       });
-    }
+    }*/
   };
 
   const enterChatQueue = (chatType: string) => {
@@ -231,16 +270,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     });
   };
 
-  const nextOpeningDay = useMemo(() => {
-    const nextOpeningDay = new Date();
-    if (nextOpeningDay.getHours() >= 17) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    return weekDays[nextOpeningDay.getDay()].toLowerCase();
-  }, []);
+  const nextOpeningDay = useNextOpeningDay();
 
   return (
     <div className="sectioncontainer">
@@ -248,7 +278,7 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
       {isLeksehjelpOpen ? (
         <>
           <span className="sectioncontainer--header--status">
-            stenger klokken 21:00
+            åpen frem til kl. 21:00
           </span>
           <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
             Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,
@@ -297,26 +327,36 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
         )}
         {renderStatusMessage()}
       </form>
-      <button
-        className="btn btn-submit"
-        disabled={
-          /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === '' || inQueue
-        }
-        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
-      >
-        Chat
-      </button>{' '}
-      <button
-        className="btn btn-submit btn-right"
-        disabled={
-          /*!statusActive || TODO: uncomment in prod*/
-          course.value === '' || grade.value === '' || inQueue
-        }
-        onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
-      >
-        Videochat
-      </button>
+      {isLeksehjelpOpen && (
+        <>
+          <button
+            className="btn btn-submit"
+            disabled={
+              /*!statusActive || TODO: uncomment in prod*/
+              course.value === '' ||
+              grade.value === '' ||
+              inQueue ||
+              !isActiveSubject(course.label)
+            }
+            onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_TEXT)}
+          >
+            Chat
+          </button>{' '}
+          <button
+            className="btn btn-submit btn-right"
+            disabled={
+              /*!statusActive || TODO: uncomment in prod*/
+              course.value === '' ||
+              grade.value === '' ||
+              inQueue ||
+              !isActiveSubject(course.label)
+            }
+            onClick={() => enterChatQueue(CHAT_TYPES.LEKSEHJELP_VIDEO)}
+          >
+            Videochat
+          </button>
+        </>
+      )}
     </div>
   );
 };

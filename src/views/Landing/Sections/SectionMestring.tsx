@@ -14,6 +14,7 @@ import { QueueMessageBuilder } from '../../../services/message-service';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import { toast } from 'react-toastify';
 import { SocketContext } from '../../../providers';
+import { useNextOpeningDay } from '../../../hooks/use-next-opening-day';
 
 interface IProps extends RouteComponentProps {
   isLeksehjelpOpen: boolean;
@@ -21,7 +22,9 @@ interface IProps extends RouteComponentProps {
 
 const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
   const [subjects, setSubjects] = useState<ISubject[]>([]);
-  const { socketSend, uniqueID, inQueue } = useContext(SocketContext);
+  const { socketSend, uniqueID, inQueue, activeSubjects } = useContext(
+    SocketContext,
+  );
   const { MESTRING_VIDEO, MESTRING_TEXT } = CHAT_TYPES;
 
   const [grade, setGrade] = useState<Option>({
@@ -66,26 +69,11 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
     });
   };
 
-  const weekDays = [
-    'Søndag',
-    'Mandag',
-    'Tirsdag',
-    'Onsdag',
-    'Torsdag',
-    'Fredag',
-    'Lørdag',
-  ];
+  const nextOpeningDay = useNextOpeningDay();
 
-  const nextOpeningDay = useMemo(() => {
-    const nextOpeningDay = new Date();
-    if (nextOpeningDay.getHours() >= 17) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    while (nextOpeningDay.getDay() === 0 || nextOpeningDay.getDay() === 6) {
-      nextOpeningDay.setDate(nextOpeningDay.getDate() + 1);
-    }
-    return weekDays[nextOpeningDay.getDay()].toLowerCase();
-  }, []);
+  const isActiveSubject = (subject: string): boolean => {
+    return activeSubjects.indexOf(subject) >= 0;
+  };
 
   return (
     <div className="help">
@@ -98,7 +86,7 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           {isLeksehjelpOpen ? (
             <>
               <span className="sectioncontainer--header--status">
-                stenger klokken 21:00
+                åpen frem til kl. 21:00
               </span>
               <p className="sectioncontainer--text">
                 Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve
@@ -110,10 +98,6 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
               åpner {nextOpeningDay} klokken 17:00
             </span>
           )}
-          <p className="sectioncontainer--text">
-            Snakk med en av våre frivillige, enten via chat eller på
-            videosamtale!
-          </p>
           <form className="mestring--form">
             <div className="mestring--form--header">Velg tema</div>
             <Dropdown
@@ -125,20 +109,32 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
               menuClassName={'dropdown-placeholder'}
             />
           </form>
-          <button
-            className="btn btn-submit"
-            disabled={!isLeksehjelpOpen || inQueue}
-            onClick={() => enterChatQueue(MESTRING_TEXT)}
-          >
-            Chat
-          </button>{' '}
-          <button
-            className="btn btn-submit btn-right"
-            disabled={!isLeksehjelpOpen || inQueue}
-            onClick={() => enterChatQueue(MESTRING_VIDEO)}
-          >
-            Videochat
-          </button>
+          {isLeksehjelpOpen && (
+            <>
+              <button
+                className="btn btn-submit"
+                disabled={
+                  !isLeksehjelpOpen ||
+                  inQueue ||
+                  !isActiveSubject(subject.value)
+                }
+                onClick={() => enterChatQueue(MESTRING_TEXT)}
+              >
+                Chat
+              </button>{' '}
+              <button
+                className="btn btn-submit btn-right"
+                disabled={
+                  !isLeksehjelpOpen ||
+                  inQueue ||
+                  !isActiveSubject(subject.value)
+                }
+                onClick={() => enterChatQueue(MESTRING_VIDEO)}
+              >
+                Videochat
+              </button>
+            </>
+          )}
         </div>
         <div className="cross-my-heart">
           Trenger du noen å snakke med?{' '}

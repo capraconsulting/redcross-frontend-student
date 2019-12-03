@@ -51,6 +51,7 @@ export const SocketContext = createContext({
   dispatchStudentInfo(action: IAction) {},
   studentInfo: {} as IQueueMessage,
   inQueue: false,
+  activeSubjects: [] as string[],
 });
 
 let socket;
@@ -81,6 +82,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
   const [talkyID, setTalkyID] = useState('');
   const [imgUrl, setImgUrl] = useState('');
+  const [activeSubjects, setActiveSubjects] = useState([]);
   const [studentInfo, dispatchStudentInfo] = useReducer(
     queueInfoReducer,
     {} as IQueueMessage,
@@ -94,6 +96,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
     RECONNECT,
     UPDATE_QUEUE,
     CONFIRMED_QUEUE,
+    UPDATE_ACTIVE_SUBJECTS,
   } = MESSAGE_TYPES;
 
   const socketSend = (message: ISocketMessage): void => {
@@ -166,6 +169,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
         setTalkyID(payload['talkyID']);
         break;
       case CONNECTION:
+        setActiveSubjects(payload['activeSubjects']);
         reconnectHandler(payload['uniqueID']);
         break;
       case LEAVE_CHAT:
@@ -184,6 +188,9 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
       case CONFIRMED_QUEUE:
         setInQueue(true);
         dispatchStudentInfo(initStudentInfoAction(payload['info']));
+        break;
+      case UPDATE_ACTIVE_SUBJECTS:
+        setActiveSubjects(payload['activeSubjects']);
         break;
     }
   };
@@ -245,6 +252,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
         imgUrl,
         inQueue,
         cleanState,
+        activeSubjects,
       }}
     >
       {children}
