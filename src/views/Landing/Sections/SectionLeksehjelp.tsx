@@ -68,14 +68,14 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           activeSubjects.includes(s1.label) &&
           !activeSubjects.includes(s2.label)
         ) {
-          return 1;
+          return -1;
         }
 
         if (
           activeSubjects.includes(s2.label) &&
           !activeSubjects.includes(s1.label)
         ) {
-          return -1;
+          return 1;
         }
 
         return 0;
