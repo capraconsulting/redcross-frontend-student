@@ -58,10 +58,28 @@ const SectionLeksehjelp: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
   }, []);
 
   const getSubjectOptions = (): Option[] => {
-    return (subjects || []).map(subject => ({
-      value: subject.id.toString(),
-      label: subject.subjectTitle,
-    }));
+    return (subjects || [])
+      .map(subject => ({
+        value: subject.id.toString(),
+        label: subject.subjectTitle,
+      }))
+      .sort((s1, s2) => {
+        if (
+          activeSubjects.includes(s1.label) &&
+          !activeSubjects.includes(s2.label)
+        ) {
+          return 1;
+        }
+
+        if (
+          activeSubjects.includes(s2.label) &&
+          !activeSubjects.includes(s1.label)
+        ) {
+          return -1;
+        }
+
+        return 0;
+      });
   };
 
   const getGradeOptions = (): Option[] => {
