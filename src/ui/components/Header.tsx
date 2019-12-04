@@ -64,7 +64,11 @@ export const Header = (props: RouteComponentProps) => {
         </div>
       )}
       <span>
-        <a href="https://www.rodekors.no/">
+        <a
+          href="https://www.rodekors.no/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             className="header--rk_logo"
             src={require('../../assets/images/rk_logo.png')}

@@ -20,6 +20,8 @@ const SectionInfo = () => {
           <a
             href="https://www.rodekors.no/om/bevegelsen/"
             className="volunteer--text--colored"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             her
           </a>
