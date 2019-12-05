@@ -38,6 +38,19 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
+  const [backgroundColors, setBackgroundColors] = useState({
+    cannotEnterChat: '#FFFFFF',
+    canEnterChat: '#8C52C7',
+    default: '#FFFFFF',
+  });
+
+  const updateBackgroundColor = queueState => {
+    if (queueState === backgroundColors.cannotEnterChat) {
+      document.body.style.backgroundColor = backgroundColors.cannotEnterChat;
+    } else {
+      document.body.style.backgroundColor = backgroundColors.canEnterChat;
+    }
+  };
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
@@ -57,6 +70,12 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
       }
     });
   }, [studentInfo.subject]);
+
+  useEffect(() => {
+    return () => {
+      updateBackgroundColor(backgroundColors.default);
+    };
+  }, []);
 
   const update = () => {
     socketSend({
@@ -89,48 +108,73 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
   };
 
   const { positionInQueue, subject, introText } = studentInfo;
-  return (
-    <div className="waiting-container">
-      <div className="content">
-        <div className="header">
-          <p className="text">
-            Du står nå i kø for <span className="course">{subject}</span>
-          </p>
-          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
-        </div>
-        <div className="body">
-          <div className="item">
+
+  if (positionInQueue && positionInQueue >= 1 && roomID.length < 1) {
+    updateBackgroundColor(backgroundColors.cannotEnterChat);
+
+    return (
+      <div className="waiting-container">
+        <div className="content">
+          <div className="header">
             <p className="text">
-              Mens du venter kan du begynne å forklare hva du lurer på.
+              Du står nå i kø for <span className="course">{subject}</span>
             </p>
-            <Textarea
-              autoFocus
-              cols={window.scrollX}
-              minRows={6}
-              value={introText}
-              onChange={event =>
-                dispatchStudentInfo(setIntroTextAction(event.target.value))
-              }
-            />
+            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
           </div>
-          {themes && (
+          <div className="body">
             <div className="item">
-              <p className="text">Legg til underkategorier</p>
-              <Picker
-                optionList={themes}
-                placeholder="Velg en kategori"
-                addSelected={addSelectedTheme}
-                removeSelected={removeSelectedTheme}
-                selectedList={studentInfo.themes}
+              <p className="text">
+                Mens du venter kan du begynne å forklare hva du lurer på.
+              </p>
+              <Textarea
+                autoFocus
+                cols={window.scrollX}
+                minRows={6}
+                value={introText}
+                onChange={event =>
+                  dispatchStudentInfo(setIntroTextAction(event.target.value))
+                }
               />
             </div>
-          )}
-        </div>
+            {themes && (
+              <div className="item">
+                <p className="text">Legg til underkategorier</p>
+                <Picker
+                  optionList={themes}
+                  placeholder="Velg en kategori"
+                  addSelected={addSelectedTheme}
+                  removeSelected={removeSelectedTheme}
+                  selectedList={studentInfo.themes}
+                />
+              </div>
+            )}
+          </div>
 
-        <div className="button-container">
-          <button className="btn btn-submit btn-queue" onClick={update}>
-            Oppdater Informasjon
-          </button>
+          <div className="button-container">
+            <button className="btn btn-submit btn-queue" onClick={update}>
+              Lagre
+            </button>
+          </div>
+
+          <div className="queue-link">
+            <a href={searchString()} target="_blank" rel="noopener noreferrer">
+              Prøv gjerne å søke på google ved å trykke på denne linken mens du
+              venter!
+            </a>
+          </div>
+          <div className="header">
+            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
+          </div>
+        </div>
+      </div>
+    );
+  } else if (positionInQueue === 1 && roomID.length >= 1) {
+    updateBackgroundColor(backgroundColors.canEnterChat);
+
+    return (
+      <div className="start-chat-container">
+        <div className="content">
+          <span className="start-chat-text">Du er nå fremme i køen</span>
           <button
             disabled={roomID.length < 1}
             className="btn btn-submit btn-queue"
@@ -139,22 +183,21 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
               history.push('meldinger');
             }}
           >
-            Gå til chat
+            Gå til chatten
           </button>
         </div>
-
-        <div className="queue-link">
-          <a href={searchString()} target="_blank" rel="noopener noreferrer">
-            Prøv gjerne å søke på google ved å trykke på denne linken mens du
-            venter!
-          </a>
-        </div>
-        <div className="header">
-          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
-        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    updateBackgroundColor(backgroundColors.cannotEnterChat);
+
+    return (
+      <div>
+        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
+        nytt.
+      </div>
+    );
+  }
 };
 
 export default LeksehjelpPage;
