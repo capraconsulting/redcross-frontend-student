@@ -219,7 +219,7 @@ const SectionForm = (props: RouteComponentProps) => {
       !isValidEmail(email)
     );
   };
-  
+
   return (
     <div className={'form-container'}>
       <form className={'form'}>
