@@ -178,15 +178,10 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
-      });
-    return subjectOptions;
+    return subjects.map(subject => ({
+      value: subject.id.toString(),
+      label: subject.subjectTitle,
+    }));
   };
 
   const getThemeOptions = (): Option[] => {
