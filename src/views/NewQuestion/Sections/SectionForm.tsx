@@ -29,7 +29,6 @@ import {
 
 //Persistent grade list
 import gradeList from '../../../grades';
-import { emailValidatorRegExp } from '../../../../config';
 
 const defaultOption: Option = {
   value: '',
@@ -91,8 +90,8 @@ const SectionForm = (props: RouteComponentProps) => {
     setAzureToken(generatedToken.token);
   }, []);
 
-  const emailValidator = (email: string) => {
-    return emailValidatorRegExp.test(String(email).toLowerCase());
+  const isValidEmail = (email: string) => {
+    return /.+@.+/.test(email);
   };
 
   const uploadPromises = tempFiles => {
@@ -211,15 +210,16 @@ const SectionForm = (props: RouteComponentProps) => {
     });
   };
 
-  const formControls = () => {
+  const isInvalidForm = () => {
     return (
       email.length < 1 ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
-      studentGrade.value.length < 1
+      studentGrade.value.length < 1 ||
+      !isValidEmail(email)
     );
   };
-
+  
   return (
     <div className={'form-container'}>
       <form className={'form'}>
@@ -287,7 +287,7 @@ const SectionForm = (props: RouteComponentProps) => {
             key={1}
           />
           <div className="error-message--text">
-            {!emailValidator(email) && email.length > 0 ? (
+            {!isValidEmail(email) && email.length > 0 ? (
               <p>Eposten er ikke gyldig</p>
             ) : (
               <p> </p>
@@ -329,7 +329,7 @@ const SectionForm = (props: RouteComponentProps) => {
           </div>
         }
         buttonText={'Send'}
-        disabled={formControls()}
+        disabled={isInvalidForm()}
       />
     </div>
   );
