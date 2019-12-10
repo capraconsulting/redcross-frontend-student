@@ -212,7 +212,6 @@ const SectionForm = (props: RouteComponentProps) => {
 
   const isInvalidForm = () => {
     return (
-      email.length < 1 ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
       studentGrade.value.length < 1 ||
