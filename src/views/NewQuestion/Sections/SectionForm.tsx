@@ -187,10 +187,12 @@ const SectionForm = (props: RouteComponentProps) => {
   const getThemeOptions = (): Option[] => {
     const chosenSubject = subjects.find(c => c.subjectTitle === subject.label);
     if (chosenSubject) {
-      return chosenSubject.themes.map(theme => ({
-        value: theme.id.toString(),
-        label: theme.theme,
-      }));
+      return chosenSubject.themes
+        .filter(theme => !selectedList.find(x => x.id === theme.id))
+        .map(theme => ({
+          value: theme.id.toString(),
+          label: theme.theme,
+        }));
     } else return [];
   };
 
