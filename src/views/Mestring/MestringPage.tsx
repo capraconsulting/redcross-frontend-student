@@ -1,15 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { DropZone, Picker } from '../../ui/components';
+import React, { useContext } from 'react';
 import { SocketContext } from '../../providers';
-import { Option } from 'react-dropdown';
-import { getSubjectList } from '../../services/api-service';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
-import {
-  addThemeAction,
-  removeThemeAction,
-  setIntroTextAction,
-} from '../../reducers';
+import { setIntroTextAction } from '../../reducers';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import '../../styles/LeksehjelpPage.less';
@@ -22,27 +15,7 @@ export const MestringPage = (props: RouteComponentProps) => {
     roomID,
     talkyID,
   } = useContext(SocketContext);
-  const [themes, setThemes] = useState<Option[]>();
   const { history } = props;
-
-  useEffect(() => {
-    getSubjectList('?isMestring=0').then(data => {
-      const tmpSubject = data.find(
-        subject => subject.subjectTitle === studentInfo.subject,
-      );
-      if (tmpSubject) {
-        const tmpThemes: Option[] = tmpSubject.themes.map(theme => {
-          return {
-            value: theme.theme,
-            label: theme.theme,
-          };
-        });
-        if (tmpThemes) {
-          setThemes(tmpThemes);
-        }
-      }
-    });
-  }, [studentInfo.subject]);
 
   const update = () => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.UPDATE_QUEUE)
