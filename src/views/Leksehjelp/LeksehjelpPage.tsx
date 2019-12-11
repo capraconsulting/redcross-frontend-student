@@ -7,24 +7,15 @@ import React, {
 import { RouteComponentProps } from 'react-router';
 import { Option } from 'react-dropdown';
 import Textarea from 'react-textarea-autosize';
-
-//Components and styles
 import { Picker } from '../../ui/components';
 import '../../styles/LeksehjelpPage.less';
-
-//Services
 import { getSubjectList } from '../../services/api-service';
-import { QueueMessageBuilder } from '../../services/message-service';
-
-//Providers and reducers
 import { SocketContext } from '../../providers';
 import {
   addThemeAction,
   removeThemeAction,
   setIntroTextAction,
 } from '../../reducers';
-
-//Config
 import { MESSAGE_TYPES } from '../../../config';
 
 const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
@@ -38,18 +29,9 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
-  const [backgroundColors, setBackgroundColors] = useState({
-    cannotEnterChat: '#FFFFFF',
-    canEnterChat: '#8C52C7',
-    default: '#FFFFFF',
-  });
 
-  const updateBackgroundColor = queueState => {
-    if (queueState === backgroundColors.cannotEnterChat) {
-      document.body.style.backgroundColor = backgroundColors.cannotEnterChat;
-    } else {
-      document.body.style.backgroundColor = backgroundColors.canEnterChat;
-    }
+  const setBackgroundColor = backgroundColor => {
+    document.body.style.backgroundColor = backgroundColor;
   };
 
   useEffect(() => {
@@ -73,7 +55,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
 
   useEffect(() => {
     return () => {
-      updateBackgroundColor(backgroundColors.default);
+      setBackgroundColor('#FFFFFF');
     };
   }, []);
 
@@ -109,8 +91,8 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
 
   const { positionInQueue, subject, introText } = studentInfo;
 
-  if (positionInQueue && positionInQueue >= 1 && roomID.length < 1) {
-    updateBackgroundColor(backgroundColors.cannotEnterChat);
+  if (roomID.length < 1) {
+    setBackgroundColor('#FFFFFF');
 
     return (
       <div className="waiting-container">
@@ -168,8 +150,8 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
         </div>
       </div>
     );
-  } else if (positionInQueue === 1 && roomID.length >= 1) {
-    updateBackgroundColor(backgroundColors.canEnterChat);
+  } else if (roomID.length >= 1) {
+    setBackgroundColor('#8C52C7');
 
     return (
       <div className="start-chat-container">
@@ -189,7 +171,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
       </div>
     );
   } else {
-    updateBackgroundColor(backgroundColors.cannotEnterChat);
+    setBackgroundColor('#FFFFFF');
 
     return (
       <div>

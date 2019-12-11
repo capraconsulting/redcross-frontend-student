@@ -24,6 +24,9 @@ export const MestringPage = (props: RouteComponentProps) => {
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>();
   const { history } = props;
+  const setBackgroundColor = backgroundColor => {
+    document.body.style.backgroundColor = backgroundColor;
+  };
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
@@ -44,6 +47,12 @@ export const MestringPage = (props: RouteComponentProps) => {
     });
   }, [studentInfo.subject]);
 
+  useEffect(() => {
+    return () => {
+      setBackgroundColor('#FFFFFF');
+    };
+  }, []);
+
   const update = () => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.UPDATE_QUEUE)
       .withGrade(studentInfo.grade)
@@ -63,39 +72,55 @@ export const MestringPage = (props: RouteComponentProps) => {
     }
   };
 
-  return (
-    <div className="waiting-container">
-      <div className="content">
-        <div className="header">
-          <p className="text">
-            Du står nå i kø for{' '}
-            <span className="course">{studentInfo.subject}</span>
-          </p>
-          <span className="queue">
-            Du er nr. {studentInfo.positionInQueue} i køen.
-          </span>
-        </div>
-        <div className="body">
-          <div className="item">
+  const { positionInQueue } = studentInfo;
+
+  if (roomID.length < 1) {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div className="waiting-container">
+        <div className="content">
+          <div className="header">
             <p className="text">
-              Mens du venter kan du begynne å forklare hva du lurer på.
+              Du står nå i kø for{' '}
+              <span className="course">{studentInfo.subject}</span>
             </p>
-            <Textarea
-              autoFocus
-              cols={window.scrollX}
-              minRows={15}
-              value={studentInfo.introText}
-              onChange={event =>
-                dispatchStudentInfo(setIntroTextAction(event.target.value))
-              }
-            />
+            <span className="queue">
+              Du er nr. {positionInQueue} i køen.
+            </span>
+          </div>
+          <div className="body">
+            <div className="item">
+              <p className="text">
+                Mens du venter kan du begynne å forklare hva du lurer på.
+              </p>
+              <Textarea
+                autoFocus
+                cols={window.scrollX}
+                minRows={15}
+                value={studentInfo.introText}
+                onChange={event =>
+                  dispatchStudentInfo(setIntroTextAction(event.target.value))
+                }
+              />
+            </div>
+          </div>
+
+          <div className="button-container">
+            <button className="btn btn-submit" onClick={update}>
+              Lagre
+            </button>
           </div>
         </div>
+      </div>
+    );
+  } else if (roomID.length >= 1) {
+    setBackgroundColor('#8C52C7');
 
-        <div className="button-container">
-          <button className="btn btn-submit" onClick={update}>
-            Oppdater Informasjon
-          </button>
+    return (
+      <div className="start-chat-container">
+        <div className="content">
+          <span className="start-chat-text">Du er nå fremme i køen</span>
           <button
             disabled={roomID.length < 1}
             className="btn btn-submit"
@@ -108,8 +133,17 @@ export const MestringPage = (props: RouteComponentProps) => {
           </button>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div>
+        Du står ikke i kø akkurat nå, vennligst gå tilbake til forsiden og prøv
+        nytt.
+      </div>
+    );
+  }
 };
 
 export default withRouter(MestringPage);
