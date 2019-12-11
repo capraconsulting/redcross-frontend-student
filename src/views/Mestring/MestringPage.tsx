@@ -85,9 +85,7 @@ export const MestringPage = (props: RouteComponentProps) => {
               Du står nå i kø for{' '}
               <span className="course">{studentInfo.subject}</span>
             </p>
-            <span className="queue">
-              Du er nr. {positionInQueue} i køen.
-            </span>
+            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
           </div>
           <div className="body">
             <div className="item">
