@@ -137,11 +137,13 @@ const SectionForm = (props: RouteComponentProps) => {
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
-          <span className="message-text">
+          <React.Fragment>
             <button className="upload">+</button>
-            <span>Legg til filer </span>
-            <span className="grey">(max 5 mb)</span>
-          </span>
+            <span className="message-text">
+              <span>Legg til filer </span>
+              <span className="grey">(max 5 mb)</span>
+            </span>
+          </React.Fragment>
         )}
       </div>
     );
