@@ -19,18 +19,17 @@ import Button from '@material-ui/core/Button';
 //Services
 import { getIsLeksehjelpOpen } from '../../services/api-service';
 import { SocketContext } from '../../providers';
+import { useOpeningHours } from '../../providers/LeksehjelpInformationProvider';
 
 const LandingPage = (props: RouteComponentProps) => {
-  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+  //const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
   const { inQueue, roomID, cleanState, studentInfo } = useContext(
     SocketContext,
   );
-  const [isOpen] = useState<boolean>(false);
+  const { isOpen } = useOpeningHours();
+  //const [isOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { history } = props;
-  useEffect(() => {
-    getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-  }, []);
 
   const cancelQueueAndChat = () => {
     cleanState();
@@ -42,17 +41,17 @@ const LandingPage = (props: RouteComponentProps) => {
   return (
     <div className="content">
       <SectionHero />
-      {isLeksehjelpOpen ? (
+      {isOpen ? (
         <div>
-          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
-          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionLeksehjelp isLeksehjelpOpen={isOpen} />
+          <SectionMestring isLeksehjelpOpen={isOpen} />
           <SectionQuestions />
         </div>
       ) : (
         <div>
           <SectionQuestions />
-          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
-          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionLeksehjelp isLeksehjelpOpen={isOpen} />
+          <SectionMestring isLeksehjelpOpen={isOpen} />
         </div>
       )}
       <SectionFrivillig />

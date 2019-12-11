@@ -11,8 +11,8 @@ import { SocketContext } from '../../providers';
 import ModalComponent from './ModalComponent';
 import { ICustomWindow } from '../../interfaces/ICustomWindow';
 import { CHAT_TYPES } from '../../../config';
-import { getIsLeksehjelpOpen } from '../../services/api-service';
 import { useNextOpeningDay } from '../../hooks/use-next-opening-day';
+import { useOpeningHours } from '../../providers/LeksehjelpInformationProvider';
 
 declare const window: ICustomWindow;
 
@@ -22,12 +22,10 @@ export const Header = (props: RouteComponentProps) => {
   const { inQueue, roomID, cleanState, studentInfo } = useContext(
     SocketContext,
   );
-  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+  const openingHours = useOpeningHours();
+  //const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+  //const [information, setInformation] = useState<IInformation>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-  }, []);
 
   const cancelQueueAndChat = () => {
     if (
@@ -51,8 +49,8 @@ export const Header = (props: RouteComponentProps) => {
           {getApplicationTitle('Digital Leksehjelp')}
         </span>
         <span className="header--serviceStatusMessage">
-          {!isLeksehjelpOpen && ` åpner ${nextOpeningDay} kl. 17:00`}
-          {isLeksehjelpOpen && ' åpent frem til kl. 21:00'}
+          {!openingHours.isOpen && ` åpner ${nextOpeningDay} kl. 17:00`}
+          {openingHours.isOpen && ' åpent frem til kl. 21:00'}
         </span>
       </a>
       {inQueue && (

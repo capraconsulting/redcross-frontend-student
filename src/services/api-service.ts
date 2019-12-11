@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL, HEADERS } from '../../config';
 import { IQuestion, IGrade, ISubject, IOpen } from '../interfaces';
+import { IInformation } from '../interfaces/IInformation';
 
 const api = axios.create({
   baseURL:
@@ -43,5 +44,9 @@ export function getQuestion(url: string) {
 }
 
 export function getIsLeksehjelpOpen<T>(): Promise<IOpen> {
+  return api.get('isopen').then(res => res.data);
+}
+
+export async function getLeksehjelpInformation<T>(): Promise<IInformation> {
   return api.get('isopen').then(res => res.data);
 }
