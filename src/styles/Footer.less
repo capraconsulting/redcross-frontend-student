@@ -1,35 +1,30 @@
 @import 'colors.less';
 
-.facebook-icon {
-  height: 2.2rem;
-  @media (max-width: 550px) {
-    height: 1.9rem;
+@body-margin: 2.67rem;
+@body-margin-mobile: 0.57rem;
+
+.footer {
+  margin-left: -@body-margin;
+  padding-left: -@body-margin;
+  padding: 1rem 0;
+  color: @white;
+  background-color: @primary-color;
+  width: ~'calc(100% + 2*(@{body-margin}))';
+
+  @media (max-width: 560px) {
+    margin-left: -@body-margin-mobile;
+    padding-left: -@body-margin-mobile;
+    width: ~'calc(100% + 2*(@{body-margin-mobile}))';
   }
-  @media (max-width: 340px) {
-    height: 1.5rem;
-  }
-  position: fixed;
-  bottom: 1rem;
-  vertical-align: center;
-  cursor: pointer;
-  text-decoration: none;
-  right: 1rem;
 }
 
-.rk-logo-container {
-  position: fixed;
-  bottom: 0.5rem;
-  vertical-align: center;
-  cursor: pointer;
-  left: 0.5rem;
+.footer a {
+  color: @white;
 }
 
-.rk-icon {
-  height: 2.2rem;
-  @media (max-width: 550px) {
-    height: 1.9rem;
-  }
-  @media (max-width: 340px) {
-    height: 1.5rem;
+.footer span {
+  margin-left: @body-margin;
+  @media (max-width: 560px) {
+    margin-left: @body-margin-mobile;
   }
 }
