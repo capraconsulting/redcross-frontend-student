@@ -127,7 +127,7 @@ export const MestringPage = (props: RouteComponentProps) => {
               history.push('meldinger');
             }}
           >
-            Gå til chat
+            Gå til chatten
           </button>
         </div>
       </div>
