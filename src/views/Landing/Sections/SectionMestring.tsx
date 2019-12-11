@@ -141,6 +141,8 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
           <a
             href="https://korspaahalsen.rodekors.no/"
             className="cross-my-heart--link"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Kors på halsen
           </a>

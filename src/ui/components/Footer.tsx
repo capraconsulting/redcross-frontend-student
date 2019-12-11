@@ -1,6 +1,4 @@
 import React from 'react';
-import Zoom from 'react-reveal/Zoom';
-import Roll from 'react-reveal/Roll';
 import { SocialIcon } from 'react-social-icons';
 
 //Styles
@@ -8,7 +6,12 @@ import '../../styles/Footer.less';
 
 const Footer = () => (
   <div>
-    <a href="https://www.rodekors.no/" className="rk_logo_container">
+    <a
+      href="https://www.rodekors.no/"
+      className="rk_logo_container"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <img
         className="rk-icon"
         src={require('../../assets/images/rk_logo.png')}

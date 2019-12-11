@@ -23,6 +23,8 @@ const SectionRecruiting = () => {
           <a
             href="https://www.rodekors.no"
             className="volunteer--text--colored"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             www.rodekors.no
           </a>
