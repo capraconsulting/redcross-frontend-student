@@ -205,20 +205,14 @@
 }
 
 .dropzone {
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
+  position: unset;
+  height: unset;
+  cursor: pointer;
   padding: 0rem;
-  border-radius: 0.6rem;
-  color: #bdbdbd;
-  outline: none;
-  transition: border 0.24s ease-in-out;
-  max-height: 3rem;
 
   > .message-text {
     color: @black;
     font-size: 1.1rem;
-    vertical-align: 'middle';
     @media (max-width: 520px) {
       font-size: 0.8rem;
     }
@@ -231,12 +225,12 @@
   }
 
   .upload {
-    flex-shrink: 0;
+    vertical-align: sub;
     border: none;
     color: white;
     background-color: @action-color;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
     margin-right: 1rem;
     font-size: 32px;
     border-radius: 0.6rem;
