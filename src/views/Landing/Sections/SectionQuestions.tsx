@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { withRouter, RouteComponentProps } from 'react-router';
 import Zoom from 'react-reveal/Zoom';
 //Material UI
@@ -25,19 +25,16 @@ const SectionQuestions = (props: RouteComponentProps) => {
       <div className="sectioncontainer--header">Spørsmål og svar</div>
       <p className="sectioncontainer--text" id="sectionquestions--text">
         Her kan du lete etter svar blant{' '}
-        <a
-          onClick={() => history.push('questions')}
+        <Link
+          to="/questions?page=1"
           className="sectioncontainer--text--colored"
         >
           allerede stilte spørsmål
-        </a>
+        </Link>
         , eller{' '}
-        <a
-          onClick={() => history.push('questions/new')}
-          className="sectioncontainer--text--colored"
-        >
+        <Link to="/questions/new" className="sectioncontainer--text--colored">
           stille et nytt spørsmål
-        </a>{' '}
+        </Link>{' '}
         hvis du ikke finner det du lurer på!
       </p>
       <form className="sectioncontainer--form" onSubmit={() => setSubmit(true)}>

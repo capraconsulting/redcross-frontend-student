@@ -28,22 +28,18 @@ export const QA = (props: IProps & RouteComponentProps) => {
   const values = qs.parse(location.search);
 
   //Returns option to be filled out based on query params
-  const getDefaultOptions = type => {
-    return { value: values[type] || type === 'page' ? '1' : '' };
+  const getDefaultOptions = (type: string): Option => {
+    return { value: values[type] || type === 'page' ? '1' : '', label: '' };
   };
 
   //Query states
   const [search, setSearch] = useState(
-    location.search.length > 0 ? (values.searchText as string) : ('' as string),
+    location.search.length > 0 ? values.searchText : '',
   );
-  const [subject, setSubject] = useState(getDefaultOptions(
-    'subjectID',
-  ) as Option);
-  const [grade, setGrade] = useState(getDefaultOptions('grade') as Option);
-  const [orderByDate, setOrderByDate] = useState(getDefaultOptions(
-    'filter',
-  ) as Option);
-  const [page, setPage] = useState(getDefaultOptions('page') as Option);
+  const [subject, setSubject] = useState(getDefaultOptions('subjectID'));
+  const [grade, setGrade] = useState(getDefaultOptions('grade'));
+  const [orderByDate, setOrderByDate] = useState(getDefaultOptions('filter'));
+  const [page, setPage] = useState(getDefaultOptions('page'));
 
   //Function removing empty fields from query object
   const removeFalsyFields = obj => {
@@ -65,7 +61,9 @@ export const QA = (props: IProps & RouteComponentProps) => {
       page: parseInt(page.value),
     };
     let queryString = qs.stringify(removeFalsyFields(queryObject));
-    history.push({ pathname: '/questions', search: queryString });
+    if (queryString !== location.search.slice(1)) {
+      history.push({ pathname: '/questions', search: queryString });
+    }
     // note that `search` automatically prepends a question mark in browser window
     getQuestionList(queryString.length > 0 ? '?' + queryString : '').then(
       setQuestions,
@@ -83,23 +81,19 @@ export const QA = (props: IProps & RouteComponentProps) => {
   }, [page]);
 
   useEffect(() => {
-    questions.length < 1 &&
-      page.value !== '1' &&
+    if (questions.length < 1 && page.value !== '1') {
       setPage({ value: '1', label: '' });
+    }
   }, [questions]);
 
-  useEffect(() => {});
-
   const getSubjectOptions = (): Option[] => {
-    const subjectOptions = [{ value: '0', label: 'Alle fag' }] as Option[];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
-      });
-    return subjectOptions;
+    return [
+      { value: '0', label: 'Alle fag' },
+      ...(subjects || []).map(subject => ({
+        value: subject.id.toString(),
+        label: subject.subjectTitle,
+      })),
+    ];
   };
 
   const getFilterOptions = (): Option[] => {
@@ -116,14 +110,13 @@ export const QA = (props: IProps & RouteComponentProps) => {
   };
 
   const getGradeOptions = (): Option[] => {
-    const gradeOptions = [{ value: '0', label: 'Alle trinn' }] as Option[];
-    gradeList.map(grade => {
-      gradeOptions.push({
+    return [
+      { value: '0', label: 'Alle trinn' },
+      ...gradeList.map(grade => ({
         value: grade.gradeID,
         label: grade.label,
-      });
-    });
-    return gradeOptions;
+      })),
+    ];
   };
 
   const renderSearchForm = () => {
@@ -204,7 +197,6 @@ export const QA = (props: IProps & RouteComponentProps) => {
   const pageLimit = 10;
   const pageCount = Math.ceil(totalHits / pageLimit);
 
-  console.log(search);
   return (
     <div className="content">
       {renderSearchForm()}
