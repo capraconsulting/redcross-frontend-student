@@ -177,27 +177,21 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
-      });
-    return subjectOptions;
+    return subjects.map(subject => ({
+      value: subject.id.toString(),
+      label: subject.subjectTitle,
+    }));
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenSubject =
-      subjects && subjects.filter(c => c.subjectTitle === subject.label)[0]; // Will always only be one entry in array
+    const chosenSubject = subjects.find(c => c.subjectTitle === subject.label);
     if (chosenSubject) {
-      return chosenSubject.themes.map(theme => {
-        return {
+      return chosenSubject.themes
+        .filter(theme => !selectedList.find(x => x.id === theme.id))
+        .map(theme => ({
           value: theme.id.toString(),
           label: theme.theme,
-        };
-      });
+        }));
     } else return [];
   };
 
