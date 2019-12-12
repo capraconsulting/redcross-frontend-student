@@ -38,25 +38,25 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
+  const selectedThemes = studentInfo.themes || [];
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
       const tmpSubject = data.find(
         subject => subject.subjectTitle === studentInfo.subject,
       );
+
       if (tmpSubject) {
-        const tmpThemes: Option[] = tmpSubject.themes.map(theme => {
-          return {
+        const themes: Option[] = tmpSubject.themes
+          .filter(theme => !selectedThemes.find(s => s === theme.theme))
+          .map(theme => ({
             value: theme.theme,
             label: theme.theme,
-          };
-        });
-        if (tmpThemes) {
-          setThemes(tmpThemes);
-        }
+          }));
+        setThemes(themes);
       }
     });
-  }, [studentInfo.subject]);
+  }, [selectedThemes]);
 
   const update = () => {
     socketSend({

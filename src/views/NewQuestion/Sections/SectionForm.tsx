@@ -45,30 +45,26 @@ const SectionForm = (props: RouteComponentProps) => {
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [email, setEmail] = useState('');
   const [questionText, setQuestionText] = useState('');
-  const [subject, setSubject] = useState(defaultOption);
-  const [themeList, setThemeList] = useState<IOption[]>([]);
+  const [subject, setSubject] = useState<ISubject>();
+  const [themeList, setThemeList] = useState<ITheme[]>([]);
   const [studentGrade, setGrade] = useState(defaultOption);
   const [isPublic, setIsPublic] = useState(true);
   const [azureToken, setAzureToken] = useState('');
   const [tempFiles, setTempFiles] = useState<any[]>([]);
-  const [selectedList, setSelectedList] = useState<ITheme[]>([]);
+  const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([]);
 
-  const addTheme = (theme: IOption): void => {
-    const { value, label } = theme;
-    const selected = { theme: label, id: Number(value) };
-    if (!(selectedList.filter(e => e.id === Number(value)).length > 0)) {
-      setSelectedList([...[selected], ...selectedList]);
+  const addTheme = (selected: ITheme): void => {
+    if (!selectedThemes.find(e => e.id === selected.id)) {
+      setSelectedThemes([...[selected], ...selectedThemes]);
     }
-    const themes = themeList.filter(e => e.value !== theme.value);
+    const themes = themeList.filter(e => e.id !== selected.id);
     setThemeList(themes);
   };
 
-  const removeTheme = (item: number, theme: string, e: MouseEvent): void => {
-    const list = selectedList.filter(({ id }) => id !== Number(item));
-    setSelectedList(list);
-    const themeObj = { label: theme, value: item.toString() };
-    setThemeList([...[themeObj], ...themeList]);
-    e.preventDefault();
+  const removeTheme = (theme: ITheme): void => {
+    const list = selectedThemes.filter(({ id }) => id !== theme.id);
+    setSelectedThemes(list);
+    setThemeList([theme, ...themeList]);
   };
 
   useEffect(() => {
@@ -101,17 +97,20 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const handleSubmit = () => {
+    if (!subject) {
+      return;
+    }
     return Promise.all<IFile>(uploadPromises(tempFiles)).then(results => {
       const questionForm: IQuestion = {
         email,
         studentGrade: studentGrade.value,
-        subjectID: Number(subject.value),
-        subject: subject.label ? subject.label.toString() : undefined,
+        subjectID: subject.id,
+        subject: subject.subjectTitle,
         questionText,
         isPublic,
         totalRows: 0,
         files: results,
-        themes: selectedList,
+        themes: selectedThemes,
       };
       console.log(questionForm.files);
       postQuestion(questionForm).then(() => {
@@ -185,18 +184,6 @@ const SectionForm = (props: RouteComponentProps) => {
     }));
   };
 
-  const getThemeOptions = (): Option[] => {
-    const chosenSubject = subjects.find(c => c.subjectTitle === subject.label);
-    if (chosenSubject) {
-      return chosenSubject.themes
-        .filter(theme => !selectedList.find(x => x.id === theme.id))
-        .map(theme => ({
-          value: theme.id.toString(),
-          label: theme.theme,
-        }));
-    } else return [];
-  };
-
   const getGradeOptions = (): Option[] => {
     return gradeList.map(grade => {
       return {
@@ -209,7 +196,7 @@ const SectionForm = (props: RouteComponentProps) => {
   const isInvalidForm = () => {
     return (
       questionText.length < 1 ||
-      subject.value.length < 1 ||
+      !subject ||
       studentGrade.value.length < 1 ||
       !isValidEmail(email)
     );
@@ -229,20 +216,22 @@ const SectionForm = (props: RouteComponentProps) => {
             placeholderClassName={'dropdown-placeholder'}
             menuClassName={'dropdown-placeholder'}
             options={getSubjectOptions()}
-            value={subject.value && subject}
+            value={subject ? subject.subjectTitle : undefined}
             onChange={event => {
-              setSubject({ value: event.value, label: event.label });
-              setSelectedList([]);
+              setSubject(subjects.find(s => s.subjectTitle === event.label));
+              setSelectedThemes([]);
             }}
           />
-          <ThemePickerComponent
-            title="Velg undertema"
-            placeholder="Legg til undertema"
-            optionList={getThemeOptions()}
-            addTheme={addTheme}
-            selectedList={selectedList}
-            removeTheme={removeTheme}
-          />
+          {subject && (
+            <ThemePickerComponent
+              title="Velg undertema"
+              placeholder="Legg til undertema"
+              themes={subject.themes}
+              addTheme={addTheme}
+              selectedThemes={selectedThemes}
+              removeTheme={removeTheme}
+            />
+          )}
           <label className={'formLabel'}>
             Klassetrinn <span className="error-message">*</span>
           </label>
