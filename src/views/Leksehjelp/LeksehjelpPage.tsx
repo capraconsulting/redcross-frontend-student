@@ -81,14 +81,14 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
 
   const addSelectedTheme = (option: ITheme) => {
     setSelectedThemes([option, ...selectedThemes]);
-    //dispatchStudentInfo(addThemeAction('' + option.id));
+    dispatchStudentInfo(addThemeAction('' + option.theme));
   };
 
   const removeSelectedTheme = (option: ITheme) => {
     setSelectedThemes(
       selectedThemes.filter(selected => selected.id !== option.id),
     );
-    //dispatchStudentInfo(removeThemeAction('' + option.id));
+    dispatchStudentInfo(removeThemeAction('' + option.theme));
   };
 
   const searchString = () => {
