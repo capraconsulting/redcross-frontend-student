@@ -5,11 +5,10 @@ import React, {
   useState,
 } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Option } from 'react-dropdown';
 import Textarea from 'react-textarea-autosize';
 
 //Components and styles
-import { Picker, ThemePickerComponent } from '../../ui/components';
+import { ThemePickerComponent } from '../../ui/components';
 import '../../styles/LeksehjelpPage.less';
 
 //Services
@@ -62,7 +61,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
         setSelectedThemes(selected);
       }
     });
-  }, [studentInfo]);
+  }, [studentInfo.themes]);
 
   const update = () => {
     socketSend({

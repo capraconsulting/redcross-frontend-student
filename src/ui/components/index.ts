@@ -1,4 +1,3 @@
-export { default as Picker } from './PickerComponent';
 export { default as ThemePickerComponent } from './ThemePickerComponent';
 export { default as Chat } from '../../views/Chat/Chat';
 export { default as ChatHeader } from '../../views/Chat/Sections/ChatHeader';
