@@ -9,7 +9,7 @@ import { Option } from 'react-dropdown';
 import Textarea from 'react-textarea-autosize';
 
 //Components and styles
-import { Picker } from '../../ui/components';
+import { Picker, ThemePickerComponent } from '../../ui/components';
 import '../../styles/LeksehjelpPage.less';
 
 //Services
@@ -26,6 +26,7 @@ import {
 
 //Config
 import { MESSAGE_TYPES } from '../../../config';
+import { ITheme } from '../../interfaces';
 
 const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
   history,
@@ -37,30 +38,38 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     roomID,
     talkyID,
   } = useContext(SocketContext);
-  const [themes, setThemes] = useState<Option[]>([]);
-  const selectedThemes = studentInfo.themes || [];
+  const [themes, setThemes] = useState<ITheme[]>([]);
+  const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([]);
+  //console.log('themes', themes);
+  console.log('studeninfo', studentInfo);
+  //console.log('selected', selectedThemes);
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
       const tmpSubject = data.find(
         subject => subject.subjectTitle === studentInfo.subject,
       );
-
+      console.log(data, tmpSubject);
       if (tmpSubject) {
-        const themes: Option[] = tmpSubject.themes
-          .filter(theme => !selectedThemes.find(s => s === theme.theme))
-          .map(theme => ({
-            value: theme.theme,
-            label: theme.theme,
-          }));
+        const themes: ITheme[] = tmpSubject.themes;
         setThemes(themes);
+        const selected: ITheme[] = [];
+        studentInfo.themes
+          .map(x => themes.find(theme => x === theme.theme))
+          .forEach(x => {
+            if (x) selected.push(x);
+          });
+        setSelectedThemes(selected);
       }
     });
-  }, [selectedThemes]);
+  }, [studentInfo]);
 
   const update = () => {
     socketSend({
-      payload: studentInfo,
+      payload: {
+        themes: selectedThemes.map(theme => '' + theme.theme),
+        ...studentInfo,
+      },
       msgType: MESSAGE_TYPES.UPDATE_QUEUE,
     });
   };
@@ -71,12 +80,16 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     }
   };
 
-  const addSelectedTheme = (option: Option) => {
-    dispatchStudentInfo(addThemeAction(option.value));
+  const addSelectedTheme = (option: ITheme) => {
+    setSelectedThemes([option, ...selectedThemes]);
+    //dispatchStudentInfo(addThemeAction('' + option.id));
   };
 
-  const removeSelectedTheme = (option: string) => {
-    dispatchStudentInfo(removeThemeAction(option));
+  const removeSelectedTheme = (option: ITheme) => {
+    setSelectedThemes(
+      selectedThemes.filter(selected => selected.id !== option.id),
+    );
+    //dispatchStudentInfo(removeThemeAction('' + option.id));
   };
 
   const searchString = () => {
@@ -115,13 +128,13 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
           </div>
           {themes && (
             <div className="item">
-              <p className="text">Legg til underkategorier</p>
-              <Picker
-                optionList={themes}
+              <ThemePickerComponent
+                title="Legg til underkategorier"
+                themes={themes}
                 placeholder="Velg en kategori"
-                addSelected={addSelectedTheme}
-                removeSelected={removeSelectedTheme}
-                selectedList={studentInfo.themes}
+                addTheme={addSelectedTheme}
+                removeTheme={removeSelectedTheme}
+                selectedThemes={selectedThemes}
               />
             </div>
           )}

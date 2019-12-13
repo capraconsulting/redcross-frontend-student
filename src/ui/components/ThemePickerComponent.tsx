@@ -29,6 +29,8 @@ const ThemePickerComponent = ({
       }));
   };
 
+  console.log('themes', themes);
+  console.log('selected', selectedThemes);
   return (
     <div className="dropdown-placeholder">
       <label className={'formLabel'}>{title}</label>
