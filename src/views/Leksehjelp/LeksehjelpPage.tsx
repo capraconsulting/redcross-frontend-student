@@ -29,6 +29,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
+  const isChatRoomGenerated = roomID.length >= 1;
 
   const setBackgroundColor = backgroundColor => {
     document.body.style.backgroundColor = backgroundColor;
@@ -91,7 +92,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
 
   const { positionInQueue, subject, introText } = studentInfo;
 
-  if (roomID.length < 1) {
+  if (!isChatRoomGenerated) {
     setBackgroundColor('#FFFFFF');
 
     return (
@@ -150,7 +151,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
         </div>
       </div>
     );
-  } else if (roomID.length >= 1) {
+  } else if (isChatRoomGenerated) {
     setBackgroundColor('#8C52C7');
 
     return (
