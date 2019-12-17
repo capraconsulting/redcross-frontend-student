@@ -13,6 +13,7 @@ import { ICustomWindow } from '../../interfaces/ICustomWindow';
 import { CHAT_TYPES } from '../../../config';
 import { getIsLeksehjelpOpen } from '../../services/api-service';
 import { useNextOpeningDay } from '../../hooks/use-next-opening-day';
+import ResponsiveComponent from './ResponsiveComponent';
 
 declare const window: ICustomWindow;
 
@@ -50,6 +51,7 @@ export const Header = (props: RouteComponentProps) => {
         <span className="header--logo" id="header--logo">
           {getApplicationTitle('Digital Leksehjelp')}
         </span>
+        <ResponsiveComponent belowThreshold={<br />} />
         <span className="header--serviceStatusMessage">
           {!isLeksehjelpOpen && ` åpner ${nextOpeningDay} kl. 17:00`}
           {isLeksehjelpOpen && ' åpent frem til kl. 21:00'}
