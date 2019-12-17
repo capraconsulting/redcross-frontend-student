@@ -24,6 +24,8 @@ export const MestringPage = (props: RouteComponentProps) => {
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>();
   const { history } = props;
+  const isChatRoomGenerated = roomID.length >= 1;
+
   const setBackgroundColor = backgroundColor => {
     document.body.style.backgroundColor = backgroundColor;
   };
@@ -74,7 +76,7 @@ export const MestringPage = (props: RouteComponentProps) => {
 
   const { positionInQueue } = studentInfo;
 
-  if (roomID.length < 1) {
+  if (!isChatRoomGenerated) {
     setBackgroundColor('#FFFFFF');
 
     return (
@@ -112,7 +114,7 @@ export const MestringPage = (props: RouteComponentProps) => {
         </div>
       </div>
     );
-  } else if (roomID.length >= 1) {
+  } else if (isChatRoomGenerated) {
     setBackgroundColor('#8C52C7');
 
     return (
