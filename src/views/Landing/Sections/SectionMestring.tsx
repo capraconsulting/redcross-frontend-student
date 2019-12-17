@@ -110,7 +110,7 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
             />
           </form>
           {isLeksehjelpOpen && (
-            <>
+            <div className="button-container">
               <button
                 className="btn btn-submit"
                 disabled={
@@ -133,7 +133,7 @@ const SectionMestring: React.FC<IProps> = ({ history, isLeksehjelpOpen }) => {
               >
                 Videochat
               </button>
-            </>
+            </div>
           )}
         </div>
         <div className="cross-my-heart">

@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { withRouter, RouteComponentProps } from 'react-router';
 import Zoom from 'react-reveal/Zoom';
-//Material UI
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-//Styles
 import '../../../styles/LandingPage.less';
-import { InputSearch } from '../../../ui/components';
 
 const SectionQuestions = (props: RouteComponentProps) => {
   const { history } = props;
@@ -40,20 +35,23 @@ const SectionQuestions = (props: RouteComponentProps) => {
       <form className="sectioncontainer--form" onSubmit={() => setSubmit(true)}>
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
       </form>
-      <InputSearch
-        placeholder="Hva lurer du på?"
-        onClick={setSubmit}
-        onChange={setSearchText}
-        button={
-          <IconButton
-            style={{ padding: 10 }}
-            aria-label={'Search'}
-            onClick={() => setSubmit(true)}
-          >
-            <SearchIcon />
-          </IconButton>
-        }
-      />
+
+      <span className="search--input">
+        <input
+          className="search--input--searchkey"
+          value={searchText}
+          onChange={event => setSearchText(event.target.value)}
+          type="text"
+          placeholder="Hva lurer du på?"
+        />
+        <button
+          onClick={() => setSubmit(true)}
+          className="btn btn-submit btn-search"
+          type="button"
+        >
+          Søk
+        </button>
+      </span>
       {submit && (
         <Redirect
           push
