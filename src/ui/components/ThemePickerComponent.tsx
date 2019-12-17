@@ -21,7 +21,7 @@ const ThemePickerComponent = ({
   placeholder,
 }: IProps) => (
   <div className="dropdown-placeholder">
-    <label className={'formLabel'}>{title}</label>
+    <label className="formLabel">{title}</label>
     <Dropdown
       className="theme--dropdown"
       options={optionList}
