@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SocketContext } from '../../providers';
-import { Option } from 'react-dropdown';
-import { getSubjectList } from '../../services/api-service';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
 import { setIntroTextAction } from '../../reducers';
@@ -17,32 +15,12 @@ export const MestringPage = (props: RouteComponentProps) => {
     roomID,
     talkyID,
   } = useContext(SocketContext);
-  const [themes, setThemes] = useState<Option[]>();
   const { history } = props;
   const isChatRoomGenerated = roomID.length >= 1;
 
   const setBackgroundColor = backgroundColor => {
     document.body.style.backgroundColor = backgroundColor;
   };
-
-  useEffect(() => {
-    getSubjectList('?isMestring=0').then(data => {
-      const tmpSubject = data.find(
-        subject => subject.subjectTitle === studentInfo.subject,
-      );
-      if (tmpSubject) {
-        const tmpThemes: Option[] = tmpSubject.themes.map(theme => {
-          return {
-            value: theme.theme,
-            label: theme.theme,
-          };
-        });
-        if (tmpThemes) {
-          setThemes(tmpThemes);
-        }
-      }
-    });
-  }, [studentInfo.subject]);
 
   useEffect(() => {
     return () => {
