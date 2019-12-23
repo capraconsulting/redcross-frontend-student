@@ -92,7 +92,20 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
 
   const { positionInQueue, subject, introText } = studentInfo;
 
-  if (!isChatRoomGenerated) {
+  const renderNotInQueue = () => {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div>
+        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
+        nytt.
+      </div>
+    );
+  };
+
+  if (!positionInQueue) {
+    return renderNotInQueue();
+  } else if (!isChatRoomGenerated) {
     setBackgroundColor('#FFFFFF');
 
     return (
@@ -102,16 +115,13 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
             <p className="text">
               Du står nå i kø for <span className="course">{subject}</span>
             </p>
-            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
           </div>
           <div className="body">
             <div className="item">
-              <p className="text">
-                Mens du venter kan du begynne å forklare hva du lurer på.
-              </p>
               <Textarea
                 autoFocus
                 cols={window.scrollX}
+                placeHolder="Skriv her..."
                 minRows={6}
                 value={introText}
                 onChange={event =>
@@ -121,16 +131,18 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
             </div>
             {themes && (
               <div className="item">
-                <p className="text">Legg til underkategorier</p>
                 <Picker
                   optionList={themes}
-                  placeholder="Velg en kategori"
+                  placeholder="Legg til tema"
                   addSelected={addSelectedTheme}
                   removeSelected={removeSelectedTheme}
                   selectedList={studentInfo.themes}
                 />
               </div>
             )}
+            <p className="intro-text">
+              Mens du venter kan du begynne å forklare hva du lurer på.
+            </p>
           </div>
 
           <div className="button-container">
@@ -144,9 +156,6 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
               Prøv gjerne å søke på google ved å trykke på denne linken mens du
               venter!
             </a>
-          </div>
-          <div className="header">
-            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
           </div>
         </div>
       </div>
@@ -172,14 +181,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
       </div>
     );
   } else {
-    setBackgroundColor('#FFFFFF');
-
-    return (
-      <div>
-        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
-        nytt.
-      </div>
-    );
+    return renderNotInQueue();
   }
 };
 

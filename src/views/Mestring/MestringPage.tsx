@@ -1,15 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { DropZone, Picker } from '../../ui/components';
 import { SocketContext } from '../../providers';
 import { Option } from 'react-dropdown';
 import { getSubjectList } from '../../services/api-service';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
-import {
-  addThemeAction,
-  removeThemeAction,
-  setIntroTextAction,
-} from '../../reducers';
+import { setIntroTextAction } from '../../reducers';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import '../../styles/LeksehjelpPage.less';
@@ -76,7 +71,20 @@ export const MestringPage = (props: RouteComponentProps) => {
 
   const { positionInQueue } = studentInfo;
 
-  if (!isChatRoomGenerated) {
+  const renderNotInQueue = () => {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div>
+        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
+        nytt.
+      </div>
+    );
+  };
+
+  if (!positionInQueue) {
+    return renderNotInQueue();
+  } else if (!isChatRoomGenerated) {
     setBackgroundColor('#FFFFFF');
 
     return (
@@ -87,16 +95,16 @@ export const MestringPage = (props: RouteComponentProps) => {
               Du står nå i kø for{' '}
               <span className="course">{studentInfo.subject}</span>
             </p>
-            <span className="queue">Du er nr. {positionInQueue} i køen.</span>
           </div>
           <div className="body">
             <div className="item">
-              <p className="text">
+              <p className="intro-text">
                 Mens du venter kan du begynne å forklare hva du lurer på.
               </p>
               <Textarea
                 autoFocus
                 cols={window.scrollX}
+                placeHolder="Skriv her..."
                 minRows={15}
                 value={studentInfo.introText}
                 onChange={event =>
@@ -123,7 +131,7 @@ export const MestringPage = (props: RouteComponentProps) => {
           <span className="start-chat-text">Du er nå fremme i køen</span>
           <button
             disabled={roomID.length < 1}
-            className="btn btn-submit"
+            className="btn btn-submit btn-queue"
             onClick={() => {
               openTalky();
               history.push('meldinger');
@@ -135,14 +143,7 @@ export const MestringPage = (props: RouteComponentProps) => {
       </div>
     );
   } else {
-    setBackgroundColor('#FFFFFF');
-
-    return (
-      <div>
-        Du står ikke i kø akkurat nå, vennligst gå tilbake til forsiden og prøv
-        nytt.
-      </div>
-    );
+    return renderNotInQueue();
   }
 };
 
