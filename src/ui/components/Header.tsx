@@ -8,6 +8,8 @@ import ModalComponent from './ModalComponent';
 import { ICustomWindow } from '../../interfaces/ICustomWindow';
 import { CHAT_TYPES } from '../../../config';
 import { useOpeningHours } from '../../providers/OpeningHoursProvider';
+import ResponsiveComponent from './ResponsiveComponent';
+import { MediaQuery } from '../../enums/media-query';
 
 declare const window: ICustomWindow;
 
@@ -41,6 +43,10 @@ export const Header = (props: RouteComponentProps) => {
         <span className="header--logo" id="header--logo">
           Digital Leksehjelp
         </span>
+        <ResponsiveComponent
+          threshold={MediaQuery.TABLET_PORTRAIT}
+          belowThreshold={<br />}
+        />
         <span className="header--serviceStatusMessage">{openingMessage}</span>
       </a>
       {inQueue && (
