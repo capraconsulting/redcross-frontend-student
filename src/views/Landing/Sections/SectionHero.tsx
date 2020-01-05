@@ -2,7 +2,7 @@ import React from 'react';
 
 //Styles
 import '../../../styles/LandingPage.less';
-import { useOpeningHours } from '../../../providers/LeksehjelpInformationProvider';
+import { useOpeningHours } from '../../../providers/OpeningHoursProvider';
 
 export const SectionHero = () => {
   const { announcement } = useOpeningHours();

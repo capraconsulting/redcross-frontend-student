@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 
 //Providers
 import { SocketContext } from '../../providers';
-import { useOpeningHours } from '../../providers/LeksehjelpInformationProvider';
+import { useOpeningHours } from '../../providers/OpeningHoursProvider';
 
 const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { inQueue, roomID, cleanState, studentInfo } = useContext(

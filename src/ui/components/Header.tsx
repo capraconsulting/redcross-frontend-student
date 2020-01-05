@@ -7,7 +7,7 @@ import { SocketContext } from '../../providers';
 import ModalComponent from './ModalComponent';
 import { ICustomWindow } from '../../interfaces/ICustomWindow';
 import { CHAT_TYPES } from '../../../config';
-import { useOpeningMessage } from '../../hooks/use-opening-message';
+import { useOpeningHours } from '../../providers/OpeningHoursProvider';
 
 declare const window: ICustomWindow;
 
@@ -17,6 +17,8 @@ export const Header = (props: RouteComponentProps) => {
   const { inQueue, roomID, cleanState, studentInfo } = useContext(
     SocketContext,
   );
+
+  const { openingMessage } = useOpeningHours();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -32,8 +34,6 @@ export const Header = (props: RouteComponentProps) => {
     setIsModalOpen(false);
     history.push('/');
   };
-
-  const openingMessage = useOpeningMessage(true);
 
   return (
     <div className="header">

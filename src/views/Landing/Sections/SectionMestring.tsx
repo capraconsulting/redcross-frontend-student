@@ -8,8 +8,7 @@ import { QueueMessageBuilder } from '../../../services/message-service';
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import { toast } from 'react-toastify';
 import { SocketContext } from '../../../providers';
-import { useOpeningMessage } from '../../../hooks/use-opening-message';
-import { useOpeningHours } from '../../../providers/LeksehjelpInformationProvider';
+import { useOpeningHours } from '../../../providers/OpeningHoursProvider';
 import { useSubjects } from '../../../hooks/use-subjects';
 // Styles
 import '../../../styles/LandingPage.less';
@@ -32,7 +31,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
 
   const subjectStatusMessage = useSubjectStatusMessage(subject);
 
-  const openingMessage = useOpeningMessage(false);
+  const { isOpen, openingMessage } = useOpeningHours();
 
   const enterChatQueue = (chatType: string) => {
     getIsLeksehjelpOpen().then(data => {
@@ -65,7 +64,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
           </div>
           <div className="mestring--header">Mestring og motivasjon</div>
           <span className="sectioncontainer--header--status">
-            {openingMessage}
+            {isOpen ? 'åpen nå' : openingMessage}
           </span>
           {isLeksehjelpOpen && (
             <p className="sectioncontainer--text">

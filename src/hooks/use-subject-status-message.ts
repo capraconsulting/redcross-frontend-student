@@ -1,5 +1,5 @@
 import { Option } from 'react-dropdown';
-import { useOpeningHours } from '../providers/LeksehjelpInformationProvider';
+import { useOpeningHours } from '../providers/OpeningHoursProvider';
 import { useContext } from 'react';
 import { SocketContext } from '../providers';
 

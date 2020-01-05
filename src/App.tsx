@@ -6,7 +6,7 @@ import './styles/base.less';
 //Router
 import AppRouter from './Router';
 import { SocketProvider } from './providers';
-import OpeningHoursProvider from './providers/LeksehjelpInformationProvider';
+import OpeningHoursProvider from './providers/OpeningHoursProvider';
 
 export const App = () => {
   return (

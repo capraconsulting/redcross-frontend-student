@@ -13,11 +13,10 @@ import { QueueMessageBuilder } from '../../../services/message-service';
 //Providers & reducers
 import { SocketContext } from '../../../providers';
 import { initStudentInfoAction } from '../../../reducers';
-import { useOpeningMessage } from '../../../hooks/use-opening-message';
 //Configurations
 import { CHAT_TYPES, MESSAGE_TYPES } from '../../../../config';
 import grades from '../../../grades';
-import { useOpeningHours } from '../../../providers/LeksehjelpInformationProvider';
+import { useOpeningHours } from '../../../providers/OpeningHoursProvider';
 import { useSubjects } from '../../../hooks/use-subjects';
 import { useSubjectStatusMessage } from '../../../hooks/use-subject-status-message';
 
@@ -49,7 +48,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
 
   const subjectStatusMessage = useSubjectStatusMessage(subject);
 
-  const openingMessage = useOpeningMessage(false);
+  const { isOpen, openingMessage } = useOpeningHours();
 
   const isActiveSubject = (subject: React.ReactNode): boolean => {
     return typeof subject === 'string' && activeSubjects.indexOf(subject) >= 0;
@@ -78,7 +77,9 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <div className="sectioncontainer">
       <div className="sectioncontainer--header">Leksehjelp</div>
-      <span className="sectioncontainer--header--status">{openingMessage}</span>
+      <span className="sectioncontainer--header--status">
+        {isOpen ? 'åpen nå' : openingMessage}
+      </span>
       {isLeksehjelpOpen && (
         <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
           Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,{' '}
