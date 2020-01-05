@@ -44,7 +44,7 @@ function getMessage(openingHours: IInformation) {
   );
 
   if (!nextOpeningDay) {
-    throw Error('No next opening day');
+    return 'stengt';
   }
 
   const day = nextOpeningDay[1].toLowerCase();
