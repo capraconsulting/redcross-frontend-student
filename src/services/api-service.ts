@@ -44,9 +44,9 @@ export function getQuestion(url: string) {
 }
 
 export function getIsLeksehjelpOpen<T>(): Promise<IOpen> {
-  return api.get('isopen').then(res => res.data);
+  return api.get('information/isopen').then(res => res.data);
 }
 
 export async function getLeksehjelpInformation<T>(): Promise<IInformation> {
-  return api.get('isopen').then(res => res.data);
+  return api.get('information/').then(res => res.data);
 }

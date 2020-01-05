@@ -14,7 +14,7 @@ export const SectionHero = () => {
         <span className="hero--description--colored">anonymt</span> for deg på
         ungdomsskolen og videregående.
       </div>
-      {announcement.length > 0 && (
+      {announcement && announcement.length > 0 && (
         <div className="hero--tips" id="hero--tips">
           {announcement}
         </div>
