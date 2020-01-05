@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SocketContext } from '../../providers';
 import { QueueMessageBuilder } from '../../services/message-service';
 import { MESSAGE_TYPES } from '../../../config';
@@ -16,6 +16,17 @@ export const MestringPage = (props: RouteComponentProps) => {
     talkyID,
   } = useContext(SocketContext);
   const { history } = props;
+  const isChatRoomGenerated = roomID.length >= 1;
+
+  const setBackgroundColor = backgroundColor => {
+    document.body.style.backgroundColor = backgroundColor;
+  };
+
+  useEffect(() => {
+    return () => {
+      setBackgroundColor('#FFFFFF');
+    };
+  }, []);
 
   const update = () => {
     const msg = new QueueMessageBuilder(MESSAGE_TYPES.UPDATE_QUEUE)
@@ -36,53 +47,82 @@ export const MestringPage = (props: RouteComponentProps) => {
     }
   };
 
-  return (
-    <div className="waiting-container">
-      <div className="content">
-        <div className="header">
-          <p className="text">
-            Du står nå i kø for{' '}
-            <span className="course">{studentInfo.subject}</span>
-          </p>
-          <span className="queue">
-            Du er nr. {studentInfo.positionInQueue} i køen.
-          </span>
-        </div>
-        <div className="body">
-          <div className="item">
+  const { positionInQueue } = studentInfo;
+
+  const renderNotInQueue = () => {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div>
+        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
+        nytt.
+      </div>
+    );
+  };
+
+  if (!positionInQueue) {
+    return renderNotInQueue();
+  } else if (!isChatRoomGenerated) {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div className="waiting-container">
+        <div className="content">
+          <div className="header">
             <p className="text">
-              Mens du venter kan du begynne å forklare hva du lurer på.
+              Du står nå i kø for{' '}
+              <span className="course">{studentInfo.subject}</span>
             </p>
-            <Textarea
-              autoFocus
-              cols={window.scrollX}
-              minRows={15}
-              value={studentInfo.introText}
-              onChange={event =>
-                dispatchStudentInfo(setIntroTextAction(event.target.value))
-              }
-            />
+          </div>
+          <div className="body">
+            <div className="item">
+              <p className="intro-text">
+                Mens du venter kan du begynne å forklare hva du lurer på.
+              </p>
+              <Textarea
+                autoFocus
+                cols={window.scrollX}
+                placeHolder="Skriv her..."
+                minRows={15}
+                value={studentInfo.introText}
+                onChange={event =>
+                  dispatchStudentInfo(setIntroTextAction(event.target.value))
+                }
+              />
+            </div>
+          </div>
+
+          <div className="button-container">
+            <button className="btn btn-submit" onClick={update}>
+              Lagre
+            </button>
           </div>
         </div>
+      </div>
+    );
+  } else if (isChatRoomGenerated) {
+    setBackgroundColor('#8C52C7');
 
-        <div className="button-container">
-          <button className="btn btn-submit" onClick={update}>
-            Oppdater Informasjon
-          </button>
+    return (
+      <div className="start-chat-container">
+        <div className="content">
+          <span className="start-chat-text">Du er nå fremme i køen</span>
           <button
             disabled={roomID.length < 1}
-            className="btn btn-submit"
+            className="btn btn-submit btn-queue"
             onClick={() => {
               openTalky();
               history.push('meldinger');
             }}
           >
-            Gå til chat
+            Gå til chatten
           </button>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return renderNotInQueue();
+  }
 };
 
 export default withRouter(MestringPage);

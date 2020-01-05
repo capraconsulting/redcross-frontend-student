@@ -7,24 +7,15 @@ import React, {
 import { RouteComponentProps } from 'react-router';
 import { Option } from 'react-dropdown';
 import Textarea from 'react-textarea-autosize';
-
-//Components and styles
 import { Picker } from '../../ui/components';
 import '../../styles/LeksehjelpPage.less';
-
-//Services
 import { getSubjectList } from '../../services/api-service';
-import { QueueMessageBuilder } from '../../services/message-service';
-
-//Providers and reducers
 import { SocketContext } from '../../providers';
 import {
   addThemeAction,
   removeThemeAction,
   setIntroTextAction,
 } from '../../reducers';
-
-//Config
 import { MESSAGE_TYPES } from '../../../config';
 
 const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
@@ -38,6 +29,11 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
+  const isChatRoomGenerated = roomID.length >= 1;
+
+  const setBackgroundColor = backgroundColor => {
+    document.body.style.backgroundColor = backgroundColor;
+  };
 
   useEffect(() => {
     getSubjectList('?isMestring=0').then(data => {
@@ -57,6 +53,12 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
       }
     });
   }, [studentInfo.subject]);
+
+  useEffect(() => {
+    return () => {
+      setBackgroundColor('#FFFFFF');
+    };
+  }, []);
 
   const update = () => {
     socketSend({
@@ -89,48 +91,82 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
   };
 
   const { positionInQueue, subject, introText } = studentInfo;
-  return (
-    <div className="waiting-container">
-      <div className="content">
-        <div className="header">
-          <p className="text">
-            Du står nå i kø for <span className="course">{subject}</span>
-          </p>
-          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
-        </div>
-        <div className="body">
-          <div className="item">
+
+  const renderNotInQueue = () => {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div>
+        Du står ikke lengre i kø, vennligst gå tilbake til forsiden og prøv på
+        nytt.
+      </div>
+    );
+  };
+
+  if (!positionInQueue) {
+    return renderNotInQueue();
+  } else if (!isChatRoomGenerated) {
+    setBackgroundColor('#FFFFFF');
+
+    return (
+      <div className="waiting-container">
+        <div className="content">
+          <div className="header">
             <p className="text">
-              Mens du venter kan du begynne å forklare hva du lurer på.
+              Du står nå i kø for <span className="course">{subject}</span>
             </p>
-            <Textarea
-              autoFocus
-              cols={window.scrollX}
-              minRows={6}
-              value={introText}
-              onChange={event =>
-                dispatchStudentInfo(setIntroTextAction(event.target.value))
-              }
-            />
           </div>
-          {themes && (
+          <div className="body">
             <div className="item">
-              <p className="text">Legg til underkategorier</p>
-              <Picker
-                optionList={themes}
-                placeholder="Velg en kategori"
-                addSelected={addSelectedTheme}
-                removeSelected={removeSelectedTheme}
-                selectedList={studentInfo.themes}
+              <Textarea
+                autoFocus
+                cols={window.scrollX}
+                placeHolder="Skriv her..."
+                minRows={6}
+                value={introText}
+                onChange={event =>
+                  dispatchStudentInfo(setIntroTextAction(event.target.value))
+                }
               />
             </div>
-          )}
-        </div>
+            {themes && (
+              <div className="item">
+                <Picker
+                  optionList={themes}
+                  placeholder="Legg til tema"
+                  addSelected={addSelectedTheme}
+                  removeSelected={removeSelectedTheme}
+                  selectedList={studentInfo.themes}
+                />
+              </div>
+            )}
+            <p className="intro-text">
+              Mens du venter kan du begynne å forklare hva du lurer på.
+            </p>
+          </div>
 
-        <div className="button-container">
-          <button className="btn btn-submit btn-queue" onClick={update}>
-            Oppdater Informasjon
-          </button>
+          <div className="button-container">
+            <button className="btn btn-submit btn-queue" onClick={update}>
+              Lagre
+            </button>
+          </div>
+
+          <div className="queue-link">
+            <a href={searchString()} target="_blank" rel="noopener noreferrer">
+              Prøv gjerne å søke på google ved å trykke på denne linken mens du
+              venter!
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  } else if (isChatRoomGenerated) {
+    setBackgroundColor('#8C52C7');
+
+    return (
+      <div className="start-chat-container">
+        <div className="content">
+          <span className="start-chat-text">Du er nå fremme i køen</span>
           <button
             disabled={roomID.length < 1}
             className="btn btn-submit btn-queue"
@@ -139,22 +175,14 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
               history.push('meldinger');
             }}
           >
-            Gå til chat
+            Gå til chatten
           </button>
         </div>
-
-        <div className="queue-link">
-          <a href={searchString()} target="_blank" rel="noopener noreferrer">
-            Prøv gjerne å søke på google ved å trykke på denne linken mens du
-            venter!
-          </a>
-        </div>
-        <div className="header">
-          <span className="queue">Du er nr. {positionInQueue} i køen.</span>
-        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return renderNotInQueue();
+  }
 };
 
 export default LeksehjelpPage;

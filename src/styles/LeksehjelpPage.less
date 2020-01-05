@@ -65,8 +65,11 @@
     }
 
     .body {
+      display: flex;
+      flex-direction: column-reverse;
       > .item {
         > .text {
+          padding: 0.5rem;
           margin: 4rem 0.5rem 0;
           font-size: 1.2rem;
           font-weight: 500;
@@ -78,5 +81,34 @@
         }
       }
     }
+  }
+}
+
+.start-chat-container {
+  height: 80vh;
+
+  > .content {
+    display: flex;
+    align-items: center;
+    color: @white;
+  }
+}
+
+.intro-text {
+  margin-bottom: 1rem;
+  @media(min-width: 678px) {
+    font-size: 20px;
+  }
+
+  @media(max-width: 677px) {
+    font-size: 15px;
+  }
+}
+
+.start-chat-text {
+  font-size: 40px;
+
+  @media(max-width: 677px) {
+    font-size: 20px;
   }
 }
