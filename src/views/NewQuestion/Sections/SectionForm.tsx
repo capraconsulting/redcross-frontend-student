@@ -263,7 +263,7 @@ const SectionForm = (props: RouteComponentProps) => {
             placeholder={
               'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
             }
-            className={'textarea'}
+            className="textarea"
             value={questionText}
             onChange={event => setQuestionText(event.target.value)}
           />
