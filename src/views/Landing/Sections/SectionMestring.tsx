@@ -18,7 +18,6 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
   const { socketSend, uniqueID, inQueue, activeSubjects } = useContext(
     SocketContext,
   );
-  const { isOpen: isLeksehjelpOpen } = useOpeningHours();
 
   const subjects = useSubjects(true, s => s.subjectTitle);
 
@@ -66,7 +65,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
           <span className="sectioncontainer--header--status">
             {isOpen ? 'åpen nå' : openingMessage}
           </span>
-          {isLeksehjelpOpen && (
+          {isOpen && (
             <p className="sectioncontainer--text">
               Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve en{' '}
               ny læringsmetode?
@@ -86,26 +85,18 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
               <p className="sectioncontainer--text">{subjectStatusMessage}</p>
             )}
           </form>
-          {isLeksehjelpOpen && (
+          {isOpen && (
             <>
               <button
                 className="btn btn-submit"
-                disabled={
-                  !isLeksehjelpOpen ||
-                  inQueue ||
-                  !isActiveSubject(subject.value)
-                }
+                disabled={!isOpen || inQueue || !isActiveSubject(subject.value)}
                 onClick={() => enterChatQueue(MESTRING_TEXT)}
               >
                 Chat
               </button>{' '}
               <button
                 className="btn btn-submit btn-right"
-                disabled={
-                  !isLeksehjelpOpen ||
-                  inQueue ||
-                  !isActiveSubject(subject.value)
-                }
+                disabled={!isOpen || inQueue || !isActiveSubject(subject.value)}
                 onClick={() => enterChatQueue(MESTRING_VIDEO)}
               >
                 Videochat
@@ -127,6 +118,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
       </div>
       <div />
       <img
+        alt=""
         src={require('../../../assets/images/figure_2.svg')}
         className="help--image"
       />

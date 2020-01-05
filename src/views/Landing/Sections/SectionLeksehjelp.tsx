@@ -33,7 +33,6 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
     inQueue,
     activeSubjects,
   } = useContext(SocketContext);
-  const { isOpen: isLeksehjelpOpen } = useOpeningHours();
 
   const subjects = useSubjects(false, s => s.id.toString());
 
@@ -80,7 +79,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
       <span className="sectioncontainer--header--status">
         {isOpen ? 'åpen nå' : openingMessage}
       </span>
-      {isLeksehjelpOpen && (
+      {isOpen && (
         <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
           Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,{' '}
           skrive tekster eller øve til prøver. Start en chat eller videosamtale!
@@ -124,7 +123,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
           <p className="sectioncontainer--text">{subjectStatusMessage}</p>
         )}
       </form>
-      {isLeksehjelpOpen && (
+      {isOpen && (
         <>
           <button
             className="btn btn-submit"
