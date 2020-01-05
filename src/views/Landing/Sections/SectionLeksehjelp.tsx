@@ -90,7 +90,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
           className="sectioncontainer--form--header"
           id="leksehjelp--form--header"
         >
-          Velg tema <span className="error-message">*</span>
+          Velg fag <span className="error-message">*</span>
         </div>
         <Dropdown
           placeholder={'F.eks. Matematikk, naturfag eller norsk'}

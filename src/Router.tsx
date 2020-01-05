@@ -58,6 +58,9 @@ export const AppRouter = (props: IProps) => {
       <Route
         path="/"
         render={props => {
+          props.history.listen(_ => {
+            window.scrollTo(0, 0);
+          });
           return props.history.location.pathname !== '/meldinger' && <Footer />;
         }}
       />

@@ -29,7 +29,6 @@ import {
 
 //Persistent grade list
 import gradeList from '../../../grades';
-import { emailValidatorRegExp } from '../../../../config';
 
 const defaultOption: Option = {
   value: '',
@@ -91,8 +90,8 @@ const SectionForm = (props: RouteComponentProps) => {
     setAzureToken(generatedToken.token);
   }, []);
 
-  const emailValidator = (email: string) => {
-    return emailValidatorRegExp.test(String(email).toLowerCase());
+  const isValidEmail = (email: string) => {
+    return /.+@.+/.test(email);
   };
 
   const uploadPromises = tempFiles => {
@@ -138,11 +137,13 @@ const SectionForm = (props: RouteComponentProps) => {
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
-          <span className="message-text">
+          <React.Fragment>
             <button className="upload">+</button>
-            <span>Legg til filer </span>
-            <span className="grey">(max 5 mb)</span>
-          </span>
+            <span className="message-text">
+              <span>Legg til filer </span>
+              <span className="grey">(max 5 mb)</span>
+            </span>
+          </React.Fragment>
         )}
       </div>
     );
@@ -178,27 +179,21 @@ const SectionForm = (props: RouteComponentProps) => {
   };
 
   const getSubjectOptions = (): Option[] => {
-    let subjectOptions: Option[] = [];
-    subjects &&
-      subjects.map(subject => {
-        subjectOptions.push({
-          value: subject.id.toString(),
-          label: subject.subjectTitle,
-        });
-      });
-    return subjectOptions;
+    return subjects.map(subject => ({
+      value: subject.id.toString(),
+      label: subject.subjectTitle,
+    }));
   };
 
   const getThemeOptions = (): Option[] => {
-    const chosenSubject =
-      subjects && subjects.filter(c => c.subjectTitle === subject.label)[0]; // Will always only be one entry in array
+    const chosenSubject = subjects.find(c => c.subjectTitle === subject.label);
     if (chosenSubject) {
-      return chosenSubject.themes.map(theme => {
-        return {
+      return chosenSubject.themes
+        .filter(theme => !selectedList.find(x => x.id === theme.id))
+        .map(theme => ({
           value: theme.id.toString(),
           label: theme.theme,
-        };
-      });
+        }));
     } else return [];
   };
 
@@ -211,12 +206,12 @@ const SectionForm = (props: RouteComponentProps) => {
     });
   };
 
-  const formControls = () => {
+  const isInvalidForm = () => {
     return (
-      email.length < 1 ||
       questionText.length < 1 ||
       subject.value.length < 1 ||
-      studentGrade.value.length < 1
+      studentGrade.value.length < 1 ||
+      !isValidEmail(email)
     );
   };
 
@@ -287,7 +282,7 @@ const SectionForm = (props: RouteComponentProps) => {
             key={1}
           />
           <div className="error-message--text">
-            {!emailValidator(email) && email.length > 0 ? (
+            {!isValidEmail(email) && email.length > 0 ? (
               <p>Eposten er ikke gyldig</p>
             ) : (
               <p> </p>
@@ -329,7 +324,7 @@ const SectionForm = (props: RouteComponentProps) => {
           </div>
         }
         buttonText={'Send'}
-        disabled={formControls()}
+        disabled={isInvalidForm()}
       />
     </div>
   );
