@@ -11,7 +11,7 @@ import {
 import '../../../styles/QAList.less';
 
 //Interfaces
-import { IQuestion, IFile } from '../../../interfaces';
+import { IQuestion } from '../../../interfaces';
 
 //Services
 import { NorwegianDate } from '../../../services/date-service';
