@@ -1,11 +1,15 @@
 @import 'colors.less';
 
 .success-body {
-  width: '100%';
   margin-left: 0;
   margin-right: 0;
+  margin-top: 2rem;
   height: 85vh;
   background-color: @form-background-color;
+
+  @media (max-width: 550px) {
+    margin-top: 1rem;
+  }
 }
 
 .text-container {
@@ -14,14 +18,16 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 40px;
+  text-align: center;
 
   > .text {
-    font-weight: 550;
+    font-weight: 500;
     font-size: 3rem;
     width: 70vw;
-    @media (max-width: 520px) {
+    @media (max-width: 550px) {
       font-weight: 400;
-      font-size: 2rem;
+      font-size: 20px;
     }
   }
 }

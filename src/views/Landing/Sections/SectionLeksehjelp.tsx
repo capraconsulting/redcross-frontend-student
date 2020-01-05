@@ -124,7 +124,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
         )}
       </form>
       {isOpen && (
-        <>
+        <div className="button-container">
           <button
             className="btn btn-submit"
             disabled={
@@ -151,7 +151,7 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
           >
             Videochat
           </button>
-        </>
+        </div>
       )}
     </div>
   );

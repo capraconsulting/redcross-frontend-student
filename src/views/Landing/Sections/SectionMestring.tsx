@@ -86,7 +86,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
             )}
           </form>
           {isOpen && (
-            <>
+            <div className="button-container">
               <button
                 className="btn btn-submit"
                 disabled={!isOpen || inQueue || !isActiveSubject(subject.value)}
@@ -101,7 +101,7 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
               >
                 Videochat
               </button>
-            </>
+            </div>
           )}
         </div>
         <div className="cross-my-heart">

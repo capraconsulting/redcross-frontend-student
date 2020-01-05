@@ -104,6 +104,7 @@ const ChatInput = (props: IProps) => {
       <input
         className={'message-text'}
         type="textarea"
+        placeholder="Skriv her"
         value={message}
         onChange={event => {
           setMessage(event.target.value);
@@ -134,8 +135,8 @@ const ChatInput = (props: IProps) => {
           accept="image/*|.pdf|.doc|.docx"
           className="file"
         />
-        <div className={'message-form-container'}>
-          <form className={'message-form'}>
+        <div className="message-form-container">
+          <form className="message-form">
             <button
               type="button"
               className="upload"

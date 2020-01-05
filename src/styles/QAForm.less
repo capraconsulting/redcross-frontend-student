@@ -54,8 +54,9 @@
   font-weight: bold;
   font-size: 1.3rem;
   padding-bottom: 0.3rem;
-  @media (max-width: 520px) {
-    font-size: 1rem;
+
+  @media (max-width: 550px) {
+    font-size: 15px;
   }
 }
 
@@ -79,15 +80,14 @@
       @media (max-width: 800px) {
         width: 60vw;
       }
-      @media (max-width: 440px) {
+      @media (max-width: 550px) {
         height: 1.4rem;
         width: 50vw;
-        font-size: 1.1rem;
+        font-size: 15px;
       }
       @media (max-width: 340px) {
         height: 1.3rem;
-
-        font-size: 1rem;
+        font-size: 15px;
       }
 
       &--modal {
@@ -172,7 +172,6 @@
 }
 
 .anon {
-  margin-top: 1rem;
   > input {
     float: left;
     margin-right: 0.5rem;
@@ -190,10 +189,10 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   font-size: 1.1rem;
+  font-family: "GT America", Arial, sans-serif;
   @media (max-width: 520px) {
     font-size: 0.8rem;
   }
-  margin-bottom: 1rem;
 
   &.error {
     border-color: @error-color;
