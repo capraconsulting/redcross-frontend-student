@@ -32,26 +32,24 @@ const SectionQuestions = (props: RouteComponentProps) => {
         </Link>{' '}
         hvis du ikke finner det du lurer på!
       </p>
-      <form className="sectioncontainer--form" onSubmit={() => setSubmit(true)}>
+      <form onSubmit={() => setSubmit(true)}>
         <div className="sectioncontainer--form--header">Søk etter spørsmål</div>
+        <form>
+          <input
+            className="search--input--searchkey"
+            value={searchText}
+            onChange={event => setSearchText(event.target.value)}
+            type="text"
+            placeholder="Hva lurer du på?"
+          />
+          <img
+            src={require('../../../assets/images/search.svg')}
+            alt=""
+            className="search--input--img"
+            onClick={() => setSubmit(true)}
+          />
+        </form>
       </form>
-
-      <span className="search--input">
-        <input
-          className="search--input--searchkey"
-          value={searchText}
-          onChange={event => setSearchText(event.target.value)}
-          type="text"
-          placeholder="Hva lurer du på?"
-        />
-        <button
-          onClick={() => setSubmit(true)}
-          className="btn btn-submit btn-search"
-          type="button"
-        >
-          Søk
-        </button>
-      </span>
       {submit && (
         <Redirect
           push
