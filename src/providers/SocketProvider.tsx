@@ -77,6 +77,7 @@ const useSessionStorageBinding = (key: string, value: string) => {
 
 export const SocketProvider: FunctionComponent = ({ children }) => {
   const [inQueue, setInQueue] = useState(false);
+  const [chatClosed, setChatClosed] = useState(false);
   const [uniqueID, setUniqueID] = useState('');
   const [roomID, setRoomID] = useState('');
   const [messages, dispatchMessages] = useReducer(chatReducer, []);
@@ -176,6 +177,7 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
         dispatchMessages(hasLeftChatAction(payload['name']));
         break;
       case CLOSE_CHAT:
+        setChatClosed(true);
         dispatchMessages(chatClosedAction());
         break;
       case RECONNECT:
@@ -203,9 +205,14 @@ export const SocketProvider: FunctionComponent = ({ children }) => {
     dispatchMessages(cleanChatAction());
     dispatchStudentInfo(cleanStudentInfoAction());
 
-    socketSend(
-      createLeaveMessage(uniqueID, roomID, studentInfo.nickname, 'student'),
-    );
+    if (!chatClosed) {
+      socketSend(
+        createLeaveMessage(uniqueID, roomID, studentInfo.nickname, 'student'),
+      );
+    } else {
+      setChatClosed(false);
+    }
+
     setTalkyID('');
     setRoomID('');
     setUniqueID('');
