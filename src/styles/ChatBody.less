@@ -1,12 +1,13 @@
 @import 'colors';
 
-.cb {
+.chat-body {
   height: 80vh;
   margin-bottom: 5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex-grow: 1;
+  flex: 1;
+  overflow-y: scroll;
   padding-bottom: 1.5rem;
   @media (max-width: 550px) {
     padding-bottom: 0.5rem;
@@ -19,23 +20,24 @@
     height: 50vh;
   }
 
-  > .display {
-    width: 100%;
-    max-height: 100%;
-    overflow: scroll;
-    flex-grow: 1;
-    > .welcome-container {
-      border-bottom: @message-separator 1px solid;
-      padding: 0.5rem 1rem;
-      text-align: center;
-      > .welcome-header {
-        color: @primary-color;
-        font-size: 1rem;
-      }
-      > .welcome-body {
-        color: @welcome-message-body;
-        font-size: 15px;
-      }
+
+  > .welcome-container {
+    border-bottom: @message-separator 1px solid;
+    padding: 0.5rem 1rem;
+    text-align: center;
+
+    > .welcome-header {
+      color: @primary-color;
+      font-size: 1rem;
     }
+
+    > .welcome-body {
+      color: @welcome-message-body;
+      font-size: 15px;
+    }
+  }
+
+  > .cm:first-child {
+    margin-top: auto;
   }
 }

@@ -8,15 +8,9 @@ interface IProps {
 
 const ChatHeader = (props: IProps) => {
   return (
-    <div className={`ch`}>
-      {/*<span className={'ch--left'}>
-        <p>{props.connectedWith}</p>
-      </span>
-      <span className={'ch--right'}>{unreadMessages}</span>*/}
-      <div className={'ch--text'}>
-        <p className={'ch--text--left'}>{props.connectedWith}</p>
-        <p className={'ch--text--right'}>{props.subject}</p>
-      </div>
+    <div className="chat-header">
+      <p>{props.connectedWith}</p>
+      <p>{props.subject}</p>
     </div>
   );
 };

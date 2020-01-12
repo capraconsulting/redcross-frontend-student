@@ -75,6 +75,17 @@ const ChatInput = (props: IProps) => {
     onDrop,
   });
 
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      const newFiles: (File | null)[] = [];
+      for (let i = 0; i < files.length; i++) {
+        newFiles.push(files.item(i));
+      }
+      setTempFiles(prevFiles => [...prevFiles, ...newFiles]);
+    }
+  };
+
   const FileList = () => {
     return (
       <div className="subject--list">
@@ -102,7 +113,7 @@ const ChatInput = (props: IProps) => {
   function renderInput() {
     return (
       <input
-        className={'message-text'}
+        className="message-text"
         type="textarea"
         placeholder="Skriv her"
         value={message}
@@ -114,21 +125,12 @@ const ChatInput = (props: IProps) => {
   }
 
   return (
-    <div>
+    <div className="chat-input">
       <FileList />
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <input
-          onChange={event => {
-            let { files } = event.target;
-            let newFiles = [] as any;
-            let steps = (files && files.length) || 0;
-            for (var i = 0; i < steps; i++) {
-              let item = (files && files.item(i)) || 'null';
-              newFiles.push(item);
-            }
-            files && setTempFiles([...tempFiles, ...newFiles]);
-          }}
+          onChange={onFileChange}
           type="file"
           name="attachment"
           id="msg-file-input"
@@ -137,26 +139,13 @@ const ChatInput = (props: IProps) => {
         />
         <div className="message-form-container">
           <form className="message-form">
-            <button
-              type="button"
-              className="upload"
-              onClick={() => openFileDialog()}
-            >
+            <button type="button" className="upload" onClick={openFileDialog}>
               <input
                 type="file"
                 id="file-dialog"
                 className="input-file"
                 accept="image/*|.pdf|.doc|.docx|.csv"
-                onChange={event => {
-                  let { files } = event.target;
-                  let newFiles = [] as any;
-                  let steps = (files && files.length) || 0;
-                  for (let i = 0; i < steps; i++) {
-                    let item = (files && files.item(i)) || 'null';
-                    newFiles.push(item);
-                  }
-                  files && setTempFiles([...tempFiles, ...newFiles]);
-                }}
+                onChange={onFileChange}
               />
               <span className="plus">+</span>
               <div className="tooltip">
@@ -165,7 +154,7 @@ const ChatInput = (props: IProps) => {
               </div>
             </button>
             {renderInput()}
-            <button onClick={handleSubmit} className={'send-message'}>
+            <button onClick={handleSubmit} className="send-message">
               <svg width="30px" height="30px" viewBox="0 0 30 30">
                 <polygon className="arrow" points="30 15 0 30 5.5 15 0 0" />
               </svg>
