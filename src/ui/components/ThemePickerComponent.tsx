@@ -25,6 +25,7 @@ const ThemePickerComponent = ({
     <Dropdown
       className="theme--dropdown"
       options={optionList}
+      placeholderClassName="dropdown-placeholder"
       onChange={option => addTheme(option)}
       placeholder={placeholder}
     />

@@ -117,18 +117,14 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
             </p>
           </div>
           <div className="body">
-            <div className="item">
-              <Textarea
-                autoFocus
-                cols={window.scrollX}
-                placeHolder="Skriv her..."
-                minRows={6}
-                value={introText}
-                onChange={event =>
-                  dispatchStudentInfo(setIntroTextAction(event.target.value))
-                }
-              />
-            </div>
+            <textarea
+              placeholder="Skriv her..."
+              className="textarea"
+              value={introText}
+              onChange={event =>
+                dispatchStudentInfo(setIntroTextAction(event.target.value))
+              }
+            />
             {themes && (
               <div className="item">
                 <Picker

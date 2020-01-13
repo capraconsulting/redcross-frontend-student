@@ -9,7 +9,7 @@ const SectionFrivillig = (props: RouteComponentProps) => {
   const { history } = props;
   return (
     <div className="volunteer">
-      <div className="volunteer--header">Våre frivillige</div>
+      <div className="sectioncontainer--header">Våre frivillige</div>
       <p className="volunteer--text" id="sectionVolunteer--text">
         På samme måte som de fleste andre aktiviteter i Røde Kors, er Digital
         Leksehjelp drevet av frivillige. Våre frivillige er trygge
