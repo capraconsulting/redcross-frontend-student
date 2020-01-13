@@ -48,7 +48,7 @@ const SectionForm = (props: RouteComponentProps) => {
   const [subject, setSubject] = useState(defaultOption);
   const [themeList, setThemeList] = useState<IOption[]>([]);
   const [studentGrade, setGrade] = useState(defaultOption);
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(false);
   const [azureToken, setAzureToken] = useState('');
   const [tempFiles, setTempFiles] = useState<any[]>([]);
   const [selectedList, setSelectedList] = useState<ITheme[]>([]);
@@ -91,7 +91,7 @@ const SectionForm = (props: RouteComponentProps) => {
   }, []);
 
   const isValidEmail = (email: string) => {
-    return /.+@.+/.test(email);
+    return /.+@[A-z]+\.[A-z]+/.test(email);
   };
 
   const uploadPromises = tempFiles => {
@@ -243,20 +243,20 @@ const SectionForm = (props: RouteComponentProps) => {
             selectedList={selectedList}
             removeTheme={removeTheme}
           />
-          <label className={'formLabel'}>
+          <label className="formLabel">
             Klassetrinn <span className="error-message">*</span>
           </label>
           <Dropdown
-            placeholder={'Velg klassetrinn'}
-            placeholderClassName={'dropdown-placeholder'}
-            menuClassName={'dropdown-placeholder'}
+            placeholder="Velg klassetrinn"
+            placeholderClassName="dropdown-placeholder"
+            menuClassName="dropdown-placeholder"
             options={getGradeOptions()}
             value={studentGrade.value && studentGrade}
             onChange={event =>
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>
+          <label className="formLabel">
             Spørsmål <span className="error-message">*</span>
           </label>
           <textarea
@@ -269,16 +269,16 @@ const SectionForm = (props: RouteComponentProps) => {
           />
           <MyDropzone />
           <FileList />
-          <label className={'formLabel'}>
+          <label className="formLabel">
             E-post <span className="error-message">*</span>
           </label>
           <input
-            placeholder={'Skriv e-postadressen din'}
-            className={'email'}
+            placeholder="Skriv e-postadressen din"
+            className="email"
             value={email}
             onChange={event => setEmail(event.target.value)}
             type="email"
-            name={'email'}
+            name="email"
             key={1}
           />
           <div className="error-message--text">
