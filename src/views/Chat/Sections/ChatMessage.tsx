@@ -25,11 +25,11 @@ const ChatMessage = (props: IProps) => {
       files.length > 0 &&
       files.map((file, index) => {
         return (
-          <div className={'cm'} key={index}>
+          <div className="cm" key={index}>
             <div
               className={`cm--download cm--${authorType} cm--${authorType}--file`}
             >
-              <p className={`cm--message`}>
+              <p className="cm--message">
                 <span className="cm--file-name">{file.fileName} </span>
                 <span className="cm--file-size">
                   {(1000000 / 1000000).toPrecision(3)} MB
@@ -88,8 +88,8 @@ const ChatMessage = (props: IProps) => {
     );
   } else {
     return (
-      <div>
-        <div className={`cm`}>
+      <>
+        <div className="cm">
           <p className={`cm--author-${authorType}`}>
             <span>{authorType === 'self' ? 'Deg' : author}</span>, kl.{' '}
             <span>{datetime}</span>
@@ -97,7 +97,7 @@ const ChatMessage = (props: IProps) => {
           {renderMessage()}
         </div>
         {RenderFiles()}
-      </div>
+      </>
     );
   }
 };
