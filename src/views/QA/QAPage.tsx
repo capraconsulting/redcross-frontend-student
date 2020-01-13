@@ -123,69 +123,70 @@ export const QA = (props: IProps & RouteComponentProps) => {
     return (
       history && (
         <div>
-          <h1 className={'searchcontainer--header'} id="QAsearchForm--header">
+          <h1 className="searchcontainer--header" id="QAsearchForm--header">
             Søk blant spørsmål
           </h1>
           <div
-            className={'searchcontainer'}
+            className="searchcontainer"
             onKeyDown={event => event.keyCode === 13 && handleSubmit()}
           >
-            {' '}
-            {/*input container start*/}
-            <span className={'searchcontainer--input'}>
+            <form
+              className="searchcontainer--form"
+              onSubmit={() => handleSubmit()}
+            >
               <input
-                className={'searchcontainer--input--searchkey'}
+                className="search--input--searchkey"
                 value={search}
                 onChange={event => setSearch(event.target.value)}
                 type="text"
                 placeholder="Hva lurer du på?"
-              />{' '}
+              />
+              <Dropdown
+                className="searchcontainer--input--gradeselector"
+                placeholderClassName="dropdown-placeholder"
+                menuClassName="dropdown-placeholder"
+                placeholder="Velg fag"
+                options={getSubjectOptions()}
+                value={(subject.value && subject.label && subject) || ''}
+                onChange={event =>
+                  setSubject({ value: event.value, label: event.label })
+                }
+              />
+              <Dropdown
+                className="searchcontainer--input--subjectselector"
+                placeholderClassName="dropdown-placeholder"
+                menuClassName="dropdown-placeholder"
+                placeholder="Velg trinn"
+                options={getGradeOptions()}
+                value={(grade.value && grade.label && grade) || ''}
+                onChange={event =>
+                  setGrade({ value: event.value, label: event.label })
+                }
+              />
+              <Dropdown
+                className="searchcontainer--input--subjectselector"
+                placeholderClassName="dropdown-placeholder"
+                menuClassName="dropdown-placeholder"
+                placeholder="Sorter etter"
+                options={getFilterOptions()}
+                value={
+                  (orderByDate.value && orderByDate.label && orderByDate) || ''
+                }
+                onChange={event =>
+                  setOrderByDate({
+                    value: orderByDate.value === 'true' ? 'false' : 'true',
+                    label: event.label,
+                  })
+                }
+              />
               <button
                 onClick={() => handleSubmit()}
-                className={'btn btn-submit btn-search'}
-                type={'button'}
+                className="btn btn-submit btn-search"
+                type="button"
               >
                 Søk
               </button>
-            </span>
-            <Dropdown
-              className={'searchcontainer--input--gradeselector'}
-              placeholderClassName={'dropdown-placeholder'}
-              menuClassName={'dropdown-placeholder'}
-              placeholder={'Velg fag'}
-              options={getSubjectOptions()}
-              value={(subject.value && subject.label && subject) || ''}
-              onChange={event =>
-                setSubject({ value: event.value, label: event.label })
-              }
-            />
-            <Dropdown
-              className={'searchcontainer--input--subjectselector'}
-              placeholderClassName={'dropdown-placeholder'}
-              menuClassName={'dropdown-placeholder'}
-              placeholder={'Velg trinn'}
-              options={getGradeOptions()}
-              value={(grade.value && grade.label && grade) || ''}
-              onChange={event =>
-                setGrade({ value: event.value, label: event.label })
-              }
-            />
-            <Dropdown
-              className={'searchcontainer--input--subjectselector'}
-              placeholderClassName={'dropdown-placeholder'}
-              menuClassName={'dropdown-placeholder'}
-              placeholder={'Sorter etter'}
-              options={getFilterOptions()}
-              value={
-                (orderByDate.value && orderByDate.label && orderByDate) || ''
-              }
-              onChange={event =>
-                setOrderByDate({
-                  value: orderByDate.value === 'true' ? 'false' : 'true',
-                  label: event.label,
-                })
-              }
-            />
+            </form>
           </div>
         </div>
       )
