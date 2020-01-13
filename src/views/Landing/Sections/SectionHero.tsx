@@ -2,8 +2,11 @@ import React from 'react';
 
 //Styles
 import '../../../styles/LandingPage.less';
+import { useOpeningHours } from '../../../providers/OpeningHoursProvider';
 
 export const SectionHero = () => {
+  const { announcement } = useOpeningHours();
+
   return (
     <div className="hero">
       <div className="hero--description">
@@ -11,10 +14,11 @@ export const SectionHero = () => {
         <span className="hero--description--colored">anonymt</span> for deg på
         ungdomsskolen og videregående.
       </div>
-      <div className="hero--tips" id="hero--tips">
-        Hvis det tar lang tid å få videohjelp anbefaler vi å prøve vanlig chat i
-        stedet. Det går ofte raskere!
-      </div>
+      {announcement && announcement.length > 0 && (
+        <div className="hero--tips" id="hero--tips">
+          {announcement}
+        </div>
+      )}
       <img
         className="hero--svg"
         src={require('../../../assets/images/figure_1.svg')}

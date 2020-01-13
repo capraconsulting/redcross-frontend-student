@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
-import Zoom from 'react-reveal/Zoom';
-
+import React, { useContext, useState } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 //Styles
 import '../../styles/Header.less';
-
 //Services
-import getApplicationTitle from '../../services/header-service';
 import { SocketContext } from '../../providers';
 import ModalComponent from './ModalComponent';
 import { ICustomWindow } from '../../interfaces/ICustomWindow';
 import { CHAT_TYPES } from '../../../config';
-import { getIsLeksehjelpOpen } from '../../services/api-service';
-import { useNextOpeningDay } from '../../hooks/use-next-opening-day';
+import { useOpeningHours } from '../../providers/OpeningHoursProvider';
 import ResponsiveComponent from './ResponsiveComponent';
+import { MediaQuery } from '../../enums/media-query';
 
 declare const window: ICustomWindow;
 
@@ -23,12 +19,10 @@ export const Header = (props: RouteComponentProps) => {
   const { inQueue, roomID, cleanState, studentInfo } = useContext(
     SocketContext,
   );
-  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-  }, []);
+  const { openingMessage } = useOpeningHours();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const cancelQueueAndChat = () => {
     if (
@@ -43,19 +37,17 @@ export const Header = (props: RouteComponentProps) => {
     history.push('/');
   };
 
-  const nextOpeningDay = useNextOpeningDay();
-
   return (
     <div className="header">
       <a className="header--link" onClick={() => history.push('/')}>
         <span className="header--logo" id="header--logo">
-          {getApplicationTitle('Digital Leksehjelp')}
+          Digital Leksehjelp
         </span>
-        <ResponsiveComponent belowThreshold={<br />} />
-        <span className="header--serviceStatusMessage">
-          {!isLeksehjelpOpen && ` åpner ${nextOpeningDay} kl. 17:00`}
-          {isLeksehjelpOpen && ' åpent frem til kl. 21:00'}
-        </span>
+        <ResponsiveComponent
+          threshold={MediaQuery.TABLET_PORTRAIT}
+          belowThreshold={<br />}
+        />
+        <span className="header--serviceStatusMessage">{openingMessage}</span>
       </a>
       {inQueue && (
         <div className="header-button-container">

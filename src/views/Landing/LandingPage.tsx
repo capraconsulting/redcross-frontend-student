@@ -1,5 +1,5 @@
 // Sections for this page
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 //Styles
@@ -16,21 +16,16 @@ import {
 import { Snackbar, ModalComponent } from '../../ui/components';
 import Button from '@material-ui/core/Button';
 
-//Services
-import { getIsLeksehjelpOpen } from '../../services/api-service';
+//Providers
 import { SocketContext } from '../../providers';
+import { useOpeningHours } from '../../providers/OpeningHoursProvider';
 
-const LandingPage = (props: RouteComponentProps) => {
-  const [isLeksehjelpOpen, setIsLeksehjelpOpen] = useState<boolean>(false);
+const LandingPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { inQueue, roomID, cleanState, studentInfo } = useContext(
     SocketContext,
   );
-  const [isOpen] = useState<boolean>(false);
+  const { isOpen } = useOpeningHours();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { history } = props;
-  useEffect(() => {
-    getIsLeksehjelpOpen().then(data => setIsLeksehjelpOpen(data.isopen));
-  }, []);
 
   const cancelQueueAndChat = () => {
     cleanState();
@@ -42,17 +37,17 @@ const LandingPage = (props: RouteComponentProps) => {
   return (
     <div className="content">
       <SectionHero />
-      {isLeksehjelpOpen ? (
+      {isOpen ? (
         <div>
-          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
-          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionLeksehjelp />
+          <SectionMestring />
           <SectionQuestions />
         </div>
       ) : (
         <div>
           <SectionQuestions />
-          <SectionLeksehjelp isLeksehjelpOpen={isLeksehjelpOpen} />
-          <SectionMestring isLeksehjelpOpen={isLeksehjelpOpen} />
+          <SectionLeksehjelp />
+          <SectionMestring />
         </div>
       )}
       <SectionFrivillig />
@@ -107,7 +102,7 @@ const LandingPage = (props: RouteComponentProps) => {
               : 'Er du sikker på at du vil forlate køen?'
           }
           warningButtonText="Avslutt"
-          warningCallback={() => cancelQueueAndChat()}
+          warningCallback={cancelQueueAndChat}
           closingCallback={() => setIsModalOpen(false)}
         />
       )}
