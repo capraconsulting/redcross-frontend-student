@@ -8,10 +8,10 @@ const SectionRecruiting = () => {
     <div className="volunteersPage--section">
       <div className="volunteersPage--section--div">
         <img
-          src={require('../../../assets/images/volunteers_3.jpg')}
+          src={require('../../../assets/images/volunteers_3.png')}
           className="volunteer--image--content"
           alt="frivillig"
-        ></img>
+        />
       </div>
       <div className="volunteersPage--section--div">
         <div className="volunteer--header">Bli frivillig hos oss</div>

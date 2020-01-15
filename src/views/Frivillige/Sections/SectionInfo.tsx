@@ -35,10 +35,10 @@ const SectionInfo = () => {
       </div>
       <div className="volunteersPage--section--img">
         <img
-          src={require('../../../assets/images/volunteers_2.jpg')}
+          src={require('../../../assets/images/volunteers_2.png')}
           className="volunteer--image--content"
           alt="frivillig"
-        ></img>
+        />
       </div>
     </div>
   );

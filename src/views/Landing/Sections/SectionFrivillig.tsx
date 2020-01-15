@@ -31,10 +31,10 @@ const SectionFrivillig = (props: RouteComponentProps) => {
           <Zoom>Bli frivillig!</Zoom>
         </a>
         <img
-          src={require('../../../assets/images/volunteers_1.jpg')}
+          src={require('../../../assets/images/volunteers_1.png')}
           className="volunteer--image--content"
           alt="frivillig"
-        ></img>
+        />
       </div>
     </div>
   );
