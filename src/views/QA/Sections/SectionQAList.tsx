@@ -53,7 +53,7 @@ export const SectionQAList = (props: IProps) => {
                       {themes.map(({ theme }, index) => (
                         <div
                           key={index}
-                          className="subject--list-element subject--list-element-right"
+                          className="subject--list-element"
                         >
                           <p>{theme}</p>
                         </div>

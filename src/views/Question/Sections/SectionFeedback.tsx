@@ -28,7 +28,11 @@ export const SectionFeedback = (props: IProps) => {
           className="feedback--form--textarea"
           onChange={event => setFeedbackText(event.target.value)}
         ></textarea>
-        <button className="feedback--form--button" onClick={handleSubmit}>
+        <button
+          className="feedback--form--button"
+          onClick={handleSubmit}
+          disabled={feedbackText.length === 0}
+        >
           Send
         </button>
       </div>

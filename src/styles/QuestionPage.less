@@ -16,7 +16,6 @@
   }
 
   p {
-    font-size: 1.2rem;
     border-bottom: 0;
     margin-bottom: 0;
     line-height: 1.5;
@@ -25,6 +24,10 @@
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+    font-size: 20px;
+    @media (max-width: 550px) {
+      font-size: 15px;
+    }
   }
 
   &--info {
@@ -64,7 +67,6 @@
   position: relative;
   margin-bottom: 50px;
   max-width: 720px;
-  line-height: 1.2;
 
   @media (min-width: 768px) {
     margin-bottom: 70px;
@@ -84,6 +86,7 @@
   }
 
   &--link {
+    cursor: pointer;
     color: @secondary-color;
     text-decoration: underline;
     background-color: transparent;
@@ -129,6 +132,7 @@
     }
 
     &--button {
+      cursor: pointer;
       align-self: flex-end;
       margin-top: 10px;
       --primary-color: @white;
@@ -140,7 +144,7 @@
       width: 110px;
       font-size: 15px;
 
-      .disabled {
+      &[disabled] {
         --secondary-color: @disabled-color;
         cursor: default;
       }
