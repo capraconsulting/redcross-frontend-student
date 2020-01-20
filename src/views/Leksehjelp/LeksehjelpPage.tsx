@@ -29,6 +29,7 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     talkyID,
   } = useContext(SocketContext);
   const [themes, setThemes] = useState<Option[]>([]);
+  const [selectedList, setSelectedList] = useState<string[]>([]);
   const isChatRoomGenerated = roomID.length >= 1;
 
   const setBackgroundColor = backgroundColor => {
@@ -60,6 +61,15 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
     };
   }, []);
 
+  const getThemeOptions = (): Option[] => {
+    return themes
+      .filter(theme => !selectedList.find(x => x === theme.label))
+      .map(theme => ({
+        value: theme.value,
+        label: theme.label,
+      }));
+  };
+
   const update = () => {
     socketSend({
       payload: studentInfo,
@@ -74,10 +84,12 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
   };
 
   const addSelectedTheme = (option: Option) => {
+    setSelectedList(oldValue => [...oldValue, option.value]);
     dispatchStudentInfo(addThemeAction(option.value));
   };
 
   const removeSelectedTheme = (option: string) => {
+    setSelectedList(oldValue => oldValue.filter(el => el !== option));
     dispatchStudentInfo(removeThemeAction(option));
   };
 
@@ -132,11 +144,11 @@ const LeksehjelpPage: FunctionComponent<RouteComponentProps> = ({
             {themes && (
               <div className="item">
                 <Picker
-                  optionList={themes}
+                  optionList={getThemeOptions()}
                   placeholder="Legg til tema"
                   addSelected={addSelectedTheme}
                   removeSelected={removeSelectedTheme}
-                  selectedList={studentInfo.themes}
+                  selectedList={selectedList}
                 />
               </div>
             )}
