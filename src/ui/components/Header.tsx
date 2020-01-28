@@ -64,10 +64,12 @@ export const Header = (props: RouteComponentProps) => {
           href="https://www.rodekors.no/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Lenke til rodekors.no"
         >
           <img
             className="header--rk_logo"
             src={require('../../assets/images/rk_logo.png')}
+            alt="Røde Kors logo"
           />
         </a>
       </span>

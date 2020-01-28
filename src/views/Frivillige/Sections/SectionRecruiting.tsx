@@ -1,18 +1,10 @@
 import React from 'react';
-
-//Styles
 import '../../../styles/LandingPage.less';
+import ResponsiveComponent from '../../../ui/components/ResponsiveComponent';
 
 const SectionRecruiting = () => {
-  return (
-    <div className="volunteersPage--section">
-      <div className="volunteersPage--section--div">
-        <img
-          src={require('../../../assets/images/volunteers_3.jpg')}
-          className="volunteer--image--content"
-          alt="frivillig"
-        ></img>
-      </div>
+  const renderTextContent = () => {
+    return (
       <div className="volunteersPage--section--div">
         <div className="volunteer--header">Bli frivillig hos oss</div>
         <p className="volunteer--text" id="sectionRecruiting--text">
@@ -44,6 +36,37 @@ const SectionRecruiting = () => {
           </li>
         </ul>
       </div>
+    );
+  };
+
+  return (
+    <div className="volunteersPage--section">
+      <ResponsiveComponent
+        aboveThreshold={
+          <>
+            <div className="volunteersPage--section--div">
+              <img
+                src={require('../../../assets/images/volunteers_3.png')}
+                className="volunteer--image--content"
+                alt="frivillig"
+              />
+            </div>
+            {renderTextContent()}
+          </>
+        }
+        belowThreshold={
+          <>
+            {renderTextContent()}
+            <div className="volunteersPage--section--div">
+              <img
+                src={require('../../../assets/images/volunteers_3.png')}
+                className="volunteer--image--content"
+                alt="frivillig"
+              />
+            </div>
+          </>
+        }
+      />
     </div>
   );
 };
