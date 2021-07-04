@@ -256,13 +256,12 @@ const SectionForm = (props: RouteComponentProps) => {
               setGrade({ value: event.value, label: event.label })
             }
           />
-          <label className={'formLabel'}>
+          <label className="formLabel">
             Spørsmål <span className="error-message">*</span>
           </label>
           <textarea
-            placeholder={
-              'Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd.'
-            }
+            rows={8}
+            placeholder="Beskriv med egne ord hva du lurer på, og forklar gjerne hva det er du har kommet fram til på egenhånd."
             className="textarea"
             value={questionText}
             onChange={event => setQuestionText(event.target.value)}
