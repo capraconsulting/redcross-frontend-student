@@ -75,10 +75,13 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <div className="sectioncontainer">
-      <div className="sectioncontainer--header">Leksehjelp</div>
-      <span className="sectioncontainer--header--status">
-        {isOpen ? 'åpen nå' : openingMessage}
-      </span>
+      <div className="sectioncontainer--header">
+        Leksehjelp{' '}
+        <span className="sectioncontainer--header--status">
+          {isOpen ? 'åpen nå' : openingMessage}
+        </span>
+      </div>
+
       {isOpen && (
         <p className="sectioncontainer--text" id="leksehjelpcontainer--text">
           Få hjelp av en frivillig til å løse oppgaver, diskutere et tema,{' '}
@@ -93,9 +96,9 @@ const SectionLeksehjelp: React.FC<RouteComponentProps> = ({ history }) => {
           Velg fag <span className="error-message">*</span>
         </div>
         <Dropdown
-          placeholder={'F.eks. Matematikk, naturfag eller norsk'}
-          placeholderClassName={'dropdown-placeholder'}
-          menuClassName={'dropdown-placeholder'}
+          placeholder="F.eks. Matematikk, naturfag eller norsk"
+          placeholderClassName="dropdown-placeholder"
+          menuClassName="dropdown-placeholder"
           options={subjects}
           value={subject.value}
           onChange={setSubject}

@@ -28,6 +28,7 @@ const SectionRecruiting = () => {
           >
             www.rodekors.no
           </a>
+          {'.'}
         </p>
         <div className="listHeader">Kriterier</div>
         <ul>

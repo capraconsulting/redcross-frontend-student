@@ -61,10 +61,13 @@ const SectionMestring: React.FC<RouteComponentProps> = ({ history }) => {
           <div className="mestring--badge_new">
             <Zoom>Ny tjeneste!</Zoom>
           </div>
-          <div className="mestring--header">Mestring og motivasjon</div>
-          <span className="sectioncontainer--header--status">
-            {isOpen ? 'åpen nå' : openingMessage}
-          </span>
+          <div className="sectioncontainer--header">
+            Mestring og motivasjon{' '}
+            <span className="sectioncontainer--header--status">
+              {isOpen ? 'åpen nå' : openingMessage}
+            </span>
+          </div>
+
           {isOpen && (
             <p className="sectioncontainer--text">
               Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve en{' '}

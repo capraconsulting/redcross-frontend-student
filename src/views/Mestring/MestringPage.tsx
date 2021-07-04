@@ -79,11 +79,9 @@ export const MestringPage = (props: RouteComponentProps) => {
               <p className="intro-text">
                 Mens du venter kan du begynne å forklare hva du lurer på.
               </p>
-              <Textarea
-                autoFocus
-                cols={window.scrollX}
-                placeHolder="Skriv her..."
-                minRows={15}
+              <textarea
+                placeholder="Skriv her..."
+                className="textarea"
                 value={studentInfo.introText}
                 onChange={event =>
                   dispatchStudentInfo(setIntroTextAction(event.target.value))

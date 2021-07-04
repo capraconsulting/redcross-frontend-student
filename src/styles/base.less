@@ -5,7 +5,7 @@
   margin-left: 2.2rem;
   margin-right: 2.2rem;
   font-size: 1.1rem;
-  line-height: 1.7;
+  line-height: 1.5;
   height: 98vh;
 
   @media (min-width: 768px) {
@@ -13,10 +13,9 @@
   }
 
   @media (max-width: 560px) {
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
-    line-height: 1.4;
-    font-size: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 15px;
   }
 }
 
@@ -175,10 +174,17 @@
 
   &-queue {
     margin-bottom: 1rem;
-    width: 300px;
+    width: 200px;
     font-size: 20px;
+    font-weight: normal;
+
     @media (max-width: 677px) {
       width: 150px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 550px) {
+      width: 100px;
     }
   }
 
